@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cstdio>
+#include <array>
+#include <cstdint>
+#include <fstream>
 #include <iostream>
 #include <queue>
 #include <execinfo.h>
@@ -69,4 +72,28 @@ public:
     vector<cv::Point2f> pts_velocity;
     vector<int> ids;
     vector<int> track_cnt;
+
+private:
+    bool xfeat_enabled_ = false;
+    bool xfeat_hybrid_ = false;
+    bool xfeat_admission_only_ = false;
+    std::ifstream xfeat_stream_;
+    uint64_t xfeat_frame_count_ = 0;
+    uint64_t xfeat_frames_read_ = 0;
+    cv::Mat xfeat_prev_desc_;
+    vector<cv::Point2f> xfeat_prev_proposal_pts_;
+    vector<int> xfeat_prev_proposal_ids_;
+    vector<int> xfeat_prev_proposal_age_;
+    uint64_t xfeat_propagated_total_ = 0;
+    uint64_t xfeat_emitted_total_ = 0;
+    vector<array<float, 64>> hybrid_anchor_desc_;
+    vector<uchar> hybrid_has_anchor_;
+
+    void openXFeatSidecar(const string &path);
+    void trackImageXFeat(const cv::Mat &_img, double _cur_time);
+    void trackImageHybrid(const cv::Mat &_img, double _cur_time);
+    void readXFeatRecord(int64_t expected_stamp_ns,
+                         vector<cv::Point2f> &points,
+                         vector<float> &scores,
+                         cv::Mat &descriptors);
 };

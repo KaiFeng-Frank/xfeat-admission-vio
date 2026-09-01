@@ -19,7 +19,7 @@ projection_parameters:
 imu_topic: "/imu"
 image_topic: "/cam0/color"
 dpt_img_topic: "/cam0/depth"
-output_path: "/home/oran/WS/Work/SLAM/SVIO/output"
+output_path: "/work/run_motion4_atlanta_admission"
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
@@ -57,11 +57,12 @@ multiple_thread: 1
 
 # Feature traker paprameters
 max_cnt: 150            # max feature number in feature tracking
-min_dist: 30            # min distance between two features 
-freq: 10                # frequence (Hz) of publish tracking result. At least 10Hz for good estimation. If set 0, the frequence will be same as raw image 
+min_dist: 20            # frozen admission-only live-track spacing
+freq_gate: 0            # Phase2 default is full-rate; set 1 only for the independent frequency experiment
+freq: 10                # target Hz when freq_gate is enabled
 F_threshold: 2.0        # ransac threshold (pixel)
-show_track: 1           # publish tracking image as topic
-flow_back: 1            # perform forward and backward optical flow to improve feature tracking accuracy
+show_track: 0           # sandbox sidecar run: no visualization overhead
+flow_back: 0            # Phase2 corrected baseline is forward-only
 
 # IMU acc. multiply
 acc_mult: -9.8
@@ -118,6 +119,8 @@ min_used_num: 4
 
 # ablation study
 structure_verify: 1
-disable_line: 0
+use_gmm: 1
+use_gmm_ext: 1
+disable_line: 1
 disable_plane: 0
 structure: 1
