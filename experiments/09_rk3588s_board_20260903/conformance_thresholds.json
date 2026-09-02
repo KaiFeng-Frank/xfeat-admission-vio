@@ -1,0 +1,17 @@
+{
+ "schema": "xfeat-admission-vio-board-conformance-thresholds-v1",
+ "frozen_before_first_board_result": "2026-09-03T00:20+08:00",
+ "reference": "host onnxruntime CPU on models/xfeat_backbone_1x3x480x640_opset19.onnx, same NCHW float32 inputs",
+ "candidate": "RK3588S NPU via rknnlite on xfeat_backbone_1x3x480x640_rk3588_fp16.rknn (sha256 a59da795...)",
+ "dense_outputs": {
+  "descriptors_dense": {"min_cosine": 0.999},
+  "keypoint_logits": {"min_cosine": 0.999},
+  "reliability": {"min_cosine": 0.999, "max_abs": 0.02}
+ },
+ "sparse_tail_on_real_frame": {
+  "keypoint_recall_within_1px_min": 0.90,
+  "matched_descriptor_cosine_median_min": 0.98,
+  "note": "pinned sparse tail (NMS 5x5, threshold 0.05, top-500, bicubic descriptor sampling) applied to both backbones"
+ },
+ "latency_gate_ms": {"backbone_p99_max": 50.0, "note": "from the sandbox deployment gate: NPU p99 <= 50 ms at the 10 Hz tick"}
+}

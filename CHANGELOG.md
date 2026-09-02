@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1 — 2026-09-03
+
+On-device receipts, no estimator code change.
+
+- RK3588S (Indiedroid Nova, `9tripod,rk3588s`) identity receipt; NPU driver 0.7.2, Rockchip
+  runtime 2.3.2, rknnlite 2.3.2
+- pinned FP16 backbone latency per input layout and NPU core mask; CPU sparse-tail latency;
+  memory; thermal
+- conformance against the host ONNX reference on frozen inputs and through the sparse tail
+  (`experiments/09_rk3588s_board_20260903/`)
+- README: board photo and on-device summary
+
 ## 1.0 — 2026-09-02
 
 Final code release, extracted from the 2026-09-01 learning campaign.

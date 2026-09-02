@@ -122,3 +122,8 @@ exit status 134 is the inherited teardown abort after playback; both trajectorie
 are complete. Receipts, normalized trajectories, the container script and the scoring
 script are in `experiments/08_rebuild_verification_20260902/`.
 
+## 7. On the board
+
+The RK3588S recipe (ADB access, Rockchip runtime and wheels without pip or network, the
+benchmark and conformance scripts) is documented with its receipts in
+`experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md`.

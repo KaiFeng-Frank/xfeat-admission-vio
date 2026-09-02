@@ -145,6 +145,15 @@ under `set -u` before exporting `ROS_MASTER_URI`
 (`control_v5/V4_OPEN_ROS_ENV_INCIDENT.json`). A v5 OpenLORIS-only restart was
 prepared and self-tested; it has not been executed.
 
+## Stage 8 — the pinned backbone on the RK3588S (`experiments/09_rk3588s_board_20260903/`)
+
+One board, one runtime, one model file. Backbone 64 ms median on three NPU cores,
+CPU sparse tail 19 ms, rknnlite session 111 MiB; real-frame outputs reproduce the
+ONNX reference through the sparse tail (500 of 500 keypoints, 0.996 within 1 px). The
+frozen backbone p99 gate of 50 ms fails on this board and driver; the synthetic
+patterns fail the frozen reliability cosine gate while staying within its absolute
+bound. Details and every receipt: `BOARD_RECEIPT.md` in that directory.
+
 ## Boundary of the evidence
 
 * Sealed artifacts were path-anonymized after sealing (machine paths became
@@ -154,10 +163,9 @@ prepared and self-tested; it has not been executed.
 
 * Single executions throughout; the estimator runs multi-threaded and byte identity
   across repeats has not been demonstrated.
-* Every learned input was a precomputed sidecar. The 10 Hz tick is a data-time
-  cadence, not a measured runtime. Host-CPU reference latency of the sparse path is
-  recorded (`sidecar/BENCHMARK_xfeat_causal_host_cpu.json`); RK3588 device latency,
-  memory and thermal behaviour are not.
+* Every learned input in stages 1–7 was a precomputed sidecar. The 10 Hz tick is a
+  data-time cadence there; stage 8 supplies the on-device backbone and tail latencies
+  but no end-to-end replay on the board.
 * Comparator provenance differs per table and is stated in each table.
 * The inherited S-VIO node aborts during teardown after the trajectory is complete;
   every scored trajectory reached the source's final image stamp.

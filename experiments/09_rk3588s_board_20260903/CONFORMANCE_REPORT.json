@@ -1,0 +1,93 @@
+{
+ "cases": {
+  "frame": {
+   "descriptors_dense": {
+    "cosine": 0.999995121366649,
+    "max_abs": 0.036700427532196045,
+    "pass": true,
+    "shape_ok": true
+   },
+   "keypoint_logits": {
+    "cosine": 0.9999953445817062,
+    "max_abs": 0.18113493919372559,
+    "pass": true,
+    "shape_ok": true
+   },
+   "reliability": {
+    "cosine": 0.9999982205718526,
+    "max_abs": 0.003207296133041382,
+    "pass": true,
+    "shape_ok": true
+   },
+   "sparse_tail": {
+    "cand_keypoints": 500,
+    "matched_descriptor_cosine_median": 0.9999983310699463,
+    "pass": true,
+    "recall_within_1px": 0.996,
+    "ref_keypoints": 500
+   }
+  },
+  "ramp": {
+   "descriptors_dense": {
+    "cosine": 0.9980113596238662,
+    "max_abs": 1.0598992109298706,
+    "pass": false,
+    "shape_ok": true
+   },
+   "keypoint_logits": {
+    "cosine": 0.9980432116659508,
+    "max_abs": 0.8032140731811523,
+    "pass": false,
+    "shape_ok": true
+   },
+   "reliability": {
+    "cosine": 0.8769422924020327,
+    "max_abs": 0.0016769766807556152,
+    "pass": false,
+    "shape_ok": true
+   }
+  },
+  "seeded_noise": {
+   "descriptors_dense": {
+    "cosine": 0.9999758251957996,
+    "max_abs": 0.14625632762908936,
+    "pass": true,
+    "shape_ok": true
+   },
+   "keypoint_logits": {
+    "cosine": 0.9999975638968025,
+    "max_abs": 0.14815330505371094,
+    "pass": true,
+    "shape_ok": true
+   },
+   "reliability": {
+    "cosine": 0.9955882565199274,
+    "max_abs": 0.0015344321727752686,
+    "pass": false,
+    "shape_ok": true
+   }
+  },
+  "zero": {
+   "descriptors_dense": {
+    "cosine": 0.9996229628971077,
+    "max_abs": 0.3596687316894531,
+    "pass": true,
+    "shape_ok": true
+   },
+   "keypoint_logits": {
+    "cosine": 0.9999998390034696,
+    "max_abs": 0.005379676818847656,
+    "pass": true,
+    "shape_ok": true
+   },
+   "reliability": {
+    "cosine": 0.8195774881335831,
+    "max_abs": 0.0017076730728149414,
+    "pass": false,
+    "shape_ok": true
+   }
+  }
+ },
+ "pass": false,
+ "schema": "xfeat-admission-vio-board-conformance-v1"
+}

@@ -1,0 +1,58 @@
+== compatible ==
+9tripod,rk3588s
+rockchip,rk3588
+
+== model ==
+9tripod rk3588s Board
+
+== kernel ==
+Linux root 5.10.66 #237 SMP Wed Apr 29 02:01:20 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+== os ==
+PRETTY_NAME="Ubuntu 22.04 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+== user ==
+uid=0(root) gid=0(root) groups=0(root)
+== cpu ==
+CPU part	: 0xd05
+8
+1800000 2352000 
+== mem ==
+MemTotal:       16076040 kB
+MemAvailable:   15718400 kB
+== npu driver ==
+[    7.008239] RKNPU fdab0000.npu: Adding to iommu group 0
+[    7.008419] RKNPU fdab0000.npu: RKNPU: rknpu iommu is enabled, using iommu mode
+[    7.008553] RKNPU fdab0000.npu: Looking up rknpu-supply from device tree
+crw-rw---- 1 root render 226, 128 Jun  5 15:40  /dev/dri/renderD128
+crw-rw---- 1 root render 226, 129 Jun  5 15:40  /dev/dri/renderD129
+NPU load:  Core0:  6%, Core1:  1%, Core2:  1%,
+1000000000
+== rknn runtime lib ==
+-rwxr-xr-x 1 root root 7726232 Sep  2  2026 /usr/lib/librknnrt.so
+/usr/lib/librknnrt.so
+== python / rknnlite ==
+Python 3.10.12
+ModuleNotFoundError: No module named 'rknnlite'
+ModuleNotFoundError: No module named 'numpy'
+== rknn_server / tools ==
+ /usr/bin/rknn_server
+== network ==
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+dummy0           DOWN           
+enP4p65s0        DOWN           
+wlan0            DOWN           
+p2p0             DOWN           
+== storage ==
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        14G  928M   13G   7% /
+/dev/root        14G  928M   13G   7% /
+/dev/root        14G  928M   13G   7% /
+== temp ==
+soc-thermal: 54538
+bigcore0-thermal: 55461
+bigcore1-thermal: 55461
+littlecore-thermal: 54538
+center-thermal: 53615
+gpu-thermal: 52692
+npu-thermal: 52692

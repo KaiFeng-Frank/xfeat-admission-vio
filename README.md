@@ -32,11 +32,18 @@ with a reproducible ledger, not a research project.
   to the values frozen before the held-out sequences were opened
   (`PROVENANCE.json`); every stage under `experiments/` carries its pre-execution
   contract and post-execution receipts.
-* **Deployment split proven at the compiler.** The fixed-shape XFeat backbone
-  compiles wholly to RK3588 NPU compute operators (`deploy/rknn/`); the sparse tail,
-  matching and the gate stay on CPU.
+* **Runs on the target NPU.** The pinned FP16 backbone runs on an RK3588S
+  (Indiedroid Nova) through the Rockchip 2.3.2 runtime: 64 ms median per frame on
+  three NPU cores, 19 ms for the CPU sparse tail, and the real-frame outputs reproduce
+  the ONNX backbone through the whole sparse tail (500 of 500 keypoints, 0.996 within
+  1 px). Identity, latency, memory and conformance receipts:
+  [`experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md`](experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md).
 
 ![sealed results](docs/figures/results_vcu_kaist.png)
+
+![RK3588S board used for the on-device receipts](docs/figures/rk3588s_indiedroid_nova.jpg)
+
+*Indiedroid Nova (RK3588S, 16 GB) on the bench over ADB: the board that produced the NPU receipts.*
 
 ## Layout
 
@@ -73,8 +80,9 @@ verification record of this repository's own rebuild, is in
 
 | Version | What it is |
 |---|---|
-| **1.0** | final code release: frozen candidate, sidecar tooling, sealed VCU + KAIST ledger, RKNN compile receipts, byte-identical rebuild verification |
-| 1.x | on-device receipts from the RK3588S campaign as they are measured; no code change planned |
+| 1.0 | final code release: frozen candidate, sidecar tooling, sealed VCU + KAIST ledger, RKNN compile receipts, byte-identical rebuild verification |
+| **1.1** | RK3588S on-device receipts: identity, NPU latency per core mask, CPU sparse-tail latency, memory, conformance against the ONNX reference |
+| 1.x | further device receipts (C++ runtime path, driver upgrade, on-board end-to-end replay); no estimator code change planned |
 
 See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
