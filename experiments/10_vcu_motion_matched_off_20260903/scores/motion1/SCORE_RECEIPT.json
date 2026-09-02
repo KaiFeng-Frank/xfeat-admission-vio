@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "formal_python": {
+      "path": "${CONDA_ROOT}/bin/python3.13",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+      "size_bytes": 32003680
+    },
+    "formal_table2_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "sha256": "800b96b0c9bdeaf61779f126cb35d5a09a856fba781605e1e846f4783524caf0",
+      "size_bytes": 20124
+    },
+    "formal_table2_scorer_dependency": {
+      "path": "${REPO_ROOT}/tools/scoring/trajectory_compare.py",
+      "sha256": "4c8895b1e4b58d90aeaf4859e2716c5ab6e6f00c4f395ad251b6a31c57f6500a",
+      "size_bytes": 28000
+    },
+    "frozen_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/score_nn20.py",
+      "sha256": "037a579cfd5cdb6368733e9fe04809eb301da255091dc69f2dfde61953a8c01b",
+      "size_bytes": 964
+    },
+    "ground_truth": {
+      "path": "${DATA_ROOT}/vcu_rvi/motion1_gt.tum",
+      "sha256": "b9f0443d670751b78089ae30a44073c4f6d4bb493364b859516cfcd48fe535aa",
+      "size_bytes": 1033038
+    },
+    "normalized": {
+      "path": "${VERIFY_ROOT}/verify/scores/motion1_off/trajectory_body.tum",
+      "sha256": "508baca11ca49f1c48eb191c39ecc8a890c71d567f286f97ac29c897e8cb3de2",
+      "size_bytes": 317629
+    },
+    "normalizer_and_exact_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/normalize_score_phase1.py",
+      "sha256": "9598238d10703a07d7d5e97fc1f1d530efb289202dfd4cf3f97b25f0283aa190",
+      "size_bytes": 10075
+    },
+    "raw": {
+      "path": "${VERIFY_ROOT}/verify/runs/motion1_off/svio_no_loop.csv",
+      "sha256": "c504a61f1622190cae7bd0230260ff24b7e2090e1bf491703afd647fce43575e",
+      "size_bytes": 309733
+    }
+  },
+  "formal_table2_scoring": {
+    "alignment": "SE3_Horn_no_scale_all_interpolated_rows",
+    "association": "GT_interpolated_to_each_estimate_timestamp_within_GT_span",
+    "command": [
+      "${CONDA_ROOT}/bin/python3",
+      "-s",
+      "-B",
+      "tools/scoring/eval_openloris.py",
+      "--input",
+      "${VERIFY_ROOT}/verify/scores/motion1_off/trajectory_body.tum",
+      "--scene",
+      "motion1",
+      "--gt-file",
+      "${DATA_ROOT}/vcu_rvi/motion1_gt.tum",
+      "--align",
+      "se3",
+      "--start-offset",
+      "0",
+      "--cr-span",
+      "gt",
+      "--ate-thresh",
+      "1.0",
+      "--no-to-base-link",
+      "--format",
+      "csv"
+    ],
+    "environment": {
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "result": {
+      "align": "se3",
+      "aoe_median_deg": "4.144520022676225",
+      "ate_max_m": "0.5148419280834534",
+      "ate_median_m": "0.19261107197188493",
+      "ate_rmse_all_m": "0.23956583282713567",
+      "ate_rmse_correct_m": "0.23956583282713567",
+      "coverage": "1.0",
+      "cr": "0.9640726672470377",
+      "cr_inf": "0.9640726672470377",
+      "cr_pos": "0.9640726672470377",
+      "eps_m": "1.0",
+      "matched": "3144",
+      "method": "",
+      "n_est": "3144",
+      "n_gt": "13009",
+      "scene": "motion1",
+      "tag": "trajectory_body",
+      "temporal_coverage": "0.9640726672470377"
+    },
+    "role": "primary_Table_II_metric",
+    "stderr": "",
+    "time_shift_s": 0.0
+  },
+  "label": "motion1-verify-off",
+  "normalization": {
+    "canonical_header": "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows",
+    "output_frame": "body_imu",
+    "parser": "vins_ns_qwxyz_csv",
+    "quaternion_input": "qw_qx_qy_qz",
+    "quaternion_output": "qx_qy_qz_qw",
+    "row_count": 3144,
+    "timestamp": "ns_to_s_if_gt_1e10",
+    "transform": "native_body"
+  },
+  "schema": "svio-native-body-nn20-score-v1",
+  "scoring": {
+    "alignment": "SE3_Umeyama_no_scale_all_matched_rows",
+    "alignment_rotation": [
+      [
+        0.1177518754790029,
+        -0.021807058868345212,
+        0.9928035797702832
+      ],
+      [
+        -0.6315763711263159,
+        -0.7731467219055489,
+        0.057926106736229825
+      ],
+      [
+        0.7663196351758774,
+        -0.6338521898599201,
+        -0.10481229962982933
+      ]
+    ],
+    "alignment_translation_m": [
+      0.09453355537020096,
+      -0.10874137143276541,
+      0.05024709431303537
+    ],
+    "association": "nearest_neighbor_strict_abs_dt_lt_0.020s",
+    "ate_median_m": 0.1926242784063722,
+    "ate_p90_m": 0.35657116586528487,
+    "ate_rmse_m": 0.23941562314937068,
+    "estimate_rows": 3144,
+    "frozen_stdout": "motion1-verify-off: n=3144 ATE RMSE=23.94cm median=19.26cm p90=35.66cm",
+    "ground_truth_rows": 13009,
+    "matched_rows": 3144,
+    "max_matched_abs_dt_s": 0.01080555999999433,
+    "time_shift_s": 0.0,
+    "unmatched_rows": 0
+  }
+}

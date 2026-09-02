@@ -21,3 +21,4 @@ the target hardware, not code.
 - inherited S-VIO teardown abort after trajectory completion (does not truncate output)
 - estimator determinism across repeats under `multiple_thread: 1` is unmeasured
 - OpenLORIS-Scene inputs are sealed; the runs were never executed and are not planned here
+- the VCU motion matched-OFF control was completed in 1.2; the KAIST-VIO port stays an interim staged score in the ledger

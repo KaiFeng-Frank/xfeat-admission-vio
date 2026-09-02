@@ -1,0 +1,55 @@
+== motion1: convert ==
+00:24:17
+6d6fb2b91d4f6e34
+== motion1: run OFF ==
+00:24:28
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion1 ARM=off rows=3144
+== motion1: score ==
+SCORE_FAIL motion1
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '${PRIVATE_ROOT}/docs/audit_td_prod_ep_20260825/score.py', '${VERIFY_ROOT}/verify/scores/motion1_off/trajectory_body.tum', '${DATA_ROOT}/vcu_rvi/motion1_gt.tum', 'motion1-verify-off']' returned non-zero exit status 2.
+== motion2: convert ==
+00:26:31
+bf1db436d808bca7
+== motion2: run OFF ==
+00:26:44
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion2 ARM=off rows=3502
+== motion2: score ==
+SCORE_FAIL motion2
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '${PRIVATE_ROOT}/docs/audit_td_prod_ep_20260825/score.py', '${VERIFY_ROOT}/verify/scores/motion2_off/trajectory_body.tum', '${DATA_ROOT}/vcu_rvi/motion2_gt.tum', 'motion2-verify-off']' returned non-zero exit status 2.
+== motion3: convert ==
+00:29:00
+d02db307e4a8d805
+== motion3: run OFF ==
+00:29:09
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion3 ARM=off rows=2707
+== motion3: score ==
+motion3 OFF ate_cm=10.23 cr=0.9604 n=2707
+== motion4: convert ==
+00:30:58
+6b82373b6ef83c4e
+== motion4: run OFF ==
+00:31:07
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion4 ARM=off rows=2252
+== motion4: score ==
+motion4 OFF ate_cm=29.79 cr=0.9504 n=2252
+== motion5: convert ==
+00:32:42
+b40afb910213a114
+== motion5: run OFF ==
+00:32:51
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion5 ARM=off rows=2741
+== motion5: score ==
+motion5 OFF ate_cm=14.24 cr=0.9650 n=2741
+== motion6: convert ==
+00:34:40
+e77e2eb3bed05245
+== motion6: run OFF ==
+00:34:52
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion6 ARM=off rows=3050
+== motion6: score ==
+motion6 OFF ate_cm=18.24 cr=0.9795 n=3050
+CAMPAIGN_DONE 00:36:53

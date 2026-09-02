@@ -22,12 +22,9 @@ import sys
 import numpy as np
 
 
-DEFAULT_SCORER = Path("${PRIVATE_ROOT}/docs/audit_td_prod_ep_20260825/score.py")
-DEFAULT_FORMAL_SCORER = Path(
-    "${PRIVATE_ROOT}/results/tro_vd_adoption_round_v3_20260824_r2/"
-    "freeze/scorer/fixed_artifacts/eval_openloris.py"
-)
-FORMAL_PYTHON = Path("${CONDA_ROOT}/bin/python3")
+DEFAULT_SCORER = Path(__file__).resolve().with_name("score_nn20.py")
+DEFAULT_FORMAL_SCORER = Path(__file__).resolve().with_name("eval_openloris.py")
+FORMAL_PYTHON = Path(sys.executable)
 CANONICAL_HEADER = (
     "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows"
 )

@@ -89,20 +89,22 @@ beats the reported bars on five of six sequences by itself.
 
 ## Stage 6 — same frozen candidate replayed on VCU motion (`experiments/05_…`)
 
-| Sequence | gated admission ON | full S-VIO local replay | always-open admission (stage 3) | CR (ON) |
-|---|---:|---:|---:|---:|
-| motion1 | 24.10 | 24.47 | 20.27 | 0.964 |
-| motion2 | 18.55 | 22.22 | 18.16 | 0.945 |
-| motion3 | 10.18 | 11.46 | 12.55 | 0.959 |
-| motion4 | 31.94 | 34.09 | 30.94 | 0.950 |
-| motion5 | 15.48 | 15.34 | 14.13 | 0.965 |
-| motion6 | 15.28 | 18.91 | 18.27 | 0.980 |
-| mean | 19.25 | 21.08 | 19.05 | |
+| Sequence | gated admission ON | same build, OFF (2026-09-03) | full S-VIO local replay | always-open admission (stage 3) | CR (ON) |
+|---|---:|---:|---:|---:|---:|
+| motion1 | 24.10 | 23.96 | 24.47 | 20.27 | 0.964 |
+| motion2 | 18.55 | 20.29 | 22.22 | 18.16 | 0.945 |
+| motion3 | 10.18 | 10.23 | 11.46 | 12.55 | 0.959 |
+| motion4 | 31.94 | 29.79 | 34.09 | 30.94 | 0.950 |
+| motion5 | 15.48 | 14.24 | 15.34 | 14.13 | 0.965 |
+| motion6 | 15.28 | 18.24 | 18.91 | 18.27 | 0.980 |
+| mean | 19.25 | 19.46 | 21.08 | 19.05 | |
 
 Five of six against the replayed full S-VIO; the only loss is motion5 (see table).
 The gate costs a little on this family relative to always-open admission and buys
 the Light result; the trade was accepted because it is one identity-blind rule for
-both families. No matched-OFF arm was run on motion.
+both families. The matched-OFF column was added on 2026-09-03 with the byte-identical
+rebuild (`experiments/10_vcu_motion_matched_off_20260903/`): ON is lower on three of six
+(motion2, motion3, motion6); OFF alone is lower than the upstream replay on all six.
 
 Cross-family tally for the one candidate: eleven of twelve VCU sequences
 (`experiments/07_cross_family_verdict/`).

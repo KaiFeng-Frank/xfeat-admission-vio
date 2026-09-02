@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2 — 2026-09-03
+
+- matched-OFF control on all six VCU motion sequences, produced with the rebuilt binary that is
+  byte-identical to the frozen candidate (`experiments/10_vcu_motion_matched_off_20260903/`);
+  the twelve-sequence ledger now has a like-for-like control on every row
+- README: VCU tables replace the results chart; the board photo moves to the on-device section;
+  the cross-dataset port is left to the ledger
+
 ## 1.1 — 2026-09-03
 
 On-device receipts, no estimator code change.
