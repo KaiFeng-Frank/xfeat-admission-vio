@@ -2,8 +2,8 @@ project(svio)
 
 cmake_minimum_required(VERSION 2.8.3)
 
-# SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -std=c++11 -w -g -O3 -fpermissive -mno-avx -mno-avx2")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w -g -O3 -fpermissive")
+# SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -std=c++14 -w -g -O3 -fpermissive -mno-avx -mno-avx2")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -w -g -O3 -fpermissive")
 SET(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
 if(COMMAND cmake_policy)

@@ -7,6 +7,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/eigen.hpp>
 #include <fstream>
+#include <atomic>
+#include <cstdint>
 
 #define SQ(x) ((x)*(x))
 
@@ -65,6 +67,8 @@ extern double ERR_PLANE_DIST;
 
 // Paras for frontend sampling 
 extern int DROP_FRAME;
+extern int FREQ;
+extern bool ENABLE_FREQ_GATE;
 
 const double FOCAL_LENGTH = 460.0; // 460.0; // when use downsampled input change it to 230
 const int WINDOW_SIZE = 10;
@@ -124,10 +128,33 @@ extern double ACC_MULT; // normalize value
 
 extern bool USE_GMM; // whether use gmm to compute covariance 
 extern bool USE_GMM_EXT; // whether extend gmm by introducing similarity 
+extern bool ENABLE_PLANE;
+extern bool ENABLE_LINE;
 extern int S_VERIFY;
 extern int ENABLE_STRUCTURE;
 
+struct Phase2RuntimeCounters
+{
+    std::atomic<uint64_t> processed_frames{0};
+    std::atomic<uint64_t> enqueued_frames{0};
+    std::atomic<uint64_t> flow_back_checks{0};
+    std::atomic<uint64_t> gmm_depth_calls{0};
+    std::atomic<uint64_t> simple_depth_calls{0};
+    std::atomic<uint64_t> plane_detect_calls{0};
+    std::atomic<uint64_t> plane_associate_calls{0};
+    std::atomic<uint64_t> plane_factor_solve{0};
+    std::atomic<uint64_t> normal_factor_solve{0};
+    std::atomic<uint64_t> struct_line_factor_solve{0};
+    std::atomic<uint64_t> plane_factor_margin{0};
+    std::atomic<uint64_t> normal_factor_margin{0};
+    std::atomic<uint64_t> struct_line_factor_margin{0};
+};
+
+extern Phase2RuntimeCounters PHASE2_COUNTERS;
+
 void readParameters(ros::NodeHandle &n);
+bool shouldProcessFrameByFrequency(double current_time);
+void logPhase2Counters(bool final_snapshot=false);
 
 enum SIZE_PARAMETERIZATION
 {

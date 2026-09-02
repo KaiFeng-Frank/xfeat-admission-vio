@@ -1,4 +1,6 @@
 #include "parameters.h"
+#include <cmath>
+#include <cstdlib>
 
 // Paras for identifying structural elements
 double STRUCTURE_HORIZONTAL_ANG_DIFF;
@@ -48,19 +50,47 @@ int MAX_CNT;
 int MIN_DIST;
 double F_THRESHOLD;
 int SHOW_TRACK;
-int FLOW_BACK;
-bool PUB_THIS_FRAME;
+int FLOW_BACK = 0;
+bool PUB_THIS_FRAME = true;
 
 double RGBD_DPT_MIN, RGBD_DPT_MAX;
 int S_VERIFY = 1; // whether use two-stage aw interference
 int ENABLE_STRUCTURE = 1;
 
 int DROP_FRAME = 0;
+int FREQ = 0;
+bool ENABLE_FREQ_GATE = false;
 
 double ACC_MULT; 
 
 bool USE_GMM = true; // whether use gmm to compute covariance 
 bool USE_GMM_EXT = true; // whether extend gmm by introducing similarity 
+bool ENABLE_PLANE = true;
+bool ENABLE_LINE = false;
+Phase2RuntimeCounters PHASE2_COUNTERS;
+
+namespace
+{
+bool first_frequency_frame = true;
+double first_frequency_time = 0.0;
+double last_frequency_time = 0.0;
+int frequency_publish_count = 1;
+
+int optionalInt(const cv::FileStorage& settings, const char* key, int fallback)
+{
+    const cv::FileNode node = settings[key];
+    if (node.empty())
+        return fallback;
+    int value = fallback;
+    node >> value;
+    return value;
+}
+
+bool optionalBool(const cv::FileStorage& settings, const char* key, bool fallback)
+{
+    return optionalInt(settings, key, fallback ? 1 : 0) != 0;
+}
+}
 
 
 template <typename T>
@@ -96,16 +126,15 @@ void readParameters(ros::NodeHandle &n)
         ROS_DEBUG("parameters.cpp: succeed to load config_file: %s", config_file.c_str());
     }
 
-    n.param("use_gmm", USE_GMM, USE_GMM); 
-    n.param("use_gmm_ext", USE_GMM_EXT, USE_GMM_EXT); 
-
     ACC_MULT = fsSettings["acc_mult"];
     MAX_CNT = fsSettings["max_cnt"];
     MIN_DIST = fsSettings["min_dist"];
     F_THRESHOLD = fsSettings["F_threshold"];
     SHOW_TRACK = fsSettings["show_track"];
-    FLOW_BACK = fsSettings["flow_back"];
-    DROP_FRAME = fsSettings["drop_frame"];
+    FREQ = optionalInt(fsSettings, "freq", FREQ);
+    ENABLE_FREQ_GATE = optionalBool(fsSettings, "freq_gate", ENABLE_FREQ_GATE);
+    FLOW_BACK = optionalInt(fsSettings, "flow_back", FLOW_BACK);
+    DROP_FRAME = optionalInt(fsSettings, "drop_frame", DROP_FRAME);
 
     IMAGE_COL = fsSettings["image_width"];
     IMAGE_ROW = fsSettings["image_height"];
@@ -221,10 +250,138 @@ void readParameters(ros::NodeHandle &n)
     CAM_NAMES = config_file;
 
     S_VERIFY = fsSettings["structure_verify"];
-    ENABLE_STRUCTURE = fsSettings["structure"];
+    ENABLE_STRUCTURE = optionalInt(fsSettings, "structure", ENABLE_STRUCTURE);
+    USE_GMM = optionalBool(fsSettings, "use_gmm", USE_GMM);
+    USE_GMM_EXT = optionalBool(fsSettings, "use_gmm_ext", USE_GMM_EXT);
+    ENABLE_PLANE = !optionalBool(fsSettings, "disable_plane", !ENABLE_PLANE);
+    ENABLE_LINE = !optionalBool(fsSettings, "disable_line", !ENABLE_LINE);
+
+    n.param("freq_gate", ENABLE_FREQ_GATE, ENABLE_FREQ_GATE);
+    n.param("freq", FREQ, FREQ);
+    n.param("flow_back", FLOW_BACK, FLOW_BACK);
+    n.param("drop_frame", DROP_FRAME, DROP_FRAME);
+    n.param("use_gmm", USE_GMM, USE_GMM);
+    n.param("use_gmm_ext", USE_GMM_EXT, USE_GMM_EXT);
+    bool disable_plane = !ENABLE_PLANE;
+    bool disable_line = !ENABLE_LINE;
+    n.param("disable_plane", disable_plane, disable_plane);
+    n.param("disable_line", disable_line, disable_line);
+    n.param("structure", ENABLE_STRUCTURE, ENABLE_STRUCTURE);
+    ENABLE_PLANE = !disable_plane;
+    ENABLE_LINE = !disable_line;
+
+    if (FREQ < 0 || DROP_FRAME < 0 || (FLOW_BACK != 0 && FLOW_BACK != 1) ||
+        (ENABLE_STRUCTURE != 0 && ENABLE_STRUCTURE != 1))
+    {
+        ROS_FATAL("[PHASE2_FLAGS] invalid flags: freq=%d drop_frame=%d flow_back=%d structure=%d",
+                  FREQ, DROP_FRAME, FLOW_BACK, ENABLE_STRUCTURE);
+        std::exit(EXIT_FAILURE);
+    }
+    if (ENABLE_FREQ_GATE && (FREQ <= 0 || DROP_FRAME != 0))
+    {
+        ROS_FATAL("[PHASE2_FLAGS] freq_gate requires freq>0 and drop_frame=0 (freq=%d drop_frame=%d)", FREQ, DROP_FRAME);
+        std::exit(EXIT_FAILURE);
+    }
+    if (USE_GMM_EXT && !USE_GMM)
+    {
+        ROS_FATAL("[PHASE2_FLAGS] use_gmm_ext=1 is incompatible with use_gmm=0");
+        std::exit(EXIT_FAILURE);
+    }
+    if (ENABLE_STRUCTURE && !ENABLE_PLANE)
+    {
+        ROS_FATAL("[PHASE2_FLAGS] structure=1 requires disable_plane=0");
+        std::exit(EXIT_FAILURE);
+    }
+
+    const char* arm = "custom";
+    if (!ENABLE_FREQ_GATE && DROP_FRAME == 0 && FLOW_BACK == 0 && !ENABLE_LINE)
+    {
+        if (!USE_GMM && !USE_GMM_EXT && !ENABLE_PLANE && !ENABLE_STRUCTURE)
+            arm = "A0_simple_point_only";
+        else if (USE_GMM && USE_GMM_EXT && !ENABLE_PLANE && !ENABLE_STRUCTURE)
+            arm = "A1_gmm_point_only";
+        else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && !ENABLE_STRUCTURE)
+            arm = "A2_gmm_raw_plane";
+        else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && ENABLE_STRUCTURE)
+            arm = "A3_gmm_plane_atlanta";
+    }
+    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d",
+             arm, static_cast<int>(ENABLE_FREQ_GATE), FREQ, DROP_FRAME, FLOW_BACK,
+             static_cast<int>(USE_GMM), static_cast<int>(USE_GMM_EXT),
+             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE);
 
     INIT_DEPTH =  5.0; 
     fsSettings.release();
     once = true;
     return ;
+}
+
+bool shouldProcessFrameByFrequency(double current_time)
+{
+    if (!ENABLE_FREQ_GATE)
+    {
+        PUB_THIS_FRAME = true;
+        return true;
+    }
+
+    if (first_frequency_frame)
+    {
+        first_frequency_frame = false;
+        first_frequency_time = current_time;
+        last_frequency_time = current_time;
+        frequency_publish_count = 1;
+        PUB_THIS_FRAME = false;
+        return false;
+    }
+
+    if (current_time < last_frequency_time || current_time - last_frequency_time > 1.0)
+    {
+        ROS_WARN("[PHASE2_FREQ] timestamp discontinuity; reset frequency gate");
+        first_frequency_time = current_time;
+        last_frequency_time = current_time;
+        frequency_publish_count = 1;
+        PUB_THIS_FRAME = false;
+        return false;
+    }
+    last_frequency_time = current_time;
+
+    const double elapsed = current_time - first_frequency_time;
+    if (elapsed <= 0.0)
+    {
+        PUB_THIS_FRAME = false;
+        return false;
+    }
+
+    const double average_frequency = static_cast<double>(frequency_publish_count) / elapsed;
+    PUB_THIS_FRAME = std::round(average_frequency) <= FREQ;
+    if (PUB_THIS_FRAME)
+    {
+        if (std::fabs(average_frequency - FREQ) < 0.01 * FREQ)
+        {
+            first_frequency_time = current_time;
+            frequency_publish_count = 0;
+        }
+        ++frequency_publish_count;
+    }
+    return PUB_THIS_FRAME;
+}
+
+void logPhase2Counters(bool final_snapshot)
+{
+    const char* kind = final_snapshot ? "final" : "periodic";
+    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
+             kind,
+             static_cast<unsigned long long>(PHASE2_COUNTERS.processed_frames.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.enqueued_frames.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.flow_back_checks.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.gmm_depth_calls.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.simple_depth_calls.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_detect_calls.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_associate_calls.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_factor_solve.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.normal_factor_solve.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.struct_line_factor_solve.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_factor_margin.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.normal_factor_margin.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.struct_line_factor_margin.load(std::memory_order_relaxed)));
 }

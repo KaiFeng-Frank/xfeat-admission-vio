@@ -1,6 +1,6 @@
 #include "svio.h"
 #include "../utility/utility.h"
-#include "opencv/cv.h"
+#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <string>
 #include <thread>
@@ -13,6 +13,7 @@
 #include "vanish_point_factor.h"
 #include "line_parameterization.h"
 #include "line_projection_factor.h"
+#include <cstdlib>
 
 using namespace QUATERNION_VIO;
 using namespace Eigen;
@@ -153,10 +154,61 @@ void SVIO::setParameter(const string &calib_file)
     camodocal::CameraPtr camera = CameraFactory::instance()->generateCameraFromYamlFile(calib_file);
     vector<double> parameterVec;
     camera->writeParameters(parameterVec);
-    l_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
+    if (ENABLE_LINE)
+        l_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
     f_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
 
     m_process.unlock();
+}
+
+void SVIO::enforceRuntimeSwitchInvariants(const Meas& vision_meas, const char* stage) const
+{
+    size_t point_plane_refs = 0;
+    for (const auto& point : vision_meas.point_meas)
+        point_plane_refs += point.plane_index != -1;
+
+    size_t line_plane_refs = 0;
+    for (const auto& line : vision_meas.line_meas)
+        line_plane_refs += line.plane_index != -1;
+
+    size_t feature_manager_plane_refs = 0;
+    for (const auto& feature : f_manager.feature)
+        feature_manager_plane_refs += feature.cur_plane_id != -1 || feature.comfirm_plane_id != -1;
+
+    bool violation = false;
+    if (!ENABLE_PLANE && (!vision_meas.plane_meas.empty() || point_plane_refs != 0 || line_plane_refs != 0 || feature_manager_plane_refs != 0 ||
+                          !p_manager.plane_l.empty() || !p_manager.history_normal.empty() || p_manager.plane_id != 0))
+    {
+        ROS_FATAL("[PHASE2_INVARIANT] stage=%s plane disabled but meas=%zu point_refs=%zu line_refs=%zu feature_manager_refs=%zu manager=%zu history=%zu plane_id=%d",
+                  stage, vision_meas.plane_meas.size(), point_plane_refs, line_plane_refs, feature_manager_plane_refs,
+                  p_manager.plane_l.size(), p_manager.history_normal.size(), p_manager.plane_id);
+        violation = true;
+    }
+    if (!ENABLE_LINE && (!vision_meas.line_meas.empty() || !l_manager.line_l.empty() || !l_manager.vvp_l.empty()))
+    {
+        ROS_FATAL("[PHASE2_INVARIANT] stage=%s line disabled but meas=%zu manager=%zu vvp=%zu",
+                  stage, vision_meas.line_meas.size(), l_manager.line_l.size(), l_manager.vvp_l.size());
+        violation = true;
+    }
+    if (!ENABLE_STRUCTURE)
+    {
+        size_t structural_planes = 0;
+        for (const auto& plane : p_manager.plane_l)
+            structural_planes += plane.second.s_type != no;
+        if (structural_planes != 0 || !a_map.axis_l.empty())
+        {
+            ROS_FATAL("[PHASE2_INVARIANT] stage=%s Atlanta disabled but structural_planes=%zu axes=%zu",
+                      stage, structural_planes, a_map.axis_l.size());
+            violation = true;
+        }
+    }
+    if (violation)
+        std::abort();
+
+    ROS_DEBUG_THROTTLE(5.0,
+                       "[PHASE2_INVARIANT] stage=%s point_meas=%zu line_meas=%zu plane_meas=%zu line_manager=%zu plane_manager=%zu axes=%zu",
+                       stage, vision_meas.point_meas.size(), vision_meas.line_meas.size(), vision_meas.plane_meas.size(),
+                       l_manager.line_l.size(), p_manager.plane_l.size(), a_map.axis_l.size());
 }
 
 bool SVIO::findNewAtlantaAxis()
@@ -245,6 +297,7 @@ bool SVIO::findNewAtlantaAxis()
 
 void SVIO::processImage_Init(const Meas& vision_meas)
 {
+    enforceRuntimeSwitchInvariants(vision_meas, "ingress");
     Headers[frame_count] = vision_meas.time;
     
     string s_stage;
@@ -257,9 +310,12 @@ void SVIO::processImage_Init(const Meas& vision_meas)
      // add lines and planes
     if (solver_flag != INITIAL)
     {
-        p_manager.addNewMeasurements(vision_meas, frame_count, Ps, Rs, tic, ric);
-        l_manager.addNewMeasurements(vision_meas, frame_count, p_manager);
-        l_manager.addLinePlaneMeasurements(p_manager);    
+        if (ENABLE_PLANE)
+            p_manager.addNewMeasurements(vision_meas, frame_count, Ps, Rs, tic, ric);
+        if (ENABLE_LINE)
+            l_manager.addNewMeasurements(vision_meas, frame_count, p_manager);
+        if (ENABLE_LINE && ENABLE_PLANE)
+            l_manager.addLinePlaneMeasurements(p_manager);
     }
 
     // add points, decide keyframe
@@ -267,7 +323,7 @@ void SVIO::processImage_Init(const Meas& vision_meas)
         marginalization_flag = MARGIN_OLD;
     else
         marginalization_flag = MARGIN_SECOND_NEW;
-    if (solver_flag != INITIAL)
+    if (solver_flag != INITIAL && ENABLE_PLANE)
         f_manager.addPointPlaneMeasurements(p_manager);
 
     bool is_keyframe = (marginalization_flag==MARGIN_OLD) ? true : false;
@@ -342,21 +398,26 @@ void SVIO::processImage_Init(const Meas& vision_meas)
         std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
         f_manager.triangulateWithDepth(Ps, tic, ric);
         f_manager.triangulateSimple(frame_count, Ps, Rs, tic, ric);
-        l_manager.triangulateStructural(a_map,Ps,Rs,tic,ric); 
+        if (ENABLE_LINE)
+            l_manager.triangulateStructural(a_map,Ps,Rs,tic,ric);
 #ifdef USE_VVP
-        l_manager.computeVerticalVanishPointMea();
+        if (ENABLE_LINE)
+            l_manager.computeVerticalVanishPointMea();
 #endif
-        p_manager.initialGeo(a_map,Ps,Rs,tic,ric); 
+        if (ENABLE_PLANE)
+            p_manager.initialGeo(a_map,Ps,Rs,tic,ric);
 
         // remove outliers, verify point-on-plane/line-on-plane
 #ifdef REMOVE_POINT_OUTLIER
         f_manager.identifyOutlier(Ps,Rs,tic,ric);
 #endif
 #ifdef REMOVE_LINE_OUTLIER
-        l_manager.removeOutlier(Ps,Rs,tic,ric);
+        if (ENABLE_LINE)
+            l_manager.removeOutlier(Ps,Rs,tic,ric);
 #endif
 #ifdef REINIT_PLANE_OUTLIER
-        p_manager.findOutlier(Ps,Rs,tic,ric);
+        if (ENABLE_PLANE)
+            p_manager.findOutlier(Ps,Rs,tic,ric);
 #endif
         
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
@@ -377,8 +438,10 @@ void SVIO::processImage_Init(const Meas& vision_meas)
         ROS_DEBUG("slide window costs %f ms", tp*1000);
         
         // f_manager.removeFailures();
-        l_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
-        f_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
+        if (ENABLE_LINE && ENABLE_PLANE)
+            l_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
+        if (ENABLE_PLANE)
+            f_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
 
         t1 = std::chrono::steady_clock::now();
         
@@ -386,8 +449,11 @@ void SVIO::processImage_Init(const Meas& vision_meas)
         if (ENABLE_STRUCTURE != 0)
         {
             p_manager.classifyStructuralPlanes(a_map);
-            l_manager.classifyVerticalLines(Rs[frame_count]*ric[0], frame_count-1);
-            l_manager.classifyAtlantaLines(Rs[frame_count]*ric[0], frame_count-1, a_map); 
+            if (ENABLE_LINE)
+            {
+                l_manager.classifyVerticalLines(Rs[frame_count]*ric[0], frame_count-1);
+                l_manager.classifyAtlantaLines(Rs[frame_count]*ric[0], frame_count-1, a_map);
+            }
             
             // add new axis
             if (findNewAtlantaAxis())
@@ -405,7 +471,8 @@ void SVIO::processImage_Init(const Meas& vision_meas)
 
         // l_manager.printStatus();
         // p_manager.printStatus();
-        a_map.printStatus();
+        if (ENABLE_STRUCTURE)
+            a_map.printStatus();
 
         key_poses.clear();
         for (int i = 0; i <= WINDOW_SIZE; i++)
@@ -416,6 +483,7 @@ void SVIO::processImage_Init(const Meas& vision_meas)
         last_R0 = Rs[0];
         last_P0 = Ps[0];
     }
+    enforceRuntimeSwitchInvariants(vision_meas, "egress");
     return;
 }
 
@@ -553,8 +621,10 @@ void SVIO::slideWindowNew()
 {
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
     f_manager.removeFront(frame_count);
-    p_manager.removeFront(frame_count);
-    l_manager.removeFront(frame_count);
+    if (ENABLE_PLANE)
+        p_manager.removeFront(frame_count);
+    if (ENABLE_LINE)
+        l_manager.removeFront(frame_count);
     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     double dt = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
     ROS_DEBUG("slideWindwoNew costs %f ms", dt*1000);
@@ -574,13 +644,15 @@ void SVIO::slideWindowOld()
         P0 = back_P0 + back_R0 * tic[0];
         P1 = Ps[0] + Rs[0] * tic[0];
         f_manager.removeBackShiftDepth(R0, P0, R1, P1);
-        l_manager.removeBackShiftDepth(R0, P0, R1, P1);
-        p_manager.removeBack(frame_count);
+        if (ENABLE_LINE)
+            l_manager.removeBackShiftDepth(R0, P0, R1, P1);
+        if (ENABLE_PLANE)
+            p_manager.removeBack(frame_count);
     }
     else
     {
         f_manager.removeBack();
-        if (p_manager.plane_id != 0)
+        if (ENABLE_PLANE && p_manager.plane_id != 0)
         {
             ROS_ERROR("plane is added before initialization completion, exit!");
             exit(1);
@@ -743,6 +815,8 @@ void SVIO::solveOdometry()
 #ifdef USE_STRUCTURAL_LINE
     for (auto& it_pair : l_manager.line_l)
     {
+        if (!ENABLE_LINE)
+            break;
         LinePerId& it_per_id = it_pair.second;
         if (!(it_per_id.line_ml.size() >= MIN_USED_NUM && it_per_id.start_frame_id < WINDOW_SIZE - 2 && 
                 it_per_id.has_init == true && it_per_id.comfirm_plane_id == -1))
@@ -785,6 +859,7 @@ void SVIO::solveOdometry()
         }
     }
 #endif
+    PHASE2_COUNTERS.struct_line_factor_solve.fetch_add(m_cnt, std::memory_order_relaxed);
     ROS_DEBUG("ceres optimization: %d structual lines have been used with %d constraints!", v_cnt, m_cnt);
     opt_var_cnt += v_cnt;
     opt_dim += v_cnt*2;
@@ -799,6 +874,8 @@ void SVIO::solveOdometry()
     int p_pm_cnt = 0, p_cnt = 0, p_pl_cnt = 0, p_pp_cnt = 0, p_normal_cnt = 0;
     for (auto& it : p_manager.plane_l)
     {
+        if (!ENABLE_PLANE)
+            break;
         PlanePerId& p = it.second;
         
         if (p.plane_ml.size() < 2)
@@ -813,13 +890,13 @@ void SVIO::solveOdometry()
             p_pm_cnt++;
         }
 
-        if (p.s_type == vertical)
+        if (ENABLE_STRUCTURE && p.s_type == vertical)
         {
             PlaneOnePoseVerticalFactor *f = new PlaneOnePoseVerticalFactor(Vector3d(0,0,1));
             problem.AddResidualBlock(f, loss_function, p.cp);
             p_normal_cnt++;
         }
-        else if (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4)
+        else if (ENABLE_STRUCTURE && (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4))
         {
             is_yaw_observed = true;
 
@@ -836,7 +913,7 @@ void SVIO::solveOdometry()
             problem.AddResidualBlock(f, loss_function, p.cp);
             p_normal_cnt++;
         }
-        else if (p.s_type == horizontal_1 || p.s_type == horizontal_2)
+        else if (ENABLE_STRUCTURE && (p.s_type == horizontal_1 || p.s_type == horizontal_2))
         {
             Vector3d ref_dir = (p.s_type==horizontal_1)?Vector3d(0,0,1):Vector3d(0,0,-1);
             PlaneOnePoseParallelFactor *f = new PlaneOnePoseParallelFactor(ref_dir);
@@ -847,6 +924,8 @@ void SVIO::solveOdometry()
 #ifdef USE_PLPP
         for (const auto& line_id : p.lines)
         {
+            if (!ENABLE_LINE)
+                break;
             auto it = l_manager.line_l.find(line_id);
             if (it != l_manager.line_l.end())
             {
@@ -893,6 +972,8 @@ void SVIO::solveOdometry()
         }
 #endif
     }
+    PHASE2_COUNTERS.plane_factor_solve.fetch_add(p_pm_cnt, std::memory_order_relaxed);
+    PHASE2_COUNTERS.normal_factor_solve.fetch_add(p_normal_cnt, std::memory_order_relaxed);
     ROS_DEBUG("ceres optimization: %d planes have been used with %d depth constraints, %d normal constraints, %d plane-line constraints, %d plane-point constraints", 
             p_cnt, p_pm_cnt, p_normal_cnt, p_pl_cnt, p_pp_cnt);
     opt_var_cnt += p_cnt;
@@ -904,6 +985,8 @@ void SVIO::solveOdometry()
     m_cnt = 0;
     for (auto& vvp_pair : l_manager.vvp_l)
     {
+        if (!ENABLE_LINE)
+            break;
         auto& vvp = vvp_pair.second;
         VPPoseFactor *f = new VPPoseFactor(vvp.mea_sqrt, Vector3d(0,0,1));
         problem.AddResidualBlock(f, loss_function, para_Pose[vvp.frame_id], para_Ex_Pose[0]);
@@ -945,8 +1028,10 @@ void SVIO::solveOdometry()
     // 1.9 save optimized parameter values
     afterOptimize(a_map, is_yaw_observed);
  
-    f_manager.assignPlanePointDepth(Ps, Rs, tic, ric, p_manager);
-    l_manager.assignPlaneLinePlk(Ps, Rs, tic, ric, p_manager);
+    if (ENABLE_PLANE)
+        f_manager.assignPlanePointDepth(Ps, Rs, tic, ric, p_manager);
+    if (ENABLE_LINE && ENABLE_PLANE)
+        l_manager.assignPlaneLinePlk(Ps, Rs, tic, ric, p_manager);
 
     TicToc t_add;
     // 2. marginalization
@@ -1045,6 +1130,8 @@ void SVIO::solveOdometry()
         m_cnt = 0, v_cnt = 0;
         for (auto &it_pair : l_manager.line_l)
         {
+            if (!ENABLE_LINE)
+                break;
             LinePerId& it_per_id = it_pair.second;
             if (!(it_per_id.line_ml.size() >= MIN_USED_NUM && it_per_id.start_frame_id < WINDOW_SIZE - 2 && 
                     it_per_id.has_init == true)) // && it_per_id.comfirm_plane_id == -1))
@@ -1086,12 +1173,15 @@ void SVIO::solveOdometry()
                 }
             }
         }
+        PHASE2_COUNTERS.struct_line_factor_margin.fetch_add(m_cnt, std::memory_order_relaxed);
         ROS_DEBUG("marginalization: %d structual lines have been used with %d constraints!", v_cnt, m_cnt);
 
         // 2.6 add plane residual block
         int p_pm_cnt = 0, p_cnt = 0, p_pl_cnt = 0, p_pp_cnt = 0, p_normal_cnt = 0;
         for (auto& it : p_manager.plane_l)
         {
+            if (!ENABLE_PLANE)
+                break;
             PlanePerId& p = it.second;
             if (p.plane_ml.size() < 2 || p.plane_ml[0].frame_id != 0)
                 continue;
@@ -1106,7 +1196,7 @@ void SVIO::solveOdometry()
                 p_pm_cnt++;
             }
 
-            if (p.s_type == vertical)
+            if (ENABLE_STRUCTURE && p.s_type == vertical)
             {
                 PlaneOnePoseVerticalFactor *f = new PlaneOnePoseVerticalFactor(Vector3d(0,0,1));
                 ResidualBlockInfo *residual_block_info = new ResidualBlockInfo(f, loss_function,
@@ -1114,7 +1204,7 @@ void SVIO::solveOdometry()
                 marginalization_info->addResidualBlockInfo(residual_block_info);
                 p_normal_cnt++;
             }
-            else if (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4)
+            else if (ENABLE_STRUCTURE && (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4))
             {
                 is_yaw_observed = true;
 
@@ -1133,7 +1223,7 @@ void SVIO::solveOdometry()
                 marginalization_info->addResidualBlockInfo(residual_block_info);
                 p_normal_cnt++;
             }
-            else if (p.s_type == horizontal_1 || p.s_type == horizontal_2)
+            else if (ENABLE_STRUCTURE && (p.s_type == horizontal_1 || p.s_type == horizontal_2))
             {
                 Vector3d ref_dir = (p.s_type==horizontal_1)?Vector3d(0,0,1):Vector3d(0,0,-1);
                 PlaneOnePoseParallelFactor *f = new PlaneOnePoseParallelFactor(ref_dir);
@@ -1200,6 +1290,8 @@ void SVIO::solveOdometry()
 
             p_cnt++;
         }
+        PHASE2_COUNTERS.plane_factor_margin.fetch_add(p_pm_cnt, std::memory_order_relaxed);
+        PHASE2_COUNTERS.normal_factor_margin.fetch_add(p_normal_cnt, std::memory_order_relaxed);
         ROS_DEBUG("marginalization: %d planes have been used with %d depth constraints, %d normal constraints, %d plane-line constraints, %d plane-point constraints", 
                 p_cnt, p_pm_cnt, p_normal_cnt, p_pl_cnt, p_pp_cnt);
 
@@ -1207,7 +1299,7 @@ void SVIO::solveOdometry()
 #ifdef USE_VVP
         m_cnt = 0;
         auto vvp_it = l_manager.vvp_l.find(0);
-        if (vvp_it != l_manager.vvp_l.end())
+        if (ENABLE_LINE && vvp_it != l_manager.vvp_l.end())
         {
             auto& vvp = vvp_it->second;
             if (vvp.frame_id != 0)
@@ -1419,11 +1511,14 @@ void SVIO::afterOptimize(AxisMap& a_map, bool is_yaw_observed, bool add_plane_po
 
     for (auto& p_pair : p_manager.plane_l)
     {
+        if (!ENABLE_PLANE)
+            break;
         auto& p = p_pair.second;
         p.cp2hesse();
     }
 
-    l_manager.refreshGeo(a_map);
+    if (ENABLE_LINE)
+        l_manager.refreshGeo(a_map);
     // p_manager.applyTransformation(old_R0, old_P0, Rs[0], Ps[0]);
 
     return;

@@ -317,7 +317,7 @@ void LineTracker::trackImage(const cv::Mat &mono_img)
         // fit line by opencv
         cv::Vec4f coffefficient;
         // std::cout << "LineTracker: " << sample_pts.size() << std::endl;
-        cv::fitLine(sample_pts, coffefficient, CV_DIST_L2, 0, 1e-2, 1e-2);
+        cv::fitLine(sample_pts, coffefficient, cv::DIST_L2, 0, 1e-2, 1e-2);
 
         // find long line segment
         float s_p = -1, e_p = -1;
@@ -420,9 +420,9 @@ cv::Mat LineTracker::drawImTrack(const cv::Mat& color_img)
         {
             cv::Point2f s(lines[i].segments[j][0], lines[i].segments[j][1]);
             cv::Point2f e(lines[i].segments[j][2], lines[i].segments[j][3]);
-            cv::line(imTrack, s, e, color, 1, CV_AA);
+            cv::line(imTrack, s, e, color, 1, cv::LINE_AA);
         }
-        cv::line(imLongLine, lines[i].s, lines[i].e, color, 1, CV_AA);
+        cv::line(imLongLine, lines[i].s, lines[i].e, color, 1, cv::LINE_AA);
     }
 
     std::cout << "total line: " << lines.size() << std::endl;

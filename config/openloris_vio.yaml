@@ -20,7 +20,7 @@ projection_parameters:
 imu_topic: "/d400/imu0"
 image_topic: "/d400/color/image_raw"
 dpt_img_topic: "/d400/aligned_depth_to_color/image_raw"
-output_path: "/home/oran/WS/Work/SLAM/SVIO/output"
+output_path: "/out"
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.

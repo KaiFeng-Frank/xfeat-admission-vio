@@ -48,8 +48,10 @@ public:
         return cv_pl;
     }
 
-    void FillMeas(FeatureTracker& feature_tracker, LineTracker& line_tracker, PlaneDetection& plane_detector)
+    void FillMeas(FeatureTracker& feature_tracker, LineTracker& line_tracker, PlaneDetection& plane_detector,
+                  bool include_lines, bool include_planes)
     {
+        ROS_ASSERT(feature_tracker.cur_pts_depth.size() == feature_tracker.cur_pts.size());
         for (int i = 0; i < feature_tracker.cur_pts.size(); i++)
         {
             pointMea tmp_pt;
@@ -58,7 +60,7 @@ public:
             tmp_pt.mu_l = feature_tracker.cur_pts_depth[i][1];
             tmp_pt.sig_d = feature_tracker.cur_pts_depth[i][2];
             tmp_pt.sig_l = feature_tracker.cur_pts_depth[i][3];
-            tmp_pt.plane_index = feature_tracker.cur_pts_plane_index[i];
+            tmp_pt.plane_index = include_planes ? feature_tracker.cur_pts_plane_index.at(i) : -1;
             tmp_pt.u_pt = feature_tracker.cur_pts[i].x;
             tmp_pt.v_pt = feature_tracker.cur_pts[i].y;
             tmp_pt.un_u_pt = feature_tracker.cur_un_pts[i].x;
@@ -68,43 +70,50 @@ public:
             point_meas.push_back(tmp_pt);
         }
 
-        for (int i = 0; i < line_tracker.lines.size(); i++)
+        if (include_lines)
         {
-            lineMea tmp_l;
-            tmp_l.id = line_tracker.lines[i].id;
-            tmp_l.plane_index = line_tracker.lines[i].plane_index;
-            tmp_l.start_u_pt = line_tracker.lines[i].un_s.x;
-            tmp_l.start_v_pt = line_tracker.lines[i].un_s.y;
-            tmp_l.end_u_pt = line_tracker.lines[i].un_e.x;
-            tmp_l.end_v_pt = line_tracker.lines[i].un_e.y;
-            tmp_l.length = line_tracker.lines[i].length;
-            tmp_l.start_pt = line_tracker.lines[i].s;
-            tmp_l.end_pt = line_tracker.lines[i].e;
-            for (int j = 0; j < line_tracker.lines[i].segments.size(); j++)
+            for (int i = 0; i < line_tracker.lines.size(); i++)
             {
-                const auto& it_seg = line_tracker.lines[i].segments[j];
-                cv::Point2f seg_s(it_seg[0], it_seg[1]), seg_e(it_seg[2], it_seg[3]);
-                tmp_l.start_seg_pts.push_back(projectPtOnLine(seg_s, line_tracker.lines[i].s, line_tracker.lines[i].e));
-                tmp_l.end_seg_pts.push_back(projectPtOnLine(seg_e, line_tracker.lines[i].s, line_tracker.lines[i].e));
+                lineMea tmp_l;
+                tmp_l.id = line_tracker.lines[i].id;
+                tmp_l.plane_index = include_planes ? line_tracker.lines[i].plane_index : -1;
+                tmp_l.start_u_pt = line_tracker.lines[i].un_s.x;
+                tmp_l.start_v_pt = line_tracker.lines[i].un_s.y;
+                tmp_l.end_u_pt = line_tracker.lines[i].un_e.x;
+                tmp_l.end_v_pt = line_tracker.lines[i].un_e.y;
+                tmp_l.length = line_tracker.lines[i].length;
+                tmp_l.start_pt = line_tracker.lines[i].s;
+                tmp_l.end_pt = line_tracker.lines[i].e;
+                for (int j = 0; j < line_tracker.lines[i].segments.size(); j++)
+                {
+                    const auto& it_seg = line_tracker.lines[i].segments[j];
+                    cv::Point2f seg_s(it_seg[0], it_seg[1]), seg_e(it_seg[2], it_seg[3]);
+                    tmp_l.start_seg_pts.push_back(projectPtOnLine(seg_s, line_tracker.lines[i].s, line_tracker.lines[i].e));
+                    tmp_l.end_seg_pts.push_back(projectPtOnLine(seg_e, line_tracker.lines[i].s, line_tracker.lines[i].e));
+                }
+                line_meas.push_back(tmp_l);
             }
-            line_meas.push_back(tmp_l);
         }
 
-        for (int i = 0; i < plane_detector.meas.size(); i++)
+        if (include_planes)
         {
-            planeMea tmp_p;
-            tmp_p.id = i;
-            tmp_p.mea = plane_detector.meas[i];
-            auto extractedPlane = plane_detector.plane_filter.extractedPlanes[i];
-            tmp_p.normal = Eigen::Vector3d(extractedPlane->normal[0], extractedPlane->normal[1], extractedPlane->normal[2]);
-            tmp_p.center = Eigen::Vector3d(extractedPlane->center[0], extractedPlane->center[1], extractedPlane->center[2]);
-            tmp_p.p_cnt = plane_detector.plane_vertices_[i].size();
-            for (int j : plane_detector.plane_vertices_[i]) 
+            ROS_ASSERT(feature_tracker.cur_pts_plane_index.size() == feature_tracker.cur_pts.size());
+            for (int i = 0; i < plane_detector.meas.size(); i++)
             {
-                tmp_p.point_cloud.push_back(plane_detector.cloud.vertices[j]);
-                tmp_p.dp_var.push_back(plane_detector.cloud.verticesVariance[j](2,2));
+                planeMea tmp_p;
+                tmp_p.id = i;
+                tmp_p.mea = plane_detector.meas[i];
+                auto extractedPlane = plane_detector.plane_filter.extractedPlanes[i];
+                tmp_p.normal = Eigen::Vector3d(extractedPlane->normal[0], extractedPlane->normal[1], extractedPlane->normal[2]);
+                tmp_p.center = Eigen::Vector3d(extractedPlane->center[0], extractedPlane->center[1], extractedPlane->center[2]);
+                tmp_p.p_cnt = plane_detector.plane_vertices_[i].size();
+                for (int j : plane_detector.plane_vertices_[i])
+                {
+                    tmp_p.point_cloud.push_back(plane_detector.cloud.vertices[j]);
+                    tmp_p.dp_var.push_back(plane_detector.cloud.verticesVariance[j](2,2));
+                }
+                plane_meas.push_back(tmp_p);
             }
-            plane_meas.push_back(tmp_p);
         }
     }
 
@@ -116,4 +125,3 @@ public:
 
     double time;
 };
-

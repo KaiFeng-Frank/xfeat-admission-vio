@@ -28,7 +28,6 @@
 #include <geometry_msgs/PointStamped.h>
 
 #include <pcl_conversions/pcl_conversions.h>
-#include <pcl/ros/conversions.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl/filters/voxel_grid.h>
@@ -79,6 +78,7 @@ public:
     // initialization functions 
     virtual void processImage_Init(const Meas& vision_meas);
     bool findNewAtlantaAxis();
+    void enforceRuntimeSwitchInvariants(const Meas& vision_meas, const char* stage) const;
 
     bool initialStructure();
     bool visualInitialAlign();

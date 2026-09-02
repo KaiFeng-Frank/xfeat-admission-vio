@@ -844,11 +844,11 @@ cv::Mat LineManager::drawImCluster(const cv::Mat& imColor, const AxisMap& a_map,
 
         for (int i = 0; i < lt.line_ml.back().start_seg_pts.size(); i++)
         {
-            cv::line(imLine, lt.line_ml.back().start_seg_pts[i], lt.line_ml.back().end_seg_pts[i], color, 1, CV_AA);
+            cv::line(imLine, lt.line_ml.back().start_seg_pts[i], lt.line_ml.back().end_seg_pts[i], color, 1, cv::LINE_AA);
             // if (i == 0)
             // {
             //     cv::Point text_location = (lt.line_ml.back().start_seg_pts[i]+lt.line_ml.back().end_seg_pts[i])/2;
-            //     cv::putText(imLine, to_string(lt.line_id), text_location, CV_FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0,0,255));
+            //     cv::putText(imLine, to_string(lt.line_id), text_location, cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0,0,255));
             // }
         }
 

@@ -132,7 +132,16 @@ void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_tim
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
     feature_tracker.trackImage(mono_img, cur_time);
-    feature_tracker.associateDepthGMM(dpt_img);
+    if (USE_GMM)
+    {
+        feature_tracker.associateDepthGMM(dpt_img, USE_GMM_EXT);
+        PHASE2_COUNTERS.gmm_depth_calls.fetch_add(1, std::memory_order_relaxed);
+    }
+    else
+    {
+        feature_tracker.associateDepthSimple(dpt_img);
+        PHASE2_COUNTERS.simple_depth_calls.fetch_add(1, std::memory_order_relaxed);
+    }
 
     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
@@ -158,6 +167,7 @@ void detectPlanes(const cv::Mat& dpt_img)
     plane_detector.runPlaneDetection();
     plane_detector.buildColorBook();
     plane_detector.buildMeasurement();
+    PHASE2_COUNTERS.plane_detect_calls.fetch_add(1, std::memory_order_relaxed);
 
     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
     double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
@@ -197,7 +207,13 @@ void frontend_sync()
             {
                 time = time_color;
 
-                if (drop_frame_cnt == DROP_FRAME)
+                const bool pass_drop_gate = drop_frame_cnt == DROP_FRAME;
+                if (pass_drop_gate)
+                    drop_frame_cnt = 0;
+                else
+                    drop_frame_cnt++;
+
+                if (pass_drop_gate && shouldProcessFrameByFrequency(time))
                 {
                     sensor_msgs::Image img;
                     img.header = color_img_buf.front()->header;
@@ -211,7 +227,7 @@ void frontend_sync()
                     color_img = ptr->image;
                     color_img_buf.pop();
 
-                    cv::cvtColor(color_img, mono_img, CV_BGR2GRAY);
+                    cv::cvtColor(color_img, mono_img, cv::COLOR_BGR2GRAY);
 
                     img.header = dpt_img_buf.front()->header;
                     img.height = dpt_img_buf.front()->height;
@@ -224,14 +240,11 @@ void frontend_sync()
                     dpt_img = ptr->image;
                     dpt_img_buf.pop();
 
-                    drop_frame_cnt = 0;
                 } 
                 else
                 {
                     color_img_buf.pop();
                     dpt_img_buf.pop();
-
-                    drop_frame_cnt++;
                 }
             }
         }
@@ -241,14 +254,21 @@ void frontend_sync()
         // 2. frontend processing
         if (!dpt_img.empty() && !color_img.empty())
         {
+            PHASE2_COUNTERS.processed_frames.fetch_add(1, std::memory_order_relaxed);
             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
             std::thread thread_points{trackPoints, mono_img, dpt_img, time};
-            std::thread thread_lines{trackLines, mono_img};
-            std::thread thread_planes{detectPlanes, dpt_img};
+            std::thread thread_lines;
+            std::thread thread_planes;
+            if (ENABLE_LINE)
+                thread_lines = std::thread(trackLines, mono_img);
+            if (ENABLE_PLANE)
+                thread_planes = std::thread(detectPlanes, dpt_img);
             thread_points.join();
-            thread_lines.join();
-            thread_planes.join();
+            if (thread_lines.joinable())
+                thread_lines.join();
+            if (thread_planes.joinable())
+                thread_planes.join();
 
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
             double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
@@ -256,28 +276,43 @@ void frontend_sync()
             ROS_DEBUG("frontend costs %f ms", tf*1000);
 
             // associate points and lines with planes
-            feature_tracker.associatePlane(plane_detector);
-            line_tracker.associatePlane(plane_detector);
+            if (ENABLE_PLANE)
+            {
+                feature_tracker.associatePlane(plane_detector);
+                PHASE2_COUNTERS.plane_associate_calls.fetch_add(1, std::memory_order_relaxed);
+            }
+            if (ENABLE_LINE && ENABLE_PLANE)
+                line_tracker.associatePlane(plane_detector);
 
-            line_tracker.recordStats();
+            if (ENABLE_LINE)
+                line_tracker.recordStats();
 
             // publish frontend results
             cv::Mat imTrack = feature_tracker.drawImTrack(color_img);
             pubPointImage(imTrack, time);
-            imTrack = line_tracker.drawImTrack(color_img);
-            pubLineImg(imTrack, time);
-            imTrack = plane_detector.drawImDetect(color_img);
-            pubPlaneSegmentation(imTrack, time);
+            if (ENABLE_LINE)
+            {
+                imTrack = line_tracker.drawImTrack(color_img);
+                pubLineImg(imTrack, time);
+            }
+            if (ENABLE_PLANE)
+            {
+                imTrack = plane_detector.drawImDetect(color_img);
+                pubPlaneSegmentation(imTrack, time);
+            }
 
             // send measurements to backend
             m_m_buf.lock();
             Meas cur_meas;
             cur_meas.time = time;
-            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector);
+            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector, ENABLE_LINE, ENABLE_PLANE);
             cur_meas.imColor = color_img;
             mea_buf.push(cur_meas);
+            const uint64_t enqueued = PHASE2_COUNTERS.enqueued_frames.fetch_add(1, std::memory_order_relaxed) + 1;
             m_m_buf.unlock();
             con_m_buf.notify_one();
+            if (enqueued % 100 == 0)
+                logPhase2Counters(false);
         }
     }
 }
@@ -378,7 +413,7 @@ void backend_sync()
             vio_times.push_back(tvio*1000);
             ROS_DEBUG("VIO costs %f ms", tvio*1000);
 
-            if (svio.solver_flag != INITIAL)
+            if (ENABLE_LINE && svio.solver_flag != INITIAL)
             {
                 cv::Mat imCluster = svio.l_manager.drawImCluster(vision_meas.imColor, svio.a_map, svio.frame_count-1);
                 pubLineClusterImg(imCluster, vision_meas.time);
@@ -392,8 +427,10 @@ void backend_sync()
             pubKeyPoses(svio, vision_meas.time);
             pubCameraPose(svio, vision_meas.time);
             pubPointCloud(svio, vision_meas.time);
-            pubPlanePointCloud(svio, vision_meas.time, true, true);
-            pubLineCloud(svio, vision_meas.time);
+            if (ENABLE_PLANE)
+                pubPlanePointCloud(svio, vision_meas.time, true, true);
+            if (ENABLE_LINE)
+                pubLineCloud(svio, vision_meas.time);
             pubTF(svio, vision_meas.time);
             pubKeyframe(svio, vision_meas.time);
 
@@ -429,8 +466,10 @@ int main(int argc, char **argv)
 
     svio.setParameter(CAM_NAMES);
     feature_tracker.readIntrinsicParameter(CAM_NAMES);
-    line_tracker.setParameters(CAM_NAMES);
-    plane_detector.setParameters(CAM_NAMES);
+    if (ENABLE_LINE)
+        line_tracker.setParameters(CAM_NAMES);
+    if (ENABLE_PLANE)
+        plane_detector.setParameters(CAM_NAMES);
 
     ros::Subscriber sub_imu = n.subscribe(IMU_TOPIC, 2000, imu_callback, ros::TransportHints().tcpNoDelay());
     ros::Subscriber sub_color = n.subscribe(COLOR_TOPIC, 2000, color_img_callback);
@@ -440,7 +479,9 @@ int main(int argc, char **argv)
     std::thread backend_process{backend_sync};
     ros::spin();
 
-    line_tracker.printStats();
+    logPhase2Counters(true);
+    if (ENABLE_LINE)
+        line_tracker.printStats();
     
     std::ofstream foutA(VINS_STATS_PATH, std::ios::out);
 
