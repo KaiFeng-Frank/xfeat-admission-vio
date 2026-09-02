@@ -1,0 +1,13 @@
+System: xfeat-admission-vio, a fork of the S-VIO RGB-D visual-inertial odometry with a learned feature admission seat.
+
+Inputs: an RGB-D camera (colour image and aligned depth) and an IMU on a handheld rig. The rig moves through indoor scenes that are sometimes dark or texture-poor; in those stretches the classical feature tracker starves.
+
+Classical front end (unchanged from S-VIO): a KLT optical-flow tracker follows a fixed budget of point tracks from frame to frame, a two-view geometric check rejects wrong tracks, and the surviving tracks are spaced across the image. When the budget is not full, a corner detector refills it with new points. Depth from the RGB-D sensor is attached to each track; planes and structural lines are extracted from the depth image.
+
+Learned seat (the only addition): a small pretrained feature network, XFeat, runs at a fixed low cadence on the colour image, on an NPU or as a precomputed sidecar file. It produces candidate keypoints with descriptors. The tracker reads its own health from the number of tracks that survived the geometric check. Only while the tracker is starving does the next network tick supply new-track candidates, which the tracker admits before the ordinary corner refill. The network never provides motion, never re-identifies old landmarks, and never changes any weight; it only decides which new points enter the measurement set.
+
+Back end (unchanged from S-VIO): a sliding window of recent camera keyframes with IMU preintegration between them, point landmarks with depth, plane and structural-line constraints, solved as a local bundle adjustment with marginalization of old states. Output: the body trajectory.
+
+Deployment split: the network backbone runs on the RK3588S NPU as a fixed-shape model; the sparse post-processing, matching and the admission decision run on the CPU; the estimator runs on the CPU.
+
+Principle in one picture: along the trajectory, tracks are dense where the scene is bright and textured; entering a dark stretch, tracks die and the geometric check removes the rest; the learned network proposes candidate points there, the tracker admits them and keeps going; after the dark stretch the classical refill takes over again. The admitted points enter the back end exactly like any other track.

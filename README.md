@@ -17,6 +17,13 @@ adapters for the common open-source estimators, and device receipts for embedded
 NPUs — so that "add a learned detector to my VIO" becomes a configuration change
 with a reproducible ledger, not a research project.
 
+![System overview (A) and the admission principle (B)](docs/figures/overview.svg)
+
+*A: what is added to S-VIO and where. B: along one trajectory, classical tracks (green)
+feed the tracker while the scene is textured; in a dark stretch they starve, and only
+there the network's candidates (blue) are admitted as new tracks. Source text of the
+figure: `docs/figures/overview_source.txt`.*
+
 ## Results on VCU-RVI, the handheld benchmark S-VIO was built for
 
 Whole-sequence SE(3) ATE RMSE in centimetres, no scale, start offset 0, from the

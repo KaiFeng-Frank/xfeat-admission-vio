@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#0b0b0b">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2a78d6"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="900" fill="#fcfcfb"/>
+
+  <!-- ================= Panel A: system overview ================= -->
+  <text x="24" y="34" font-size="20" font-weight="bold">A · System overview</text>
+
+  <!-- sensors -->
+  <rect x="30" y="86" width="150" height="58" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="105" y="110" text-anchor="middle" font-weight="bold">RGB-D camera</text>
+  <text x="105" y="131" text-anchor="middle" font-size="13" fill="#52514e">colour · aligned depth</text>
+  <rect x="30" y="182" width="150" height="44" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="105" y="209" text-anchor="middle" font-weight="bold">IMU</text>
+
+  <!-- classical front end group -->
+  <rect x="215" y="62" width="440" height="270" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
+  <text x="228" y="86" font-weight="bold">Classical front end</text>
+  <text x="390" y="86" font-size="13" fill="#52514e">S-VIO, unchanged</text>
+  <text x="640" y="86" text-anchor="end" font-size="12" fill="#52514e">CPU</text>
+
+  <rect x="230" y="108" width="90" height="42" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="275" y="134" text-anchor="middle" font-size="14">KLT tracking</text>
+  <rect x="338" y="108" width="110" height="42" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="393" y="134" text-anchor="middle" font-size="14">geometric check</text>
+  <rect x="466" y="108" width="72" height="42" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="502" y="134" text-anchor="middle" font-size="14">spacing</text>
+  <rect x="556" y="108" width="84" height="42" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="598" y="128" text-anchor="middle" font-size="14">refill</text>
+  <text x="598" y="143" text-anchor="middle" font-size="11" fill="#52514e">corner detector</text>
+  <line x1="320" y1="129" x2="338" y2="129" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="448" y1="129" x2="466" y2="129" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="538" y1="129" x2="556" y2="129" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="230" y="172" width="150" height="40" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="305" y="197" text-anchor="middle" font-size="14">depth association</text>
+  <rect x="398" y="172" width="140" height="40" rx="5" fill="#ffffff" stroke="#52514e"/>
+  <text x="468" y="197" text-anchor="middle" font-size="14">planes &amp; lines</text>
+
+  <!-- learned seat -->
+  <rect x="230" y="240" width="330" height="76" rx="8" fill="#eaf2fc" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="244" y="262" font-weight="bold" fill="#2a78d6">Learned seat</text>
+  <text x="352" y="262" font-size="12" fill="#52514e">the only addition</text>
+  <text x="548" y="262" text-anchor="end" font-size="12" fill="#2a78d6">NPU or sidecar file</text>
+  <rect x="244" y="272" width="130" height="34" rx="5" fill="#ffffff" stroke="#2a78d6"/>
+  <text x="309" y="294" text-anchor="middle" font-size="14">XFeat backbone</text>
+  <rect x="392" y="272" width="156" height="34" rx="5" fill="#ffffff" stroke="#2a78d6"/>
+  <text x="470" y="294" text-anchor="middle" font-size="14">candidate points</text>
+  <line x1="374" y1="289" x2="392" y2="289" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- admission switch: candidates -> refill, opened by tracker health -->
+  <path d="M 548 289 L 598 289 L 598 178" fill="none" stroke="#2a78d6" stroke-width="2"/>
+  <line x1="598" y1="178" x2="598" y2="150" stroke="#2a78d6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <circle cx="598" cy="222" r="9" fill="#ffffff" stroke="#2a78d6" stroke-width="2"/>
+  <line x1="598" y1="231" x2="606" y2="215" stroke="#2a78d6" stroke-width="2"/>
+  <text x="586" y="226" font-size="12" fill="#2a78d6" text-anchor="end">admit only while</text>
+  <text x="586" y="240" font-size="12" fill="#2a78d6" text-anchor="end">the tracker starves</text>
+  <path d="M 393 150 L 393 160 L 580 160 L 580 214" fill="none" stroke="#52514e" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <rect x="446" y="153" width="74" height="13" fill="#f4f3ef"/>
+  <text x="483" y="163" font-size="11" fill="#52514e" text-anchor="middle">tracker health</text>
+
+  <!-- back end group -->
+  <rect x="700" y="62" width="330" height="270" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
+  <text x="713" y="86" font-weight="bold">Back end</text>
+  <text x="790" y="86" font-size="13" fill="#52514e">S-VIO, unchanged</text>
+  <text x="1015" y="86" text-anchor="end" font-size="12" fill="#52514e">CPU</text>
+  <rect x="715" y="108" width="300" height="200" rx="6" fill="#ffffff" stroke="#52514e"/>
+  <text x="865" y="140" text-anchor="middle" font-size="14">sliding window of keyframes</text>
+  <text x="865" y="166" text-anchor="middle" font-size="14">IMU preintegration between keyframes</text>
+  <text x="865" y="192" text-anchor="middle" font-size="14">point · plane · structural-line factors</text>
+  <text x="865" y="218" text-anchor="middle" font-size="14">local bundle adjustment</text>
+  <text x="865" y="244" text-anchor="middle" font-size="14">marginalization of old states</text>
+  <text x="865" y="284" text-anchor="middle" font-size="12" fill="#52514e">admitted points enter here like any other track</text>
+
+  <!-- output -->
+  <rect x="1065" y="164" width="110" height="46" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="1120" y="192" text-anchor="middle" font-weight="bold">trajectory</text>
+
+  <!-- data arrows -->
+  <line x1="180" y1="115" x2="230" y2="115" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 105 226 L 105 350 L 870 350 L 870 332" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="535" y="366" font-size="12" fill="#52514e" text-anchor="middle">IMU samples</text>
+  <line x1="655" y1="190" x2="700" y2="190" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="678" y="178" font-size="11" fill="#52514e" text-anchor="middle">tracks</text>
+  <line x1="1030" y1="187" x2="1065" y2="187" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 105 144 L 105 160 L 195 160 L 195 289 L 230 289" fill="none" stroke="#2a78d6" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrowBlue)"/>
+  <text x="188" y="246" font-size="11" fill="#2a78d6" text-anchor="end">colour image</text>
+  <text x="188" y="260" font-size="11" fill="#2a78d6" text-anchor="end">low cadence</text>
+
+  <!-- ================= Panel B: principle ================= -->
+  <line x1="24" y1="404" x2="1176" y2="404" stroke="#e6e5e1"/>
+  <text x="24" y="440" font-size="20" font-weight="bold">B · Principle: learning fills the tracker's starvation, nothing else</text>
+
+  <!-- scene regions -->
+  <rect x="40" y="470" width="1120" height="300" rx="8" fill="#ffffff" stroke="#e6e5e1"/>
+  <rect x="470" y="470" width="300" height="300" fill="#dad9d3"/>
+  <text x="255" y="494" text-anchor="middle" font-size="13" fill="#52514e">textured scene</text>
+  <text x="620" y="494" text-anchor="middle" font-size="13" fill="#0b0b0b" font-weight="bold">dark stretch</text>
+  <text x="965" y="494" text-anchor="middle" font-size="13" fill="#52514e">textured scene</text>
+
+  <!-- landmarks: classical (green), lost (hollow gray), learned (blue) -->
+  <g fill="#008300">
+    <circle cx="120" cy="530" r="5"/><circle cx="175" cy="512" r="5"/><circle cx="230" cy="545" r="5"/><circle cx="290" cy="518" r="5"/>
+    <circle cx="345" cy="540" r="5"/><circle cx="405" cy="522" r="5"/><circle cx="450" cy="548" r="5"/>
+    <circle cx="800" cy="536" r="5"/><circle cx="860" cy="516" r="5"/><circle cx="925" cy="544" r="5"/><circle cx="990" cy="520" r="5"/>
+    <circle cx="1050" cy="542" r="5"/><circle cx="1110" cy="524" r="5"/>
+  </g>
+  <g fill="none" stroke="#8b8a85" stroke-width="1.5">
+    <circle cx="500" cy="528" r="5"/><circle cx="545" cy="548" r="5"/><circle cx="700" cy="530" r="5"/><circle cx="740" cy="552" r="5"/>
+  </g>
+  <g stroke="#8b8a85" stroke-width="1.5">
+    <line x1="496" y1="524" x2="504" y2="532"/><line x1="504" y1="524" x2="496" y2="532"/>
+    <line x1="541" y1="544" x2="549" y2="552"/><line x1="549" y1="544" x2="541" y2="552"/>
+    <line x1="696" y1="526" x2="704" y2="534"/><line x1="704" y1="526" x2="696" y2="534"/>
+    <line x1="736" y1="548" x2="744" y2="556"/><line x1="744" y1="548" x2="736" y2="556"/>
+  </g>
+  <g fill="#2a78d6">
+    <circle cx="585" cy="520" r="5.5"/><circle cx="615" cy="552" r="5.5"/><circle cx="650" cy="514" r="5.5"/><circle cx="672" cy="546" r="5.5"/><circle cx="600" cy="500" r="5.5"/>
+  </g>
+
+  <!-- trajectory -->
+  <path d="M 70 720 C 300 690, 420 760, 620 720 S 950 660, 1140 700" fill="none" stroke="#0b0b0b" stroke-width="2.5"/>
+
+  <!-- camera frustums along the trajectory (apex on the curve, opening upward) -->
+  <g fill="none" stroke="#0b0b0b" stroke-width="1.5">
+    <path d="M 180 706 L 158 672 L 202 672 Z"/>
+    <path d="M 380 726 L 358 692 L 402 692 Z"/>
+    <path d="M 620 720 L 598 686 L 642 686 Z"/>
+    <path d="M 850 690 L 828 656 L 872 656 Z"/>
+    <path d="M 1060 686 L 1038 652 L 1082 652 Z"/>
+  </g>
+
+  <!-- rays: classical tracks (green) -->
+  <g stroke="#008300" stroke-width="1" opacity="0.7">
+    <line x1="180" y1="706" x2="120" y2="530"/><line x1="180" y1="706" x2="175" y2="512"/><line x1="180" y1="706" x2="230" y2="545"/>
+    <line x1="380" y1="726" x2="345" y2="540"/><line x1="380" y1="726" x2="405" y2="522"/><line x1="380" y1="726" x2="450" y2="548"/>
+    <line x1="850" y1="690" x2="800" y2="536"/><line x1="850" y1="690" x2="860" y2="516"/><line x1="850" y1="690" x2="925" y2="544"/>
+    <line x1="1060" y1="686" x2="990" y2="520"/><line x1="1060" y1="686" x2="1050" y2="542"/><line x1="1060" y1="686" x2="1110" y2="524"/>
+  </g>
+  <!-- rays: learned candidates admitted in the dark stretch (blue) -->
+  <g stroke="#2a78d6" stroke-width="1.2">
+    <line x1="620" y1="720" x2="585" y2="520"/><line x1="620" y1="720" x2="615" y2="552"/><line x1="620" y1="720" x2="650" y2="514"/><line x1="620" y1="720" x2="672" y2="546"/><line x1="620" y1="720" x2="600" y2="500"/>
+  </g>
+  <!-- dead rays (dotted gray) from the dark-stretch camera to lost tracks -->
+  <g stroke="#8b8a85" stroke-width="1" stroke-dasharray="3 3">
+    <line x1="620" y1="720" x2="500" y2="528"/><line x1="620" y1="720" x2="740" y2="552"/>
+  </g>
+
+  <!-- live-track budget bars under each camera -->
+  <g>
+    <rect x="150" y="742" width="60" height="8" fill="#e6e5e1"/><rect x="150" y="742" width="56" height="8" fill="#008300"/>
+    <rect x="350" y="762" width="60" height="8" fill="#e6e5e1"/><rect x="350" y="762" width="54" height="8" fill="#008300"/>
+    <rect x="590" y="756" width="60" height="8" fill="#e6e5e1"/><rect x="590" y="756" width="18" height="8" fill="#008300"/><rect x="608" y="756" width="34" height="8" fill="#2a78d6"/>
+    <rect x="820" y="726" width="60" height="8" fill="#e6e5e1"/><rect x="820" y="726" width="55" height="8" fill="#008300"/>
+    <rect x="1030" y="722" width="60" height="8" fill="#e6e5e1"/><rect x="1030" y="722" width="57" height="8" fill="#008300"/>
+  </g>
+  <text x="150" y="765" font-size="11" fill="#52514e">live tracks</text>
+
+  <!-- sliding window bracket over the last cameras -->
+  <path d="M 800 636 L 800 626 L 1100 626 L 1100 636" fill="none" stroke="#52514e" stroke-width="1.5"/>
+  <text x="950" y="618" text-anchor="middle" font-size="12" fill="#52514e">sliding window of keyframes kept live by the back end</text>
+
+  <!-- annotations -->
+  <text x="255" y="792" text-anchor="middle" font-size="13" fill="#008300">classical refill keeps the budget full</text>
+  <text x="620" y="792" text-anchor="middle" font-size="13" fill="#2a78d6" font-weight="bold">tracks starve → learned candidates admitted</text>
+  <text x="965" y="792" text-anchor="middle" font-size="13" fill="#008300">classical refill resumes</text>
+
+  <!-- legend -->
+  <circle cx="60" cy="845" r="5" fill="#008300"/><text x="72" y="850" font-size="13">classical track</text>
+  <circle cx="220" cy="845" r="5" fill="none" stroke="#8b8a85" stroke-width="1.5"/><line x1="216" y1="841" x2="224" y2="849" stroke="#8b8a85" stroke-width="1.5"/><line x1="224" y1="841" x2="216" y2="849" stroke="#8b8a85" stroke-width="1.5"/><text x="232" y="850" font-size="13">track lost in the dark</text>
+  <circle cx="420" cy="845" r="5.5" fill="#2a78d6"/><text x="432" y="850" font-size="13">learned candidate admitted as a new track</text>
+  <path d="M 720 852 L 700 818 L 744 818 Z" fill="none" stroke="#0b0b0b" stroke-width="1.5" transform="scale(0.55) translate(600 700)"/>
+  <text x="760" y="850" font-size="13">camera along the trajectory · the network never supplies motion</text>
+</svg>
