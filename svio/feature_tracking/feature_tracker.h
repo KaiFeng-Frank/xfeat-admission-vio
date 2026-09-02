@@ -86,6 +86,7 @@ private:
     vector<int> xfeat_prev_proposal_age_;
     uint64_t xfeat_propagated_total_ = 0;
     uint64_t xfeat_emitted_total_ = 0;
+    uint32_t xfeat_low_health_streak_ = 0;
     vector<array<float, 64>> hybrid_anchor_desc_;
     vector<uchar> hybrid_has_anchor_;
 
