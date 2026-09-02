@@ -55,6 +55,30 @@ The node exits with status 134 after every completed run: that is the inherited
 teardown abort after playback, not a fault. A real fault prints `terminate called after
 throwing` in `svio.log` and the launcher reports it.
 
+## 2b. Run at sensor rate
+
+`base_realtime.yaml` is the frozen base with the back-end cadence enabled
+(`backend_freq_gate: 1`, `solver_threads: 2`, `max_solver_time: 0.08`; the repository
+copy is `experiments/12_rk3588s_realtime_20260903/config_realtime.yaml`). With it the
+estimator keeps up with light1 at 1× on the A76 cores:
+
+```bash
+SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_EXPECT_FRAMES=2875 \
+    /opt/xfeat/bin/svio-chroot.sh run_estimator.sh light1 on 11521 /data/vcu/light1.bag /data/vcu/light1_board.xfs /data/runs/rt_light1_on
+```
+
+The runner samples the pose count against wall-clock time (`timeline.csv`) and reports
+`rows_at_play_end`, `final_rows`, `backlog_after_play_s` and `realtime_ok` (catch-up of at
+most `SVIO_RT_BACKLOG_MAX` seconds, default 2). Keep `SVIO_EST_CORES=4-7`: letting the
+scheduler use the A55 cores slows every stage by about a third
+(`experiments/12_rk3588s_realtime_20260903/board_probes/`).
+
+The estimator in the rootfs is the native `-O3 -mcpu=cortex-a76` build of the patched
+sources (`experiments/12_rk3588s_realtime_20260903/build/`). To rebuild on the board,
+push the sources and run `board_build.sh` inside the chroot; set the board clock from the
+host first (`date -s @<epoch>`), because a clock that lags the source timestamps makes
+`make` skip the link step (`board_relink.sh` records the fix).
+
 ## 3. Score on the host
 
 Pull `/data/runs/<name>/svio_no_loop.csv` and score it with `tools/scoring/` exactly as

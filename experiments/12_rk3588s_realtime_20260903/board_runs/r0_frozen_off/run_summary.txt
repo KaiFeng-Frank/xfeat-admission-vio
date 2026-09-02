@@ -1,0 +1,5 @@
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=off OUT=/data/runs/r0_frozen_off
+rows=2819 frames=2875 drained=1 drain_wait_s=69 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=23.746 swo_ms=48.7715
+wall_total_s=179 wall_play_s=108 pinning=taskset est=4-7 io=0-3 play_rate=1.0
+rows_at_play_end=1861 final_rows=2819 backlog_after_play_s=48.9 realtime_ok=0 rt_backlog_max_s=2 env_extra=<none>

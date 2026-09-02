@@ -1,0 +1,1 @@
+[WARN] [1788379157.070310581]: [PHASE2_EFFECTIVE] arm=custom freq_gate=0 freq=10 drop_frame=0 flow_back=0 use_gmm=1 use_gmm_ext=1 plane=1 line=1 atlanta=1 backend_freq_gate=1 solver_threads=2

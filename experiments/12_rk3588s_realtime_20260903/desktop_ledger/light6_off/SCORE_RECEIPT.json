@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "formal_python": {
+      "path": "python3",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+      "size_bytes": 32003680
+    },
+    "formal_table2_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "sha256": "800b96b0c9bdeaf61779f126cb35d5a09a856fba781605e1e846f4783524caf0",
+      "size_bytes": 20124
+    },
+    "formal_table2_scorer_dependency": {
+      "path": "${REPO_ROOT}/tools/scoring/trajectory_compare.py",
+      "sha256": "4c8895b1e4b58d90aeaf4859e2716c5ab6e6f00c4f395ad251b6a31c57f6500a",
+      "size_bytes": 28000
+    },
+    "frozen_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/score_nn20.py",
+      "sha256": "037a579cfd5cdb6368733e9fe04809eb301da255091dc69f2dfde61953a8c01b",
+      "size_bytes": 964
+    },
+    "ground_truth": {
+      "path": "${DATA_ROOT}/vcu_rvi/light6_gt.tum",
+      "sha256": "1d7c336f529c9658b2e1dbb15a404dd701b5fcf0d4969e9d60aef49a5bafe1ee",
+      "size_bytes": 846027
+    },
+    "normalized": {
+      "path": "${VERIFY_ROOT}/verify/scores/rt_light6_off/trajectory_body.tum",
+      "sha256": "22e6fcab743d0c843aa48a584d119a9b728219c6623366ef2cd59fbaff12d039",
+      "size_bytes": 104639
+    },
+    "normalizer_and_exact_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/normalize_score_phase1.py",
+      "sha256": "9598238d10703a07d7d5e97fc1f1d530efb289202dfd4cf3f97b25f0283aa190",
+      "size_bytes": 10075
+    },
+    "raw": {
+      "path": "${VERIFY_ROOT}/verify/runs/rt_light6_off/svio_no_loop.csv",
+      "sha256": "3d92937fac98eb75ffa73551b67d7282bc9bc688851e47ff199585bad107097f",
+      "size_bytes": 101991
+    }
+  },
+  "formal_table2_scoring": {
+    "alignment": "SE3_Horn_no_scale_all_interpolated_rows",
+    "association": "GT_interpolated_to_each_estimate_timestamp_within_GT_span",
+    "command": [
+      "python3",
+      "-s",
+      "-B",
+      "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "--input",
+      "${VERIFY_ROOT}/verify/scores/rt_light6_off/trajectory_body.tum",
+      "--scene",
+      "rt",
+      "--gt-file",
+      "${DATA_ROOT}/vcu_rvi/light6_gt.tum",
+      "--align",
+      "se3",
+      "--start-offset",
+      "0",
+      "--cr-span",
+      "gt",
+      "--ate-thresh",
+      "1.0",
+      "--no-to-base-link",
+      "--format",
+      "csv"
+    ],
+    "environment": {
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "result": {
+      "align": "se3",
+      "aoe_median_deg": "4.764055146578672",
+      "ate_max_m": "1.2462440116954263",
+      "ate_median_m": "0.5443368361854581",
+      "ate_rmse_all_m": "0.6371924705036863",
+      "ate_rmse_correct_m": "0.5418206480474154",
+      "coverage": "1.0",
+      "cr": "0.853838414646557",
+      "cr_inf": "0.9772924316588105",
+      "cr_pos": "0.853838414646557",
+      "eps_m": "1.0",
+      "matched": "1030",
+      "method": "",
+      "n_est": "1030",
+      "n_gt": "10571",
+      "scene": "rt",
+      "tag": "trajectory_body",
+      "temporal_coverage": "0.9772924316588105"
+    },
+    "role": "primary_Table_II_metric",
+    "stderr": "",
+    "time_shift_s": 0.0
+  },
+  "label": "rt-light6-off",
+  "normalization": {
+    "canonical_header": "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows",
+    "output_frame": "body_imu",
+    "parser": "vins_ns_qwxyz_csv",
+    "quaternion_input": "qw_qx_qy_qz",
+    "quaternion_output": "qx_qy_qz_qw",
+    "row_count": 1030,
+    "timestamp": "ns_to_s_if_gt_1e10",
+    "transform": "native_body"
+  },
+  "schema": "svio-native-body-nn20-score-v1",
+  "scoring": {
+    "alignment": "SE3_Umeyama_no_scale_all_matched_rows",
+    "alignment_rotation": [
+      [
+        0.27376488999567605,
+        -0.07977980989802709,
+        0.9584821161285638
+      ],
+      [
+        -0.053922701496396115,
+        -0.9962595213872494,
+        -0.06752265033734099
+      ],
+      [
+        0.9602838784802055,
+        -0.033198614095816065,
+        -0.27704282115429574
+      ]
+    ],
+    "alignment_translation_m": [
+      -0.6150852871816821,
+      -0.1459072272819668,
+      -0.06218265782365823
+    ],
+    "association": "nearest_neighbor_strict_abs_dt_lt_0.020s",
+    "ate_median_m": 0.5382922582194776,
+    "ate_p90_m": 1.093251029040662,
+    "ate_rmse_m": 0.6314687467384867,
+    "estimate_rows": 1030,
+    "frozen_stdout": "rt-light6-off: n=975 ATE RMSE=63.15cm median=53.83cm p90=109.33cm",
+    "ground_truth_rows": 10571,
+    "matched_rows": 975,
+    "max_matched_abs_dt_s": 0.019319274000054065,
+    "time_shift_s": 0.0,
+    "unmatched_rows": 55
+  }
+}

@@ -78,8 +78,12 @@ CPU                               NMS / top-k / descriptor sampling / matching /
 
 The conversion receipts are in `deploy/rknn/preflight_v1/`. Host-CPU reference
 latency of the full sparse path (x86, ONNX Runtime, four threads) is in
-`sidecar/BENCHMARK_xfeat_causal_host_cpu.json`. On-device latency has not been
-measured; every experiment in this repository consumed a precomputed sidecar.
+`sidecar/BENCHMARK_xfeat_causal_host_cpu.json`. On-device latency of the backbone and
+the tail is in `experiments/09_rk3588s_board_20260903/`; the estimator itself runs on
+the board at sensor rate under the back-end cadence configuration of
+`experiments/12_rk3588s_realtime_20260903/` (front end on every frame, back end fed at
+10 Hz; the admission tick and the cadence coincide). Every experiment in this
+repository consumed a precomputed sidecar.
 
 ## What is deliberately not here
 

@@ -1,0 +1,101 @@
+== waiting for the desktop rebuild 03:45:17
+BUILD_EXIT=0
+56fd19415679b8be
+-- run light1 OFF/ON 03:45:17
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=off rows=939 frames=2875 anomalies=0 
+RT light1 off ate_cm=19.49 cr=0.9835 n=939
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=on rows=939 frames=2875 anomalies=0 
+RT light1 on ate_cm=18.41 cr=0.9835 n=939
+-- convert motion1 03:45:17
+-- run motion1 OFF/ON 03:45:29
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion1 ARM=off rows=1042 frames=3159 anomalies=0 
+RT motion1 off ate_cm=16.90 cr=0.9580 n=1042
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion1 ARM=on rows=1042 frames=3159 anomalies=0 
+RT motion1 on ate_cm=18.57 cr=0.9580 n=1042
+-- convert motion2 03:45:17
+-- run motion2 OFF/ON 03:45:31
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion2 ARM=off rows=1167 frames=3558 anomalies=0 
+RT motion2 off ate_cm=582500.49 cr=0.0000 n=1167
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion2 ARM=on rows=1165 frames=3558 anomalies=0 
+RT motion2 on ate_cm=14.12 cr=0.9432 n=1165
+-- convert motion3 03:47:47
+-- run motion3 OFF/ON 03:48:06
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion3 ARM=off rows=903 frames=2767 anomalies=0 
+RT motion3 off ate_cm=10.09 cr=0.9604 n=903
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion3 ARM=on rows=903 frames=2767 anomalies=0 
+RT motion3 on ate_cm=11.93 cr=0.9604 n=903
+-- convert motion4 03:47:47
+-- run motion4 OFF/ON 03:48:05
+processed_frames=2101 enqueued_frames=700 tracked_only_frames=1401  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion4 ARM=off rows=751 frames=2330 anomalies=0 
+RT motion4 off ate_cm=31.24 cr=0.9500 n=751
+SCORE_FAIL motion4 on
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '${VERIFY_ROOT}/verify/runs/rt_motion4_on/svio_no_loop.csv'
+-- convert motion5 03:47:47
+-- run motion5 OFF/ON 03:48:06
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion5 ARM=off rows=907 frames=2752 anomalies=0 
+RT motion5 off ate_cm=22.89 cr=0.9573 n=907
+processed_frames=2701 enqueued_frames=900 tracked_only_frames=1801  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion5 ARM=on rows=907 frames=2752 anomalies=0 
+RT motion5 on ate_cm=15.95 cr=0.9573 n=907
+== waiting for the regenerated light sidecars 03:49:58
+-- convert motion6 03:50:43
+-- run motion6 OFF/ON 03:50:50
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion6 ARM=off rows=1019 frames=3128 anomalies=0 
+RT motion6 off ate_cm=16.29 cr=0.9792 n=1019
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion6 ARM=on rows=1019 frames=3128 anomalies=0 
+RT motion6 on ate_cm=17.90 cr=0.9792 n=1019
+-- run light2 OFF/ON 03:50:43
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light2 ARM=off rows=1091 frames=3305 anomalies=0 
+RT light2 off ate_cm=32.20 cr=0.9720 n=1091
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light2 ARM=on rows=1091 frames=3305 anomalies=0 
+RT light2 on ate_cm=20.60 cr=0.9720 n=1091
+-- run light3 OFF/ON 03:50:43
+processed_frames=2401 enqueued_frames=800 tracked_only_frames=1601  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light3 ARM=off rows=806 frames=2591 anomalies=0 
+RT light3 off ate_cm=13.22 cr=0.9819 n=806
+SCORE_FAIL light3 on
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '${VERIFY_ROOT}/verify/runs/rt_light3_on/svio_no_loop.csv'
+-- run light4 OFF/ON 03:52:52
+processed_frames=2401 enqueued_frames=800 tracked_only_frames=1601  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light4 ARM=off rows=870 frames=2665 anomalies=0 
+RT light4 off ate_cm=10.52 cr=0.9684 n=870
+processed_frames=2401 enqueued_frames=800 tracked_only_frames=1601  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light4 ARM=on rows=867 frames=2665 anomalies=0 
+RT light4 on ate_cm=12.62 cr=0.9651 n=867
+-- run light5 OFF/ON 03:52:52
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light5 ARM=off rows=1077 frames=3263 anomalies=0 
+RT light5 off ate_cm=50.83 cr=0.9540 n=1077
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light5 ARM=on rows=1077 frames=3263 anomalies=0 
+RT light5 on ate_cm=58.13 cr=0.9540 n=1077
+-- run light6 OFF/ON 03:52:52
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light6 ARM=off rows=1030 frames=3121 anomalies=0 
+RT light6 off ate_cm=63.72 cr=0.8538 n=1030
+processed_frames=3001 enqueued_frames=1000 tracked_only_frames=2001  PLAY_STATUS=0 NODE_STATUS=134 SEQ=light6 ARM=on rows=1030 frames=3121 anomalies=0 
+RT light6 on ate_cm=30.34 cr=0.9773 n=1030
+RT_CAMPAIGN_DONE 03:54:58
+== light3 on + motion4 on 04:01:51
+(light3 on / motion4 on already ran)
+RT light3 on ate_cm=13.81 cr=0.9819 n=804
+RT motion4 on ate_cm=32.34 cr=0.9500 n=751
+== motion2 repeat OFF/ON 04:01:52
+missing config or bag: /work/verify/configs/rt_motion2_on_rep2.yaml /work/verify/input/motion2.bag 
+missing config or bag: /work/verify/configs/rt_motion2_off_rep2.yaml /work/verify/input/motion2.bag 
+SCORE_FAIL motion2 off_rep2
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '${VERIFY_ROOT}/verify/runs/rt_motion2_off_rep2/svio_no_loop.csv'
+SCORE_FAIL motion2 on_rep2
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '${VERIFY_ROOT}/verify/runs/rt_motion2_on_rep2/svio_no_loop.csv'
+RERUN_DONE 04:01:54
+== motion2 repeat pair 04:03:16
+5471582312
+output_path: "/work/verify/runs/rt_motion2_off_rep2"
+output_path: "/work/verify/runs/rt_motion2_on_rep2"
+476814736
+[1]-  已完成               docker run --rm --name rr_m2_off --entrypoint bash -v "$V:/work" -v "$SSD/motion2.bag:/work/verify/input/motion2.bag:ro" -v "$XFS:/work/verify/input/motion2.xfs:ro" xfeat-admission-vio-verify:noetic-ceres -lc "bash /work/verify/run_rt_seq.sh motion2 off 12311 _rep2" > $V/verify/rt_motion2_off_rep2.log 2>&1
+[2]+  已完成               docker run --rm --name rr_m2_on --entrypoint bash -v "$V:/work" -v "$SSD/motion2.bag:/work/verify/input/motion2.bag:ro" -v "$XFS:/work/verify/input/motion2.xfs:ro" xfeat-admission-vio-verify:noetic-ceres -lc "bash /work/verify/run_rt_seq.sh motion2 on 12312 _rep2" > $V/verify/rt_motion2_on_rep2.log 2>&1
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion2 ARM=off rows=1167 frames=3558 anomalies=0 
+RT motion2 off_rep2 ate_cm=586748.93 cr=0.0000 n=1167
+processed_frames=3301 enqueued_frames=1100 tracked_only_frames=2201  PLAY_STATUS=0 NODE_STATUS=134 SEQ=motion2 ARM=on rows=1165 frames=3558 anomalies=0 
+RT motion2 on_rep2 ate_cm=14.16 cr=0.9432 n=1165
+M2_REPEAT_DONE 04:05:38

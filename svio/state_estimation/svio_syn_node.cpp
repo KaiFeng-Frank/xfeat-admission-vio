@@ -127,12 +127,17 @@ void imu_callback(const sensor_msgs::ImuConstPtr &imu_msg)
 
 
 // thread: frontend for visual-inertial odometry
-void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_time)
+void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_time, bool associate_depth)
 {
     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
     feature_tracker.trackImage(mono_img, cur_time);
-    if (USE_GMM)
+    if (!associate_depth)
+    {
+        // tracked-only frame under the back-end cadence: depth is consumed only
+        // by measurements, and this frame produces none
+    }
+    else if (USE_GMM)
     {
         feature_tracker.associateDepthGMM(dpt_img, USE_GMM_EXT);
         PHASE2_COUNTERS.gmm_depth_calls.fetch_add(1, std::memory_order_relaxed);
@@ -180,6 +185,7 @@ void frontend_sync()
     {
         cv::Mat dpt_img, color_img, mono_img;
         double time;
+        bool feed_backend = true;
 
         // 1. sync depth & rgb
         std::unique_lock<std::mutex> lk(m_img_buf);
@@ -213,7 +219,10 @@ void frontend_sync()
                 else
                     drop_frame_cnt++;
 
-                if (pass_drop_gate && shouldProcessFrameByFrequency(time))
+                const bool frame_admitted = pass_drop_gate && shouldProcessFrameByFrequency(time);
+                if (frame_admitted && ENABLE_BACKEND_FREQ_GATE)
+                    feed_backend = frequencyGateAdmits(time);
+                if (frame_admitted)
                 {
                     sensor_msgs::Image img;
                     img.header = color_img_buf.front()->header;
@@ -257,12 +266,17 @@ void frontend_sync()
             PHASE2_COUNTERS.processed_frames.fetch_add(1, std::memory_order_relaxed);
             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 
-            std::thread thread_points{trackPoints, mono_img, dpt_img, time};
+            // Under the back-end cadence a tracked-only frame keeps every point
+            // track alive (KLT, outlier rejection, starvation gate, learned
+            // admission) but detects no new corners, runs no line or plane
+            // front end, and produces no measurement.
+            feature_tracker.setDetectNewFeatures(feed_backend);
+            std::thread thread_points{trackPoints, mono_img, dpt_img, time, feed_backend};
             std::thread thread_lines;
             std::thread thread_planes;
-            if (ENABLE_LINE)
+            if (feed_backend && ENABLE_LINE)
                 thread_lines = std::thread(trackLines, mono_img);
-            if (ENABLE_PLANE)
+            if (feed_backend && ENABLE_PLANE)
                 thread_planes = std::thread(detectPlanes, dpt_img);
             thread_points.join();
             if (thread_lines.joinable())
@@ -274,6 +288,11 @@ void frontend_sync()
             double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
             frontend_time.push_back(tf*1000);
             ROS_DEBUG("frontend costs %f ms", tf*1000);
+            if (!feed_backend)
+            {
+                PHASE2_COUNTERS.tracked_only_frames.fetch_add(1, std::memory_order_relaxed);
+                continue;
+            }
 
             // associate points and lines with planes
             if (ENABLE_PLANE)

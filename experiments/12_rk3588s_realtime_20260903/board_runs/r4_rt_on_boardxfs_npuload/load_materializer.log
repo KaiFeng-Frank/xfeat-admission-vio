@@ -1,0 +1,9 @@
+W rknn-toolkit-lite2 version: 2.3.2
+W Query dynamic range failed. Ret code: RKNN_ERR_MODEL_INVALID. (If it is a static shape RKNN model, please ignore the above warning message.)
+{"frames": 100, "elapsed_s": 20.43628713600083, "median_total_ms": 196.75104099951568}
+{"frames": 200, "elapsed_s": 39.52228284600096, "median_total_ms": 192.30399850039248}
+{"frames": 300, "elapsed_s": 59.21592082400093, "median_total_ms": 193.53972749922832}
+{"frames": 400, "elapsed_s": 78.91972955399979, "median_total_ms": 194.87499850038148}
+{"frames": 500, "elapsed_s": 98.73159204500007, "median_total_ms": 195.19868600036716}
+{"frames": 600, "elapsed_s": 118.3844637279999, "median_total_ms": 195.16291550007736}
+{"frames": 700, "elapsed_s": 137.96255527799985, "median_total_ms": 195.09631100027036}

@@ -1,0 +1,252 @@
+diff --git a/svio/feature_tracking/feature_tracker.cpp b/svio/feature_tracking/feature_tracker.cpp
+index 8a21561..b302a33 100644
+--- a/svio/feature_tracking/feature_tracker.cpp
++++ b/svio/feature_tracking/feature_tracker.cpp
+@@ -332,7 +332,7 @@ void FeatureTracker::trackImage(const cv::Mat &mono_img, double _cur_time)
+     setMask();
+ 
+     int n_max_cnt = MAX_CNT - static_cast<int>(cur_pts.size());
+-    if (n_max_cnt > 0)
++    if (detect_new_features_ && n_max_cnt > 0)
+         cv::goodFeaturesToTrack(cur_img, n_pts, MAX_CNT - cur_pts.size(), 0.01, MIN_DIST, mask);
+     else
+         n_pts.clear();
+@@ -793,7 +793,7 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+     }
+ 
+     const int remaining = MAX_CNT - static_cast<int>(cur_pts.size());
+-    if (remaining > 0)
++    if (detect_new_features_ && remaining > 0)
+         cv::goodFeaturesToTrack(cur_img, n_pts, remaining, 0.01, MIN_DIST, mask);
+     else
+         n_pts.clear();
+diff --git a/svio/feature_tracking/feature_tracker.h b/svio/feature_tracking/feature_tracker.h
+index da9518f..980ba94 100644
+--- a/svio/feature_tracking/feature_tracker.h
++++ b/svio/feature_tracking/feature_tracker.h
+@@ -48,6 +48,7 @@ public:
+ 
+     // API
+     void trackImage(const cv::Mat &_img, double _cur_time);
++    void setDetectNewFeatures(bool enable) { detect_new_features_ = enable; }
+     void removeOutliers(set<int> &removePtsIds);
+     void associateDepthSimple(const cv::Mat& dpt);
+     void associateDepthGMM(const cv::Mat& dpt, bool use_sim=true);
+@@ -74,6 +75,7 @@ public:
+     vector<int> track_cnt;
+ 
+ private:
++    bool detect_new_features_ = true; // false on tracked-only frames under the back-end cadence
+     bool xfeat_enabled_ = false;
+     bool xfeat_hybrid_ = false;
+     bool xfeat_admission_only_ = false;
+diff --git a/svio/state_estimation/parameters.cpp b/svio/state_estimation/parameters.cpp
+index 8ccbe00..3485571 100644
+--- a/svio/state_estimation/parameters.cpp
++++ b/svio/state_estimation/parameters.cpp
+@@ -60,6 +60,8 @@ int ENABLE_STRUCTURE = 1;
+ int DROP_FRAME = 0;
+ int FREQ = 0;
+ bool ENABLE_FREQ_GATE = false;
++bool ENABLE_BACKEND_FREQ_GATE = false;
++int SOLVER_THREADS = 1;
+ 
+ double ACC_MULT; 
+ 
+@@ -133,6 +135,8 @@ void readParameters(ros::NodeHandle &n)
+     SHOW_TRACK = fsSettings["show_track"];
+     FREQ = optionalInt(fsSettings, "freq", FREQ);
+     ENABLE_FREQ_GATE = optionalBool(fsSettings, "freq_gate", ENABLE_FREQ_GATE);
++    ENABLE_BACKEND_FREQ_GATE = optionalBool(fsSettings, "backend_freq_gate", ENABLE_BACKEND_FREQ_GATE);
++    SOLVER_THREADS = optionalInt(fsSettings, "solver_threads", SOLVER_THREADS);
+     FLOW_BACK = optionalInt(fsSettings, "flow_back", FLOW_BACK);
+     DROP_FRAME = optionalInt(fsSettings, "drop_frame", DROP_FRAME);
+ 
+@@ -258,6 +262,8 @@ void readParameters(ros::NodeHandle &n)
+ 
+     n.param("freq_gate", ENABLE_FREQ_GATE, ENABLE_FREQ_GATE);
+     n.param("freq", FREQ, FREQ);
++    n.param("backend_freq_gate", ENABLE_BACKEND_FREQ_GATE, ENABLE_BACKEND_FREQ_GATE);
++    n.param("solver_threads", SOLVER_THREADS, SOLVER_THREADS);
+     n.param("flow_back", FLOW_BACK, FLOW_BACK);
+     n.param("drop_frame", DROP_FRAME, DROP_FRAME);
+     n.param("use_gmm", USE_GMM, USE_GMM);
+@@ -282,6 +288,17 @@ void readParameters(ros::NodeHandle &n)
+         ROS_FATAL("[PHASE2_FLAGS] freq_gate requires freq>0 and drop_frame=0 (freq=%d drop_frame=%d)", FREQ, DROP_FRAME);
+         std::exit(EXIT_FAILURE);
+     }
++    if (ENABLE_BACKEND_FREQ_GATE && (FREQ <= 0 || DROP_FRAME != 0 || ENABLE_FREQ_GATE))
++    {
++        ROS_FATAL("[PHASE2_FLAGS] backend_freq_gate requires freq>0, drop_frame=0 and freq_gate=0 (freq=%d drop_frame=%d freq_gate=%d)",
++                  FREQ, DROP_FRAME, static_cast<int>(ENABLE_FREQ_GATE));
++        std::exit(EXIT_FAILURE);
++    }
++    if (SOLVER_THREADS < 1)
++    {
++        ROS_FATAL("[PHASE2_FLAGS] solver_threads must be >= 1 (got %d)", SOLVER_THREADS);
++        std::exit(EXIT_FAILURE);
++    }
+     if (USE_GMM_EXT && !USE_GMM)
+     {
+         ROS_FATAL("[PHASE2_FLAGS] use_gmm_ext=1 is incompatible with use_gmm=0");
+@@ -305,10 +322,11 @@ void readParameters(ros::NodeHandle &n)
+         else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && ENABLE_STRUCTURE)
+             arm = "A3_gmm_plane_atlanta";
+     }
+-    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d",
++    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d backend_freq_gate=%d solver_threads=%d",
+              arm, static_cast<int>(ENABLE_FREQ_GATE), FREQ, DROP_FRAME, FLOW_BACK,
+              static_cast<int>(USE_GMM), static_cast<int>(USE_GMM_EXT),
+-             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE);
++             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE,
++             static_cast<int>(ENABLE_BACKEND_FREQ_GATE), SOLVER_THREADS);
+ 
+     INIT_DEPTH =  5.0; 
+     fsSettings.release();
+@@ -323,7 +341,14 @@ bool shouldProcessFrameByFrequency(double current_time)
+         PUB_THIS_FRAME = true;
+         return true;
+     }
++    return frequencyGateAdmits(current_time);
++}
+ 
++// The average-frequency gate shared by the two cadence modes: frame decimation
++// (freq_gate, the frame is not processed at all) and back-end cadence
++// (backend_freq_gate, the frame is tracked but not fed to the back end).
++bool frequencyGateAdmits(double current_time)
++{
+     if (first_frequency_frame)
+     {
+         first_frequency_frame = false;
+@@ -369,10 +394,11 @@ bool shouldProcessFrameByFrequency(double current_time)
+ void logPhase2Counters(bool final_snapshot)
+ {
+     const char* kind = final_snapshot ? "final" : "periodic";
+-    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
++    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu tracked_only_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
+              kind,
+              static_cast<unsigned long long>(PHASE2_COUNTERS.processed_frames.load(std::memory_order_relaxed)),
+              static_cast<unsigned long long>(PHASE2_COUNTERS.enqueued_frames.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.tracked_only_frames.load(std::memory_order_relaxed)),
+              static_cast<unsigned long long>(PHASE2_COUNTERS.flow_back_checks.load(std::memory_order_relaxed)),
+              static_cast<unsigned long long>(PHASE2_COUNTERS.gmm_depth_calls.load(std::memory_order_relaxed)),
+              static_cast<unsigned long long>(PHASE2_COUNTERS.simple_depth_calls.load(std::memory_order_relaxed)),
+diff --git a/svio/state_estimation/parameters.h b/svio/state_estimation/parameters.h
+index 2f2bda2..ada6396 100644
+--- a/svio/state_estimation/parameters.h
++++ b/svio/state_estimation/parameters.h
+@@ -69,6 +69,8 @@ extern double ERR_PLANE_DIST;
+ extern int DROP_FRAME;
+ extern int FREQ;
+ extern bool ENABLE_FREQ_GATE;
++extern bool ENABLE_BACKEND_FREQ_GATE; // front end at sensor rate, back end fed at FREQ Hz
++extern int SOLVER_THREADS;            // ceres num_threads for the sliding-window solve
+ 
+ const double FOCAL_LENGTH = 460.0; // 460.0; // when use downsampled input change it to 230
+ const int WINDOW_SIZE = 10;
+@@ -137,6 +139,7 @@ struct Phase2RuntimeCounters
+ {
+     std::atomic<uint64_t> processed_frames{0};
+     std::atomic<uint64_t> enqueued_frames{0};
++    std::atomic<uint64_t> tracked_only_frames{0};
+     std::atomic<uint64_t> flow_back_checks{0};
+     std::atomic<uint64_t> gmm_depth_calls{0};
+     std::atomic<uint64_t> simple_depth_calls{0};
+@@ -154,6 +157,7 @@ extern Phase2RuntimeCounters PHASE2_COUNTERS;
+ 
+ void readParameters(ros::NodeHandle &n);
+ bool shouldProcessFrameByFrequency(double current_time);
++bool frequencyGateAdmits(double current_time);
+ void logPhase2Counters(bool final_snapshot=false);
+ 
+ enum SIZE_PARAMETERIZATION
+diff --git a/svio/state_estimation/svio.cpp b/svio/state_estimation/svio.cpp
+index 1f0a685..d1af68c 100644
+--- a/svio/state_estimation/svio.cpp
++++ b/svio/state_estimation/svio.cpp
+@@ -1004,7 +1004,7 @@ void SVIO::solveOdometry()
+     // 1.9 optimize it
+     ceres::Solver::Options options;
+     options.linear_solver_type = ceres::DENSE_SCHUR;
+-    // options.num_threads = 2; // default: 1
++    options.num_threads = SOLVER_THREADS; // 1 unless solver_threads is set
+     options.trust_region_strategy_type = ceres::DOGLEG;
+     options.max_num_iterations = NUM_ITERATIONS;
+     // options.use_explicit_schur_complement = true;
+diff --git a/svio/state_estimation/svio_syn_node.cpp b/svio/state_estimation/svio_syn_node.cpp
+index cf791b0..744ad54 100644
+--- a/svio/state_estimation/svio_syn_node.cpp
++++ b/svio/state_estimation/svio_syn_node.cpp
+@@ -127,12 +127,17 @@ void imu_callback(const sensor_msgs::ImuConstPtr &imu_msg)
+ 
+ 
+ // thread: frontend for visual-inertial odometry
+-void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_time)
++void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_time, bool associate_depth)
+ {
+     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+ 
+     feature_tracker.trackImage(mono_img, cur_time);
+-    if (USE_GMM)
++    if (!associate_depth)
++    {
++        // tracked-only frame under the back-end cadence: depth is consumed only
++        // by measurements, and this frame produces none
++    }
++    else if (USE_GMM)
+     {
+         feature_tracker.associateDepthGMM(dpt_img, USE_GMM_EXT);
+         PHASE2_COUNTERS.gmm_depth_calls.fetch_add(1, std::memory_order_relaxed);
+@@ -180,6 +185,7 @@ void frontend_sync()
+     {
+         cv::Mat dpt_img, color_img, mono_img;
+         double time;
++        bool feed_backend = true;
+ 
+         // 1. sync depth & rgb
+         std::unique_lock<std::mutex> lk(m_img_buf);
+@@ -213,7 +219,10 @@ void frontend_sync()
+                 else
+                     drop_frame_cnt++;
+ 
+-                if (pass_drop_gate && shouldProcessFrameByFrequency(time))
++                const bool frame_admitted = pass_drop_gate && shouldProcessFrameByFrequency(time);
++                if (frame_admitted && ENABLE_BACKEND_FREQ_GATE)
++                    feed_backend = frequencyGateAdmits(time);
++                if (frame_admitted)
+                 {
+                     sensor_msgs::Image img;
+                     img.header = color_img_buf.front()->header;
+@@ -257,12 +266,17 @@ void frontend_sync()
+             PHASE2_COUNTERS.processed_frames.fetch_add(1, std::memory_order_relaxed);
+             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+ 
+-            std::thread thread_points{trackPoints, mono_img, dpt_img, time};
++            // Under the back-end cadence a tracked-only frame keeps every point
++            // track alive (KLT, outlier rejection, starvation gate, learned
++            // admission) but detects no new corners, runs no line or plane
++            // front end, and produces no measurement.
++            feature_tracker.setDetectNewFeatures(feed_backend);
++            std::thread thread_points{trackPoints, mono_img, dpt_img, time, feed_backend};
+             std::thread thread_lines;
+             std::thread thread_planes;
+-            if (ENABLE_LINE)
++            if (feed_backend && ENABLE_LINE)
+                 thread_lines = std::thread(trackLines, mono_img);
+-            if (ENABLE_PLANE)
++            if (feed_backend && ENABLE_PLANE)
+                 thread_planes = std::thread(detectPlanes, dpt_img);
+             thread_points.join();
+             if (thread_lines.joinable())
+@@ -274,6 +288,11 @@ void frontend_sync()
+             double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+             frontend_time.push_back(tf*1000);
+             ROS_DEBUG("frontend costs %f ms", tf*1000);
++            if (!feed_backend)
++            {
++                PHASE2_COUNTERS.tracked_only_frames.fetch_add(1, std::memory_order_relaxed);
++                continue;
++            }
+ 
+             // associate points and lines with planes
+             if (ENABLE_PLANE)

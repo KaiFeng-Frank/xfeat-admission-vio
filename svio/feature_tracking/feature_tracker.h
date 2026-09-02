@@ -48,6 +48,7 @@ public:
 
     // API
     void trackImage(const cv::Mat &_img, double _cur_time);
+    void setDetectNewFeatures(bool enable) { detect_new_features_ = enable; }
     void removeOutliers(set<int> &removePtsIds);
     void associateDepthSimple(const cv::Mat& dpt);
     void associateDepthGMM(const cv::Mat& dpt, bool use_sim=true);
@@ -74,6 +75,7 @@ public:
     vector<int> track_cnt;
 
 private:
+    bool detect_new_features_ = true; // false on tracked-only frames under the back-end cadence
     bool xfeat_enabled_ = false;
     bool xfeat_hybrid_ = false;
     bool xfeat_admission_only_ = false;

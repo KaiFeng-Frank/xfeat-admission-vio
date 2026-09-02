@@ -1004,7 +1004,7 @@ void SVIO::solveOdometry()
     // 1.9 optimize it
     ceres::Solver::Options options;
     options.linear_solver_type = ceres::DENSE_SCHUR;
-    // options.num_threads = 2; // default: 1
+    options.num_threads = SOLVER_THREADS; // 1 unless solver_threads is set
     options.trust_region_strategy_type = ceres::DOGLEG;
     options.max_num_iterations = NUM_ITERATIONS;
     // options.use_explicit_schur_complement = true;

@@ -1,0 +1,12 @@
+== p1_a76_cvdefault (off) 03:56:44 env: SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=15 SVIO_PLAY_EXTRA='-u 40' SVIO_EST_CORES=4-7
+rows_at_play_end=380 final_rows=380 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 12.2±7.7 n1201 | track_line_time 20.6±6.2 n400 | track_plane_time 12.1±5.9 n400 | frontend_time 13.7±9.2 n1201 | swo_time 64.9±23.4 n399 | ceres_time 49.5±11.0 n380 | 
+== p2_all8_cvdefault (off) 03:57:54 env: SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=15 SVIO_PLAY_EXTRA='-u 40' SVIO_EST_CORES=0-7
+rows_at_play_end=380 final_rows=380 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 18.8±14.9 n1201 | track_line_time 28.4±8.0 n400 | track_plane_time 21.2±9.4 n400 | frontend_time 19.9±15.3 n1201 | swo_time 76.8±27.1 n399 | ceres_time 59.8±13.0 n380 | 
+== p3_a76_cv1 (off) 03:59:05 env: SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=15 SVIO_PLAY_EXTRA='-u 40' SVIO_EST_CORES=4-7 SVIO_ENV_EXTRA=OPENCV_FOR_THREADS_NUM=1
+rows_at_play_end=380 final_rows=380 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=OPENCV_FOR_THREADS_NUM=1
+track_point_time 12.1±7.6 n1201 | track_line_time 20.4±6.2 n400 | track_plane_time 11.6±5.6 n400 | frontend_time 13.6±9.0 n1201 | swo_time 64.7±22.7 n399 | ceres_time 49.4±9.9 n380 | 
+== p4_all8_cv1 (off) 04:00:14 env: SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=15 SVIO_PLAY_EXTRA='-u 40' SVIO_EST_CORES=0-7 SVIO_ENV_EXTRA=OPENCV_FOR_THREADS_NUM=1
+rows_at_play_end=380 final_rows=380 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=OPENCV_FOR_THREADS_NUM=1
+track_point_time 19.0±15.0 n1201 | track_line_time 29.4±7.9 n400 | track_plane_time 21.4±9.4 n400 | frontend_time 20.1±15.5 n1201 | swo_time 76.4±27.1 n399 | ceres_time 59.5±12.8 n380 | 

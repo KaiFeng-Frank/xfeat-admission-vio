@@ -332,7 +332,7 @@ void FeatureTracker::trackImage(const cv::Mat &mono_img, double _cur_time)
     setMask();
 
     int n_max_cnt = MAX_CNT - static_cast<int>(cur_pts.size());
-    if (n_max_cnt > 0)
+    if (detect_new_features_ && n_max_cnt > 0)
         cv::goodFeaturesToTrack(cur_img, n_pts, MAX_CNT - cur_pts.size(), 0.01, MIN_DIST, mask);
     else
         n_pts.clear();
@@ -793,7 +793,7 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
     }
 
     const int remaining = MAX_CNT - static_cast<int>(cur_pts.size());
-    if (remaining > 0)
+    if (detect_new_features_ && remaining > 0)
         cv::goodFeaturesToTrack(cur_img, n_pts, remaining, 0.01, MIN_DIST, mask);
     else
         n_pts.clear();

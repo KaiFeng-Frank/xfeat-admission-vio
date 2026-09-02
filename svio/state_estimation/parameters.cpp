@@ -60,6 +60,8 @@ int ENABLE_STRUCTURE = 1;
 int DROP_FRAME = 0;
 int FREQ = 0;
 bool ENABLE_FREQ_GATE = false;
+bool ENABLE_BACKEND_FREQ_GATE = false;
+int SOLVER_THREADS = 1;
 
 double ACC_MULT; 
 
@@ -133,6 +135,8 @@ void readParameters(ros::NodeHandle &n)
     SHOW_TRACK = fsSettings["show_track"];
     FREQ = optionalInt(fsSettings, "freq", FREQ);
     ENABLE_FREQ_GATE = optionalBool(fsSettings, "freq_gate", ENABLE_FREQ_GATE);
+    ENABLE_BACKEND_FREQ_GATE = optionalBool(fsSettings, "backend_freq_gate", ENABLE_BACKEND_FREQ_GATE);
+    SOLVER_THREADS = optionalInt(fsSettings, "solver_threads", SOLVER_THREADS);
     FLOW_BACK = optionalInt(fsSettings, "flow_back", FLOW_BACK);
     DROP_FRAME = optionalInt(fsSettings, "drop_frame", DROP_FRAME);
 
@@ -258,6 +262,8 @@ void readParameters(ros::NodeHandle &n)
 
     n.param("freq_gate", ENABLE_FREQ_GATE, ENABLE_FREQ_GATE);
     n.param("freq", FREQ, FREQ);
+    n.param("backend_freq_gate", ENABLE_BACKEND_FREQ_GATE, ENABLE_BACKEND_FREQ_GATE);
+    n.param("solver_threads", SOLVER_THREADS, SOLVER_THREADS);
     n.param("flow_back", FLOW_BACK, FLOW_BACK);
     n.param("drop_frame", DROP_FRAME, DROP_FRAME);
     n.param("use_gmm", USE_GMM, USE_GMM);
@@ -280,6 +286,17 @@ void readParameters(ros::NodeHandle &n)
     if (ENABLE_FREQ_GATE && (FREQ <= 0 || DROP_FRAME != 0))
     {
         ROS_FATAL("[PHASE2_FLAGS] freq_gate requires freq>0 and drop_frame=0 (freq=%d drop_frame=%d)", FREQ, DROP_FRAME);
+        std::exit(EXIT_FAILURE);
+    }
+    if (ENABLE_BACKEND_FREQ_GATE && (FREQ <= 0 || DROP_FRAME != 0 || ENABLE_FREQ_GATE))
+    {
+        ROS_FATAL("[PHASE2_FLAGS] backend_freq_gate requires freq>0, drop_frame=0 and freq_gate=0 (freq=%d drop_frame=%d freq_gate=%d)",
+                  FREQ, DROP_FRAME, static_cast<int>(ENABLE_FREQ_GATE));
+        std::exit(EXIT_FAILURE);
+    }
+    if (SOLVER_THREADS < 1)
+    {
+        ROS_FATAL("[PHASE2_FLAGS] solver_threads must be >= 1 (got %d)", SOLVER_THREADS);
         std::exit(EXIT_FAILURE);
     }
     if (USE_GMM_EXT && !USE_GMM)
@@ -305,10 +322,11 @@ void readParameters(ros::NodeHandle &n)
         else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && ENABLE_STRUCTURE)
             arm = "A3_gmm_plane_atlanta";
     }
-    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d",
+    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d backend_freq_gate=%d solver_threads=%d",
              arm, static_cast<int>(ENABLE_FREQ_GATE), FREQ, DROP_FRAME, FLOW_BACK,
              static_cast<int>(USE_GMM), static_cast<int>(USE_GMM_EXT),
-             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE);
+             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE,
+             static_cast<int>(ENABLE_BACKEND_FREQ_GATE), SOLVER_THREADS);
 
     INIT_DEPTH =  5.0; 
     fsSettings.release();
@@ -323,7 +341,14 @@ bool shouldProcessFrameByFrequency(double current_time)
         PUB_THIS_FRAME = true;
         return true;
     }
+    return frequencyGateAdmits(current_time);
+}
 
+// The average-frequency gate shared by the two cadence modes: frame decimation
+// (freq_gate, the frame is not processed at all) and back-end cadence
+// (backend_freq_gate, the frame is tracked but not fed to the back end).
+bool frequencyGateAdmits(double current_time)
+{
     if (first_frequency_frame)
     {
         first_frequency_frame = false;
@@ -369,10 +394,11 @@ bool shouldProcessFrameByFrequency(double current_time)
 void logPhase2Counters(bool final_snapshot)
 {
     const char* kind = final_snapshot ? "final" : "periodic";
-    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
+    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu tracked_only_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
              kind,
              static_cast<unsigned long long>(PHASE2_COUNTERS.processed_frames.load(std::memory_order_relaxed)),
              static_cast<unsigned long long>(PHASE2_COUNTERS.enqueued_frames.load(std::memory_order_relaxed)),
+             static_cast<unsigned long long>(PHASE2_COUNTERS.tracked_only_frames.load(std::memory_order_relaxed)),
              static_cast<unsigned long long>(PHASE2_COUNTERS.flow_back_checks.load(std::memory_order_relaxed)),
              static_cast<unsigned long long>(PHASE2_COUNTERS.gmm_depth_calls.load(std::memory_order_relaxed)),
              static_cast<unsigned long long>(PHASE2_COUNTERS.simple_depth_calls.load(std::memory_order_relaxed)),

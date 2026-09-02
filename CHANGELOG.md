@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.4 — 2026-09-03
+
+Real time on the RK3588S. One code path added to the estimator, off by default.
+
+- `patches/04_backend_cadence.patch`: `backend_freq_gate` (front end at sensor rate, back
+  end fed at `freq` Hz through the existing average-frequency gate; tracked-only frames keep
+  every point track, the starvation gate and the learned admission, and skip corner
+  detection, depth association, the line and plane front ends and the measurement),
+  `solver_threads` (Ceres `num_threads`), a `tracked_only_frames` counter; with the keys
+  absent the patched binary reproduces the sealed light1 rows to 0.005 cm
+- `experiments/12_rk3588s_realtime_20260903/`: the real-time configuration (three lines over
+  the frozen base), four instrument-setting probes, light1 at 1× replay on the board under
+  the frozen and the real-time configuration (OFF, ON with either sidecar, ON under
+  concurrent NPU-materializer load), and the accuracy of the 10 Hz cadence on all twelve
+  VCU-RVI sequences on the desktop, OFF and ON
+- board: native `-O3 -mcpu=cortex-a76` rebuild inside the rootfs (`build/`), replay runner
+  with a pose-count timeline and a real-time verdict, `base_realtime.yaml`
+- light2 to light6 sidecars regenerated with the pinned materializer; hashes identical to the
+  sealed ones
+- README: real-time section; ROADMAP: sensor-rate item ticked, live pipeline and the motion2
+  divergence added
+
 ## 1.3 — 2026-09-03
 
 End-to-end replay on the RK3588S, no estimator code change.

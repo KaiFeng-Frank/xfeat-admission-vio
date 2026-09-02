@@ -167,6 +167,20 @@ configurations. The cap binds on the board and never on the desktop, but lifting
 not reproduce the desktop trajectory. Details, timings and the checks made on that
 difference: `BOARD_E2E_RECEIPT.md` in that directory.
 
+## Stage 10 — real time on the RK3588S (`experiments/12_rk3588s_realtime_20260903/`)
+
+The back-end cadence configuration (front end at sensor rate, back end fed at 10 Hz,
+80 ms solver guard) and a native `-O3 -mcpu=cortex-a76` build make the estimator run
+light1 at 1× on the board with no backlog, OFF and ON, also under concurrent NPU load;
+the frozen configuration leaves a 49 s backlog on the 96 s sequence. Board scores at
+that cadence, single runs: OFF 17.97 cm, ON 14.89 cm (desktop-made sidecar), 16.36 cm
+(NPU-made sidecar). The accuracy of the cadence on the desktop, all twelve VCU-RVI
+sequences: OFF diverges on motion2 in both of two runs while ON scores 14.12 and
+14.16 cm; ON beats OFF on four of the eleven scored pairs; against the full-rate rows the
+cadence improves five OFF rows and four ON rows of twelve. Table and receipts:
+`REALTIME_RECEIPT.md` in that directory. The patched binary with the new keys absent
+reproduces the sealed light1 rows to 0.005 cm.
+
 ## Boundary of the evidence
 
 * Sealed artifacts were path-anonymized after sealing (machine paths became
@@ -179,8 +193,11 @@ difference: `BOARD_E2E_RECEIPT.md` in that directory.
 * Every learned input in stages 1–7 was a precomputed sidecar. The 10 Hz tick is a
   data-time cadence there; stage 8 supplies the on-device backbone and tail latencies,
   and stage 9 replays one sequence on the board at a quarter of sensor rate with the
-  sidecar precomputed on the device. No run consumed a live camera or a sidecar produced
-  concurrently with the estimate.
+  sidecar precomputed on the device; stage 10 replays it at sensor rate, once with the
+  NPU materializer running concurrently as load. No run consumed a live camera or a sidecar
+  produced concurrently with the estimate.
+* The real-time rows of stage 10 are a different operating point (back end at 10 Hz) and
+  are never mixed with the full-rate rows of stages 1–7 in any count.
 * Comparator provenance differs per table and is stated in each table.
 * The inherited S-VIO node aborts during teardown after the trajectory is complete;
   every scored trajectory reached the source's final image stamp.

@@ -1,0 +1,47 @@
+{
+ "light2": {
+  "sealed_sha256": "1704fb19b317371b135583e343942ad1c83bb85c8b378975cb7d633ba3011572",
+  "regenerated_sha256_prefix": "1704fb19b317371b",
+  "match": true,
+  "bytes": 442909700,
+  "sealed_bytes": 442909700,
+  "frames": 3305
+ },
+ "light3": {
+  "sealed_sha256": "422f779b7d127c6f221ef0d8d8375ac8e246cb962e88d15713e8769cb350903d",
+  "regenerated_sha256_prefix": "422f779b7d127c6f",
+  "match": true,
+  "bytes": 347225132,
+  "sealed_bytes": 347225132,
+  "frames": 2591
+ },
+ "light4": {
+  "sealed_sha256": "6dd65618125c1fdad08a486e38a83e51bdeb409926347742a4a3ede4ad90c59c",
+  "regenerated_sha256_prefix": "6dd65618125c1fda",
+  "match": true,
+  "bytes": 357142020,
+  "sealed_bytes": 357142020,
+  "frames": 2665
+ },
+ "light5": {
+  "sealed_sha256": "94d14c11001ee30b17b46fbd3e255b5f2ae5485b90db49589fde871c1b28c67a",
+  "regenerated_sha256_prefix": "94d14c11001ee30b",
+  "match": true,
+  "bytes": 437281196,
+  "sealed_bytes": 437281196,
+  "frames": 3263
+ },
+ "light6": {
+  "sealed_sha256": "8e0b4d4fc9aa1b8186c495372e903acd8eb7dda70940d2665119a61773e37045",
+  "regenerated_sha256_prefix": "8e0b4d4fc9aa1b81",
+  "match": true,
+  "bytes": 418251492,
+  "sealed_bytes": 418251492,
+  "frames": 3121
+ },
+ "light1": {
+  "sealed_sha256": "e4f21d4591cfc319f5a190a85f2360c1d78251d01f4290710229f2a1856d0910",
+  "source": "the sealed light1 sidecar itself"
+ },
+ "note": "light2 to light6 sidecars had been deleted after sealing; regenerated with sidecar/xfs_materialize.py (pinned module) from the ROS 2 bags, hashes compared with LIGHT_INPUT_FREEZE.json"
+}

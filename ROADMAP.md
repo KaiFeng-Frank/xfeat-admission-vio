@@ -1,7 +1,8 @@
 # Roadmap
 
-Release 1.0 is the final code state of this project. What remains is measurement on
-the target hardware, not code.
+Release 1.0 is the final state of the mechanism. Release 1.4 added one deployment path to
+the estimator (the back-end cadence, `patches/04_backend_cadence.patch`), off by default and
+verified to leave the sealed behavior untouched; the mechanism itself is unchanged.
 
 ## On-device campaign (RK3588S)
 
@@ -16,9 +17,14 @@ the target hardware, not code.
 - [x] one end-to-end replay on the board with the sidecar produced on-device, scored
       with the pinned scorer against the desktop ledger row (1.3; the board does not reproduce
       the desktop trajectory on light1, and the receipt records what was checked about that)
-- [ ] sensor-rate operation on the board: the stage times of this build give a pipeline
-      ceiling of about 17 Hz on the A76 cores, so light1 was replayed at a quarter of sensor
-      rate to stay lossless
+- [x] sensor-rate operation on the board (1.4): front end at sensor rate, back end fed at
+      10 Hz, native `-O3 -mcpu=cortex-a76` build; light1 at 1× replay with no backlog, also
+      under concurrent NPU load; the accuracy of that cadence measured on all twelve VCU
+      sequences on the desktop
+- [ ] a live pipeline: camera driver, NPU sidecar produced concurrently, estimator; the
+      load test of 1.4 shows the CPU and NPU room for it, nothing more
+- [ ] the motion2 divergence of the OFF arm at the 10 Hz cadence: reproduced twice, not
+      diagnosed
 
 ## Standing notes
 

@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "formal_python": {
+      "path": "python3",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+      "size_bytes": 32003680
+    },
+    "formal_table2_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "sha256": "800b96b0c9bdeaf61779f126cb35d5a09a856fba781605e1e846f4783524caf0",
+      "size_bytes": 20124
+    },
+    "formal_table2_scorer_dependency": {
+      "path": "${REPO_ROOT}/tools/scoring/trajectory_compare.py",
+      "sha256": "4c8895b1e4b58d90aeaf4859e2716c5ab6e6f00c4f395ad251b6a31c57f6500a",
+      "size_bytes": 28000
+    },
+    "frozen_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/score_nn20.py",
+      "sha256": "037a579cfd5cdb6368733e9fe04809eb301da255091dc69f2dfde61953a8c01b",
+      "size_bytes": 964
+    },
+    "ground_truth": {
+      "path": "${DATA_ROOT}/vcu_rvi/motion3_gt.tum",
+      "sha256": "f2436ae1b0e2328e49514acbe40ac49264b21c73b0f64c6cbb179fceffd56968",
+      "size_bytes": 800047
+    },
+    "normalized": {
+      "path": "${VERIFY_ROOT}/verify/scores/rt_motion3_off/trajectory_body.tum",
+      "sha256": "4990fbd4983f7361784f432d9cf3e0b0042349f93ab29d9819d0664a2c0da340",
+      "size_bytes": 90941
+    },
+    "normalizer_and_exact_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/normalize_score_phase1.py",
+      "sha256": "9598238d10703a07d7d5e97fc1f1d530efb289202dfd4cf3f97b25f0283aa190",
+      "size_bytes": 10075
+    },
+    "raw": {
+      "path": "${VERIFY_ROOT}/verify/runs/rt_motion3_off/svio_no_loop.csv",
+      "sha256": "2d6d970d693ba0a697ab32d46bedd09f9962e51947259a2b73103c6fea4363e7",
+      "size_bytes": 88666
+    }
+  },
+  "formal_table2_scoring": {
+    "alignment": "SE3_Horn_no_scale_all_interpolated_rows",
+    "association": "GT_interpolated_to_each_estimate_timestamp_within_GT_span",
+    "command": [
+      "python3",
+      "-s",
+      "-B",
+      "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "--input",
+      "${VERIFY_ROOT}/verify/scores/rt_motion3_off/trajectory_body.tum",
+      "--scene",
+      "rt",
+      "--gt-file",
+      "${DATA_ROOT}/vcu_rvi/motion3_gt.tum",
+      "--align",
+      "se3",
+      "--start-offset",
+      "0",
+      "--cr-span",
+      "gt",
+      "--ate-thresh",
+      "1.0",
+      "--no-to-base-link",
+      "--format",
+      "csv"
+    ],
+    "environment": {
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "result": {
+      "align": "se3",
+      "aoe_median_deg": "1.4306020329996478",
+      "ate_max_m": "0.23792130867183148",
+      "ate_median_m": "0.09887006217497858",
+      "ate_rmse_all_m": "0.10086025026186651",
+      "ate_rmse_correct_m": "0.10086025026186651",
+      "coverage": "1.0",
+      "cr": "0.9604185523012124",
+      "cr_inf": "0.9604185523012124",
+      "cr_pos": "0.9604185523012124",
+      "eps_m": "1.0",
+      "matched": "903",
+      "method": "",
+      "n_est": "903",
+      "n_gt": "10129",
+      "scene": "rt",
+      "tag": "trajectory_body",
+      "temporal_coverage": "0.9604185523012124"
+    },
+    "role": "primary_Table_II_metric",
+    "stderr": "",
+    "time_shift_s": 0.0
+  },
+  "label": "rt-motion3-off",
+  "normalization": {
+    "canonical_header": "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows",
+    "output_frame": "body_imu",
+    "parser": "vins_ns_qwxyz_csv",
+    "quaternion_input": "qw_qx_qy_qz",
+    "quaternion_output": "qx_qy_qz_qw",
+    "row_count": 903,
+    "timestamp": "ns_to_s_if_gt_1e10",
+    "transform": "native_body"
+  },
+  "schema": "svio-native-body-nn20-score-v1",
+  "scoring": {
+    "alignment": "SE3_Umeyama_no_scale_all_matched_rows",
+    "alignment_rotation": [
+      [
+        0.2858955067468086,
+        0.009110373573451028,
+        0.9582174911341046
+      ],
+      [
+        0.09353682488034405,
+        -0.9954449757641678,
+        -0.018443497964862027
+      ],
+      [
+        0.9536847600823294,
+        0.09490153486234149,
+        -0.2854454012021957
+      ]
+    ],
+    "alignment_translation_m": [
+      -0.0815848447187133,
+      0.04015298528012945,
+      -0.08047313184151417
+    ],
+    "association": "nearest_neighbor_strict_abs_dt_lt_0.020s",
+    "ate_median_m": 0.09712802900050893,
+    "ate_p90_m": 0.13243410253035062,
+    "ate_rmse_m": 0.1007275433324925,
+    "estimate_rows": 903,
+    "frozen_stdout": "rt-motion3-off: n=881 ATE RMSE=10.07cm median=9.71cm p90=13.24cm",
+    "ground_truth_rows": 10129,
+    "matched_rows": 881,
+    "max_matched_abs_dt_s": 0.01924497600009545,
+    "time_shift_s": 0.0,
+    "unmatched_rows": 22
+  }
+}

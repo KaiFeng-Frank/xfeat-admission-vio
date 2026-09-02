@@ -1,0 +1,32 @@
+== r0_frozen_off (off) 04:01:29 env: SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=20 SVIO_EXPECT_FRAMES=2875 SVIO_EST_CORES=4-7 SVIO_BASE_CONFIG=/opt/xfeat/config/base.yaml SVIO_DRAIN_MAX=900
+rows=2819 frames=2875 drained=1 drain_wait_s=69 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=23.746 swo_ms=48.7715
+rows_at_play_end=1861 final_rows=2819 backlog_after_play_s=48.9 realtime_ok=0 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 22.7±5.1 n2875 | marginalization_time 6.7±6.5 n2819 | frontend_time 23.7±4.1 n2875 | swo_time 48.8±16.3 n2874 | ceres_time 36.3±11.0 n2819 | 
+SCORE r0_frozen_off ate_cm=22.03 cr=0.9849 n=2819
+== r1_rt_off (off) 04:04:30 env: SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=20 SVIO_EXPECT_FRAMES=2875 SVIO_EST_CORES=4-7 SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml
+rows=939 frames=2875 drained=1 drain_wait_s=20 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=13.9592 swo_ms=65.2756
+rows_at_play_end=939 final_rows=939 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 12.7±7.6 n2875 | marginalization_time 9.5±6.0 n939 | frontend_time 14.0±8.7 n2875 | swo_time 65.3±20.4 n958 | ceres_time 48.2±13.4 n939 | 
+SCORE r1_rt_off ate_cm=17.97 cr=0.9835 n=939
+== r2_rt_on_hostxfs (on) 04:06:41 env: SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=20 SVIO_EXPECT_FRAMES=2875 SVIO_EST_CORES=4-7 SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml
+rows=939 frames=2875 drained=1 drain_wait_s=20 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=13.683 swo_ms=65.2372
+rows_at_play_end=939 final_rows=939 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 12.4±7.4 n2875 | marginalization_time 9.5±5.9 n939 | frontend_time 13.7±8.3 n2875 | swo_time 65.2±20.0 n958 | ceres_time 48.3±13.8 n939 | 
+SCORE r2_rt_on_hostxfs ate_cm=14.89 cr=0.9835 n=939
+== r3_rt_on_boardxfs (on) 04:08:52 env: SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=20 SVIO_EXPECT_FRAMES=2875 SVIO_EST_CORES=4-7 SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml
+rows=939 frames=2875 drained=1 drain_wait_s=20 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=13.9342 swo_ms=64.8351
+rows_at_play_end=939 final_rows=939 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 12.6±7.5 n2875 | marginalization_time 9.7±6.3 n939 | frontend_time 13.9±8.5 n2875 | swo_time 64.8±19.7 n958 | ceres_time 47.7±13.9 n939 | 
+SCORE r3_rt_on_boardxfs ate_cm=16.36 cr=0.9835 n=939
+== start concurrent NPU materializer load 04:11:04
+== r4_rt_on_boardxfs_npuload (on) 04:11:29 env: SVIO_PLAY_RATE=1.0 SVIO_DRAIN_STABLE=20 SVIO_EXPECT_FRAMES=2875 SVIO_EST_CORES=4-7 SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml
+rows=939 frames=2875 drained=1 drain_wait_s=20 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=13.4912 swo_ms=63.9202
+rows_at_play_end=939 final_rows=939 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>
+track_point_time 12.4±7.5 n2875 | marginalization_time 9.2±5.8 n939 | frontend_time 13.5±8.3 n2875 | swo_time 63.9±19.3 n958 | ceres_time 47.1±13.7 n939 | 
+SCORE r4_rt_on_boardxfs_npuload ate_cm=16.36 cr=0.9835 n=939
+PHASE_R_DONE 04:13:40

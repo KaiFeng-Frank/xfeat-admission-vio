@@ -1,0 +1,9 @@
+track_point_time 2.59157 2.10053 2591
+track_line_time 2.95639 1.08004 863
+track_plane_time 3.37654 0.984142 863
+marginalization_time 2.02679 1.17006 804
+structural_time 0.0249038 0.0141557 803
+frontend_time 2.80997 2.13758 2591
+swo_time 11.9585 5.51027 863
+ceres_time 7.7926 3.17633 804
+opt_dim 310.046 46.485 851.922 346.146 149.872 46.5845

@@ -95,13 +95,16 @@ modes and the XFSIDE01 sidecar format.
 The gate-patched tracker hashes to the values frozen before the held-out sequences
 were opened, and a rebuild in the pinned container reproduces the frozen candidate
 binaries byte for byte; a light1 replay of both arms agrees with the sealed ATE
-(`docs/REPRODUCE.md`, `experiments/08_rebuild_verification_20260902/`).
+(`docs/REPRODUCE.md`, `experiments/08_rebuild_verification_20260902/`). Release 1.4
+added one deployment path to the estimator (the back-end cadence, off by default); the
+binary built from the current tree with that path disabled reproduces the sealed light1
+rows to 0.005 cm (`experiments/12_rk3588s_realtime_20260903/sealed_behavior_check/`).
 
 ## Layout
 
 ```
 svio/ camera_models_in/ config/ launch/   the S-VIO fork itself, at the repository root as upstream laid it out, with the XFeat sidecar reader, three front-end modes, and the gate
-patches/                the three diffs that turn upstream S-VIO into this estimator, in order
+patches/                the four diffs that turn upstream S-VIO into this estimator, in order (the fourth is the deployment cadence of 1.4, off by default)
 sidecar/                XFSIDE01 writer (xfs_materialize.py), header verifier, pinned sparse-XFeat implementation
 models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) and its export receipt
 deploy/rknn/            RKNN-Toolkit2 conversion tool and same-run receipts (the .rknn bytes are not redistributed)
@@ -173,6 +176,36 @@ Finally, the stage times of this build put the pipeline ceiling on the A76 cores
 17 Hz, so it does not run light1 at sensor rate; the replay was slowed to stay lossless.
 Receipt: [`experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md`](experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md).
 
+### Real time on the board
+
+What the frozen configuration cannot do, a three-line configuration can: with
+`backend_freq_gate: 1` the front end still runs on every frame (KLT, outlier rejection,
+the starvation gate, the learned admission) while corner detection, depth association,
+the line and plane front ends and the measurement move to the 10 Hz cadence that
+VINS-Mono's `freq` parameter defines, and the solver guard is sized to that period.
+Together with a native `-O3 -mcpu=cortex-a76` build and the estimator pinned to the four
+A76 cores, light1 replays at 1× on the board with every frame processed and nothing left
+to catch up when the data stops. ATE RMSE in cm, single runs:
+
+| Run on the RK3588S, light1 at 1× | poses at end of playback / final | catch-up after playback | ATE |
+|---|---:|---:|---:|
+| frozen configuration, OFF | 1861 / 2819 | 48.9 s | 22.03 |
+| real-time configuration, OFF | 939 / 939 | 0.0 s | 17.97 |
+| real-time configuration, ON, sidecar made on the desktop | 939 / 939 | 0.0 s | 14.89 |
+| real-time configuration, ON, sidecar made on the NPU | 939 / 939 | 0.0 s | 16.36 |
+| the same, with the NPU sidecar materializer running concurrently on the A55 cores and the NPU | 939 / 939 | 0.0 s | 16.36 |
+
+The 10 Hz back-end cadence is a different operating point, so its accuracy was measured
+on the desktop on all twelve VCU-RVI sequences, OFF and ON, beside the sealed full-rate
+rows (`experiments/12_rk3588s_realtime_20260903/desktop_ledger/LEDGER_TABLE.md`). Two
+things from that table: the plain front end diverges on motion2 at this cadence in both
+of two runs while the learned admission keeps the sequence at 14 cm; and ON beats OFF on
+four of the eleven scored pairs, against six of twelve at full rate, the cadence
+widening ON's advantage on the darkest sequences and narrowing it elsewhere. With the
+new keys absent the patched binary reproduces the sealed rows. Receipt:
+[`experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md`](experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md);
+the patch: [`patches/04_backend_cadence.patch`](patches/04_backend_cadence.patch).
+
 <img src="docs/figures/rk3588s_indiedroid_nova.jpg" alt="Indiedroid Nova RK3588S on the bench over ADB" width="520">
 
 ## Version line
@@ -182,8 +215,9 @@ Receipt: [`experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md`](exp
 | 1.0 | final code release: frozen candidate, sidecar tooling, sealed VCU ledger, RKNN compile receipts, byte-identical rebuild verification |
 | 1.1 | RK3588S on-device receipts: identity, NPU latency per core mask, CPU sparse-tail latency, memory, conformance against the ONNX reference |
 | 1.2 | matched-OFF control completed on all twelve VCU sequences with the rebuilt binary; README tables replace the chart |
-| **1.3** | the estimator end to end on the RK3588S: aarch64 build, chroot launcher, lossless replay runner, light1 scored on the board in both solver configurations against a desktop rerun |
-| 1.x | further device receipts (C++ runtime path, driver upgrade, sensor-rate operation); no estimator code change planned |
+| 1.3 | the estimator end to end on the RK3588S: aarch64 build, chroot launcher, lossless replay runner, light1 scored on the board in both solver configurations against a desktop rerun |
+| **1.4** | real time on the RK3588S: back-end cadence path (off by default, sealed behavior reproduced), native tuned build, light1 at 1× with no backlog including under NPU load, the cadence's accuracy on all twelve VCU sequences |
+| 1.x | further device receipts (C++ runtime path, driver upgrade, a live camera and sidecar pipeline); no change to the mechanism planned |
 
 See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
 

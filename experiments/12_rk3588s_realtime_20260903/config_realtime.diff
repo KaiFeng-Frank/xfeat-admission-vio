@@ -1,0 +1,7 @@
+62a63,64
+> backend_freq_gate: 1    # real-time configuration: front end at sensor rate, back end fed at freq Hz
+> solver_threads: 2       # real-time configuration: ceres num_threads for the sliding-window solve
+71c73
+< max_solver_time: 0.04   # max solver itration time (ms), to guarantee real time
+---
+> max_solver_time: 0.08   # real-time configuration: wall-clock guard inside the 100 ms back-end period

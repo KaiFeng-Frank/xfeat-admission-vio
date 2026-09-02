@@ -23,6 +23,8 @@
 #   SVIO_DRAIN_MAX     hard cap on the drain loop, s   (default 1800)
 #   SVIO_EXPECT_FRAMES required stats.csv frame count  (unset = no check)
 #   SVIO_EXPECT_ROWS   required svio_no_loop.csv rows  (unset = no check; >=95% passes)
+#   SVIO_RT_BACKLOG_MAX seconds of post-playback catch-up that still counts as real time (default 2)
+#   SVIO_ENV_EXTRA     'K=V K=V' exported into the estimator's environment (e.g. OPENCV_FOR_THREADS_NUM=1)
 #
 # Rate-limiting the replay is semantically free for this estimator: it contains
 # zero `ros::Time::now()` call sites and nothing sets use_sim_time, so every
@@ -52,6 +54,8 @@ PLAY_QUEUE=${SVIO_PLAY_QUEUE:-10000}
 PLAY_EXTRA=${SVIO_PLAY_EXTRA:-}
 DRAIN_STABLE=${SVIO_DRAIN_STABLE:-30}
 DRAIN_MAX=${SVIO_DRAIN_MAX:-1800}
+RT_BACKLOG_MAX=${SVIO_RT_BACKLOG_MAX:-2}
+ENV_EXTRA=${SVIO_ENV_EXTRA:-}
 NODE_BIN="$WS/devel/lib/svio/svio_syn_node"
 
 [[ -f "$bag"      ]] || { echo "run_estimator: missing bag: $bag" >&2; exit 2; }
@@ -147,6 +151,7 @@ if [[ "$core_up" -ne 1 ]] || ! kill -0 "$core" 2>/dev/null; then
   exit 3
 fi
 
+for kv in $ENV_EXTRA; do export "$kv"; done
 "${EST_PIN[@]}" "$NODE_BIN" _config_file:="$cfg" __name:="board_${seq}_${arm}" > "$out_dir/svio.log" 2>&1 & node=$!
 sleep "$NODE_WARMUP"
 if ! kill -0 "$node" 2>/dev/null; then
@@ -159,10 +164,25 @@ fi
   /d400/color/image:=/cam0/color \
   /d400/aligned_depth/image:=/cam0/depth \
   /d400/imu:=/imu > "$out_dir/rosbag_play.log" 2>&1 & play=$!
+t_play_start=$(date +%s.%N)
+
+# --- timeline ---------------------------------------------------------------
+# wall-clock seconds since playback start against the pose count; the sampler
+# runs until the drain loop ends, so the catch-up after playback is visible too.
+{
+  echo "wall_s,rows"
+  while :; do
+    now_s=$(date +%s.%N)
+    printf "%s,%s\n" "$(awk -v a="$now_s" -v b="$t_play_start" 'BEGIN{printf "%.1f", a-b}')" "$(wc -l < "$out_dir/svio_no_loop.csv" 2>/dev/null || echo 0)"
+    sleep 0.5
+  done
+} > "$out_dir/timeline.csv" 2>/dev/null & sampler=$!
 
 set +e
 wait "$play"; ps=$?
 t_play_end=$(date +%s)
+t_play_end_ns=$(date +%s.%N)
+rows_at_play_end=$(wc -l < "$out_dir/svio_no_loop.csv" 2>/dev/null || echo 0)
 
 # --- drain ------------------------------------------------------------------
 # A fixed tail sleep truncates the trajectory whenever the board is slower than
@@ -177,10 +197,21 @@ for _ in $(seq 1 "$DRAIN_MAX"); do
   prev=$now; waited=$((waited + 1)); sleep 1
 done
 
+kill "$sampler" 2>/dev/null; wait "$sampler" 2>/dev/null
 kill -INT "$node" 2>/dev/null; wait "$node"; ns=$?
 kill -INT "$core" 2>/dev/null; wait "$core"
 set -e
 t_end=$(date +%s)
+
+# catch-up after playback: seconds from the end of playback until the pose count
+# reached its final value (from the timeline); real time means the estimator had
+# (almost) nothing left to do when the data stopped.
+final_rows=$(wc -l < "$out_dir/svio_no_loop.csv" 2>/dev/null || echo 0)
+play_end_rel=$(awk -v a="$t_play_end_ns" -v b="$t_play_start" 'BEGIN{printf "%.1f", a-b}')
+t_final=$(awk -F, -v fr="$final_rows" 'NR>1 && $2>=fr {print $1; exit}' "$out_dir/timeline.csv" 2>/dev/null)
+t_final=${t_final:-$play_end_rel}
+backlog_s=$(awk -v a="$t_final" -v b="$play_end_rel" 'BEGIN{d=a-b; if (d<0) d=0; printf "%.1f", d}')
+realtime_ok=$(awk -v d="$backlog_s" -v m="$RT_BACKLOG_MAX" 'BEGIN{print (d<=m) ? 1 : 0}')
 
 # --- acceptance -------------------------------------------------------------
 rows=$(wc -l < "$out_dir/svio_no_loop.csv" 2>/dev/null || echo 0)
@@ -213,6 +244,7 @@ thrown_dpt=$(grep -c 'throw depth image' "$out_dir/svio.log" 2>/dev/null || true
   echo "rows=$rows frames=$frames drained=$drained drain_wait_s=$waited anomalies=$anom"
   echo "throw_rgb=$thrown_rgb throw_depth=$thrown_dpt frontend_ms=${fe_mean:-NA} swo_ms=${swo_mean:-NA}"
   echo "wall_total_s=$((t_end - t_start)) wall_play_s=$((t_play_end - t_start)) pinning=$pinning play_rate=$PLAY_RATE"
+  echo "rows_at_play_end=$rows_at_play_end final_rows=$final_rows backlog_after_play_s=$backlog_s realtime_ok=$realtime_ok rt_backlog_max_s=$RT_BACKLOG_MAX env_extra=${ENV_EXTRA:-<none>}"
 } | tee "$out_dir/run_summary.txt"
 
 [[ "$anom" -eq 0 ]] || { echo "run_estimator: FAILED - estimator anomaly, see $out_dir/svio.log" >&2; exit 4; }

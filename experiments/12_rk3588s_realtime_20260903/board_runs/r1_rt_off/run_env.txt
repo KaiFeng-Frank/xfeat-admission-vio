@@ -1,0 +1,11 @@
+SEQ=light1 ARM=off PORT=11612
+BAG=/data/vcu/light1.bag
+SIDECAR=<none>
+CONFIG=/data/runs/r1_rt_off/config_light1_off.yaml
+NODE=/opt/svio_ws/devel/lib/svio/svio_syn_node
+PINNING=taskset est=4-7 io=0-3
+PLAY_FLAGS=--clock -r 1.0 --queue 10000 --wait-for-subscribers
+WAIT_FOR_SUBSCRIBERS=1
+DRAIN_STABLE=20 DRAIN_MAX=1800
+EXPECT_FRAMES=2875 EXPECT_ROWS=<none>
+SVIO_XFEAT_*: 
