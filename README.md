@@ -107,6 +107,7 @@ models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) an
 deploy/rknn/            RKNN-Toolkit2 conversion tool and same-run receipts (the .rknn bytes are not redistributed)
 tools/scoring/          the pinned scorer and normalizer used for every number in the ledger
 experiments/            stage-by-stage contracts, configs, receipts, trajectories, telemetry, board receipts
+deploy/board/           aarch64 build recipe, chroot launcher, replay runner and NPU sidecar materializer for the RK3588S
 docs/                   mechanism, ledger, reproduction recipe
 ```
 
@@ -143,6 +144,35 @@ frozen synthetic-pattern gate and the sandbox's 50 ms p99 gate both fail on this
 board and its 0.7.2 NPU driver; the receipt says so in full:
 [`experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md`](experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md).
 
+### The estimator end to end on the board
+
+The whole fork runs on the board as well: an aarch64 build inside an Ubuntu 20.04 + ROS
+Noetic root filesystem entered with `chroot` (recipe, launcher and replay runner in
+[`deploy/board/`](deploy/board/README.md)) replays light1 from a bag at a quarter of sensor
+rate, with the sidecar produced on the NPU beforehand. Every run processed all 2875 frames
+and produced the full 2819-pose trajectory. ATE RMSE in cm from the pinned scorer:
+
+| Machine, solver configuration | OFF | ON, sidecar made on the NPU (FP16) | ON, sidecar made on the desktop (ONNX) |
+|---|---:|---:|---:|
+| RK3588S, frozen config (40 ms wall-clock cap on Ceres) | 21.76 | 22.78 | 21.04 |
+| RK3588S, cap lifted | 22.11 | 22.69 | 20.67 |
+| desktop x86, frozen config | 27.20 | — | 19.03 |
+| desktop x86, cap lifted | 27.20 | — | 19.03 |
+
+Three things the table says. The solver cap binds on the board (Ceres averages 41 ms under
+it and 50 ms without it) and never on the desktop (11 ms), yet lifting it does not bring
+the board to the desktop's numbers. A desktop replay at the board's quarter rate reproduces
+the desktop numbers and a board repeat agrees with its first run to 0.1 cm, so neither
+replay rate nor run-to-run variation is the cause; what remains is the aarch64 build itself,
+which the receipt names as the candidate it did not test. With the desktop-made sidecar, ON beats OFF on
+the board as it does on the desktop; with the FP16 sidecar made on the NPU, ON is worse
+than OFF. Admission consumes only keypoint coordinates and scores, and the FP16 backbone
+changes the admitted set on every frame (overlap median 0.985) while the descriptors
+agree to 0.99999; one sequence, and the sign of that effect is not claimed beyond it.
+Finally, the stage times of this build put the pipeline ceiling on the A76 cores near
+17 Hz, so it does not run light1 at sensor rate; the replay was slowed to stay lossless.
+Receipt: [`experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md`](experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md).
+
 <img src="docs/figures/rk3588s_indiedroid_nova.jpg" alt="Indiedroid Nova RK3588S on the bench over ADB" width="520">
 
 ## Version line
@@ -151,8 +181,9 @@ board and its 0.7.2 NPU driver; the receipt says so in full:
 |---|---|
 | 1.0 | final code release: frozen candidate, sidecar tooling, sealed VCU ledger, RKNN compile receipts, byte-identical rebuild verification |
 | 1.1 | RK3588S on-device receipts: identity, NPU latency per core mask, CPU sparse-tail latency, memory, conformance against the ONNX reference |
-| **1.2** | matched-OFF control completed on all twelve VCU sequences with the rebuilt binary; README tables replace the chart |
-| 1.x | further device receipts (C++ runtime path, driver upgrade, on-board end-to-end replay); no estimator code change planned |
+| 1.2 | matched-OFF control completed on all twelve VCU sequences with the rebuilt binary; README tables replace the chart |
+| **1.3** | the estimator end to end on the RK3588S: aarch64 build, chroot launcher, lossless replay runner, light1 scored on the board in both solver configurations against a desktop rerun |
+| 1.x | further device receipts (C++ runtime path, driver upgrade, sensor-rate operation); no estimator code change planned |
 
 See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
 

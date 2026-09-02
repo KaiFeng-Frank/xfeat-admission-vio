@@ -1,0 +1,88 @@
+{
+ "candidate": "${EXTERNAL_ROOT}/verify/light1_board.xfs",
+ "candidate_frames_total": 2875,
+ "candidate_sha256": "89c6328449e47ca6ae846fe3785014383f5aebd1d4c83d3cdde29ba9fbd162ca",
+ "covered_fraction_within_radius": {
+  "max": 1.0,
+  "mean": 0.9897175652173913,
+  "median": 0.992,
+  "min": 0.938,
+  "p01": 0.956,
+  "p10": 0.98,
+  "p90": 0.996,
+  "p99": 0.998
+ },
+ "covered_fraction_worst_1pct": {
+  "mean_of_tail": 0.949103448275862,
+  "n_frames": 29,
+  "threshold": 0.956,
+  "worst": 0.938
+ },
+ "frames_compared": 2875,
+ "frames_without_any_match": 0,
+ "full_file_comparison": true,
+ "keypoints_candidate": {
+  "max": 500.0,
+  "mean": 500.0,
+  "median": 500.0,
+  "min": 500.0,
+  "p01": 500.0,
+  "p10": 500.0,
+  "p90": 500.0,
+  "p99": 500.0
+ },
+ "keypoints_reference": {
+  "max": 500.0,
+  "mean": 500.0,
+  "median": 500.0,
+  "min": 500.0,
+  "p01": 500.0,
+  "p10": 500.0,
+  "p90": 500.0,
+  "p99": 500.0
+ },
+ "matched_descriptor_cosine": {
+  "max": 0.9999995513363037,
+  "mean": 0.999980134010598,
+  "median": 0.9999950714388656,
+  "min": 0.9993919756704186,
+  "p01": 0.9997165036121244,
+  "p10": 0.9999599836563577,
+  "p90": 0.9999990736530857,
+  "p99": 0.9999994410832707
+ },
+ "matched_descriptor_cosine_worst_1pct": {
+  "mean_of_tail": 0.9995929851881332,
+  "n_frames": 29,
+  "threshold": 0.9997024906595493,
+  "worst": 0.9993919756704186
+ },
+ "matched_pixel_distance": {
+  "max": 0.0,
+  "mean": 0.0,
+  "median": 0.0,
+  "min": 0.0,
+  "p01": 0.0,
+  "p10": 0.0,
+  "p90": 0.0,
+  "p99": 0.0
+ },
+ "matched_pixel_distance_worst_1pct": {
+  "mean_of_tail": 0.0,
+  "n_frames": 29,
+  "threshold": 0.0,
+  "worst": 0.0
+ },
+ "numpy": "2.4.4",
+ "python": "3.13.11",
+ "radius_px": 1.0,
+ "reference": "${PRIVATE_ROOT}/results/learned_duel_pilot_20260831/light1.xfs",
+ "reference_frames_total": 2875,
+ "reference_sha256": "e4f21d4591cfc319f5a190a85f2360c1d78251d01f4290710229f2a1856d0910",
+ "schema": "xfeat-admission-vio-sidecar-agreement-v1",
+ "stamps_all_match": true,
+ "trailing_bytes_check": {
+  "candidate_at_eof": true,
+  "reference_at_eof": true
+ }
+}

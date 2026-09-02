@@ -1,0 +1,4 @@
+71c71
+< max_solver_time: 0.04   # max solver itration time (ms), to guarantee real time
+---
+> max_solver_time: 1.0    # max solver itration time (ms), to guarantee real time

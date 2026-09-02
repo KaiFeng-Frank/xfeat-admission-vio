@@ -156,6 +156,17 @@ frozen backbone p99 gate of 50 ms fails on this board and driver; the synthetic
 patterns fail the frozen reliability cosine gate while staying within its absolute
 bound. Details and every receipt: `BOARD_RECEIPT.md` in that directory.
 
+## Stage 9 — end-to-end on the RK3588S (`experiments/11_rk3588s_end_to_end_20260903/`)
+
+The estimator itself on the board: an aarch64 build in a chroot root filesystem, light1
+replayed at a quarter of sensor rate without a dropped frame, the sidecar produced on the
+NPU. Under the frozen config the board scores OFF 21.76 cm, ON 22.78 cm with the
+board-made sidecar and 21.04 cm with the desktop-made one; with the solver's wall-clock
+cap lifted, 22.11 / 22.69 / 20.67 cm. The desktop scores 27.20 / 19.03 cm in both
+configurations. The cap binds on the board and never on the desktop, but lifting it does
+not reproduce the desktop trajectory. Details, timings and the checks made on that
+difference: `BOARD_E2E_RECEIPT.md` in that directory.
+
 ## Boundary of the evidence
 
 * Sealed artifacts were path-anonymized after sealing (machine paths became
@@ -166,8 +177,10 @@ bound. Details and every receipt: `BOARD_RECEIPT.md` in that directory.
 * Single executions throughout; the estimator runs multi-threaded and byte identity
   across repeats has not been demonstrated.
 * Every learned input in stages 1–7 was a precomputed sidecar. The 10 Hz tick is a
-  data-time cadence there; stage 8 supplies the on-device backbone and tail latencies
-  but no end-to-end replay on the board.
+  data-time cadence there; stage 8 supplies the on-device backbone and tail latencies,
+  and stage 9 replays one sequence on the board at a quarter of sensor rate with the
+  sidecar precomputed on the device. No run consumed a live camera or a sidecar produced
+  concurrently with the estimate.
 * Comparator provenance differs per table and is stated in each table.
 * The inherited S-VIO node aborts during teardown after the trajectory is complete;
   every scored trajectory reached the source's final image stamp.

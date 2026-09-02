@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.3 — 2026-09-03
+
+End-to-end replay on the RK3588S, no estimator code change.
+
+- aarch64 build of the estimator (Ubuntu 20.04 + ROS Noetic root filesystem with Ceres 1.14,
+  OpenCV 4.2 and opengv), a `chroot` launcher, a lossless replay runner (rate-limited, CPU-pinned,
+  drain-and-verify) and the NPU sidecar materializer, with the build recipe and the deployment
+  receipt (`deploy/board/`)
+- light1 replayed on the board in three arms (OFF, ON with the sidecar made on the NPU, ON with the
+  sidecar made on the desktop), under the frozen config and with the solver cap lifted, against a
+  desktop rerun of both configs (`experiments/11_rk3588s_end_to_end_20260903/`)
+- findings recorded in `BOARD_E2E_RECEIPT.md` there: the 40 ms solver cap binds on the board and
+  not on the desktop; lifting it does not reproduce the desktop trajectory; the desktop-made sidecar
+  keeps the ON-better-than-OFF ordering on the board, the FP16 NPU sidecar reverses it on this
+  sequence
+- README: end-to-end table in the on-device section; ROADMAP: end-to-end item ticked;
+  `SHA256SUMS` regenerated over the whole tree (the 1.2 figure had not been covered)
+
 ## 1.2 — 2026-09-03
 
 - matched-OFF control on all six VCU motion sequences, produced with the rebuilt binary that is

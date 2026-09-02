@@ -1,0 +1,115 @@
+{
+ "argv": [
+  "/opt/xfeat/bin/xfs_materialize_rknn.py",
+  "--bag",
+  "/data/vcu/light1.bag",
+  "--topic",
+  "/d400/color/image",
+  "--out",
+  "/data/vcu/light1_board.xfs",
+  "--core",
+  "0_1_2"
+ ],
+ "backbone": "rknnlite-npu",
+ "bag": "/data/vcu/light1.bag",
+ "core_mask": "0_1_2",
+ "elapsed_s": 243.70214702799967,
+ "first_stamp_ns": 1417873515081,
+ "frames": 2875,
+ "frames_per_second": 11.797187817428965,
+ "gray_conversion": "cv2-fixed15",
+ "gray_conversion_coefficients": {
+  "blue": 3735,
+  "green": 19235,
+  "red": 9798,
+  "rounding": 16384,
+  "shift": 15
+ },
+ "gray_conversion_note": "cv2 is not installed on the board; (B*3735 + G*19235 + R*9798 + 16384) >> 15 reproduces the host cv2.cvtColor COLOR_BGR2GRAY decode used by sidecar/xfs_materialize.py bit-exactly (verified over all 16777216 8-bit BGR triples against OpenCV 4.13.0), so the decode stage contributes no difference against a host-produced sidecar",
+ "input_layout": "nhwc",
+ "keypoints_per_frame": {
+  "max": 500,
+  "median": 500,
+  "min": 500
+ },
+ "last_stamp_ns": 1513665361906,
+ "librknnrt": "/usr/lib/librknnrt.so",
+ "numpy": "1.26.4",
+ "pinned_module": "/opt/xfeat/run/xfeat_sparse_onnx.py",
+ "pinned_module_sha256": "906bae36cc46cd3a344e3ba442d70059c285218acf1a995f938502bf658da471",
+ "platform": "Linux-5.10.66-aarch64-with-glibc2.35",
+ "proposal_total": 1437500,
+ "python": "3.10.12",
+ "rknn": "/opt/xfeat/run/xfeat_backbone_1x3x480x640_rk3588_fp16.rknn",
+ "rknn_sha256": "a59da79592194e11b43190d908d46a672f098ff134260d6f48be020d04913f73",
+ "rknn_sha256_expected": "a59da79592194e11b43190d908d46a672f098ff134260d6f48be020d04913f73",
+ "rknn_sha256_matches_conversion_receipt": true,
+ "rknnlite": null,
+ "rknnlite_sdk_version": "==============================================\nRKNN VERSION:\n  API: 2.3.2 (429f97ae6b@2025-04-09T09:09:27)\n  DRV: 0.7.2\n==============================================\n",
+ "schema": "xfeat-admission-vio-xfs-materialize-rknn-v1",
+ "sidecar_bytes": 385284540,
+ "sidecar_header_verified": true,
+ "sidecar_sha256": "89c6328449e47ca6ae846fe3785014383f5aebd1d4c83d3cdde29ba9fbd162ca",
+ "sidecar_stamps_strictly_increasing": true,
+ "thermal_end": {
+  "thermal_zone0": "59153",
+  "thermal_zone1": "60076",
+  "thermal_zone2": "60076",
+  "thermal_zone3": "59153",
+  "thermal_zone4": "58230",
+  "thermal_zone5": "57307",
+  "thermal_zone6": "57307"
+ },
+ "thermal_start": {
+  "thermal_zone0": "51769",
+  "thermal_zone1": "52692",
+  "thermal_zone2": "52692",
+  "thermal_zone3": "51769",
+  "thermal_zone4": "51769",
+  "thermal_zone5": "49923",
+  "thermal_zone6": "50846"
+ },
+ "timing_ms_per_frame": {
+  "backbone": {
+   "max": 57.7337559998341,
+   "mean": 41.50146895442452,
+   "median": 41.1456290003116,
+   "min": 35.73616999983642,
+   "p90": 43.53662900030031,
+   "p99": 48.16050499994162
+  },
+  "decode": {
+   "max": 15.28946000007636,
+   "mean": 6.527480721397454,
+   "median": 6.433583999751136,
+   "min": 4.788000000189641,
+   "p90": 7.286001000466058,
+   "p99": 8.443458999863651
+  },
+  "tail": {
+   "max": 61.76729799972236,
+   "mean": 35.592004588879796,
+   "median": 35.17804500006605,
+   "min": 18.470085999979347,
+   "p90": 38.51379600018845,
+   "p99": 49.23067099934997
+  },
+  "total": {
+   "max": 116.03338600070856,
+   "mean": 83.94488196417738,
+   "median": 83.18688300005306,
+   "min": 61.98092300019198,
+   "p90": 87.9185920002783,
+   "p99": 104.21596900050645
+  },
+  "write": {
+   "max": 5.944750999788084,
+   "mean": 0.32392769947562,
+   "median": 0.27474999933474464,
+   "min": 0.20066600018253666,
+   "p90": 0.32374999955209205,
+   "p99": 1.615541999854031
+  }
+ },
+ "topic": "/d400/color/image"
+}

@@ -1,0 +1,52 @@
+== prepare no-cap base config on the board ==
+71c71
+< max_solver_time: 0.04   # max solver itration time (ms), to guarantee real time
+---
+> max_solver_time: 1.0    # max solver itration time (ms), to guarantee real time
+a41eed6ef3851ccdbe9884ef558ba04496b4653ba8b7bbfe3ad45a456d21cc3a  /opt/svio_rootfs/opt/xfeat/config/base_nocap.yaml
+== board run off (port 11511) 02:40:56 ==
+svio-chroot: mounted /dev/pts -> /opt/svio_rootfs/dev/pts (bind)
+svio-chroot: mounted /dev/shm -> /opt/svio_rootfs/dev/shm (bind)
+svio-chroot: mounted /tmp -> /opt/svio_rootfs/tmp (bind)
+svio-chroot: mounted /opt/xfeat -> /opt/svio_rootfs/opt/xfeat_host (bind)
+svio-chroot: mounted /data -> /opt/svio_rootfs/data (bind)
+svio-chroot: forwarding SVIO_BASE_CONFIG=/opt/xfeat/config/base_nocap.yaml SVIO_EXPECT_FRAMES=2875 SVIO_EXPECT_ROWS=2819
+render_config: /data/runs/nocap_light1_off/config_light1_off.yaml  (output_path=/data/runs/nocap_light1_off)
+/opt/xfeat/bin/run_estimator.sh: line 180: 73716 Aborted                 "${EST_PIN[@]}" "$NODE_BIN" _config_file:="$cfg" __name:="board_${seq}_${arm}" > "$out_dir/svio.log" 2>&1
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=off OUT=/data/runs/nocap_light1_off
+rows=2819 frames=2875 drained=1 drain_wait_s=30 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=27.9277 swo_ms=66.5778
+wall_total_s=427 wall_play_s=395 pinning=taskset est=4-7 io=0-3 play_rate=0.25
+-- pull --
+== board run on_hostxfs (port 11512) 02:48:05 ==
+svio-chroot: already mounted /opt/svio_rootfs/dev/pts
+svio-chroot: already mounted /opt/svio_rootfs/dev/shm
+svio-chroot: already mounted /opt/svio_rootfs/tmp
+svio-chroot: already mounted /opt/svio_rootfs/opt/xfeat_host
+svio-chroot: already mounted /opt/svio_rootfs/data
+svio-chroot: forwarding SVIO_BASE_CONFIG=/opt/xfeat/config/base_nocap.yaml SVIO_EXPECT_FRAMES=2875 SVIO_EXPECT_ROWS=2819
+render_config: /data/runs/nocap_light1_on_hostxfs/config_light1_on.yaml  (output_path=/data/runs/nocap_light1_on_hostxfs)
+/opt/xfeat/bin/run_estimator.sh: line 180: 91130 Aborted                 "${EST_PIN[@]}" "$NODE_BIN" _config_file:="$cfg" __name:="board_${seq}_${arm}" > "$out_dir/svio.log" 2>&1
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=on OUT=/data/runs/nocap_light1_on_hostxfs
+rows=2819 frames=2875 drained=1 drain_wait_s=30 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=27.805 swo_ms=66.1015
+wall_total_s=426 wall_play_s=395 pinning=taskset est=4-7 io=0-3 play_rate=0.25
+-- pull --
+== board run on_boardxfs (port 11513) 02:55:13 ==
+svio-chroot: already mounted /opt/svio_rootfs/dev/pts
+svio-chroot: already mounted /opt/svio_rootfs/dev/shm
+svio-chroot: already mounted /opt/svio_rootfs/tmp
+svio-chroot: already mounted /opt/svio_rootfs/opt/xfeat_host
+svio-chroot: already mounted /opt/svio_rootfs/data
+svio-chroot: forwarding SVIO_BASE_CONFIG=/opt/xfeat/config/base_nocap.yaml SVIO_EXPECT_FRAMES=2875 SVIO_EXPECT_ROWS=2819
+render_config: /data/runs/nocap_light1_on_boardxfs/config_light1_on.yaml  (output_path=/data/runs/nocap_light1_on_boardxfs)
+/opt/xfeat/bin/run_estimator.sh: line 180: 108563 Aborted                 "${EST_PIN[@]}" "$NODE_BIN" _config_file:="$cfg" __name:="board_${seq}_${arm}" > "$out_dir/svio.log" 2>&1
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=on OUT=/data/runs/nocap_light1_on_boardxfs
+rows=2819 frames=2875 drained=1 drain_wait_s=30 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=27.6921 swo_ms=67.2161
+wall_total_s=426 wall_play_s=395 pinning=taskset est=4-7 io=0-3 play_rate=0.25
+-- pull --
+== umount chroot ==
+svio-chroot: unmounted /opt/svio_rootfs/sys
+svio-chroot: unmounted /opt/svio_rootfs/proc
+BOARD_NOCAP_DONE 03:02:21

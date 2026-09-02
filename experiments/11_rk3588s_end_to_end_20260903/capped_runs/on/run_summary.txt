@@ -1,0 +1,4 @@
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=on OUT=/data/runs/light1_on
+rows=2819 frames=2875 drained=1 drain_wait_s=30 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=28.5167 swo_ms=59.4205
+wall_total_s=426 wall_play_s=395 pinning=taskset est=4-7 io=0-3 play_rate=0.25

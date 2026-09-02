@@ -1,0 +1,21 @@
+{
+ "frames": 2875,
+ "total_px": 883200000,
+ "kernels": {
+  "cv2-fixed15": {
+   "frames_differing": 0,
+   "px_differing": 0,
+   "max_abs_diff": 0
+  },
+  "fixed14": {
+   "frames_differing": 2619,
+   "px_differing": 2135836,
+   "max_abs_diff": 1
+  }
+ },
+ "stamps_strictly_increasing": true,
+ "first_stamp_ns": 1417873515081,
+ "last_stamp_ns": 1513665361906,
+ "cv2": "4.13.0",
+ "cv2_useIPP": true
+}
