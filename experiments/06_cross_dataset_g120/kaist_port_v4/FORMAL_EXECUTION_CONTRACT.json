@@ -1,0 +1,94 @@
+{
+  "schema": "g120-kaist-v4-formal-execution-contract-v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "candidate": {
+    "name": "G120-A",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "gate": "MAX_CNT=150; floor(4*MAX_CNT/5)=120; existing two-valid-frame shortage streak and 10Hz tick",
+    "algorithm_parameter_variants": 1,
+    "binary_variants": 1
+  },
+  "sensor_profile": {
+    "distortion_radtan": [
+      0.006896928127777268,
+      -0.009144207062654397,
+      0.000254113977103925,
+      0.0021434982252719545
+    ],
+    "imu_noise_common_comparator": {
+      "acc_n": 0.1,
+      "gyr_n": 0.01,
+      "acc_w": 0.001,
+      "gyr_w": 0.0001
+    },
+    "depth_range_m": [0.3, 4.0],
+    "image_shift_ns": -29958533,
+    "shift_scope": ["color_header", "color_record", "depth_header", "depth_record"],
+    "imu_timestamps": "unchanged"
+  },
+  "runtime_envelope": {
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/RUNTIME_ENVELOPE.json",
+    "sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211",
+    "container_image": "gaussian_lic_noetic_baseline",
+    "container_image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+    "derived_image": false,
+    "apt": false,
+    "mount_policy": "hash-pinned read-only aliases",
+    "ld_library_path_order": [
+      "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build",
+      "/runtime",
+      "inherited_after_frozen_setup"
+    ],
+    "required_proofs": ["static ldd zero-missing and exact mapping", "live proc maps exact mapping"]
+  },
+  "arms": {
+    "on": "clear every SVIO_XFEAT_* variable, then set only SVIO_XFEAT_XFS and SVIO_XFEAT_MODE=admission",
+    "off": "clear every SVIO_XFEAT_* variable and require none",
+    "shared": "same binary, libsvio, algorithm fields, sensor fields, shifted bag, container image and runtime envelope; rendered YAML differs only in output_path"
+  },
+  "execution": {
+    "order": [
+      "circle", "circle_fast", "circle_head", "infinite", "infinite_fast",
+      "infinite_head", "square", "square_fast", "square_head", "rotation",
+      "rotation_fast"
+    ],
+    "staged_bags": 1,
+    "shared_estimator_lock": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/locks/g120_estimator_serial.lock",
+    "v4_execution_freeze": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+    "v4_execution_state": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+    "v3_invalidation_incident": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/incidents/V3_SHUTDOWN_TRAP_INCIDENT.json",
+    "v3_input_sidecars": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars",
+    "v4_output_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist",
+    "input_mount_policy": "V3 hash-sealed sidecars/runtime read-only; each normal V4 staged bag is mounted read-only at the single constant container path /g120_staged_input/current.bag; circle is a full-hash-verified temporary copy of the preserved V3 bag and follows the same lifecycle",
+    "exact_next_job_enforced": true,
+    "timeout_s": 2400,
+    "post_play_flush_s": 10,
+    "node_readiness_timeout_s": 30,
+    "shutdown": "SIGINT up to 20s, SIGTERM up to 10s, SIGKILL is failure; exact V4 conditional-wait capture makes accepted post-completion statuses 0,130,134,143 reachable without disabling the global ERR trap elsewhere",
+    "completion": "owned roscore alive, named node and all three subscriptions ready before playback, rosbag status 0 and Done marker, node alive through playback, >=3 finite strictly increasing poses, exact runtime maps, and arm-specific runtime sidecar-consumption proof",
+    "runtime_sidecar_consumption": {
+      "off": "svio.log contains neither XFEAT-SIDECAR nor XFEAT-HYBRID",
+      "on": "exactly one enabled header matches sealed path/frame-count/klt_10hz_admission, frame 1 is observed, frozen-binary XFS error stems are absent, and either destructor count equals N or max HYBRID periodic receipt reaches floor(N/100)*100 so the unobserved suffix is below 100 frames"
+    },
+    "failure_lifecycle": "each attempted arm writes one V4 terminal PASS/FAILURE receipt; no automatic retry; the ordinary V4 staged bag is deleted after both KAIST arms are terminal; the preserved V3 circle source is never modified"
+  },
+  "scoring": {
+    "timestamp_restoration": "t_eval=t_svio_output-(-0.029958533)",
+    "normalization": "native body, qw-qx-qy-qz input to qx-qy-qz-qw TUM",
+    "registered_wrapper_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+    "underlying_t3_scorer_sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07",
+    "metric": "whole-sequence rigid SE(3), scale one, start offset zero primary; start offset five diagnostic",
+    "rotation_only": "after timestamp restoration, crop both estimate and GT inclusively at timestamp <= 1624246998.484489441",
+    "all_other_sequences": "full GT span"
+  },
+  "boundaries": {
+    "production_writes": false,
+    "reserved_nya_02_eee_02_access": false,
+    "estimator_run_at_contract_creation": false,
+    "scoring_run_at_contract_creation": false
+  }
+}

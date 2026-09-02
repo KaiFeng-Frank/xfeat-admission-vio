@@ -1,0 +1,39 @@
+{
+  "schema": "vcu-light-klt-survivor-census-manifest-v1",
+  "scope": ["light1", "light3", "light5"],
+  "ground_truth_read": false,
+  "production_write": false,
+  "reserved_unseen_access": false,
+  "frozen_reference": {
+    "full_line_freeze_sha256": "fce18ad84a1a33810c6af5955f9082f8176d9b268a7ba9ba265428b581adb935",
+    "feature_tracker_cpp_sha256": "1e2edf59c87baa5d13d4a9ee201c734bc382de5ce5c49bfb3f7c6de858909979",
+    "config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "opencv": "4.2.0",
+    "compiler": "g++ 9.4.0"
+  },
+  "input_metadata_sha256": {
+    "light1": "071146b6f59bc0f79503d874eca418ca5e7ea21490b73e99e1f9292b3155ca0e",
+    "light3": "5b7bb5d6168f47f9f5f9d8beb2d4661645b9b3d35465f80962028ed51d6ebee8",
+    "light5": "b4d87650d7ce016b3028aaba28351469dc29ba35bf866737971c5ce1c8460959"
+  },
+  "implementation_sha256": {
+    "feature_tracker_off_census.cpp": "6aaa916594d3100b22a17c6a9cf827d078b7a98d6c2f0052dc0cfbecf537cc5b",
+    "stream_vcu_rgb.py": "4f89b2730a75eee392333bcf2d18e5d6bb23ae0b1bc6c931023dfeec4a7993ef",
+    "summarize_census.py": "e0986abaef9f42c8ed5945d0e4462374aa52cfd3910e73250b35a48bb40e2832",
+    "compare_gate_semantics.py": "f65ac8a209b8bd6807c563c22c3ed0413ea844827642ac298482cd7babab5500",
+    "run_census.sh": "c167df54e13d30dcd43c71a0d872f0300bb674ff6fcd2920efb3589a83811f35",
+    "worker_binary": "f18001c1a6654027f849c4d497e170c2d523c2b8aea28b2211622abf2745a287"
+  },
+  "result_sha256": {
+    "light1_ticks.csv": "d56100f6e424742bfabb88a6e8a47da7b5733e503f4ace3e629b8c11852c0ed3",
+    "light1_repeat_ticks.csv": "d56100f6e424742bfabb88a6e8a47da7b5733e503f4ace3e629b8c11852c0ed3",
+    "light3_ticks.csv": "90340f14ea17ba9856986f16f6277c35b77da3ab78edeb94a02ee4994dfc2c2b",
+    "light5_ticks.csv": "cd0f4c40a10c70a10766a4b46b1dd763eb2e2b5611f4cd66af457e87daea095f",
+    "summary.json": "254e5a3012d41f431dd8fdc240d26a19eaa30218199abe9b14e12ab1321308f1",
+    "gate_semantics.json": "b9248d39be3450376a78d384064c2ee07f38071c49f857b2664c894918da8d5a",
+    "VERDICT.md": "e9776d250f305ff33576f623cc539cd468c2e8fceb23784537d3fac6400a396c"
+  },
+  "repeatability": {
+    "light1_full_replay_byte_identical": true
+  }
+}

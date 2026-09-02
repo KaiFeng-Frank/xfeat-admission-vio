@@ -1,0 +1,47 @@
+{
+ "extracted_from": "${SANDBOX_ROOT}",
+ "frozen_candidate_binaries_not_included": {
+  "build_image": "gaussian_lic_noetic_baseline sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+  "libsvio.so": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+  "svio_syn_node": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+  "toolchain": "Ubuntu 20.04.6, ROS Noetic, OpenCV 4.2.0, Eigen 3.3.7, Ceres 1.14.0-4ubuntu1.1, GCC 9.4"
+ },
+ "gate_patched_tracker_sha256": {
+  "feature_tracker.cpp": "243b1607b415dc3b69c071e6512baccbb14aa8b6fbe02e229571027d4d1fefc6",
+  "feature_tracker.h": "3583bd961743648a7c9e96e1500799109326117cb989ce42c89e1183a19a3df0"
+ },
+ "path_anonymization": "docs/PATH_REWRITE_RECORD.json",
+ "pre_gate_tracker_sha256": {
+  "feature_tracker.cpp": "1e2edf59c87baa5d13d4a9ee201c734bc382de5ce5c49bfb3f7c6de858909979",
+  "feature_tracker.h": "1994caf5817e2e94c736075c8ddf69419eaec1d1c0b45a431f26e20ae14bd00a"
+ },
+ "sandbox_xfeat_commit": "562cdfeaf6b361d49b7c6a331d1b50df5ae8e0cf",
+ "schema": "xfeat-admission-vio-extraction-v1",
+ "scorer_sha256": {
+  "eval_openloris.py": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3"
+ },
+ "svio_upstream": {
+  "commit": "18cdfbcffecedaef593089e66db529becb750327",
+  "license": "GPL-3.0",
+  "repo": "https://github.com/oranfire/SVIO"
+ },
+ "untracked_sandbox_configs_excluded": [
+  "config/cavers_lh1_A1_full_raw.yaml",
+  "config/cavers_lh1_A2_full_clahe.yaml",
+  "config/cavers_lh1_A3_pp_clahe.yaml",
+  "config/cavers_lh1_A4_ppa_clahe.yaml",
+  "config/kaist_vio.yaml",
+  "config/struct_core_v2.yaml.bak",
+  "config/viral_eee01_E1_td0.yaml",
+  "config/viral_nya01_B1_td0.yaml",
+  "config/viral_nya01_B2_td1.yaml",
+  "config/viral_nya01_B3_nostruct.yaml"
+ ],
+ "xfeat": {
+  "commit": "e92685f57f8318b18725c5c8c0bd28c7fe188d9a",
+  "license": "Apache-2.0",
+  "onnx_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+  "rknn_fp16_sha256_not_redistributed": "a59da79592194e11b43190d908d46a672f098ff134260d6f48be020d04913f73",
+  "upstream": "https://github.com/verlab/accelerated_features"
+ }
+}

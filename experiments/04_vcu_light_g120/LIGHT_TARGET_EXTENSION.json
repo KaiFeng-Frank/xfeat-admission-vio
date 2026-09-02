@@ -1,0 +1,77 @@
+{
+  "schema": "vcu-light-xfeat-full-line-target-extension-v1",
+  "status": "FROZEN_BEFORE_ANY_LIGHT_ESTIMATOR_RUN_OR_GT_SCORE",
+  "frozen_at": "2026-09-01T19:16:40+08:00",
+  "battlefield": [
+    "light1",
+    "light2",
+    "light3",
+    "light4",
+    "light5",
+    "light6"
+  ],
+  "roles": {
+    "TUNE": [
+      "light1",
+      "light3",
+      "light5"
+    ],
+    "DEVELOPMENT_HOLD": [
+      "light2",
+      "light4",
+      "light6"
+    ]
+  },
+  "fixed_candidate": {
+    "algorithm": "KLT/F-RANSAC identities plus XFeat new-point admission every third RGB frame, full line/plane/Atlanta backend",
+    "max_tracks": 150,
+    "minimum_spacing_px": 20,
+    "per_sequence_tuning": false,
+    "binary_sha256": "cdc2cb2d7cc0bd0f045566f8cf8dd27c3e8220d51a74e2f7465e8e1a593e6e1a",
+    "libsvio_sha256": "9efe50165e1864aebb5c38131a72485ad8efe6ba4e10399ee58b4f675971cdc8",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "xfeat_model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+  },
+  "comparators": {
+    "matched_off": "same binary and restored-identical config with every SVIO_XFEAT_* variable absent",
+    "paper_svio_ate_cm_rounded": {
+      "light1": 69.3,
+      "light2": 51.1,
+      "light3": 12.2,
+      "light4": 11.1,
+      "light5": 65.7,
+      "light6": 37.3
+    },
+    "unsealed_svio_diagnostic_ate_cm": {
+      "light1": 43.6248,
+      "light2": 36.7168,
+      "light3": 10.7695,
+      "light4": 11.3108,
+      "light5": 38.7954,
+      "light6": 48.1765
+    }
+  },
+  "scoring": {
+    "primary": "Table-II SE3 ATE RMSE without scale, start offset 0, CR span GT, native body",
+    "formal_scorer_sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3",
+    "minimum_cr": 0.95,
+    "sequence_win": "learned ATE is lower than comparator and learned CR is at least 0.95",
+    "broad_win": "at least 4 of 6 wins versus paper S-VIO and at least 2 of 3 DEVELOPMENT_HOLD wins",
+    "causal_gain": "learned ATE is lower than matched OFF on the same sequence"
+  },
+  "discipline": {
+    "generate_all_sidecars_without_ground_truth_before_first_score": true,
+    "odd_sequences_may_inform_at_most_one_global_revision": true,
+    "even_sequences_may_not_inform_any_revision": true,
+    "production_writes": false,
+    "reserved_unseen_access": false
+  },
+  "protocol_sha256": {
+    "frozen_contract_sh": "6b61225e53ff1f014d7b8411ac95eea8824102104bf2472d704154faf8b46d94",
+    "render_config_py": "8ec4c55fa5775af2119f2317758737ab98874030959efb242d84ae49f0593db7",
+    "run_sequence_common_sh": "d0d3f2df14c49d12624f393908ac20574a789afd212f33dcd205da884a2f307e",
+    "run_learned_sequence_sh": "3dbb766c27dab5ec32f4a71b4c9880b22b35a3dc2130ab336d018575b8a05ebf",
+    "run_matched_off_sequence_sh": "47f5f6286126a4b77654bc9a431822a2280b9d35592f0329bb5601447e0e52ac",
+    "materializer_py": "eae6b6ff3d893b61f0e4e60d406b554f509024911cc4c0e3ffda5cfd84f8a285"
+  }
+}

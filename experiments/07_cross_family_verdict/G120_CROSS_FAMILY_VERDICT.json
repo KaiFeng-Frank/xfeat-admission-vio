@@ -1,0 +1,64 @@
+{
+  "schema": "g120a-vcu-cross-family-verdict-v1",
+  "status": "PASS_BROAD_WIN_11_OF_12",
+  "candidate": {
+    "name": "G120-A",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "rule": "identity-blind XFeat admission at the existing 10 Hz tick after two consecutive valid post-F-RANSAC survivor counts below 120",
+    "per_sequence_switch": false
+  },
+  "families": {
+    "light": {
+      "wins": 6,
+      "losses": 0,
+      "locked_even_wins": 3,
+      "locked_even_losses": 0,
+      "g120a_mean_ate_cm": 23.67847976639797,
+      "comparator_mean_ate_cm": 41.11666666666667,
+      "mean_reduction_percent_from_rounded_bars": 42.41,
+      "comparator_precision": "one-decimal reported bars",
+      "comparator": "pre-frozen reported rounded S-VIO table bars",
+      "verdict_sha256": "7573fce11132785947b7f91e0ad190e6663d8c68a11609a0b93adb07ef966da6",
+      "manifest_sha256": "7521012c9814c812c0c20aa6fb2b5e11c2c059ebc095172e2d279e74dddeb6fe"
+    },
+    "motion": {
+      "wins": 5,
+      "losses": 1,
+      "only_loss": "motion5 by 0.13967353790490122 cm",
+      "g120a_mean_ate_cm": 19.253069383126736,
+      "comparator_mean_ate_cm": 21.079738194120086,
+      "mean_reduction_percent": 8.665519439434377,
+      "comparator": "frozen precise full-SVIO replay values",
+      "comparator_source_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/FULL_LINE_VERDICT.json",
+      "comparator_source_sha256": "f8b938de9bfafa9715dbfa16e5cc75fff93cad8bb9d6546dd526a9f4dce80636",
+      "verdict_sha256": "8f99af7cf82d5a26ade63480e924766719eeff8f3e960c5217586c6298cf1976",
+      "manifest_sha256": "e21529c94f4a653ffd1e7c74eefdbeae6ea06ec4e0bfc9b0a2a875a0c64eee49"
+    }
+  },
+  "aggregate": {
+    "wins": 11,
+    "losses": 1,
+    "win_rate": 0.9166666666666666,
+    "broad_win_in_each_family": true,
+    "single_execution_no_repeat_variance": true,
+    "mixed_family_mean_not_used": "Light comparators are rounded reported bars while motion comparators are precise local replays"
+  },
+  "learning_attribution": {
+    "light_single_paired_replays": "G120-A improves 3/6 sequences versus same-build learned-OFF and lowers mean ATE by 16.19%",
+    "motion": "no new same-build OFF arm was run in the G120 regression; only system-level comparison to full S-VIO and descriptive comparison to the old always-open learned arm are claimed",
+    "no_repeat_run_variance": true
+  },
+  "limits": {
+    "scientific_sandbox_not_clean_room_production": true,
+    "production_integration": false,
+    "rk3588s_runtime_measured": false,
+    "sidecars_precomputed_offline": true
+  },
+  "safety": {
+    "production_writes": false,
+    "reserved_nya_02_eee_02_access": false
+  }
+}

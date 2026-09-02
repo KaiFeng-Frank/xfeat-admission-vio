@@ -1,0 +1,26 @@
+{
+ "score_motion4": {
+  "aoe_median_deg": "13.497066167553452",
+  "ate_rmse_all_m": "0.38805293760464343",
+  "cr": "0.6712575664162639",
+  "label": "motion4-xfeat-causal150-localba"
+ },
+ "score_motion4_atlanta": {
+  "aoe_median_deg": "9.107450530850606",
+  "ate_rmse_all_m": "0.3150541252825349",
+  "cr": "0.6766739097711287",
+  "label": "motion4-xfeat-causal150-point-plane-atlanta"
+ },
+ "score_motion4_atlanta_admission": {
+  "aoe_median_deg": "2.786800614403056",
+  "ate_rmse_all_m": "0.30116120307837163",
+  "cr": "0.9504293653487697",
+  "label": "motion4-xfeat-admission10hz-point-plane-atlanta"
+ },
+ "score_motion4_atlanta_hybrid": {
+  "aoe_median_deg": "2.9021755176434803",
+  "ate_rmse_all_m": "0.35247980667052886",
+  "cr": "0.9504293653487697",
+  "label": "motion4-xfeat-klt10hz-point-plane-atlanta"
+ }
+}

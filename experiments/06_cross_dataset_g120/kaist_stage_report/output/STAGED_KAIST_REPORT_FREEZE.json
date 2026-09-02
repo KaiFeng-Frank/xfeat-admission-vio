@@ -1,0 +1,26 @@
+{
+  "amendment": {
+    "bytes": 20757,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report/STAGED_KAIST_REPORT_AMENDMENT.json",
+    "sha256": "f2fdc3bf80592fdbb55b5c9502812ad9596f1f5a66d831b20fdc9a62a8a78eff"
+  },
+  "generator": {
+    "bytes": 10645,
+    "path": "${SANDBOX_ROOT}/g120_kaist_stage_report_20260902/create_staged_amendment.py",
+    "sha256": "6770eae7e105c9d04fbb6cebbb95ada19078c8b4e35314d74af4bd0653960944"
+  },
+  "official_v4_aggregator_eligible": false,
+  "output_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report",
+  "schema": "g120-kaist-staged-report-freeze-v1",
+  "sealed_v4_score_wrapper": {
+    "bytes": 14417,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/score_kaist.py",
+    "sha256": "8d15668455dbe42d62a5fd311050c2b80f0af68477bc44e997596661d35d0eab"
+  },
+  "staged_wrapper": {
+    "bytes": 11471,
+    "path": "${SANDBOX_ROOT}/g120_kaist_stage_report_20260902/staged_score_kaist.py",
+    "sha256": "9cc04ba7d7513b35c182a851be766ff0c106e7b635107b3afdb49348c079aa57"
+  },
+  "status": "FROZEN_REPORT_ONLY"
+}

@@ -1,0 +1,514 @@
+{
+ "01_vcu_motion_admission_point_no_line": {
+  "motion1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 12
+  },
+  "motion2/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 36,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3500",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 13
+  },
+  "motion3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 10
+  },
+  "motion5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 10
+  },
+  "motion6/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 12
+  }
+ },
+ "02_vcu_motion_full_line": {
+  "motion1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 12
+  },
+  "motion2/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 36,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3500",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 13
+  },
+  "motion3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 10
+  },
+  "motion4/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 24,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2300",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 9
+  },
+  "motion5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 10
+  },
+  "motion6/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 12
+  }
+ },
+ "04_vcu_light_g120": {
+  "learned/light1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 29,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2800",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 11
+  },
+  "learned/light3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 26,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2500",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 10
+  },
+  "learned/light5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 33,
+   "last_sample": {
+    "admit": "",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3200",
+    "mode": "admission",
+    "survivors": "",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": null,
+   "sampled_survivor_min": null,
+   "sampled_tick_frames": 12
+  },
+  "off/light1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "off/light3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "off/light5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120/light1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 29,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2800",
+    "mode": "admission",
+    "survivors": "148",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 1,
+   "sampled_survivor_median": 139,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 11
+  },
+  "t120/light2/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 34,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3300",
+    "mode": "admission",
+    "survivors": "150",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 5,
+   "sampled_survivor_median": 123,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 12
+  },
+  "t120/light3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 26,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2500",
+    "mode": "admission",
+    "survivors": "135",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 1,
+   "sampled_survivor_median": 135,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 10
+  },
+  "t120/light4/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 27,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2600",
+    "mode": "admission",
+    "survivors": "149",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 1,
+   "sampled_survivor_median": 136,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 10
+  },
+  "t120/light5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 33,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3200",
+    "mode": "admission",
+    "survivors": "138",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 6,
+   "sampled_survivor_median": 117,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 12
+  },
+  "t120/light6/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "150",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 5,
+   "sampled_survivor_median": 122,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 12
+  },
+  "t120_off/light1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120_off/light2/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120_off/light3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120_off/light4/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120_off/light5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  },
+  "t120_off/light6/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 0
+  }
+ },
+ "05_vcu_motion_g120_regression": {
+  "motion1/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "149",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": 134,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 12
+  },
+  "motion2/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 36,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3500",
+    "mode": "admission",
+    "survivors": "149",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 0,
+   "sampled_survivor_median": 134,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 13
+  },
+  "motion3/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "145",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 1,
+   "sampled_survivor_median": 134,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 10
+  },
+  "motion4/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 24,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2300",
+    "mode": "admission",
+    "survivors": "150",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 4,
+   "sampled_survivor_median": 113,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 9
+  },
+  "motion5/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 28,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "2700",
+    "mode": "admission",
+    "survivors": "147",
+    "tick": "0",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 5,
+   "sampled_survivor_median": 113,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 10
+  },
+  "motion6/svio.log": {
+   "done_marker_present": false,
+   "hybrid_samples_every_100_frames": 32,
+   "last_sample": {
+    "admit": "0",
+    "anchored": "0",
+    "emitted": "150",
+    "frame": "3100",
+    "mode": "admission",
+    "survivors": "149",
+    "tick": "1",
+    "validated": "0"
+   },
+   "sampled_admit_frames": 2,
+   "sampled_survivor_median": 125,
+   "sampled_survivor_min": 0,
+   "sampled_tick_frames": 12
+  }
+ }
+}

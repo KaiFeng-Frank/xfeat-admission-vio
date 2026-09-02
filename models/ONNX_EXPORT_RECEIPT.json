@@ -1,0 +1,236 @@
+{
+  "environment": {
+    "numpy": "2.2.6",
+    "onnx": "1.21.0",
+    "onnxruntime": "1.23.2",
+    "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.39",
+    "python": "3.10.19 (main, Oct 21 2025, 16:43:05) [GCC 11.2.0]",
+    "torch": "2.9.1+cu130"
+  },
+  "estimator_seam_authorization": "NONE",
+  "export": {
+    "forbidden_present": [],
+    "forbidden_rknn_2_3_2_ops": [
+      "GridSample",
+      "NonZero",
+      "TopK"
+    ],
+    "input_name": "image",
+    "input_shape": [
+      1,
+      3,
+      480,
+      640
+    ],
+    "node_count": 81,
+    "onnx_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "op_counts": {
+      "Add": 3,
+      "AveragePool": 1,
+      "Concat": 2,
+      "Constant": 13,
+      "Conv": 27,
+      "InstanceNormalization": 1,
+      "ReduceMean": 1,
+      "Relu": 23,
+      "Reshape": 2,
+      "Resize": 2,
+      "Shape": 2,
+      "Sigmoid": 1,
+      "Slice": 2,
+      "Transpose": 1
+    },
+    "opset": 19,
+    "output_names": [
+      "descriptors_dense",
+      "keypoint_logits",
+      "reliability"
+    ],
+    "output_shapes": [
+      [
+        1,
+        64,
+        60,
+        80
+      ],
+      [
+        1,
+        65,
+        60,
+        80
+      ],
+      [
+        1,
+        1,
+        60,
+        80
+      ]
+    ],
+    "warnings": [
+      {
+        "category": "DeprecationWarning",
+        "message": "You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter will be the default. To switch now, set dynamo=True in torch.onnx.export. This new exporter supports features like exporting LLMs with DynamicCache. We encourage you to try it and share feedback to help improve the experience. Learn more about the new export logic: https://pytorch.org/docs/stable/onnx_dynamo.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html."
+      },
+      {
+        "category": "DeprecationWarning",
+        "message": "The feature will be removed. Please remove usage of this function"
+      },
+      {
+        "category": "TracerWarning",
+        "message": "Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!"
+      },
+      {
+        "category": "TracerWarning",
+        "message": "Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!"
+      },
+      {
+        "category": "UserWarning",
+        "message": "ONNX export mode is set to TrainingMode.EVAL, but operator 'instance_norm' is set to train=True. Exporting with train=True."
+      }
+    ]
+  },
+  "input_class": "SYNTHETIC_ONLY",
+  "limitations": [
+    "RKNN Toolkit conversion was not run",
+    "no RK3588/RK3588S board runtime was run",
+    "no dataset, event frame, matching, geometry, trajectory, or GT was read",
+    "this receipt cannot support an efficacy or S-VIO comparison claim"
+  ],
+  "parity": [
+    {
+      "outputs": [
+        {
+          "cosine": 0.9999999984084483,
+          "max_abs": 0.0008380115032196045,
+          "name": "descriptors_dense",
+          "shape": [
+            1,
+            64,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999999999716,
+          "max_abs": 2.1457672119140625e-06,
+          "name": "keypoint_logits",
+          "shape": [
+            1,
+            65,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999987937797,
+          "max_abs": 1.2549571692943573e-07,
+          "name": "reliability",
+          "shape": [
+            1,
+            1,
+            60,
+            80
+          ]
+        }
+      ],
+      "pattern": "zero"
+    },
+    {
+      "outputs": [
+        {
+          "cosine": 0.9999999999108602,
+          "max_abs": 0.0003952980041503906,
+          "name": "descriptors_dense",
+          "shape": [
+            1,
+            64,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999999765873,
+          "max_abs": 0.00011491775512695312,
+          "name": "keypoint_logits",
+          "shape": [
+            1,
+            65,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999994977316,
+          "max_abs": 4.5797787606716156e-07,
+          "name": "reliability",
+          "shape": [
+            1,
+            1,
+            60,
+            80
+          ]
+        }
+      ],
+      "pattern": "ramp"
+    },
+    {
+      "outputs": [
+        {
+          "cosine": 0.9999999999990652,
+          "max_abs": 1.9669532775878906e-05,
+          "name": "descriptors_dense",
+          "shape": [
+            1,
+            64,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999999995218,
+          "max_abs": 3.0517578125e-05,
+          "name": "keypoint_logits",
+          "shape": [
+            1,
+            65,
+            60,
+            80
+          ]
+        },
+        {
+          "cosine": 0.9999999999875624,
+          "max_abs": 3.8743019104003906e-07,
+          "name": "reliability",
+          "shape": [
+            1,
+            1,
+            60,
+            80
+          ]
+        }
+      ],
+      "pattern": "seeded_noise"
+    }
+  ],
+  "parity_limits": {
+    "maximum_absolute_by_output": {
+      "descriptors_dense": 0.001,
+      "keypoint_logits": 0.0002,
+      "reliability": 1e-06
+    },
+    "minimum_cosine": 0.999999
+  },
+  "rewrite": {
+    "full_network_zero_input": "BIT_IDENTICAL",
+    "upstream_unfold2d_to_pixel_unshuffle": "BIT_IDENTICAL"
+  },
+  "schema": "xfeat-rknn-backbone-preflight-v1",
+  "scientific_authorization": "NONE",
+  "source": {
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "model_py_sha256": "d9a665f18fcea5eaf3e278925e1a92103afcba9051e05b2334f3daa29f411964",
+    "weights_sha256": "0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+  },
+  "status": "ONNX_BACKBONE_PREFLIGHT_PASS_RKNN_NOT_RUN",
+  "upstream_commit_provenance": "e92685f57f8318b18725c5c8c0bd28c7fe188d9a"
+}

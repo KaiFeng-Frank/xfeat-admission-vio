@@ -1,0 +1,117 @@
+{
+  "adapter_receipt": {
+    "counts": {
+      "/d400/aligned_depth/image": 4393,
+      "/d400/color/image": 4393,
+      "/d400/imu": 18380
+    },
+    "estimator_run": false,
+    "first_input_header_ns": {
+      "/d400/aligned_depth/image": 1624245261480147088,
+      "/d400/color/image": 1624245261480147088,
+      "/d400/imu": 1624245261455252387
+    },
+    "first_input_record_ns": {
+      "/d400/aligned_depth/image": 1624245261480147088,
+      "/d400/color/image": 1624245261480147088,
+      "/d400/imu": 1624245261455252387
+    },
+    "first_output_header_ns": {
+      "/d400/aligned_depth/image": 1624245261450188555,
+      "/d400/color/image": 1624245261450188555,
+      "/d400/imu": 1624245261455252387
+    },
+    "first_output_record_ns": {
+      "/d400/aligned_depth/image": 1624245261450188555,
+      "/d400/color/image": 1624245261450188555,
+      "/d400/imu": 1624245261455252387
+    },
+    "ground_truth_read": false,
+    "image_shift_applied_to": [
+      "header_timestamp",
+      "bag_record_timestamp"
+    ],
+    "image_shift_ns": -29958533,
+    "imu_policy": "byte-values-preserved; header and record timestamps unshifted",
+    "last_input_header_ns": {
+      "/d400/aligned_depth/image": 1624245412227499146,
+      "/d400/color/image": 1624245412227499146,
+      "/d400/imu": 1624245445285121009
+    },
+    "last_input_record_ns": {
+      "/d400/aligned_depth/image": 1624245412227499146,
+      "/d400/color/image": 1624245412227499146,
+      "/d400/imu": 1624245445285121009
+    },
+    "last_output_header_ns": {
+      "/d400/aligned_depth/image": 1624245412197540613,
+      "/d400/color/image": 1624245412197540613,
+      "/d400/imu": 1624245445285121009
+    },
+    "last_output_record_ns": {
+      "/d400/aligned_depth/image": 1624245412197540613,
+      "/d400/color/image": 1624245412197540613,
+      "/d400/imu": 1624245445285121009
+    },
+    "max_frames_per_image_stream": 0,
+    "numpy": "2.4.4",
+    "output_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+    "output_bag_bytes": 6757093050,
+    "output_bag_sha256": "1c251a3cccdf842d823d9b066ea9f76aeb3e654ba329b79ae6adb2a5754a02a3",
+    "python_executable": "${CONDA_ROOT}/bin/python3.13",
+    "python_executable_sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+    "rosbags": "0.11.1",
+    "schema": "g120-kaist-ros2-to-ros1-adapter-v1",
+    "scoring_run": false,
+    "sequence": "circle_fast",
+    "shifted_color_stamp_sequence": {
+      "count": 4393,
+      "encoding": "concatenated_little_endian_signed_int64_ns",
+      "sha256": "048e679e5d940cb55d16f5f85340610afa9ad7a16fff2d0badf81418360c674f"
+    },
+    "source_bag": "${DATA_ROOT}/kaist_vio/circle_fast_ros2",
+    "source_bag_identity": {
+      "files": [
+        {
+          "bytes": 6762885120,
+          "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2/circle_fast_ros2.db3",
+          "sha256": "54e7d9b14b85ee54e62fdcd972be787950a6226a04d4840001bd9fb1ff1580b8"
+        },
+        {
+          "bytes": 1393,
+          "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2/metadata.yaml",
+          "sha256": "69a6cfbd98ce62d47f71a85f5ef91019847377cf36c134303f92db815061f6fe"
+        }
+      ],
+      "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+      "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2"
+    },
+    "status": "PASS_FULL_ADAPTATION",
+    "topics_unchanged": [
+      "/d400/color/image",
+      "/d400/aligned_depth/image",
+      "/d400/imu"
+    ]
+  },
+  "deleted_staged_bag_sha256": "1c251a3cccdf842d823d9b066ea9f76aeb3e654ba329b79ae6adb2a5754a02a3",
+  "recovery": "full shifted bag is reproducible from the hash-bound ROS2 source and adapter",
+  "schema": "g120-kaist-staged-bag-release-v4",
+  "sequence": "circle_fast",
+  "staged_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+  "staged_input_disposition": "DELETED_REPRODUCIBLE_V4_TEMPORARY",
+  "terminal_runs": {
+    "off": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle_fast/RUN_RECEIPT.json",
+      "receipt_sha256": "c9698f6589031ab04e4c4288318965be3ecf489b2d43342036067756cc35f225",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "6cea63b18b423fbcac15a96bd15e1232441cd6579e295a8b3cc5ebae727d8567"
+    },
+    "on": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_fast/RUN_RECEIPT.json",
+      "receipt_sha256": "8dbe9f83199df12bf357379c6efa18b522429f3a5f4802f7906b36bbb0d196c2",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "aed8453b1bdb85d3656bb4448b743d6e8aaeb6e170d44c970e135dc5a23feb90"
+    }
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "algorithm": {
+    "derivation": "(4 * MAX_CNT) // 5",
+    "drop_frame": 0,
+    "freq_gate": false,
+    "low_health_streak_frames": 2,
+    "max_cnt": 150,
+    "name": "G120-A",
+    "per_sequence_switch": false,
+    "post_f_survivor_threshold": 120
+  },
+  "candidate": {
+    "base_config": {
+      "bytes": 4249,
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/config_full_line.yaml",
+      "sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008"
+    },
+    "binary": {
+      "bytes": 22731408,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+      "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+    },
+    "gate_patch": {
+      "bytes": 3303,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/T120_GATE.patch",
+      "sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915"
+    },
+    "libsvio": {
+      "bytes": 327883064,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+      "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+    },
+    "model": {
+      "bytes": 2652913,
+      "path": "${PRIVATE_ROOT}/docs/exp_registry_20260828/xfeat_rknn_conversion_preflight_v1/xfeat_backbone_1x3x480x640_opset19.onnx",
+      "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+    }
+  },
+  "numpy": "1.26.4",
+  "opencv": "4.6.0",
+  "outputs": {
+    "npz": {
+      "bytes": 2981177,
+      "path": "${EXTERNAL_ROOT}/g120_openloris_smoke_20260901/consumed_pairs.npz",
+      "sha256": "8fdcaee087c40f4414a49eed00dd5414a264a4465283ce39a030c6283e564f9b"
+    },
+    "paired_bag": {
+      "path": "${EXTERNAL_ROOT}/g120_openloris_smoke_20260901/paired_bag",
+      "tree_bytes": 6181837
+    },
+    "readback": {
+      "records": 8,
+      "records_detail": [
+        {
+          "encoding": "16UC1",
+          "height": 480,
+          "payload_sha256": "0f2de8e87295fcfaf94f3b2cdb89daa0e5fcc99fefd3d556bed30678cc96c672",
+          "stamp_ns": 1560000110937635000,
+          "step": 1280,
+          "storage_ns": 1560000110937635000,
+          "topic": "/cam0/depth",
+          "width": 640
+        },
+        {
+          "encoding": "bgr8",
+          "height": 480,
+          "payload_sha256": "c24c2ca5a66f4e3679fa9b5dfef5f662c3adaabfcfb25d6ed9700c6dc343fa17",
+          "stamp_ns": 1560000110937641000,
+          "step": 1920,
+          "storage_ns": 1560000110937641000,
+          "topic": "/cam0/color",
+          "width": 640
+        },
+        {
+          "encoding": "16UC1",
+          "height": 480,
+          "payload_sha256": "5c1a13cdf79f01a1964560b30376e0ead799689ae2e6ac3de08c92701de3522e",
+          "stamp_ns": 1560000110970998000,
+          "step": 1280,
+          "storage_ns": 1560000110970998000,
+          "topic": "/cam0/depth",
+          "width": 640
+        },
+        {
+          "encoding": "bgr8",
+          "height": 480,
+          "payload_sha256": "4093a2bbdd2fec61f1055bd513ceb35834a01ff107293b3610203362c084201e",
+          "stamp_ns": 1560000110971004000,
+          "step": 1920,
+          "storage_ns": 1560000110971004000,
+          "topic": "/cam0/color",
+          "width": 640
+        },
+        {
+          "encoding": "16UC1",
+          "height": 480,
+          "payload_sha256": "b617bf0ad2ca159565dc6694b90587c474613ee6506d5691d07ee88f0fa7da7a",
+          "stamp_ns": 1560000111004362000,
+          "step": 1280,
+          "storage_ns": 1560000111004362000,
+          "topic": "/cam0/depth",
+          "width": 640
+        },
+        {
+          "encoding": "bgr8",
+          "height": 480,
+          "payload_sha256": "5ef3d41fb02978e36c08ca3e18a250a310fa314fe59c4a1783421ca7068b6215",
+          "stamp_ns": 1560000111004368000,
+          "step": 1920,
+          "storage_ns": 1560000111004368000,
+          "topic": "/cam0/color",
+          "width": 640
+        },
+        {
+          "encoding": "16UC1",
+          "height": 480,
+          "payload_sha256": "ddca765ea2a03ec65cd1ebaf1cb0a8b303afb6b7a909a66aa8a94c1230e43cf1",
+          "stamp_ns": 1560000111037725000,
+          "step": 1280,
+          "storage_ns": 1560000111037725000,
+          "topic": "/cam0/depth",
+          "width": 640
+        },
+        {
+          "encoding": "bgr8",
+          "height": 480,
+          "payload_sha256": "3cff4e20f8381b0e9be177f14a4135a440b413388297db50ad82748b71ce22b2",
+          "stamp_ns": 1560000111037731000,
+          "step": 1920,
+          "storage_ns": 1560000111037731000,
+          "topic": "/cam0/color",
+          "width": 640
+        }
+      ],
+      "status": "PASS"
+    }
+  },
+  "pairing": {
+    "color_stamps_ns": [
+      1560000110937641000,
+      1560000110971004000,
+      1560000111004368000,
+      1560000111037731000
+    ],
+    "consumed_pairs": 4,
+    "depth_stamps_ns": [
+      1560000110937635000,
+      1560000110970998000,
+      1560000111004362000,
+      1560000111037725000
+    ],
+    "dropped_color_before_stop": 0,
+    "dropped_depth_before_stop": 0,
+    "source_semantics": "SVIO svio_syn_node frontend_sync",
+    "tolerance_s_inclusive": 0.003
+  },
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "resize": {
+    "color_interpolation": "cv2.INTER_AREA",
+    "crop": false,
+    "depth_interpolation": "cv2.INTER_NEAREST",
+    "horizontal_scale": 0.7547169811320755,
+    "intrinsics": {
+      "cx": 326.9463996167453,
+      "cy": 249.4730224609375,
+      "fx": 461.47244435436323,
+      "fy": 611.4857177734375
+    },
+    "source_wh": [
+      848,
+      480
+    ],
+    "target_wh": [
+      640,
+      480
+    ]
+  },
+  "safety": {
+    "estimator_run": false,
+    "ground_truth_read": false,
+    "production_write": false,
+    "reserved_unseen_access": false,
+    "score_computed": false
+  },
+  "schema": "g120a-openloris-pair-adapter-smoke-v1",
+  "source": {
+    "bag": "${DATA_ROOT}/openloris_ros2/office1-3",
+    "metadata_sha256": "c0b0b1f51d74a27c08c11ab9f242dc73e8ed53bfd39e81f910869a923e6c4962",
+    "sqlite_path": "${DATA_ROOT}/openloris_ros2/office1-3/office1-3_0.db3",
+    "sqlite_sha256": "c696f0b1e50e5f041acd61eae650e6be801925496beec88771b0025bb1e50e40"
+  },
+  "status": "PASS_NO_GT_IO_SMOKE"
+}

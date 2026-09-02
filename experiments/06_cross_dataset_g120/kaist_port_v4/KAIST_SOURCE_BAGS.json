@@ -1,0 +1,191 @@
+{
+  "ground_truth_read": false,
+  "reserved_nya_02_eee_02_access": false,
+  "schema": "g120-kaist-source-bags-v1",
+  "sequence_order": [
+    "circle",
+    "circle_fast",
+    "circle_head",
+    "infinite",
+    "infinite_fast",
+    "infinite_head",
+    "square",
+    "square_fast",
+    "square_head",
+    "rotation",
+    "rotation_fast"
+  ],
+  "sequences": {
+    "circle": {
+      "files": [
+        {
+          "bytes": 7015395328,
+          "path": "${DATA_ROOT}/kaist_vio/circle_ros2/circle_ros2.db3",
+          "sha256": "ded4d93eda50b24fe9133ca82802ea891c2760caa2b14fcb722381a59b911099"
+        },
+        {
+          "bytes": 1383,
+          "path": "${DATA_ROOT}/kaist_vio/circle_ros2/metadata.yaml",
+          "sha256": "d26c95f8bcb815548fd141c47195202a53e43899bd819bd24e9b64a4741e7e25"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/circle_ros2"
+    },
+    "circle_fast": {
+      "files": [
+        {
+          "bytes": 6762885120,
+          "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2/circle_fast_ros2.db3",
+          "sha256": "54e7d9b14b85ee54e62fdcd972be787950a6226a04d4840001bd9fb1ff1580b8"
+        },
+        {
+          "bytes": 1393,
+          "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2/metadata.yaml",
+          "sha256": "69a6cfbd98ce62d47f71a85f5ef91019847377cf36c134303f92db815061f6fe"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/circle_fast_ros2"
+    },
+    "circle_head": {
+      "files": [
+        {
+          "bytes": 6670204928,
+          "path": "${DATA_ROOT}/kaist_vio/circle_head_ros2/circle_head_ros2.db3",
+          "sha256": "2acf44cf2374b244f493bd122bcc4e92a468cbc4532045fa4f0d6ff0577f5081"
+        },
+        {
+          "bytes": 1393,
+          "path": "${DATA_ROOT}/kaist_vio/circle_head_ros2/metadata.yaml",
+          "sha256": "afb29f6c6bf65797629d5931560f751c95e4b8d0d26f263d6e37a30bfdf10141"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/circle_head_ros2"
+    },
+    "infinite": {
+      "files": [
+        {
+          "bytes": 6689304576,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_ros2/infinite_ros2.db3",
+          "sha256": "2153220b56839f9e9ccfb03ec431b838443e316bf35b21a8b54dd5e59ca30402"
+        },
+        {
+          "bytes": 1387,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_ros2/metadata.yaml",
+          "sha256": "c92f94a6bb09c5fa1957f0b5ae9f8a9c74720d90a1da3e84d97c844f03818dc8"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/infinite_ros2"
+    },
+    "infinite_fast": {
+      "files": [
+        {
+          "bytes": 9432150016,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2/infinite_fast_ros2.db3",
+          "sha256": "9eaf1a0738ee5b362862f1cdfb02da8719f5a2a6f6c7a089dc354e0f4487f788"
+        },
+        {
+          "bytes": 1397,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2/metadata.yaml",
+          "sha256": "daee099fe7e420c04f058e953d309f7eddd133695a5a71f58a7599b073143837"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2"
+    },
+    "infinite_head": {
+      "files": [
+        {
+          "bytes": 7099637760,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2/infinite_head_ros2.db3",
+          "sha256": "d9b7183c793e2479150022603704c98ab3cfea9021bb38a873d166228d5524be"
+        },
+        {
+          "bytes": 1397,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2/metadata.yaml",
+          "sha256": "14a32b3b340f2c07aaaf54e9f38f073f44e0ea202bca4628cef592cf8ec8c2cd"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2"
+    },
+    "rotation": {
+      "files": [
+        {
+          "bytes": 1387,
+          "path": "${DATA_ROOT}/kaist_vio/rotation_ros2/metadata.yaml",
+          "sha256": "858b774701c3e8379d2f62d6c59b5588edae6e0356ff34cff58599413c40ebaf"
+        },
+        {
+          "bytes": 7017652224,
+          "path": "${DATA_ROOT}/kaist_vio/rotation_ros2/rotation_ros2.db3",
+          "sha256": "b7460c5efb88bd59edea44d2997277675824ce454f03d8938b010934ba45fad4"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/rotation_ros2"
+    },
+    "rotation_fast": {
+      "files": [
+        {
+          "bytes": 1397,
+          "path": "${DATA_ROOT}/kaist_vio/rotation_fast_ros2/metadata.yaml",
+          "sha256": "75598f4dbb89a13324a9354207c35a7486b23e4f3b14e884187c8691848d571c"
+        },
+        {
+          "bytes": 5645004800,
+          "path": "${DATA_ROOT}/kaist_vio/rotation_fast_ros2/rotation_fast_ros2.db3",
+          "sha256": "10656e3312e73fea4bd3632d22e2a74e53e34a305d9d983965990db62bea064b"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/rotation_fast_ros2"
+    },
+    "square": {
+      "files": [
+        {
+          "bytes": 1383,
+          "path": "${DATA_ROOT}/kaist_vio/square_ros2/metadata.yaml",
+          "sha256": "684621067e588c7badc5cba9a1b41e2a0357e59bbe44be0cc0d1b23b83b1326b"
+        },
+        {
+          "bytes": 7279722496,
+          "path": "${DATA_ROOT}/kaist_vio/square_ros2/square_ros2.db3",
+          "sha256": "ac34901114f39b5932cc7f4e640842e9e525c95a437906c417f253a4b88566e2"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/square_ros2"
+    },
+    "square_fast": {
+      "files": [
+        {
+          "bytes": 1393,
+          "path": "${DATA_ROOT}/kaist_vio/square_fast_ros2/metadata.yaml",
+          "sha256": "33c2ff8ce6724674d17cd3d14bd89bbf229236b08be78433a07cae8d67ef6f21"
+        },
+        {
+          "bytes": 6526910464,
+          "path": "${DATA_ROOT}/kaist_vio/square_fast_ros2/square_fast_ros2.db3",
+          "sha256": "1fa318f8f4cb9f2da2035a8ac69ea5b18755c2fc159a8372679c946764aa6229"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/square_fast_ros2"
+    },
+    "square_head": {
+      "files": [
+        {
+          "bytes": 1393,
+          "path": "${DATA_ROOT}/kaist_vio/square_head_ros2/metadata.yaml",
+          "sha256": "3ae724cd645c1867987d950b13cc9a204cc9c1bb131af4f9c829006441802e18"
+        },
+        {
+          "bytes": 12507430912,
+          "path": "${DATA_ROOT}/kaist_vio/square_head_ros2/square_head_ros2.db3",
+          "sha256": "425dab76f7bf8aaef8e7e5f4d42ecc716c57813a80aa5d5b7efbe66b02ef3fe2"
+        }
+      ],
+      "path": "${DATA_ROOT}/kaist_vio/square_head_ros2"
+    }
+  },
+  "source_root": "${DATA_ROOT}/kaist_vio",
+  "status": "SEALED_BEFORE_FORMAL_SIDECARS",
+  "totals": {
+    "bytes": 82646313927,
+    "files": 22
+  }
+}

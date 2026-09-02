@@ -1,0 +1,151 @@
+{
+  "estimator_run": false,
+  "execution_freeze_created": false,
+  "execution_order_controller": {
+    "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/execution_order.py",
+    "required_complete_terminal_jobs": 58,
+    "sha256": "aeca5fc6a378b0264b7541fee7a4ff231cf0d5ed10a736cac4e0d36d14d352c9"
+  },
+  "execution_state_created": false,
+  "ground_truth_hashes": {
+    "home1-1": {
+      "path": "${DATA_ROOT}/openloris/home1-1/groundtruth.txt",
+      "sha256": "e8347e27e1b50976eecbed21a2072c37e775e465452eafb622ba976b0e464d61"
+    },
+    "home1-2": {
+      "path": "${DATA_ROOT}/openloris/home1-2/groundtruth.txt",
+      "sha256": "42d04ce7491366de91e636343e483639219295bec3870feaa2ea9e7e2badb8d2"
+    },
+    "home1-3": {
+      "path": "${DATA_ROOT}/openloris/home1-3/groundtruth.txt",
+      "sha256": "24040281532e3bc7fd2b147a80ab0f21708418238f85c4f516fabd4d6639b41f"
+    },
+    "home1-4": {
+      "path": "${EXTERNAL_ROOT}/usb_117g_backup_20260822_6745-2301/home_v3_20260818/raw/home1-4/groundtruth.txt",
+      "sha256": "99225886aecddc04b75ac33a10fc8f8b7d1e34aaf2976b30c6f4eb8393a39d8b"
+    },
+    "home1-5": {
+      "path": "${DATA_ROOT}/openloris/home1-5/groundtruth.txt",
+      "sha256": "d21af7df33d20302fdcdb7740bf6447ec31a737ef55f1da1f7c00bd5eb387b0c"
+    },
+    "office1-1": {
+      "path": "${DATA_ROOT}/openloris/office1-1/groundtruth.txt",
+      "sha256": "20db51ef8eda1fc9d05d62060f0f644ee150254e22ae706dedb8e3f6100fa5bc"
+    },
+    "office1-2": {
+      "path": "${DATA_ROOT}/openloris/office1-2/groundtruth.txt",
+      "sha256": "7abd146e1f3c7683721253a501c665f2d61c52767c0d1a997d5a05d0dfb7de86"
+    },
+    "office1-3": {
+      "path": "${DATA_ROOT}/openloris/office1-3/groundtruth.txt",
+      "sha256": "53ad8a25f493794862acd841a8af25aa833227fa42057495fac81bd56269319d"
+    },
+    "office1-4": {
+      "path": "${DATA_ROOT}/openloris/office1-4/groundtruth.txt",
+      "sha256": "a5fe84dbf72e5896e675aff996a8353168eb4e238580d2bdd93c36e8ab8cf94d"
+    },
+    "office1-5": {
+      "path": "${DATA_ROOT}/openloris/office1-5/groundtruth.txt",
+      "sha256": "a3b829dd85a5a021753ca28b3950b1356fc516a6f58242530d6c260384ad2a30"
+    },
+    "office1-6": {
+      "path": "${DATA_ROOT}/openloris/office1-6/groundtruth.txt",
+      "sha256": "c1b7dec3915100731e3857debeaeeb3abbfd0ca3c47c2589abfd7443deb20682"
+    },
+    "office1-7": {
+      "path": "${DATA_ROOT}/openloris/office1-7/groundtruth.txt",
+      "sha256": "2c3f3985f457fea50001fb0ce51c9a4f0560494127b12f3ec8cad0f038160a60"
+    }
+  },
+  "ground_truth_parsed": false,
+  "input_cohort_seal": {
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/INPUT_COHORT_SEAL.json",
+    "sha256": "017e276c1d757555d9f9c4f9387338ae07f13d36fcaf6e43f174b76fd3f6c31c"
+  },
+  "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/SCORER_SEAL.json",
+  "real_scoring_run": false,
+  "registered_scientific_artifacts": {
+    "extrinsic": {
+      "path": "${PRIVATE_ROOT}/external_freeze_20260818/config/openloris_imu.yaml",
+      "sha256": "faa608fd0e8519906f5ad61d53bab4c559b15b5b0480edbdaf01f30cb97d515b"
+    },
+    "registered_normalizer_reference": {
+      "path": "${PRIVATE_ROOT}/shadow_port/scripts/ingest_home_external_upstream_r17.py",
+      "sha256": "c2e27aabfd8cf089c084b3e69e7065c0ebb206f7421febe2caab7866188a5bb3"
+    },
+    "scorer": {
+      "path": "${PRIVATE_ROOT}/external_freeze_20260818/scripts/eval_openloris.py",
+      "sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3"
+    }
+  },
+  "runner_seal": {
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/RUNNER_SELF_TEST_PASS.json",
+    "schema": "g120a-openloris-runner-selftest-v4",
+    "sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a"
+  },
+  "schema": "g120a-openloris-scorer-seal-v4",
+  "scientific_inheritance": {
+    "evaluator_command": {
+      "alignment": "se3",
+      "ate_threshold_m": 3.0,
+      "byte_exact_v3": true,
+      "double_transform_prevention": "--no-to-base-link",
+      "sha256": "e4d3c0536b7203d2455afa205d851bc3b0b9caa6ddfa2c799c22c8bd991ee841"
+    },
+    "functions": {
+      "load_extrinsic": {
+        "byte_exact_v3": true,
+        "sha256": "a57abb578b7df816c7e77ae9c6a3ffc1e140c9b09191949b70969bb3964a92ff"
+      },
+      "normalize": {
+        "byte_exact_v3": true,
+        "sha256": "3fbeaa41c3fb929af4fa03e94e69f6899c13a08cab2304dc5cd0aa20decc16ba"
+      },
+      "parse_raw": {
+        "byte_exact_v3": true,
+        "sha256": "a814847868818dfae00d39cf73e8a708ef15c9559c095048501e14184979924e"
+      },
+      "quaternion_to_rotation": {
+        "byte_exact_v3": true,
+        "sha256": "cc619f8f4532ba1678399b8ce5357d508cb702c7b153231b50578bebed211c16"
+      },
+      "rotation_to_quaternion": {
+        "byte_exact_v3": true,
+        "sha256": "24a525519bedf4a3e5b06b75e6f175c0d0181ff455c9d67246c0c9052132a20f"
+      }
+    },
+    "transform_applications": 1,
+    "transform_id": "openloris_imu_to_base_v1",
+    "v3_wrapper": {
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel/score_openloris.py",
+      "sha256": "bbea2bcfe5bbfaed3cd7e6fe3e966d597dc2b3ca2f331e582f27e3b78cc7cbb2"
+    }
+  },
+  "score_output_created": false,
+  "score_wrapper": {
+    "bytes": 14878,
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/score_openloris.py",
+    "sha256": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66"
+  },
+  "sealed_code_sha256": {
+    "score_openloris.py": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66",
+    "scorer_contract.py": "dbd49acf00f6925ca8050cd0bbb6580c498d05ffeb16e230e676ebedade9b515",
+    "seal_scorer_v4.py": "08faeabe1bcc7cc50d605a5382ea1a04af241a903cb34bbebe50a52dd580ab1b",
+    "tests/test_scorer_v4.py": "d351f4ec1af096473ef94b94afbf77fb5aebcaeace2ac49ae3e835fa607421ef"
+  },
+  "static_guards": {
+    "all_58_gate_before_any_scoring_write": true,
+    "score_wrapper_full_sha256": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66",
+    "status": "PASS_V4_PATH_SCHEMA_ORDER_FAILURE_GUARDS",
+    "v3_read_only_input_root": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris",
+    "v3_terminal_and_run_schemas_rejected": true,
+    "v4_output_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris"
+  },
+  "status": "PASS",
+  "unit_tests": {
+    "cases": 10,
+    "status": "PASS",
+    "stdout_sha256": "a6fca591b2a1ce7ba81b9bf5a35f6b83ce12c72e274efd5f4b7505608d7a8ed8",
+    "synthetic_no_ground_truth_content": true
+  }
+}

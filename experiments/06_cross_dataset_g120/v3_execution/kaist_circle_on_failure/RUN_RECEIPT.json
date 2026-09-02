@@ -1,0 +1,179 @@
+{
+  "arm": "on",
+  "attempt": {
+    "bytes": 3727,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/ATTEMPT.json",
+    "sha256": "e4427be6a12bd8ad1a6ecd498ee04bda36231c4dcb0b7d3aba04fc114f47e3fe"
+  },
+  "attempt_identity": {
+    "arm": "on",
+    "armed_utc": "2026-09-01T16:59:53.917932+00:00",
+    "candidate": {
+      "binary": {
+        "bytes": 22731408,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+        "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+      },
+      "libsvio": {
+        "bytes": 327883064,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+        "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+      }
+    },
+    "config": {
+      "bytes": 4362,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/formal_configs/on/circle.yaml",
+      "sha256": "ccc0a7b1bd1ee82ded9d0ba65c38137cd5f7a2f2e19e04d8751464afc85257ca"
+    },
+    "container_image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+    "family": "kaist",
+    "image_shift_ns": -29958533,
+    "kaist_self_test_seal": {
+      "bytes": 27949,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SELF_TEST_SEAL.json",
+      "sha256": "03a2c2b0b011e1d9c0e1d5972c6e87ed3e3077b41ed43f6da902d5dac8808c7e"
+    },
+    "runtime_envelope": {
+      "bytes": 9828,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/RUNTIME_ENVELOPE.json",
+      "sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211"
+    },
+    "schema": "g120-kaist-formal-attempt-v1",
+    "scoring_run": false,
+    "sequence": "circle",
+    "sidecar": {
+      "artifact": {
+        "bytes": 610692724,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle.xfs",
+        "sha256": "1a0073430e6ef84c2ca32fe026eff8900c36bc10089c0130e716eeecc149a45a"
+      },
+      "frames": 4557,
+      "receipt": {
+        "bytes": 2540,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle.xfs.json",
+        "sha256": "1f805985e1575371e5e3275a59c19c80537f11e55ed9050b55296a982f33cf64"
+      }
+    },
+    "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+    "staged_bag": {
+      "adapter_receipt": {
+        "bytes": 3408,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag.json",
+        "sha256": "185d5d2884654624aeeceeeda7ceb33004988894bb40fe9ea503854f57b1d544"
+      },
+      "artifact": {
+        "bytes": 7009378515,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag",
+        "sha256": "635517e8ed67f42178f5c9bd31aeab4937de8194c8e7509afb669ad95c9515c7"
+      },
+      "counts": {
+        "/d400/aligned_depth/image": 4557,
+        "/d400/color/image": 4557,
+        "/d400/imu": 19142
+      },
+      "source_bag_identity": {
+        "files": [
+          {
+            "bytes": 7015395328,
+            "path": "${DATA_ROOT}/kaist_vio/circle_ros2/circle_ros2.db3",
+            "sha256": "ded4d93eda50b24fe9133ca82802ea891c2760caa2b14fcb722381a59b911099"
+          },
+          {
+            "bytes": 1383,
+            "path": "${DATA_ROOT}/kaist_vio/circle_ros2/metadata.yaml",
+            "sha256": "d26c95f8bcb815548fd141c47195202a53e43899bd819bd24e9b64a4741e7e25"
+          }
+        ],
+        "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+        "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+        "path": "${DATA_ROOT}/kaist_vio/circle_ros2"
+      }
+    },
+    "status": "ARMED_BEFORE_CONTAINER_LAUNCH",
+    "v3_freeze": {
+      "bytes": 9423,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_FREEZE.json",
+      "sha256": "ac4062ceaab52fd091bae46c16950075f136702d4a5060f5c9d5e4c8ae82f0c4"
+    }
+  },
+  "container_status": 134,
+  "family": "kaist",
+  "run_artifacts": {
+    "RUN_FAILURE.env": {
+      "bytes": 40,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_FAILURE.env",
+      "sha256": "bae3f19d96a2a796f420128c6b0283389956d1bcf45e46a1b037bff788340957"
+    },
+    "V3_AUTHORIZATION.json": {
+      "bytes": 198,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/V3_AUTHORIZATION.json",
+      "sha256": "fb5c1ea929b42172c9308883efdb130e4528180d03d4063df325628ae3009bc1"
+    },
+    "container.log": {
+      "bytes": 230,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/container.log",
+      "sha256": "e09527db12f31a30f801a39c38997a93ee3f091590bc2df1ef2bf4962c27fc75"
+    },
+    "ldd.txt": {
+      "bytes": 14255,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/ldd.txt",
+      "sha256": "ab38bf803dab820897c57293665b30dd8a1c10f368d2ee0c0119d6bb9699bc4b"
+    },
+    "node_readiness.txt": {
+      "bytes": 1462,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/node_readiness.txt",
+      "sha256": "db0884d09962fad38e1b6157c4cb0b85ff25c043b36f3ab3d0299d516424f361"
+    },
+    "rosbag_play.log": {
+      "bytes": 2149822,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/rosbag_play.log",
+      "sha256": "f95048b7f9b5ec3474961194618bd40655b65ef1d901ec7e5f4f392bcc84f9f6"
+    },
+    "roscore.log": {
+      "bytes": 1554,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/roscore.log",
+      "sha256": "7390c9a9038570023a4058bbcd345efb964d9734db8f32508dcf601606f21fe0"
+    },
+    "roscore_identity.env": {
+      "bytes": 54,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/roscore_identity.env",
+      "sha256": "343b7f2715d407d8b4c26a056a91b6cd88df5466d05f156ff67522c0e100dba2"
+    },
+    "runtime_hashes.txt": {
+      "bytes": 1771,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/runtime_hashes.txt",
+      "sha256": "47366adb6f1f535bf884924379c1b25f9faff54830ec6e0d0885dcf2c89326e5"
+    },
+    "runtime_maps.txt": {
+      "bytes": 9103,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/runtime_maps.txt",
+      "sha256": "94363282cac3c793cce2a392d944ddcf07bd661a1518f6c631a939a141370032"
+    },
+    "stats.csv": {
+      "bytes": 350,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/stats.csv",
+      "sha256": "f5b38b20153b9eea5fa3612a250cae314ce7bf7085341f1740b06e9d3cd3a312"
+    },
+    "svio.log": {
+      "bytes": 11247603,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio.log",
+      "sha256": "f1605e8c777ed92f6dff1407ab8a035741c6d60dd9a1be39ea1fce9b438f5e5e"
+    },
+    "svio_no_loop.csv": {
+      "bytes": 424027,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio_no_loop.csv",
+      "sha256": "83fa52674fafc347bcf8048b3beb8d6183e7a74cf5d27a12db769020caabfe21"
+    },
+    "xfeat_environment.txt": {
+      "bytes": 120,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/xfeat_environment.txt",
+      "sha256": "c88b1412300e45867363a8dd1924556f736ca7d3016ab02dfda51fd29aa574ff"
+    }
+  },
+  "schema": "g120-kaist-formal-run-v2",
+  "scoring_run": false,
+  "sequence": "circle",
+  "status": "FAILURE_CONTAINER_EXIT",
+  "terminal": true,
+  "validation_error": "RuntimeError: CONTAINER_EXIT:status=134"
+}

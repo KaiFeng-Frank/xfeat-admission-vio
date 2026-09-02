@@ -1,0 +1,209 @@
+{
+  "schema": "g120a-kaist11-openloris12-duel-freeze-v2",
+  "status": "FROZEN_AFTER_ADAPTER_SMOKES_BEFORE_ANY_CROSS_DATASET_G120A_ESTIMATOR_RUN",
+  "frozen_at": "2026-09-01T22:15:19+08:00",
+  "candidate": {
+    "name": "G120-A",
+    "one_candidate_across_vcu_kaist_openloris": true,
+    "binary_path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "library_path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+    "library_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "base_config_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/config_full_line.yaml",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "model_path": "${PRIVATE_ROOT}/docs/exp_registry_20260828/xfeat_rknn_conversion_preflight_v1/xfeat_backbone_1x3x480x640_opset19.onnx",
+    "model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "xfeat_module_sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3",
+    "rule": "admit XFeat only at the existing 10 Hz tick after two consecutive valid post-F-RANSAC survivor counts below 120 under max_cnt=150",
+    "on_off_semantics": "same candidate binary and config; OFF unsets all SVIO_XFEAT_* variables",
+    "code_or_model_change_allowed": false,
+    "per_sequence_tuning": false
+  },
+  "ports": {
+    "kaist": {
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel",
+      "manifest_sha256": "611e3f815c30264a10b558e206989ded8e2a75f52cf746fa69524b9b3d0a8f5d",
+      "smoke_summary_sha256": "b165bca11356e0d1e43041906e1402812d1253aae30f5b080d3dd65aed4bb138",
+      "smoke": "11/11 one-frame adapter-only PASS; no estimator or score"
+    },
+    "openloris": {
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel",
+      "manifest_sha256": "29a5812d498f0fd2b06e584ddd37cd4c24325291dd23dc28de9b310b8bd528ac",
+      "pair_smoke_sha256": "cff81297f91e9e5072b9ae419516fcf240b1f1da10a90539eefe649221204919",
+      "xfs_smoke_sha256": "7899f459d634efd896bec05ab09d90491a153f950d9251adbafb003989efece2",
+      "smoke": "four consumed RGB-D pairs adapter-only PASS; no estimator or score"
+    }
+  },
+  "calibration_sources": {
+    "kaist": {
+      "path": "${PRIVATE_ROOT}/results/table2_evidence_20260818/svio_common_noise_20260822/circle/kaist_rectified_repro.yaml",
+      "sha256": "b546c8f1782886722884db559ca5ec50d0e047d47fb6b25ea0bf0a923a3a4e4e"
+    },
+    "openloris": {
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/src/SVIO/config/openloris_vio.yaml",
+      "sha256": "aab438e89202d8d5c1335818cabea1599ff927de8dadd2433891124a95cfe8ab"
+    },
+    "allowed_rig_only_changes": [
+      "image size, distortion, intrinsics",
+      "topic and output paths",
+      "camera-IMU extrinsics and mechanically derived virtual depth-camera transform",
+      "IMU sign/noise/gravity sensor metadata",
+      "rolling-shutter metadata",
+      "fixed registered time shift",
+      "physical depth scale and range"
+    ],
+    "all_other_candidate_yaml_fields_equal_pinned_base": true
+  },
+  "formal_openloris_svio": {
+    "role": "fresh primary comparator on the exact same resized input and transformed sensor fields; distinct from G120-A matched OFF",
+    "container_name_at_freeze": "viw",
+    "container_image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+    "binary_path_in_container": "/root/svio_ws/devel/lib/svio/svio_syn_node",
+    "binary_sha256": "e47f1976462df91f186a4d0d2a8bef0e06d06f5c69b44c3f1a292da9f0ad541d",
+    "library_path_in_container": "/root/svio_ws/devel/lib/libsvio.so",
+    "library_sha256": "e281837084669e05a7708be67179678f3e6835ebf7bdd05e5e158beece511669",
+    "method_native_non_sensor_parameters": true,
+    "same_resized_bag_and_sensor_fields_as_g120": true,
+    "one_run_per_sequence": true,
+    "values": "PENDING_CREATE_ONCE_EXECUTION"
+  },
+  "openloris_resize": {
+    "native_size": [848, 480],
+    "campaign_size": [640, 480],
+    "full_system_resize": true,
+    "color_interpolation": "OpenCV INTER_AREA",
+    "depth_type": "uint16",
+    "depth_interpolation": "OpenCV INTER_NEAREST",
+    "depth_zero_preserved": true,
+    "imu_and_timestamps_preserved": true,
+    "sx": 0.7547169811320755,
+    "sy": 1.0,
+    "intrinsic_rule": {
+      "fx_prime": "sx * fx",
+      "fy_prime": "fy",
+      "cx_prime": "sx * cx",
+      "cy_prime": "cy"
+    },
+    "candidate_coordinate_remap": false,
+    "all_three_arms_consume_identical_resized_bag_bytes": true,
+    "historical_native_848_svio_is_primary_comparator": false
+  },
+  "kaist": {
+    "sequence_order": [
+      "circle",
+      "circle_fast",
+      "circle_head",
+      "infinite",
+      "infinite_fast",
+      "infinite_head",
+      "square",
+      "square_fast",
+      "square_head",
+      "rotation",
+      "rotation_fast"
+    ],
+    "arm_order": ["g120_on", "g120_matched_off"],
+    "input_image_depth_shift_s": -0.029958533,
+    "score_timestamp_restore_s": 0.029958533,
+    "rotation_cutoff_application": "inclusive on both restored estimate and original-time-base GT",
+    "primary_comparator": "frozen precise corrected S-VIO replay",
+    "comparator_source_path": "${PRIVATE_ROOT}/results/table2_evidence_20260818/svio_common_noise_20260822/_provenance/table3_svio_corrected_20260822.csv",
+    "comparator_source_sha256": "e5da39a1ad5590951b3ad1b62c1862d750a4567149e85379f130b243add868bb",
+    "comparator_mean_ate_cm": 17.20865481748989,
+    "rows": [
+      {"sequence": "circle", "ate_cm": 5.503853508300827, "ct": 0.7087290065523211},
+      {"sequence": "circle_fast", "ate_cm": 12.27174466881395, "ct": 0.7689402930073681},
+      {"sequence": "circle_head", "ate_cm": 8.430921388107878, "ct": 0.8188147169716712},
+      {"sequence": "infinite", "ate_cm": 8.417590342439999, "ct": 0.7544457396453824},
+      {"sequence": "infinite_fast", "ate_cm": 9.95642130032406, "ct": 0.9248668248603541},
+      {"sequence": "infinite_head", "ate_cm": 28.543135689036493, "ct": 0.7761159958452544},
+      {"sequence": "square", "ate_cm": 6.5984929540379476, "ct": 0.8063347633630312},
+      {"sequence": "square_fast", "ate_cm": 7.9706785223343655, "ct": 0.7956637303083429},
+      {"sequence": "square_head", "ate_cm": 81.13665845252545, "ct": 0.9622853219268698},
+      {"sequence": "rotation", "ate_cm": 7.442273671031745, "ct": 0.7851987341566962, "inclusive_score_cutoff": 1624246998.4844894},
+      {"sequence": "rotation_fast", "ate_cm": 13.023432495436058, "ct": 0.7651757032995173}
+    ]
+  },
+  "openloris": {
+    "sequence_order": [
+      "office1-1",
+      "office1-2",
+      "office1-3",
+      "office1-4",
+      "office1-5",
+      "office1-6",
+      "office1-7",
+      "home1-1",
+      "home1-2",
+      "home1-3",
+      "home1-4",
+      "home1-5"
+    ],
+    "arm_order": ["g120_on", "g120_matched_off", "formal_svio_resized"],
+    "primary_comparator": "fresh formal S-VIO on the shared resized 640x480 view",
+    "primary_comparator_values": "PENDING_CREATE_ONCE_EXECUTION",
+    "historical_native_848_context_only": {
+      "mean_ate_cm": 13.347174027275232,
+      "sources": [
+        {"path": "${PRIVATE_ROOT}/results/table2_evidence_20260818/rescored_valid_numeric_v1/scores.csv", "sha256": "5f5231c516459680c099a3a7b1a644f91ce00f1185312609bbf704d9deede40d"},
+        {"path": "${PRIVATE_ROOT}/results/table2_evidence_20260818/rescored_existing_v1/scores.csv", "sha256": "2cc26a98b1577c5d222ed1bb60ef48a8a4827fda2431df714b0b4b5ad6a94b63"},
+        {"path": "${PRIVATE_ROOT}/paper/generated/table2_provisional.tex", "sha256": "53077044c3b68f753ea7a494e59c9007c2ffb012afcd649ce7ad4630674dc46a"}
+      ],
+      "rows": [
+        {"sequence": "office1-1", "ate_cm": 13.4408085148, "ct": 0.872687516033},
+        {"sequence": "office1-2", "ate_cm": 6.50053606378, "ct": 0.988173105728},
+        {"sequence": "office1-3", "ate_cm": 3.53251475293, "ct": 0.714954381341},
+        {"sequence": "office1-4", "ate_cm": 6.64991336213, "ct": 0.988289252367},
+        {"sequence": "office1-5", "ate_cm": 10.3345347871, "ct": 0.978406378045},
+        {"sequence": "office1-6", "ate_cm": 11.0591771941, "ct": 0.706028116805},
+        {"sequence": "office1-7", "ate_cm": 7.06345946698, "ct": 0.802789017605},
+        {"sequence": "home1-1", "ate_cm": 26.102943858, "ct": 0.972027148513},
+        {"sequence": "home1-2", "ate_cm": 23.940650125, "ct": 0.99300642166},
+        {"sequence": "home1-3", "ate_cm": 18.7878728144, "ct": 0.978427294447},
+        {
+          "sequence": "home1-4",
+          "ate_cm": 18.286240456082792,
+          "ct": 0.9962640823058614,
+          "score_recomputed_before_freeze": true,
+          "trajectory_path": "${EXTERNAL_ROOT}/home_external_upstream_r19_20260821/manual_runs/openloris-home1-4-svio/normalized_base_link.tum",
+          "trajectory_sha256": "fc660ef173f65e804eb9592e201e5c1d3e2972cc988a35262abf691632326659",
+          "ground_truth_sha256": "99225886aecddc04b75ac33a10fc8f8b7d1e34aaf2976b30c6f4eb8393a39d8b"
+        },
+        {"sequence": "home1-5", "ate_cm": 14.467436932, "ct": 0.964750427034}
+      ]
+    }
+  },
+  "evaluation": {
+    "scorer_path": "${PRIVATE_ROOT}/scripts/eval_openloris.py",
+    "scorer_sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3",
+    "primary": "whole-sequence SE3 ATE RMSE cm, no scale, start offset 0, CR span GT",
+    "openloris_normalization": "openloris_imu_to_base_v1: T_world_base=T_world_imu*T_imu_base, identical hashed normalizer for ON/OFF/formal-SVIO, then scorer no-to-base-link",
+    "row_eligibility": "finite with at least 3 associations and Ct_candidate >= max(0.50, Ct_comparator - 0.02)",
+    "sequence_win": "eligible candidate ATE strictly less than comparator ATE; equality, failure, or ineligibility is a loss",
+    "kaist_broad_pass": "at least 7 of 11 wins",
+    "openloris_broad_pass": "at least 8 of 12 wins against fresh resized S-VIO",
+    "cross_dataset_pass": "both family gates pass independently",
+    "family_mean": "secondary only if every candidate and comparator row is numeric and eligible",
+    "pool_family_means": false,
+    "matched_off": "report every signed ON-minus-OFF ATE delta, sign count, and mean when defined; single-run descriptive attribution only"
+  },
+  "execution": {
+    "run_root": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901",
+    "all_new_large_artifacts_external": true,
+    "materialize_sidecars_and_configs_before_any_estimator": true,
+    "score_only_after_all_estimator_runs": true,
+    "single_run_per_arm": true,
+    "automatic_retry": false,
+    "one_temporary_ros1_bag_at_a_time": true,
+    "production_writes": false,
+    "reserved_unseen_access": false
+  },
+  "claim_boundary": {
+    "kaist": "system-level G120-A versus frozen corrected S-VIO; matched OFF gives single-replay learning attribution",
+    "openloris": "system-level G120-A versus fresh same-view 640x480 S-VIO only",
+    "historical_native_openloris": "context only; cannot decide rows or support a headline win",
+    "one_run_caveat": "no repeat-run variance or definitive causal claim",
+    "deployment": "desktop scientific sandbox only; RK3588S latency and memory remain unmeasured"
+  }
+}

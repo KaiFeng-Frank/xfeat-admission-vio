@@ -1,0 +1,83 @@
+%YAML:1.0
+
+# OpenLORIS D435i rig calibration after a mechanical full-FOV horizontal
+# resize 848x480 -> 640x480. This is sensor I/O, not a second G120 policy.
+model_type: PINHOLE
+camera_name: camera
+image_width: 640
+image_height: 480
+distortion_parameters:
+   k1: 0.0
+   k2: 0.0
+   p1: 0.0
+   p2: 0.0
+projection_parameters:
+   fx: 461.47244435436323
+   fy: 611.4857177734375
+   cx: 326.9463996167453
+   cy: 249.4730224609375
+
+imu_topic: "/imu"
+image_topic: "/cam0/color"
+dpt_img_topic: "/cam0/depth"
+output_path: "/work/run"
+
+estimate_extrinsic: 0
+body_T_cam0: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [0.999975572679493, 0.003849141066713, 0.005854714944742, 0.0203127935529,
+      -0.003828680351062, 0.999986658473099, -0.003501944262433, -0.00510325236246,
+      -0.005868115609379, 0.003479442469180, 0.999976848846595, -0.0112013882026,
+      0, 0, 0, 1]
+
+multiple_thread: 1
+
+# Exact G120-A algorithm keys used on every sequence and family.
+max_cnt: 150
+min_dist: 20
+freq_gate: 0
+freq: 10
+F_threshold: 2.0
+show_track: 0
+flow_back: 0
+
+# OpenLORIS IMU units and D435i noise are rig calibration, not learned-policy knobs.
+acc_mult: 1
+max_solver_time: 0.04
+max_num_iterations: 8
+keyframe_parallax: 20.0
+acc_n: 0.1
+gyr_n: 0.01
+acc_w: 0.0002
+gyr_w: 2.0e-5
+g_norm: 9.805
+
+loop_closure: 0
+load_previous_pose_graph: 0
+pose_graph_save_path: ""
+save_image: 0
+estimate_td: 0
+td: 0.0
+rolling_shutter: 1
+rolling_shutter_tr: 0.033
+depth_min_dist: 0.3
+depth_max_dist: 3
+
+horizontal_structural_th: 5.0
+line_horizontal_structural_th: 5.0
+vertical_structural_th: 3.0
+err_pt_line: 10
+err_normal_line: 10
+err_point: 20
+err_plane_dist: 1.0
+save_tum: 0
+drop_frame: 0
+min_used_num: 4
+structure_verify: 1
+use_gmm: 1
+use_gmm_ext: 1
+disable_line: 0
+disable_plane: 0
+structure: 1

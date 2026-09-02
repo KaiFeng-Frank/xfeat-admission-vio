@@ -1,0 +1,169 @@
+{
+  "configs": [
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle",
+      "sequence": "circle",
+      "sha256": "c3da248e9cacad190594c1e51e0c5a92cb14357047c135a4efe6ada6c91e654c"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "eedd4af9ee28778e70674852694a38cf1fff8272cff4ca05689d580e882c9b02"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle_head",
+      "sequence": "circle_head",
+      "sha256": "79892afb95d3539b6d1cda338b98fdac9e0c47f85c7b49a85c5f4ef263d6de8f"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite",
+      "sequence": "infinite",
+      "sha256": "797c62ae3ff44ccc01ea6772ab2c39972a851fb5b600fdb9ab53248be725d6da"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "0b868b7ab7b5d2f806e6d7c6027f86e482a12e0a0a3281e6c609a0cbee6507f4"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "f56ddc25270a48f6a4cb5492ed29938f11a795e55bffbd9e8ee3c91eaf34502d"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square",
+      "sequence": "square",
+      "sha256": "9ece104e5397303fde6dcd1858045f54ee9e0731615bf49f967d3e708f17886e"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square_fast",
+      "sequence": "square_fast",
+      "sha256": "a2458d4e86b1072332eac08ba5b857c09bda2edef5a7559cffde84ee9163740f"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square_head",
+      "sequence": "square_head",
+      "sha256": "80a59e82c77b423601275e120ec6cc4e27505951d0c3c950c75b6b411274cbf5"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/rotation",
+      "sequence": "rotation",
+      "sha256": "83503daf56de6224bbba568d043b9b0934d4c2dfe27d7389e056955e4bf00cac"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "f6d7426b7710300ce563bc70e3b42aa5b3960cb18cd95b446d9269499df3e151"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle",
+      "sequence": "circle",
+      "sha256": "cd82d775b07026f4c17dabc956c27043841c4ca2cac2570763a7289d3a25be70"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "b172d50d24cff50e5702682c7c9af2106e5594c79b457a77b7a570f5105ab0e1"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle_head",
+      "sequence": "circle_head",
+      "sha256": "85d555a79d0ab5d3dbabb47aafcca9924376e2d3cf00441c2c4fd2f78cdd0540"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite",
+      "sequence": "infinite",
+      "sha256": "d1f1032f3ac63e384d3dbb73d30cb010d36f0f0c5804cee2edc05177eaf72c2f"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "7bb42b1ca961077c00666dbf03ef9f983231c59d307cccc83887dc7c54ad15c8"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "d5b2ba37b4f704f8d28be19f896976de1981910eeb41c0d8dc8f244efdb46d89"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square",
+      "sequence": "square",
+      "sha256": "f6d0a91ef64497f67015bece2f80bcfa93b444db4b30571e15ec057d875a9e91"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square_fast",
+      "sequence": "square_fast",
+      "sha256": "2f10a0dc9cc073cbee3710a6306b234f954fa0a4cae717946a6d3b74137eb739"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square_head",
+      "sequence": "square_head",
+      "sha256": "e1435a940939167b01f26f21ea890e479779bc6c15baa0ad3507c15be7350ee8"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/rotation",
+      "sequence": "rotation",
+      "sha256": "445c5477525cf53fb98a1ca02424539bdff3e3a6759b577dba49a0e9a6115a88"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "9e43b73dbf2106e30bfff85c22d61e567e4c94ffc89dada04b2f770998207da0"
+    }
+  ],
+  "corrected_sensor_profile": {
+    "depth_range_m": [
+      0.3,
+      3.0
+    ],
+    "distortion": [
+      0.006896928127777268,
+      -0.009144207062654397,
+      0.000254113977103925,
+      0.0021434982252719545
+    ],
+    "imu_noise": [
+      0.1,
+      0.01,
+      0.001,
+      0.0001
+    ]
+  },
+  "estimator_run": false,
+  "ground_truth_read": false,
+  "image_shift_ns": -29958533,
+  "registered_rotation_cutoff_s": 1624246998.4844894,
+  "registered_scorer_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+  "schema": "g120-kaist-formal-selftest-v1",
+  "scoring_run": false,
+  "status": "PASS_NO_GT_NO_ESTIMATOR_NO_SCORE",
+  "time_restoration": "t_eval=t_svio_output-(-0.029958533)",
+  "transient_max_frame_artifacts": {
+    "bag_sha256": "5ca49821e9da7118bb5b260f9a0850104be0d986b9c54db118d673983bda1eb0",
+    "registered_crop_sha256": "1490841edc77183cf6b9c205f41732094f4181a9ac2ff25f51c593724b6e15d7",
+    "restored_sha256": "b807cd2563733ec6b539a1550b4129d285b2f4a4d2a09c2fef9650f2b9ec04e6",
+    "xfs_sha256": "9127dfdb7357713f338e30f0198b6d61ba4b7dda5cb3eb98f97f1dbc8cd0f97a"
+  }
+}

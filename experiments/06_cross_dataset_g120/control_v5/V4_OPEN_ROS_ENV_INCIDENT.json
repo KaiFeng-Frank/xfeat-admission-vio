@@ -1,0 +1,520 @@
+{
+  "affected_rows": [
+    {
+      "arm": "g120_on",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 23,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-1",
+      "terminal_receipt": {
+        "bytes": 289,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/TERMINAL_RECEIPT.json",
+        "sha256": "626e8985b6e4c75f9423cd9a02552566f0cc854e4e5fce8be7f98c5b3d92752b"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-1/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "626e8985b6e4c75f9423cd9a02552566f0cc854e4e5fce8be7f98c5b3d92752b",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 24,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-1",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/TERMINAL_RECEIPT.json",
+        "sha256": "2ececb0b0fe54370f95e6326822d99a66eaa83403f54accd98be790349e7822e"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-1/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "2ececb0b0fe54370f95e6326822d99a66eaa83403f54accd98be790349e7822e",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 25,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-1",
+      "terminal_receipt": {
+        "bytes": 295,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/TERMINAL_RECEIPT.json",
+        "sha256": "ef64c2b8a044c75fb9676873d2c8de2e39be144081c2d885777ecf1f67bae83d"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-1/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "ef64c2b8a044c75fb9676873d2c8de2e39be144081c2d885777ecf1f67bae83d",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_on",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 26,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-2",
+      "terminal_receipt": {
+        "bytes": 289,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/TERMINAL_RECEIPT.json",
+        "sha256": "bb1f314e009c5c2aacb5b0397dc8d58e4b1d4e6156413e5c85c7ad76188fcf74"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-2/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "bb1f314e009c5c2aacb5b0397dc8d58e4b1d4e6156413e5c85c7ad76188fcf74",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 27,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-2",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/TERMINAL_RECEIPT.json",
+        "sha256": "e52f36e9078f4626337a9d2f078a6f4cbe18a9e3d62d839df4a06439270a2fcb"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-2/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "e52f36e9078f4626337a9d2f078a6f4cbe18a9e3d62d839df4a06439270a2fcb",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 28,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-2",
+      "terminal_receipt": {
+        "bytes": 295,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/TERMINAL_RECEIPT.json",
+        "sha256": "5fc074e67dc408780f99e6409724f695d2c1f15dcc1dd75a0da02e1f825f895a"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-2/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "5fc074e67dc408780f99e6409724f695d2c1f15dcc1dd75a0da02e1f825f895a",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_on",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 29,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-3",
+      "terminal_receipt": {
+        "bytes": 289,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/TERMINAL_RECEIPT.json",
+        "sha256": "50f379705fb1a1db1b0e0d26582499c0fe1bce6f834e878a3e5a7a564979662d"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-3/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "50f379705fb1a1db1b0e0d26582499c0fe1bce6f834e878a3e5a7a564979662d",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 30,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-3",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/TERMINAL_RECEIPT.json",
+        "sha256": "7f3b09f38b9028c74edcd57ca9b8f9be981ffa3badcbd288c504c60410678846"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-3/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "7f3b09f38b9028c74edcd57ca9b8f9be981ffa3badcbd288c504c60410678846",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 31,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-3",
+      "terminal_receipt": {
+        "bytes": 295,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/TERMINAL_RECEIPT.json",
+        "sha256": "da10d09f68afac5503d20f5741b14445179c7e80e9f094534668b47ecbec79cb"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-3/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "da10d09f68afac5503d20f5741b14445179c7e80e9f094534668b47ecbec79cb",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_on",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 32,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-4",
+      "terminal_receipt": {
+        "bytes": 289,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/TERMINAL_RECEIPT.json",
+        "sha256": "0fff5310d3dbf29f272c6d5f5f46ce28b8cb44dbb2203e8b3b6ebd07c0b2b666"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-4/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "0fff5310d3dbf29f272c6d5f5f46ce28b8cb44dbb2203e8b3b6ebd07c0b2b666",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 33,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-4",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/TERMINAL_RECEIPT.json",
+        "sha256": "93f5883ada33de9a4cfa246621ef8565f8b6e7eed2e12474233e5af4f9fe5820"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-4/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "93f5883ada33de9a4cfa246621ef8565f8b6e7eed2e12474233e5af4f9fe5820",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 34,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-4",
+      "terminal_receipt": {
+        "bytes": 295,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/TERMINAL_RECEIPT.json",
+        "sha256": "ebb78d840412aa0cc16ca8772d5ac3f7730d37f4ac3eee82510a2f74d678f614"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-4/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "ebb78d840412aa0cc16ca8772d5ac3f7730d37f4ac3eee82510a2f74d678f614",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_on",
+      "classification": "OPERATOR_STOP_AFTER_SYSTEMIC_ABORT_DETECTED",
+      "container_stdout": null,
+      "family": "openloris",
+      "ordinal": 35,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-5",
+      "terminal_receipt": {
+        "bytes": 291,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/TERMINAL_RECEIPT.json",
+        "sha256": "09ecba3340f59b711dc02873ceefd49211014455cfaec61bd6450ad76c677eeb"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-5/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "09ecba3340f59b711dc02873ceefd49211014455cfaec61bd6450ad76c677eeb",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 36,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-5",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/TERMINAL_RECEIPT.json",
+        "sha256": "7dc6cecc99ab8efc7c8c94982cd492cbaa19f19bd97c61fe485a2ab65201e9d8"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-5/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "7dc6cecc99ab8efc7c8c94982cd492cbaa19f19bd97c61fe485a2ab65201e9d8",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 37,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-5",
+      "terminal_receipt": {
+        "bytes": 295,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/TERMINAL_RECEIPT.json",
+        "sha256": "a1486bcfbd7ea0d51f0887bcf0454a10761d78eaed705cec0a726c6a350b7270"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-5/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "a1486bcfbd7ea0d51f0887bcf0454a10761d78eaed705cec0a726c6a350b7270",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_on",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 38,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-6",
+      "terminal_receipt": {
+        "bytes": 289,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/TERMINAL_RECEIPT.json",
+        "sha256": "98a8d44a5ee2cd0f7522e93c6e81472b771085a1883aaee45666ad3c9b3b1478"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_on/office1-6/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "98a8d44a5ee2cd0f7522e93c6e81472b771085a1883aaee45666ad3c9b3b1478",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "g120_off",
+      "classification": "ROS_ENV_ABORT_BEFORE_ESTIMATOR_OR_PLAYBACK",
+      "container_stdout": {
+        "bytes": 95,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/CONTAINER_STDOUT.log",
+        "sha256": "004af952222b8a1ba4378aafb904f0a192b1ba306d421c1fb76d769fa4c2612c"
+      },
+      "family": "openloris",
+      "ordinal": 39,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-6",
+      "terminal_receipt": {
+        "bytes": 290,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/TERMINAL_RECEIPT.json",
+        "sha256": "7184ee8713fec3ab93fd956acc899d3b828d9d3608d0dea03cc23b365a864fad"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/g120_off/office1-6/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "7184ee8713fec3ab93fd956acc899d3b828d9d3608d0dea03cc23b365a864fad",
+      "terminal_status": "FAIL_INCOMPLETE"
+    },
+    {
+      "arm": "released_svio",
+      "classification": "OPERATOR_STOP_AFTER_SYSTEMIC_ABORT_DETECTED",
+      "container_stdout": null,
+      "family": "openloris",
+      "ordinal": 40,
+      "scientific_artifacts_absent": [
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/RUN_COMPLETE.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/svio_no_loop.csv",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/PRE_SHUTDOWN_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/TRAJECTORY_CHECK.json",
+        "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/START_BOUNDARY.json"
+      ],
+      "sequence": "office1-6",
+      "terminal_receipt": {
+        "bytes": 297,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/TERMINAL_RECEIPT.json",
+        "sha256": "3a9506f13580b6e41c0c20b837bf1b3696649665870ad509cfa9ccb0202b9343"
+      },
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs/released_svio/office1-6/TERMINAL_RECEIPT.json",
+      "terminal_receipt_sha256": "3a9506f13580b6e41c0c20b837bf1b3696649665870ad509cfa9ccb0202b9343",
+      "terminal_status": "FAIL_INCOMPLETE"
+    }
+  ],
+  "counts": {
+    "environment_aborts": 16,
+    "operator_stop_rows": 2,
+    "scientific_results": 0,
+    "terminalized_rows": 18
+  },
+  "created_utc": "2026-09-01T19:40:28.686476+00:00",
+  "disposition": "None of the 18 terminals is an algorithm result; the entire V4 OpenLORIS family is superseded by a fresh V5 Open-only restart.",
+  "root_cause": {
+    "estimator_started": false,
+    "message": "ROS_MASTER_URI: unbound variable",
+    "ordering": "source /opt/ros/noetic/setup.bash executes under set -u before ROS_MASTER_URI and ROS_HOSTNAME are exported",
+    "rosbag_started": false,
+    "runner": {
+      "bytes": 9943,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/run_inside_container.sh",
+      "sha256": "ff9194415f6fe3e0dd9f5303a3326cb29d105de0077bf08d7d636c20c0e76f96"
+    }
+  },
+  "schema": "g120-v4-open-ros-env-incident-v1",
+  "scientific_results_from_v4_open": 0,
+  "status": "V4_OPEN_FAMILY_INVALIDATED_INFRASTRUCTURE_ONLY",
+  "v4_freeze": {
+    "bytes": 12213,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+    "sha256": "84c67a67a6f2b3513865d1744ee0ca0cab99ece108db5554ecd6607ff29e5d2b"
+  },
+  "v4_preservation": "V4 freeze/state/run directories remain immutable evidence",
+  "v4_runner_seal": {
+    "bytes": 7546,
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/RUNNER_SELF_TEST_PASS.json",
+    "sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a"
+  },
+  "v4_state_after_stop": {
+    "bytes": 16152,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+    "sha256": "760c0af1d19084144cec1d778cff520bd82916f1842491d7e026bb3273719853"
+  }
+}

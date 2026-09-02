@@ -1,0 +1,183 @@
+{
+  "configs": [
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle",
+      "sequence": "circle",
+      "sha256": "ccc0a7b1bd1ee82ded9d0ba65c38137cd5f7a2f2e19e04d8751464afc85257ca"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "c10affbf37303598cde607e1e16ef556071625b9de9d73b0844364299303a400"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle_head",
+      "sequence": "circle_head",
+      "sha256": "0f8d15daf4398e71b8d95600071fa528b9874f99be3944d52e036a3a062acaf6"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite",
+      "sequence": "infinite",
+      "sha256": "e6c3e2c85c5dfcc7b517e100ac08e010e4bcc17fc429c445203503219aac8d50"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "38f204475156fb4b702eb597327379a6f3ffa716fb28c1a2a659b492b6b238f4"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "5d5fe5cba57922c43ea78112c3e274d539fbe3fe5209c7328e8aadc844f9c259"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square",
+      "sequence": "square",
+      "sha256": "9a95819d2cd3295c442d5e76a5bad0258aac22c06edca4daa8582019a416ca40"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square_fast",
+      "sequence": "square_fast",
+      "sha256": "aa30e06a58ea37da78e55eb4cd4b1168cacb38199b092a180659914caf78e775"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/square_head",
+      "sequence": "square_head",
+      "sha256": "cb3488a2c6d63ff8f5c051a7657c03db6f055dba0bb12b7f31bb12923d833f9b"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/rotation",
+      "sequence": "rotation",
+      "sha256": "8db7def83a54be41b67bc4b97914ced53c89e2adf48781165bb84f32eb7d24f4"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "de3c9c3b89a3261aaf899cf86c4bb37c67d0013cbc9bbc2f7a5d97d9cdf9a8a6"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle",
+      "sequence": "circle",
+      "sha256": "ab2b17b537904f75360a96fa9cb55d20e745156684678ae13e97de8c4be2afe8"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "dcdaf0e0addd1c6889adce4e94f75ee52c1020fee52b44e8620d1a8b411eb3d9"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/circle_head",
+      "sequence": "circle_head",
+      "sha256": "1befa5f504d642556610e6ca1808d4900399a79bde5b00db2c1316a431798860"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite",
+      "sequence": "infinite",
+      "sha256": "3ba10d9238861a52297c77f5558093c5e57a59d8a87467be2c4117474145a5c8"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "920687375e3a9d2704b4d6b71755f469e86e4d6ffbf5e8e508d5ab394361cf5d"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "37b563a17092d538d8e2320d3b45c31b31b01e5bf54141c71b4c26bafcc482da"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square",
+      "sequence": "square",
+      "sha256": "6a5edf17fa7d6341f99d9385e706d6703e4418afaad106a7ec92b3571b52d881"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square_fast",
+      "sequence": "square_fast",
+      "sha256": "0162171726be4a6ac71d462d6aae7a5d77f4a922d46ce6dbe71a73ac881c9c39"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/square_head",
+      "sequence": "square_head",
+      "sha256": "cbb6bc5a396e12875a46ebbd7e8edbafb4352382c554cfb5ede303a6971cc986"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/rotation",
+      "sequence": "rotation",
+      "sha256": "34bd4dcf9b7b1dc0048b955d7b2cfdef619d7f1ea55bafb9ad9e40731992e764"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/off/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "e1e2488888832a5168142e6590fa3c4a64571bbd66ed41ca79ff19aacf604ba2"
+    }
+  ],
+  "corrected_sensor_profile": {
+    "depth_range_m": [
+      0.3,
+      4.0
+    ],
+    "distortion": [
+      0.006896928127777268,
+      -0.009144207062654397,
+      0.000254113977103925,
+      0.0021434982252719545
+    ],
+    "imu_noise": [
+      0.1,
+      0.01,
+      0.001,
+      0.0001
+    ]
+  },
+  "estimator_run": false,
+  "global_all_58_terminal_gate_precedes_gt": true,
+  "ground_truth_read": false,
+  "image_shift_ns": -29958533,
+  "null_and_incomplete_runner_seals_rejected": true,
+  "registered_rotation_cutoff_s": 1624246998.4844894,
+  "registered_scorer_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+  "runtime_envelope_sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211",
+  "runtime_full_sidecar_consumption_proof_selftested": true,
+  "schema": "g120-kaist-formal-selftest-v1",
+  "score_eligibility_requires_runtime_sidecar_consumption_proof": true,
+  "scoring_run": false,
+  "shared_order_controller_isolated_selftest": true,
+  "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+  "static_fresh_container_ldd_runner_arms_verified": [
+    "on",
+    "off"
+  ],
+  "status": "PASS_NO_GT_NO_ESTIMATOR_NO_SCORE",
+  "terminal_failure_classification_verified": true,
+  "time_restoration": "t_eval=t_svio_output-(-0.029958533)",
+  "transient_max_frame_artifacts": {
+    "bag_sha256": "5ca49821e9da7118bb5b260f9a0850104be0d986b9c54db118d673983bda1eb0",
+    "registered_crop_sha256": "1490841edc77183cf6b9c205f41732094f4181a9ac2ff25f51c593724b6e15d7",
+    "restored_sha256": "b807cd2563733ec6b539a1550b4129d285b2f4a4d2a09c2fef9650f2b9ec04e6",
+    "xfs_sha256": "9127dfdb7357713f338e30f0198b6d61ba4b7dda5cb3eb98f97f1dbc8cd0f97a"
+  },
+  "v3_exact_order_and_preplay_readiness_structure_verified": true,
+  "xfs_bag_full_color_key_digest_verified": true
+}

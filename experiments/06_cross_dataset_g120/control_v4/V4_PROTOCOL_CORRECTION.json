@@ -1,0 +1,30 @@
+{
+  "schema": "g120-cross-dataset-v4-protocol-correction-v1",
+  "status": "FROZEN_BEFORE_V4_ESTIMATOR_EXECUTION",
+  "supersedes_execution_identity_only": "V3",
+  "scientific_hypothesis_model_binary_library_patch_parameters_cohorts_and_metrics_unchanged": true,
+  "v3_incident": {
+    "classification": "mechanical runner contradiction after complete trajectory",
+    "scientific_result": "none; V3 must not be scored",
+    "retry_within_v3": false
+  },
+  "v4_changes": [
+    "new noncolliding external run/state/verdict root and identities",
+    "KAIST captures registered post-complete node exit 134 without the global ERR trap intercepting wait",
+    "OpenLORIS distinguishes a registered post-complete shutdown abort from a pre-complete estimator crash",
+    "exact regression fixtures bind both accepted post-complete 134 and rejected crash/no-trajectory cases"
+  ],
+  "v4_invariants": {
+    "execution_order": "exact same 58 jobs from ordinal one",
+    "automatic_retry": false,
+    "score_only_after_all_58_terminal": true,
+    "one_shared_serial_lock": true,
+    "input_materialization": "reuse existing hash-sealed bags and sidecars by read-only reference",
+    "production_write": false,
+    "reserved_unseen_access": false
+  },
+  "external_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902",
+  "freeze_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+  "state_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+  "estimator_execution_authorized": false
+}

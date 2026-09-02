@@ -1,0 +1,57 @@
+{
+  "schema": "vcu-light-xfeat-input-freeze-v1",
+  "status": "FROZEN_BEFORE_ANY_LIGHT_ESTIMATOR_RUN_OR_GT_SCORE",
+  "target_extension_sha256": "43ca533cb6803afb8b072a3ab63727ff51c9c874e3fcee30b40e86fda5d8d0db",
+  "model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+  "materializer_sha256": "eae6b6ff3d893b61f0e4e60d406b554f509024911cc4c0e3ffda5cfd84f8a285",
+  "ground_truth_read": false,
+  "estimator_run": false,
+  "sidecars": {
+    "light1": {
+      "role": "TUNE",
+      "frames": 2875,
+      "bytes": 385284540,
+      "sha256": "e4f21d4591cfc319f5a190a85f2360c1d78251d01f4290710229f2a1856d0910",
+      "path": "${PRIVATE_ROOT}/results/learned_duel_pilot_20260831/light1.xfs",
+      "reuse": "read_only"
+    },
+    "light2": {
+      "role": "DEVELOPMENT_HOLD",
+      "frames": 3305,
+      "bytes": 442909700,
+      "sha256": "1704fb19b317371b135583e343942ad1c83bb85c8b378975cb7d633ba3011572"
+    },
+    "light3": {
+      "role": "TUNE",
+      "frames": 2591,
+      "bytes": 347225132,
+      "sha256": "422f779b7d127c6f221ef0d8d8375ac8e246cb962e88d15713e8769cb350903d"
+    },
+    "light4": {
+      "role": "DEVELOPMENT_HOLD",
+      "frames": 2665,
+      "bytes": 357142020,
+      "sha256": "6dd65618125c1fdad08a486e38a83e51bdeb409926347742a4a3ede4ad90c59c"
+    },
+    "light5": {
+      "role": "TUNE",
+      "frames": 3263,
+      "bytes": 437281196,
+      "sha256": "94d14c11001ee30b17b46fbd3e255b5f2ae5485b90db49589fde871c1b28c67a"
+    },
+    "light6": {
+      "role": "DEVELOPMENT_HOLD",
+      "frames": 3121,
+      "bytes": 418251492,
+      "sha256": "8e0b4d4fc9aa1b8186c495372e903acd8eb7dda70940d2665119a61773e37045"
+    }
+  },
+  "validation": {
+    "header_abi": "XFSIDE01/v1/640x480/descriptor64/cap500",
+    "strictly_increasing_timestamps": true,
+    "record_length_and_sha_recomputed": true,
+    "light1_first_record_matches_existing_sidecar_byte_for_byte": true,
+    "reserved_unseen_access": false,
+    "production_writes": false
+  }
+}

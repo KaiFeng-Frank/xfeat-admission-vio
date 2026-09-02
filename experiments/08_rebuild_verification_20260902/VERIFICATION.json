@@ -1,0 +1,44 @@
+{
+ "build": {
+  "byte_identical_to_frozen_candidate": true,
+  "command": "catkin_make -DCMAKE_BUILD_TYPE=Release -j16",
+  "exit": 0,
+  "frozen_candidate_libsvio_so_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+  "frozen_candidate_svio_syn_node_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+  "libsvio_so_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+  "svio_syn_node_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+ },
+ "container_image": "gaussian_lic_noetic_baseline sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5 (Ubuntu 20.04.6, ROS Noetic, OpenCV 4.2.0) plus apt libceres-dev 1.14.0-4ubuntu1.1 installed at session start",
+ "date": "2026-09-02",
+ "input": {
+  "bag": "light1 ROS1 conversion",
+  "bag_sha256": "0e965a36b2aa6155300ebb05bb50ee20404821a6472d55b39641aaff1904e64f",
+  "bag_sha256_matches_sealed_light_run": true,
+  "sidecar_sha256": "e4f21d4591cfc319f5a190a85f2360c1d78251d01f4290710229f2a1856d0910"
+ },
+ "reading": "binaries byte-identical to the frozen candidate; trajectories not byte-identical (multi-threaded node) but ATE agrees with the sealed values to within 0.02 cm on both arms; node exit 134 is the inherited post-playback teardown abort",
+ "replay": {
+  "off": {
+   "ate_rmse_m": 0.27186340291246847,
+   "cr": 0.9848682614413201,
+   "n_est": 2819,
+   "node_exit": 134,
+   "play_status": 0,
+   "raw_trajectory_sha256": "a32fc1fdd72880e4a5ec2f27c911921da39eb140feffc266743bd004e321d32d",
+   "sealed_ate_rmse_m": 0.27199702740255904,
+   "sealed_raw_trajectory_sha256": "27b2e940e233b93a284be6c11a0d2660ec94f18a0df69d22d5d0775d4ecb37bc"
+  },
+  "on": {
+   "ate_rmse_m": 0.1902537504539053,
+   "cr": 0.9848682614413201,
+   "n_est": 2819,
+   "node_exit": 134,
+   "play_status": 0,
+   "raw_trajectory_sha256": "22b4a0ab598ba37ad0227f94963302b7934c466f87dcc362e80f25fa65c028e6",
+   "sealed_ate_rmse_m": 0.19024580200373328,
+   "sealed_raw_trajectory_sha256": "c082a1aaa7f7bbb630ef25c812434fd8942ef3343a6e5fe6cf2e504a904fdb81"
+  }
+ },
+ "schema": "xfeat-admission-vio-rebuild-verification-v1",
+ "source": "S-VIO tree at the repository root, three commits on top of upstream 18cdfbc (gate-patched tracker sha256 243b1607\u2026/3583bd96\u2026)"
+}

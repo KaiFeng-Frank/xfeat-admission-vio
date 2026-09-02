@@ -1,0 +1,1505 @@
+diff --git a/camera_models_in/CMakeLists.txt b/camera_models_in/CMakeLists.txt
+index 0c71986..8efdc32 100644
+--- a/camera_models_in/CMakeLists.txt
++++ b/camera_models_in/CMakeLists.txt
+@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
+ project(camera_models_in)
+ 
+ set(CMAKE_BUILD_TYPE "Release")
+-set(CMAKE_CXX_FLAGS "-std=c++11")
++set(CMAKE_CXX_FLAGS "-std=c++14")
+ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fPIC")
+ 
+ find_package(catkin REQUIRED COMPONENTS
+diff --git a/camera_models_in/src/calib/CameraCalibration.cc b/camera_models_in/src/calib/CameraCalibration.cc
+index 10543e9..682fe07 100644
+--- a/camera_models_in/src/calib/CameraCalibration.cc
++++ b/camera_models_in/src/calib/CameraCalibration.cc
+@@ -232,7 +232,7 @@ CameraCalibration::drawResults(std::vector<cv::Mat>& images) const
+         cv::Mat& image = images.at(i);
+         if (image.channels() == 1)
+         {
+-            cv::cvtColor(image, image, CV_GRAY2RGB);
++            cv::cvtColor(image, image, cv::COLOR_GRAY2RGB);
+         }
+ 
+         std::vector<cv::Point2f> estImagePoints;
+@@ -250,12 +250,12 @@ CameraCalibration::drawResults(std::vector<cv::Mat>& images) const
+             cv::circle(image,
+                        cv::Point(cvRound(pObs.x * drawMultiplier),
+                                  cvRound(pObs.y * drawMultiplier)),
+-                       5, green, 2, CV_AA, drawShiftBits);
++                       5, green, 2, cv::LINE_AA, drawShiftBits);
+ 
+             cv::circle(image,
+                        cv::Point(cvRound(pEst.x * drawMultiplier),
+                                  cvRound(pEst.y * drawMultiplier)),
+-                       5, red, 2, CV_AA, drawShiftBits);
++                       5, red, 2, cv::LINE_AA, drawShiftBits);
+ 
+             float error = cv::norm(pObs - pEst);
+ 
+@@ -272,7 +272,7 @@ CameraCalibration::drawResults(std::vector<cv::Mat>& images) const
+ 
+         cv::putText(image, oss.str(), cv::Point(10, image.rows - 10),
+                     cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(255, 255, 255),
+-                    1, CV_AA);
++                    1, cv::LINE_AA);
+     }
+ }
+ 
+diff --git a/camera_models_in/src/chessboard/Chessboard.cc b/camera_models_in/src/chessboard/Chessboard.cc
+index 4c0a761..097d9d7 100644
+--- a/camera_models_in/src/chessboard/Chessboard.cc
++++ b/camera_models_in/src/chessboard/Chessboard.cc
+@@ -17,13 +17,13 @@ Chessboard::Chessboard(cv::Size boardSize, cv::Mat& image)
+ {
+     if (image.channels() == 1)
+     {
+-        cv::cvtColor(image, mSketch, CV_GRAY2BGR);
++        cv::cvtColor(image, mSketch, cv::COLOR_GRAY2BGR);
+         image.copyTo(mImage);
+     }
+     else
+     {
+         image.copyTo(mSketch);
+-        cv::cvtColor(image, mImage, CV_BGR2GRAY);
++        cv::cvtColor(image, mImage, cv::COLOR_BGR2GRAY);
+     }
+ }
+ 
+@@ -31,10 +31,10 @@ void
+ Chessboard::findCorners(bool useOpenCV)
+ {
+     mCornersFound = findChessboardCorners(mImage, mBoardSize, mCorners,
+-                                          CV_CALIB_CB_ADAPTIVE_THRESH +
+-                                          CV_CALIB_CB_NORMALIZE_IMAGE +
+-                                          CV_CALIB_CB_FILTER_QUADS +
+-                                          CV_CALIB_CB_FAST_CHECK,
++                                          cv::CALIB_CB_ADAPTIVE_THRESH +
++                                          cv::CALIB_CB_NORMALIZE_IMAGE +
++                                          cv::CALIB_CB_FILTER_QUADS +
++                                          cv::CALIB_CB_FAST_CHECK,
+                                           useOpenCV);
+ 
+     if (mCornersFound)
+@@ -141,24 +141,24 @@ Chessboard::findChessboardCornersImproved(const cv::Mat& image,
+     // Image histogram normalization and
+     // BGR to Grayscale image conversion (if applicable)
+     // MARTIN: Set to "false"
+-    if (image.channels() != 1 || (flags & CV_CALIB_CB_NORMALIZE_IMAGE))
++    if (image.channels() != 1 || (flags & cv::CALIB_CB_NORMALIZE_IMAGE))
+     {
+         cv::Mat norm_img(image.rows, image.cols, CV_8UC1);
+ 
+         if (image.channels() != 1)
+         {
+-            cv::cvtColor(image, norm_img, CV_BGR2GRAY);
++            cv::cvtColor(image, norm_img, cv::COLOR_BGR2GRAY);
+             img = norm_img;
+         }
+ 
+-        if (flags & CV_CALIB_CB_NORMALIZE_IMAGE)
++        if (flags & cv::CALIB_CB_NORMALIZE_IMAGE)
+         {
+             cv::equalizeHist(image, norm_img);
+             img = norm_img;
+         }
+     }
+ 
+-    if (flags & CV_CALIB_CB_FAST_CHECK)
++    if (flags & cv::CALIB_CB_FAST_CHECK)
+     {
+         if (!checkChessboard(img, patternSize))
+         {
+@@ -189,13 +189,13 @@ Chessboard::findChessboardCornersImproved(const cv::Mat& image,
+             cv::Mat thresh_img;
+ 
+             // convert the input grayscale image to binary (black-n-white)
+-            if (flags & CV_CALIB_CB_ADAPTIVE_THRESH)
++            if (flags & cv::CALIB_CB_ADAPTIVE_THRESH)
+             {
+                 int blockSize = lround(prevSqrSize == 0 ?
+                     std::min(img.cols,img.rows)*(k%2 == 0 ? 0.2 : 0.1): prevSqrSize*2)|1;
+ 
+                 // convert to binary
+-                cv::adaptiveThreshold(img, thresh_img, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, blockSize, (k/2)*5);
++                cv::adaptiveThreshold(img, thresh_img, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, blockSize, (k/2)*5);
+             }
+             else
+             {
+@@ -204,7 +204,7 @@ Chessboard::findChessboardCornersImproved(const cv::Mat& image,
+                 int thresh_level = lround(mean - 10);
+                 thresh_level = std::max(thresh_level, 10);
+ 
+-                cv::threshold(img, thresh_img, thresh_level, 255, CV_THRESH_BINARY);
++                cv::threshold(img, thresh_img, thresh_level, 255, cv::THRESH_BINARY);
+             }
+ 
+             // MARTIN's Code
+@@ -212,8 +212,8 @@ Chessboard::findChessboardCornersImproved(const cv::Mat& image,
+             // homogeneous dilation is performed, which is crucial for small,
+             // distorted checkers. Use the CROSS kernel first, since its action
+             // on the image is more subtle
+-            cv::Mat kernel1 = cv::getStructuringElement(CV_SHAPE_CROSS, cv::Size(3,3), cv::Point(1,1));
+-            cv::Mat kernel2 = cv::getStructuringElement(CV_SHAPE_RECT, cv::Size(3,3), cv::Point(1,1));
++            cv::Mat kernel1 = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3,3), cv::Point(1,1));
++            cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3), cv::Point(1,1));
+ 
+             if (dilations >= 1)
+                 cv::dilate(thresh_img, thresh_img, kernel1);
+@@ -317,7 +317,7 @@ Chessboard::findChessboardCornersImproved(const cv::Mat& image,
+         }
+ 
+         cv::cornerSubPix(image, corners, cv::Size(11, 11), cv::Size(-1,-1),
+-                         cv::TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 30, 0.1));
++                         cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
+ 
+         return true;
+     }
+@@ -1172,7 +1172,7 @@ Chessboard::generateQuads(std::vector<ChessboardQuadPtr>& quads,
+     std::vector<cv::Vec4i> hierarchy;
+ 
+     // Initialize contour retrieving routine
+-    cv::findContours(image, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
++    cv::findContours(image, contours, hierarchy, cv::RETR_CCOMP, cv::CHAIN_APPROX_SIMPLE);
+ 
+     std::vector< std::vector<cv::Point> > quadContours;
+ 
+@@ -1238,7 +1238,7 @@ Chessboard::generateQuads(std::vector<ChessboardQuadPtr>& quads,
+             dp = pt[1] - pt[2];
+             double d4 = sqrt(dp.dot(dp));
+ 
+-            if (!(flags & CV_CALIB_CB_FILTER_QUADS) ||
++            if (!(flags & cv::CALIB_CB_FILTER_QUADS) ||
+                 (d3*4 > d4 && d4*4 > d3 && d3*d4 < area*1.5 && area > minSize &&
+                 d1 >= 0.15 * p && d2 >= 0.15 * p))
+             {
+@@ -1583,20 +1583,20 @@ Chessboard::checkChessboard(const cv::Mat& image, cv::Size patternSize) const
+     bool result = false;
+     for (float threshLevel = blackLevel; threshLevel < whiteLevel && !result; threshLevel += 20.0f)
+     {
+-        cv::threshold(white, thresh, threshLevel + blackWhiteGap, 255, CV_THRESH_BINARY);
++        cv::threshold(white, thresh, threshLevel + blackWhiteGap, 255, cv::THRESH_BINARY);
+ 
+         std::vector< std::vector<cv::Point> > contours;
+         std::vector<cv::Vec4i> hierarchy;
+ 
+         // Initialize contour retrieving routine
+-        cv::findContours(thresh, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
++        cv::findContours(thresh, contours, hierarchy, cv::RETR_CCOMP, cv::CHAIN_APPROX_SIMPLE);
+ 
+         std::vector<std::pair<float, int> > quads;
+         getQuadrangleHypotheses(contours, quads, 1);
+ 
+-        cv::threshold(black, thresh, threshLevel, 255, CV_THRESH_BINARY_INV);
++        cv::threshold(black, thresh, threshLevel, 255, cv::THRESH_BINARY_INV);
+ 
+-        cv::findContours(thresh, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
++        cv::findContours(thresh, contours, hierarchy, cv::RETR_CCOMP, cv::CHAIN_APPROX_SIMPLE);
+         getQuadrangleHypotheses(contours, quads, 0);
+ 
+         const size_t min_quads_count = patternSize.width * patternSize.height / 2;
+diff --git a/camera_models_in/src/intrinsic_calib.cc b/camera_models_in/src/intrinsic_calib.cc
+index 7590a64..2742d3d 100644
+--- a/camera_models_in/src/intrinsic_calib.cc
++++ b/camera_models_in/src/intrinsic_calib.cc
+@@ -274,7 +274,7 @@ main( int argc, char** argv )
+                          0.5,
+                          cv::Scalar( 255, 255, 255 ),
+                          1,
+-                         CV_AA );
++                         cv::LINE_AA );
+             cv::imshow( "Image", cbImages.at( i ) );
+             cv::waitKey( 0 );
+         }
+diff --git a/config/openloris_vio.yaml b/config/openloris_vio.yaml
+index 44c3381..00ed7f0 100755
+--- a/config/openloris_vio.yaml
++++ b/config/openloris_vio.yaml
+@@ -20,7 +20,7 @@ projection_parameters:
+ imu_topic: "/d400/imu0"
+ image_topic: "/d400/color/image_raw"
+ dpt_img_topic: "/d400/aligned_depth_to_color/image_raw"
+-output_path: "/home/oran/WS/Work/SLAM/SVIO/output"
++output_path: "/out"
+ 
+ # Extrinsic parameter between IMU and Camera.
+ estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+diff --git a/svio/CMakeLists.txt b/svio/CMakeLists.txt
+index d20bad4..6ed7791 100644
+--- a/svio/CMakeLists.txt
++++ b/svio/CMakeLists.txt
+@@ -2,8 +2,8 @@ project(svio)
+ 
+ cmake_minimum_required(VERSION 2.8.3)
+ 
+-# SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -std=c++11 -w -g -O3 -fpermissive -mno-avx -mno-avx2")
+-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w -g -O3 -fpermissive")
++# SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -std=c++14 -w -g -O3 -fpermissive -mno-avx -mno-avx2")
++SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -w -g -O3 -fpermissive")
+ SET(CMAKE_BUILD_TYPE "RelWithDebInfo")
+ 
+ if(COMMAND cmake_policy)
+diff --git a/svio/initialization/gmm_model.h b/svio/initialization/gmm_model.h
+index f98aa08..3f3aee8 100644
+--- a/svio/initialization/gmm_model.h
++++ b/svio/initialization/gmm_model.h
+@@ -1,6 +1,6 @@
+ #pragma once 
+ 
+-#include "opencv/cv.h"
++#include <opencv2/opencv.hpp>
+ #include <iostream>
+ #include <string>
+ #include <Eigen/Core>
+diff --git a/svio/line_tracking/line_tracker.cpp b/svio/line_tracking/line_tracker.cpp
+index b3f27b0..f843dd9 100644
+--- a/svio/line_tracking/line_tracker.cpp
++++ b/svio/line_tracking/line_tracker.cpp
+@@ -317,7 +317,7 @@ void LineTracker::trackImage(const cv::Mat &mono_img)
+         // fit line by opencv
+         cv::Vec4f coffefficient;
+         // std::cout << "LineTracker: " << sample_pts.size() << std::endl;
+-        cv::fitLine(sample_pts, coffefficient, CV_DIST_L2, 0, 1e-2, 1e-2);
++        cv::fitLine(sample_pts, coffefficient, cv::DIST_L2, 0, 1e-2, 1e-2);
+ 
+         // find long line segment
+         float s_p = -1, e_p = -1;
+@@ -420,9 +420,9 @@ cv::Mat LineTracker::drawImTrack(const cv::Mat& color_img)
+         {
+             cv::Point2f s(lines[i].segments[j][0], lines[i].segments[j][1]);
+             cv::Point2f e(lines[i].segments[j][2], lines[i].segments[j][3]);
+-            cv::line(imTrack, s, e, color, 1, CV_AA);
++            cv::line(imTrack, s, e, color, 1, cv::LINE_AA);
+         }
+-        cv::line(imLongLine, lines[i].s, lines[i].e, color, 1, CV_AA);
++        cv::line(imLongLine, lines[i].s, lines[i].e, color, 1, cv::LINE_AA);
+     }
+ 
+     std::cout << "total line: " << lines.size() << std::endl;
+diff --git a/svio/plane_tools/peac/AHCPlaneFitter.hpp b/svio/plane_tools/peac/AHCPlaneFitter.hpp
+index 09022e9..cf1f88b 100644
+--- a/svio/plane_tools/peac/AHCPlaneFitter.hpp
++++ b/svio/plane_tools/peac/AHCPlaneFitter.hpp
+@@ -912,7 +912,7 @@ namespace ahc {
+ #ifdef DEBUG_INIT
+             static int cnt=0;
+             cv::namedWindow("debug initGraph");
+-            cv::cvtColor(dInit,dInit,CV_RGB2BGR);
++            cv::cvtColor(dInit,dInit,cv::COLOR_RGB2BGR);
+             cv::imshow("debug initGraph", dInit);
+             std::stringstream ss;
+             ss<<saveDir<<"/output/db_init"<<std::setw(5)<<std::setfill('0')<<cnt++<<".png";
+diff --git a/svio/state_estimation/frontend.h b/svio/state_estimation/frontend.h
+index 4e6c08f..f6e1917 100644
+--- a/svio/state_estimation/frontend.h
++++ b/svio/state_estimation/frontend.h
+@@ -48,8 +48,10 @@ public:
+         return cv_pl;
+     }
+ 
+-    void FillMeas(FeatureTracker& feature_tracker, LineTracker& line_tracker, PlaneDetection& plane_detector)
++    void FillMeas(FeatureTracker& feature_tracker, LineTracker& line_tracker, PlaneDetection& plane_detector,
++                  bool include_lines, bool include_planes)
+     {
++        ROS_ASSERT(feature_tracker.cur_pts_depth.size() == feature_tracker.cur_pts.size());
+         for (int i = 0; i < feature_tracker.cur_pts.size(); i++)
+         {
+             pointMea tmp_pt;
+@@ -58,7 +60,7 @@ public:
+             tmp_pt.mu_l = feature_tracker.cur_pts_depth[i][1];
+             tmp_pt.sig_d = feature_tracker.cur_pts_depth[i][2];
+             tmp_pt.sig_l = feature_tracker.cur_pts_depth[i][3];
+-            tmp_pt.plane_index = feature_tracker.cur_pts_plane_index[i];
++            tmp_pt.plane_index = include_planes ? feature_tracker.cur_pts_plane_index.at(i) : -1;
+             tmp_pt.u_pt = feature_tracker.cur_pts[i].x;
+             tmp_pt.v_pt = feature_tracker.cur_pts[i].y;
+             tmp_pt.un_u_pt = feature_tracker.cur_un_pts[i].x;
+@@ -68,43 +70,50 @@ public:
+             point_meas.push_back(tmp_pt);
+         }
+ 
+-        for (int i = 0; i < line_tracker.lines.size(); i++)
++        if (include_lines)
+         {
+-            lineMea tmp_l;
+-            tmp_l.id = line_tracker.lines[i].id;
+-            tmp_l.plane_index = line_tracker.lines[i].plane_index;
+-            tmp_l.start_u_pt = line_tracker.lines[i].un_s.x;
+-            tmp_l.start_v_pt = line_tracker.lines[i].un_s.y;
+-            tmp_l.end_u_pt = line_tracker.lines[i].un_e.x;
+-            tmp_l.end_v_pt = line_tracker.lines[i].un_e.y;
+-            tmp_l.length = line_tracker.lines[i].length;
+-            tmp_l.start_pt = line_tracker.lines[i].s;
+-            tmp_l.end_pt = line_tracker.lines[i].e;
+-            for (int j = 0; j < line_tracker.lines[i].segments.size(); j++)
++            for (int i = 0; i < line_tracker.lines.size(); i++)
+             {
+-                const auto& it_seg = line_tracker.lines[i].segments[j];
+-                cv::Point2f seg_s(it_seg[0], it_seg[1]), seg_e(it_seg[2], it_seg[3]);
+-                tmp_l.start_seg_pts.push_back(projectPtOnLine(seg_s, line_tracker.lines[i].s, line_tracker.lines[i].e));
+-                tmp_l.end_seg_pts.push_back(projectPtOnLine(seg_e, line_tracker.lines[i].s, line_tracker.lines[i].e));
++                lineMea tmp_l;
++                tmp_l.id = line_tracker.lines[i].id;
++                tmp_l.plane_index = include_planes ? line_tracker.lines[i].plane_index : -1;
++                tmp_l.start_u_pt = line_tracker.lines[i].un_s.x;
++                tmp_l.start_v_pt = line_tracker.lines[i].un_s.y;
++                tmp_l.end_u_pt = line_tracker.lines[i].un_e.x;
++                tmp_l.end_v_pt = line_tracker.lines[i].un_e.y;
++                tmp_l.length = line_tracker.lines[i].length;
++                tmp_l.start_pt = line_tracker.lines[i].s;
++                tmp_l.end_pt = line_tracker.lines[i].e;
++                for (int j = 0; j < line_tracker.lines[i].segments.size(); j++)
++                {
++                    const auto& it_seg = line_tracker.lines[i].segments[j];
++                    cv::Point2f seg_s(it_seg[0], it_seg[1]), seg_e(it_seg[2], it_seg[3]);
++                    tmp_l.start_seg_pts.push_back(projectPtOnLine(seg_s, line_tracker.lines[i].s, line_tracker.lines[i].e));
++                    tmp_l.end_seg_pts.push_back(projectPtOnLine(seg_e, line_tracker.lines[i].s, line_tracker.lines[i].e));
++                }
++                line_meas.push_back(tmp_l);
+             }
+-            line_meas.push_back(tmp_l);
+         }
+ 
+-        for (int i = 0; i < plane_detector.meas.size(); i++)
++        if (include_planes)
+         {
+-            planeMea tmp_p;
+-            tmp_p.id = i;
+-            tmp_p.mea = plane_detector.meas[i];
+-            auto extractedPlane = plane_detector.plane_filter.extractedPlanes[i];
+-            tmp_p.normal = Eigen::Vector3d(extractedPlane->normal[0], extractedPlane->normal[1], extractedPlane->normal[2]);
+-            tmp_p.center = Eigen::Vector3d(extractedPlane->center[0], extractedPlane->center[1], extractedPlane->center[2]);
+-            tmp_p.p_cnt = plane_detector.plane_vertices_[i].size();
+-            for (int j : plane_detector.plane_vertices_[i]) 
++            ROS_ASSERT(feature_tracker.cur_pts_plane_index.size() == feature_tracker.cur_pts.size());
++            for (int i = 0; i < plane_detector.meas.size(); i++)
+             {
+-                tmp_p.point_cloud.push_back(plane_detector.cloud.vertices[j]);
+-                tmp_p.dp_var.push_back(plane_detector.cloud.verticesVariance[j](2,2));
++                planeMea tmp_p;
++                tmp_p.id = i;
++                tmp_p.mea = plane_detector.meas[i];
++                auto extractedPlane = plane_detector.plane_filter.extractedPlanes[i];
++                tmp_p.normal = Eigen::Vector3d(extractedPlane->normal[0], extractedPlane->normal[1], extractedPlane->normal[2]);
++                tmp_p.center = Eigen::Vector3d(extractedPlane->center[0], extractedPlane->center[1], extractedPlane->center[2]);
++                tmp_p.p_cnt = plane_detector.plane_vertices_[i].size();
++                for (int j : plane_detector.plane_vertices_[i])
++                {
++                    tmp_p.point_cloud.push_back(plane_detector.cloud.vertices[j]);
++                    tmp_p.dp_var.push_back(plane_detector.cloud.verticesVariance[j](2,2));
++                }
++                plane_meas.push_back(tmp_p);
+             }
+-            plane_meas.push_back(tmp_p);
+         }
+     }
+ 
+@@ -116,4 +125,3 @@ public:
+ 
+     double time;
+ };
+-
+diff --git a/svio/state_estimation/line_manager.cpp b/svio/state_estimation/line_manager.cpp
+index fd738d9..a287207 100644
+--- a/svio/state_estimation/line_manager.cpp
++++ b/svio/state_estimation/line_manager.cpp
+@@ -844,11 +844,11 @@ cv::Mat LineManager::drawImCluster(const cv::Mat& imColor, const AxisMap& a_map,
+ 
+         for (int i = 0; i < lt.line_ml.back().start_seg_pts.size(); i++)
+         {
+-            cv::line(imLine, lt.line_ml.back().start_seg_pts[i], lt.line_ml.back().end_seg_pts[i], color, 1, CV_AA);
++            cv::line(imLine, lt.line_ml.back().start_seg_pts[i], lt.line_ml.back().end_seg_pts[i], color, 1, cv::LINE_AA);
+             // if (i == 0)
+             // {
+             //     cv::Point text_location = (lt.line_ml.back().start_seg_pts[i]+lt.line_ml.back().end_seg_pts[i])/2;
+-            //     cv::putText(imLine, to_string(lt.line_id), text_location, CV_FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0,0,255));
++            //     cv::putText(imLine, to_string(lt.line_id), text_location, cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(0,0,255));
+             // }
+         }
+ 
+diff --git a/svio/state_estimation/parameters.cpp b/svio/state_estimation/parameters.cpp
+index 767819c..8ccbe00 100644
+--- a/svio/state_estimation/parameters.cpp
++++ b/svio/state_estimation/parameters.cpp
+@@ -1,4 +1,6 @@
+ #include "parameters.h"
++#include <cmath>
++#include <cstdlib>
+ 
+ // Paras for identifying structural elements
+ double STRUCTURE_HORIZONTAL_ANG_DIFF;
+@@ -48,19 +50,47 @@ int MAX_CNT;
+ int MIN_DIST;
+ double F_THRESHOLD;
+ int SHOW_TRACK;
+-int FLOW_BACK;
+-bool PUB_THIS_FRAME;
++int FLOW_BACK = 0;
++bool PUB_THIS_FRAME = true;
+ 
+ double RGBD_DPT_MIN, RGBD_DPT_MAX;
+ int S_VERIFY = 1; // whether use two-stage aw interference
+ int ENABLE_STRUCTURE = 1;
+ 
+ int DROP_FRAME = 0;
++int FREQ = 0;
++bool ENABLE_FREQ_GATE = false;
+ 
+ double ACC_MULT; 
+ 
+ bool USE_GMM = true; // whether use gmm to compute covariance 
+ bool USE_GMM_EXT = true; // whether extend gmm by introducing similarity 
++bool ENABLE_PLANE = true;
++bool ENABLE_LINE = false;
++Phase2RuntimeCounters PHASE2_COUNTERS;
++
++namespace
++{
++bool first_frequency_frame = true;
++double first_frequency_time = 0.0;
++double last_frequency_time = 0.0;
++int frequency_publish_count = 1;
++
++int optionalInt(const cv::FileStorage& settings, const char* key, int fallback)
++{
++    const cv::FileNode node = settings[key];
++    if (node.empty())
++        return fallback;
++    int value = fallback;
++    node >> value;
++    return value;
++}
++
++bool optionalBool(const cv::FileStorage& settings, const char* key, bool fallback)
++{
++    return optionalInt(settings, key, fallback ? 1 : 0) != 0;
++}
++}
+ 
+ 
+ template <typename T>
+@@ -96,16 +126,15 @@ void readParameters(ros::NodeHandle &n)
+         ROS_DEBUG("parameters.cpp: succeed to load config_file: %s", config_file.c_str());
+     }
+ 
+-    n.param("use_gmm", USE_GMM, USE_GMM); 
+-    n.param("use_gmm_ext", USE_GMM_EXT, USE_GMM_EXT); 
+-
+     ACC_MULT = fsSettings["acc_mult"];
+     MAX_CNT = fsSettings["max_cnt"];
+     MIN_DIST = fsSettings["min_dist"];
+     F_THRESHOLD = fsSettings["F_threshold"];
+     SHOW_TRACK = fsSettings["show_track"];
+-    FLOW_BACK = fsSettings["flow_back"];
+-    DROP_FRAME = fsSettings["drop_frame"];
++    FREQ = optionalInt(fsSettings, "freq", FREQ);
++    ENABLE_FREQ_GATE = optionalBool(fsSettings, "freq_gate", ENABLE_FREQ_GATE);
++    FLOW_BACK = optionalInt(fsSettings, "flow_back", FLOW_BACK);
++    DROP_FRAME = optionalInt(fsSettings, "drop_frame", DROP_FRAME);
+ 
+     IMAGE_COL = fsSettings["image_width"];
+     IMAGE_ROW = fsSettings["image_height"];
+@@ -221,10 +250,138 @@ void readParameters(ros::NodeHandle &n)
+     CAM_NAMES = config_file;
+ 
+     S_VERIFY = fsSettings["structure_verify"];
+-    ENABLE_STRUCTURE = fsSettings["structure"];
++    ENABLE_STRUCTURE = optionalInt(fsSettings, "structure", ENABLE_STRUCTURE);
++    USE_GMM = optionalBool(fsSettings, "use_gmm", USE_GMM);
++    USE_GMM_EXT = optionalBool(fsSettings, "use_gmm_ext", USE_GMM_EXT);
++    ENABLE_PLANE = !optionalBool(fsSettings, "disable_plane", !ENABLE_PLANE);
++    ENABLE_LINE = !optionalBool(fsSettings, "disable_line", !ENABLE_LINE);
++
++    n.param("freq_gate", ENABLE_FREQ_GATE, ENABLE_FREQ_GATE);
++    n.param("freq", FREQ, FREQ);
++    n.param("flow_back", FLOW_BACK, FLOW_BACK);
++    n.param("drop_frame", DROP_FRAME, DROP_FRAME);
++    n.param("use_gmm", USE_GMM, USE_GMM);
++    n.param("use_gmm_ext", USE_GMM_EXT, USE_GMM_EXT);
++    bool disable_plane = !ENABLE_PLANE;
++    bool disable_line = !ENABLE_LINE;
++    n.param("disable_plane", disable_plane, disable_plane);
++    n.param("disable_line", disable_line, disable_line);
++    n.param("structure", ENABLE_STRUCTURE, ENABLE_STRUCTURE);
++    ENABLE_PLANE = !disable_plane;
++    ENABLE_LINE = !disable_line;
++
++    if (FREQ < 0 || DROP_FRAME < 0 || (FLOW_BACK != 0 && FLOW_BACK != 1) ||
++        (ENABLE_STRUCTURE != 0 && ENABLE_STRUCTURE != 1))
++    {
++        ROS_FATAL("[PHASE2_FLAGS] invalid flags: freq=%d drop_frame=%d flow_back=%d structure=%d",
++                  FREQ, DROP_FRAME, FLOW_BACK, ENABLE_STRUCTURE);
++        std::exit(EXIT_FAILURE);
++    }
++    if (ENABLE_FREQ_GATE && (FREQ <= 0 || DROP_FRAME != 0))
++    {
++        ROS_FATAL("[PHASE2_FLAGS] freq_gate requires freq>0 and drop_frame=0 (freq=%d drop_frame=%d)", FREQ, DROP_FRAME);
++        std::exit(EXIT_FAILURE);
++    }
++    if (USE_GMM_EXT && !USE_GMM)
++    {
++        ROS_FATAL("[PHASE2_FLAGS] use_gmm_ext=1 is incompatible with use_gmm=0");
++        std::exit(EXIT_FAILURE);
++    }
++    if (ENABLE_STRUCTURE && !ENABLE_PLANE)
++    {
++        ROS_FATAL("[PHASE2_FLAGS] structure=1 requires disable_plane=0");
++        std::exit(EXIT_FAILURE);
++    }
++
++    const char* arm = "custom";
++    if (!ENABLE_FREQ_GATE && DROP_FRAME == 0 && FLOW_BACK == 0 && !ENABLE_LINE)
++    {
++        if (!USE_GMM && !USE_GMM_EXT && !ENABLE_PLANE && !ENABLE_STRUCTURE)
++            arm = "A0_simple_point_only";
++        else if (USE_GMM && USE_GMM_EXT && !ENABLE_PLANE && !ENABLE_STRUCTURE)
++            arm = "A1_gmm_point_only";
++        else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && !ENABLE_STRUCTURE)
++            arm = "A2_gmm_raw_plane";
++        else if (USE_GMM && USE_GMM_EXT && ENABLE_PLANE && ENABLE_STRUCTURE)
++            arm = "A3_gmm_plane_atlanta";
++    }
++    ROS_WARN("[PHASE2_EFFECTIVE] arm=%s freq_gate=%d freq=%d drop_frame=%d flow_back=%d use_gmm=%d use_gmm_ext=%d plane=%d line=%d atlanta=%d",
++             arm, static_cast<int>(ENABLE_FREQ_GATE), FREQ, DROP_FRAME, FLOW_BACK,
++             static_cast<int>(USE_GMM), static_cast<int>(USE_GMM_EXT),
++             static_cast<int>(ENABLE_PLANE), static_cast<int>(ENABLE_LINE), ENABLE_STRUCTURE);
+ 
+     INIT_DEPTH =  5.0; 
+     fsSettings.release();
+     once = true;
+     return ;
+ }
++
++bool shouldProcessFrameByFrequency(double current_time)
++{
++    if (!ENABLE_FREQ_GATE)
++    {
++        PUB_THIS_FRAME = true;
++        return true;
++    }
++
++    if (first_frequency_frame)
++    {
++        first_frequency_frame = false;
++        first_frequency_time = current_time;
++        last_frequency_time = current_time;
++        frequency_publish_count = 1;
++        PUB_THIS_FRAME = false;
++        return false;
++    }
++
++    if (current_time < last_frequency_time || current_time - last_frequency_time > 1.0)
++    {
++        ROS_WARN("[PHASE2_FREQ] timestamp discontinuity; reset frequency gate");
++        first_frequency_time = current_time;
++        last_frequency_time = current_time;
++        frequency_publish_count = 1;
++        PUB_THIS_FRAME = false;
++        return false;
++    }
++    last_frequency_time = current_time;
++
++    const double elapsed = current_time - first_frequency_time;
++    if (elapsed <= 0.0)
++    {
++        PUB_THIS_FRAME = false;
++        return false;
++    }
++
++    const double average_frequency = static_cast<double>(frequency_publish_count) / elapsed;
++    PUB_THIS_FRAME = std::round(average_frequency) <= FREQ;
++    if (PUB_THIS_FRAME)
++    {
++        if (std::fabs(average_frequency - FREQ) < 0.01 * FREQ)
++        {
++            first_frequency_time = current_time;
++            frequency_publish_count = 0;
++        }
++        ++frequency_publish_count;
++    }
++    return PUB_THIS_FRAME;
++}
++
++void logPhase2Counters(bool final_snapshot)
++{
++    const char* kind = final_snapshot ? "final" : "periodic";
++    ROS_WARN("[PHASE2_COUNTERS] kind=%s processed_frames=%llu enqueued_frames=%llu flow_back_checks=%llu gmm_depth_calls=%llu simple_depth_calls=%llu plane_detect_calls=%llu plane_associate_calls=%llu plane_factor_solve=%llu normal_factor_solve=%llu struct_line_factor_solve=%llu plane_factor_margin=%llu normal_factor_margin=%llu struct_line_factor_margin=%llu",
++             kind,
++             static_cast<unsigned long long>(PHASE2_COUNTERS.processed_frames.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.enqueued_frames.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.flow_back_checks.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.gmm_depth_calls.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.simple_depth_calls.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_detect_calls.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_associate_calls.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_factor_solve.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.normal_factor_solve.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.struct_line_factor_solve.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.plane_factor_margin.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.normal_factor_margin.load(std::memory_order_relaxed)),
++             static_cast<unsigned long long>(PHASE2_COUNTERS.struct_line_factor_margin.load(std::memory_order_relaxed)));
++}
+diff --git a/svio/state_estimation/parameters.h b/svio/state_estimation/parameters.h
+index 9248835..2f2bda2 100644
+--- a/svio/state_estimation/parameters.h
++++ b/svio/state_estimation/parameters.h
+@@ -7,6 +7,8 @@
+ #include <opencv2/opencv.hpp>
+ #include <opencv2/core/eigen.hpp>
+ #include <fstream>
++#include <atomic>
++#include <cstdint>
+ 
+ #define SQ(x) ((x)*(x))
+ 
+@@ -65,6 +67,8 @@ extern double ERR_PLANE_DIST;
+ 
+ // Paras for frontend sampling 
+ extern int DROP_FRAME;
++extern int FREQ;
++extern bool ENABLE_FREQ_GATE;
+ 
+ const double FOCAL_LENGTH = 460.0; // 460.0; // when use downsampled input change it to 230
+ const int WINDOW_SIZE = 10;
+@@ -124,10 +128,33 @@ extern double ACC_MULT; // normalize value
+ 
+ extern bool USE_GMM; // whether use gmm to compute covariance 
+ extern bool USE_GMM_EXT; // whether extend gmm by introducing similarity 
++extern bool ENABLE_PLANE;
++extern bool ENABLE_LINE;
+ extern int S_VERIFY;
+ extern int ENABLE_STRUCTURE;
+ 
++struct Phase2RuntimeCounters
++{
++    std::atomic<uint64_t> processed_frames{0};
++    std::atomic<uint64_t> enqueued_frames{0};
++    std::atomic<uint64_t> flow_back_checks{0};
++    std::atomic<uint64_t> gmm_depth_calls{0};
++    std::atomic<uint64_t> simple_depth_calls{0};
++    std::atomic<uint64_t> plane_detect_calls{0};
++    std::atomic<uint64_t> plane_associate_calls{0};
++    std::atomic<uint64_t> plane_factor_solve{0};
++    std::atomic<uint64_t> normal_factor_solve{0};
++    std::atomic<uint64_t> struct_line_factor_solve{0};
++    std::atomic<uint64_t> plane_factor_margin{0};
++    std::atomic<uint64_t> normal_factor_margin{0};
++    std::atomic<uint64_t> struct_line_factor_margin{0};
++};
++
++extern Phase2RuntimeCounters PHASE2_COUNTERS;
++
+ void readParameters(ros::NodeHandle &n);
++bool shouldProcessFrameByFrequency(double current_time);
++void logPhase2Counters(bool final_snapshot=false);
+ 
+ enum SIZE_PARAMETERIZATION
+ {
+diff --git a/svio/state_estimation/svio.cpp b/svio/state_estimation/svio.cpp
+index 2129db2..1f0a685 100644
+--- a/svio/state_estimation/svio.cpp
++++ b/svio/state_estimation/svio.cpp
+@@ -1,6 +1,6 @@
+ #include "svio.h"
+ #include "../utility/utility.h"
+-#include "opencv/cv.h"
++#include <opencv2/opencv.hpp>
+ #include <iostream>
+ #include <string>
+ #include <thread>
+@@ -13,6 +13,7 @@
+ #include "vanish_point_factor.h"
+ #include "line_parameterization.h"
+ #include "line_projection_factor.h"
++#include <cstdlib>
+ 
+ using namespace QUATERNION_VIO;
+ using namespace Eigen;
+@@ -153,12 +154,63 @@ void SVIO::setParameter(const string &calib_file)
+     camodocal::CameraPtr camera = CameraFactory::instance()->generateCameraFromYamlFile(calib_file);
+     vector<double> parameterVec;
+     camera->writeParameters(parameterVec);
+-    l_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
++    if (ENABLE_LINE)
++        l_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
+     f_manager.setProjectionMatrix(parameterVec[4], parameterVec[5], parameterVec[6], parameterVec[7]);
+ 
+     m_process.unlock();
+ }
+ 
++void SVIO::enforceRuntimeSwitchInvariants(const Meas& vision_meas, const char* stage) const
++{
++    size_t point_plane_refs = 0;
++    for (const auto& point : vision_meas.point_meas)
++        point_plane_refs += point.plane_index != -1;
++
++    size_t line_plane_refs = 0;
++    for (const auto& line : vision_meas.line_meas)
++        line_plane_refs += line.plane_index != -1;
++
++    size_t feature_manager_plane_refs = 0;
++    for (const auto& feature : f_manager.feature)
++        feature_manager_plane_refs += feature.cur_plane_id != -1 || feature.comfirm_plane_id != -1;
++
++    bool violation = false;
++    if (!ENABLE_PLANE && (!vision_meas.plane_meas.empty() || point_plane_refs != 0 || line_plane_refs != 0 || feature_manager_plane_refs != 0 ||
++                          !p_manager.plane_l.empty() || !p_manager.history_normal.empty() || p_manager.plane_id != 0))
++    {
++        ROS_FATAL("[PHASE2_INVARIANT] stage=%s plane disabled but meas=%zu point_refs=%zu line_refs=%zu feature_manager_refs=%zu manager=%zu history=%zu plane_id=%d",
++                  stage, vision_meas.plane_meas.size(), point_plane_refs, line_plane_refs, feature_manager_plane_refs,
++                  p_manager.plane_l.size(), p_manager.history_normal.size(), p_manager.plane_id);
++        violation = true;
++    }
++    if (!ENABLE_LINE && (!vision_meas.line_meas.empty() || !l_manager.line_l.empty() || !l_manager.vvp_l.empty()))
++    {
++        ROS_FATAL("[PHASE2_INVARIANT] stage=%s line disabled but meas=%zu manager=%zu vvp=%zu",
++                  stage, vision_meas.line_meas.size(), l_manager.line_l.size(), l_manager.vvp_l.size());
++        violation = true;
++    }
++    if (!ENABLE_STRUCTURE)
++    {
++        size_t structural_planes = 0;
++        for (const auto& plane : p_manager.plane_l)
++            structural_planes += plane.second.s_type != no;
++        if (structural_planes != 0 || !a_map.axis_l.empty())
++        {
++            ROS_FATAL("[PHASE2_INVARIANT] stage=%s Atlanta disabled but structural_planes=%zu axes=%zu",
++                      stage, structural_planes, a_map.axis_l.size());
++            violation = true;
++        }
++    }
++    if (violation)
++        std::abort();
++
++    ROS_DEBUG_THROTTLE(5.0,
++                       "[PHASE2_INVARIANT] stage=%s point_meas=%zu line_meas=%zu plane_meas=%zu line_manager=%zu plane_manager=%zu axes=%zu",
++                       stage, vision_meas.point_meas.size(), vision_meas.line_meas.size(), vision_meas.plane_meas.size(),
++                       l_manager.line_l.size(), p_manager.plane_l.size(), a_map.axis_l.size());
++}
++
+ bool SVIO::findNewAtlantaAxis()
+ {
+     // 1. mine
+@@ -245,6 +297,7 @@ bool SVIO::findNewAtlantaAxis()
+ 
+ void SVIO::processImage_Init(const Meas& vision_meas)
+ {
++    enforceRuntimeSwitchInvariants(vision_meas, "ingress");
+     Headers[frame_count] = vision_meas.time;
+     
+     string s_stage;
+@@ -257,9 +310,12 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+      // add lines and planes
+     if (solver_flag != INITIAL)
+     {
+-        p_manager.addNewMeasurements(vision_meas, frame_count, Ps, Rs, tic, ric);
+-        l_manager.addNewMeasurements(vision_meas, frame_count, p_manager);
+-        l_manager.addLinePlaneMeasurements(p_manager);    
++        if (ENABLE_PLANE)
++            p_manager.addNewMeasurements(vision_meas, frame_count, Ps, Rs, tic, ric);
++        if (ENABLE_LINE)
++            l_manager.addNewMeasurements(vision_meas, frame_count, p_manager);
++        if (ENABLE_LINE && ENABLE_PLANE)
++            l_manager.addLinePlaneMeasurements(p_manager);
+     }
+ 
+     // add points, decide keyframe
+@@ -267,7 +323,7 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+         marginalization_flag = MARGIN_OLD;
+     else
+         marginalization_flag = MARGIN_SECOND_NEW;
+-    if (solver_flag != INITIAL)
++    if (solver_flag != INITIAL && ENABLE_PLANE)
+         f_manager.addPointPlaneMeasurements(p_manager);
+ 
+     bool is_keyframe = (marginalization_flag==MARGIN_OLD) ? true : false;
+@@ -342,21 +398,26 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+         std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+         f_manager.triangulateWithDepth(Ps, tic, ric);
+         f_manager.triangulateSimple(frame_count, Ps, Rs, tic, ric);
+-        l_manager.triangulateStructural(a_map,Ps,Rs,tic,ric); 
++        if (ENABLE_LINE)
++            l_manager.triangulateStructural(a_map,Ps,Rs,tic,ric);
+ #ifdef USE_VVP
+-        l_manager.computeVerticalVanishPointMea();
++        if (ENABLE_LINE)
++            l_manager.computeVerticalVanishPointMea();
+ #endif
+-        p_manager.initialGeo(a_map,Ps,Rs,tic,ric); 
++        if (ENABLE_PLANE)
++            p_manager.initialGeo(a_map,Ps,Rs,tic,ric);
+ 
+         // remove outliers, verify point-on-plane/line-on-plane
+ #ifdef REMOVE_POINT_OUTLIER
+         f_manager.identifyOutlier(Ps,Rs,tic,ric);
+ #endif
+ #ifdef REMOVE_LINE_OUTLIER
+-        l_manager.removeOutlier(Ps,Rs,tic,ric);
++        if (ENABLE_LINE)
++            l_manager.removeOutlier(Ps,Rs,tic,ric);
+ #endif
+ #ifdef REINIT_PLANE_OUTLIER
+-        p_manager.findOutlier(Ps,Rs,tic,ric);
++        if (ENABLE_PLANE)
++            p_manager.findOutlier(Ps,Rs,tic,ric);
+ #endif
+         
+         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+@@ -377,8 +438,10 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+         ROS_DEBUG("slide window costs %f ms", tp*1000);
+         
+         // f_manager.removeFailures();
+-        l_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
+-        f_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
++        if (ENABLE_LINE && ENABLE_PLANE)
++            l_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
++        if (ENABLE_PLANE)
++            f_manager.checkPlaneRelation(Ps, Rs, tic, ric, p_manager);
+ 
+         t1 = std::chrono::steady_clock::now();
+         
+@@ -386,8 +449,11 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+         if (ENABLE_STRUCTURE != 0)
+         {
+             p_manager.classifyStructuralPlanes(a_map);
+-            l_manager.classifyVerticalLines(Rs[frame_count]*ric[0], frame_count-1);
+-            l_manager.classifyAtlantaLines(Rs[frame_count]*ric[0], frame_count-1, a_map); 
++            if (ENABLE_LINE)
++            {
++                l_manager.classifyVerticalLines(Rs[frame_count]*ric[0], frame_count-1);
++                l_manager.classifyAtlantaLines(Rs[frame_count]*ric[0], frame_count-1, a_map);
++            }
+             
+             // add new axis
+             if (findNewAtlantaAxis())
+@@ -405,7 +471,8 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+ 
+         // l_manager.printStatus();
+         // p_manager.printStatus();
+-        a_map.printStatus();
++        if (ENABLE_STRUCTURE)
++            a_map.printStatus();
+ 
+         key_poses.clear();
+         for (int i = 0; i <= WINDOW_SIZE; i++)
+@@ -416,6 +483,7 @@ void SVIO::processImage_Init(const Meas& vision_meas)
+         last_R0 = Rs[0];
+         last_P0 = Ps[0];
+     }
++    enforceRuntimeSwitchInvariants(vision_meas, "egress");
+     return;
+ }
+ 
+@@ -553,8 +621,10 @@ void SVIO::slideWindowNew()
+ {
+     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+     f_manager.removeFront(frame_count);
+-    p_manager.removeFront(frame_count);
+-    l_manager.removeFront(frame_count);
++    if (ENABLE_PLANE)
++        p_manager.removeFront(frame_count);
++    if (ENABLE_LINE)
++        l_manager.removeFront(frame_count);
+     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+     double dt = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+     ROS_DEBUG("slideWindwoNew costs %f ms", dt*1000);
+@@ -574,13 +644,15 @@ void SVIO::slideWindowOld()
+         P0 = back_P0 + back_R0 * tic[0];
+         P1 = Ps[0] + Rs[0] * tic[0];
+         f_manager.removeBackShiftDepth(R0, P0, R1, P1);
+-        l_manager.removeBackShiftDepth(R0, P0, R1, P1);
+-        p_manager.removeBack(frame_count);
++        if (ENABLE_LINE)
++            l_manager.removeBackShiftDepth(R0, P0, R1, P1);
++        if (ENABLE_PLANE)
++            p_manager.removeBack(frame_count);
+     }
+     else
+     {
+         f_manager.removeBack();
+-        if (p_manager.plane_id != 0)
++        if (ENABLE_PLANE && p_manager.plane_id != 0)
+         {
+             ROS_ERROR("plane is added before initialization completion, exit!");
+             exit(1);
+@@ -743,6 +815,8 @@ void SVIO::solveOdometry()
+ #ifdef USE_STRUCTURAL_LINE
+     for (auto& it_pair : l_manager.line_l)
+     {
++        if (!ENABLE_LINE)
++            break;
+         LinePerId& it_per_id = it_pair.second;
+         if (!(it_per_id.line_ml.size() >= MIN_USED_NUM && it_per_id.start_frame_id < WINDOW_SIZE - 2 && 
+                 it_per_id.has_init == true && it_per_id.comfirm_plane_id == -1))
+@@ -785,6 +859,7 @@ void SVIO::solveOdometry()
+         }
+     }
+ #endif
++    PHASE2_COUNTERS.struct_line_factor_solve.fetch_add(m_cnt, std::memory_order_relaxed);
+     ROS_DEBUG("ceres optimization: %d structual lines have been used with %d constraints!", v_cnt, m_cnt);
+     opt_var_cnt += v_cnt;
+     opt_dim += v_cnt*2;
+@@ -799,6 +874,8 @@ void SVIO::solveOdometry()
+     int p_pm_cnt = 0, p_cnt = 0, p_pl_cnt = 0, p_pp_cnt = 0, p_normal_cnt = 0;
+     for (auto& it : p_manager.plane_l)
+     {
++        if (!ENABLE_PLANE)
++            break;
+         PlanePerId& p = it.second;
+         
+         if (p.plane_ml.size() < 2)
+@@ -813,13 +890,13 @@ void SVIO::solveOdometry()
+             p_pm_cnt++;
+         }
+ 
+-        if (p.s_type == vertical)
++        if (ENABLE_STRUCTURE && p.s_type == vertical)
+         {
+             PlaneOnePoseVerticalFactor *f = new PlaneOnePoseVerticalFactor(Vector3d(0,0,1));
+             problem.AddResidualBlock(f, loss_function, p.cp);
+             p_normal_cnt++;
+         }
+-        else if (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4)
++        else if (ENABLE_STRUCTURE && (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4))
+         {
+             is_yaw_observed = true;
+ 
+@@ -836,7 +913,7 @@ void SVIO::solveOdometry()
+             problem.AddResidualBlock(f, loss_function, p.cp);
+             p_normal_cnt++;
+         }
+-        else if (p.s_type == horizontal_1 || p.s_type == horizontal_2)
++        else if (ENABLE_STRUCTURE && (p.s_type == horizontal_1 || p.s_type == horizontal_2))
+         {
+             Vector3d ref_dir = (p.s_type==horizontal_1)?Vector3d(0,0,1):Vector3d(0,0,-1);
+             PlaneOnePoseParallelFactor *f = new PlaneOnePoseParallelFactor(ref_dir);
+@@ -847,6 +924,8 @@ void SVIO::solveOdometry()
+ #ifdef USE_PLPP
+         for (const auto& line_id : p.lines)
+         {
++            if (!ENABLE_LINE)
++                break;
+             auto it = l_manager.line_l.find(line_id);
+             if (it != l_manager.line_l.end())
+             {
+@@ -893,6 +972,8 @@ void SVIO::solveOdometry()
+         }
+ #endif
+     }
++    PHASE2_COUNTERS.plane_factor_solve.fetch_add(p_pm_cnt, std::memory_order_relaxed);
++    PHASE2_COUNTERS.normal_factor_solve.fetch_add(p_normal_cnt, std::memory_order_relaxed);
+     ROS_DEBUG("ceres optimization: %d planes have been used with %d depth constraints, %d normal constraints, %d plane-line constraints, %d plane-point constraints", 
+             p_cnt, p_pm_cnt, p_normal_cnt, p_pl_cnt, p_pp_cnt);
+     opt_var_cnt += p_cnt;
+@@ -904,6 +985,8 @@ void SVIO::solveOdometry()
+     m_cnt = 0;
+     for (auto& vvp_pair : l_manager.vvp_l)
+     {
++        if (!ENABLE_LINE)
++            break;
+         auto& vvp = vvp_pair.second;
+         VPPoseFactor *f = new VPPoseFactor(vvp.mea_sqrt, Vector3d(0,0,1));
+         problem.AddResidualBlock(f, loss_function, para_Pose[vvp.frame_id], para_Ex_Pose[0]);
+@@ -945,8 +1028,10 @@ void SVIO::solveOdometry()
+     // 1.9 save optimized parameter values
+     afterOptimize(a_map, is_yaw_observed);
+  
+-    f_manager.assignPlanePointDepth(Ps, Rs, tic, ric, p_manager);
+-    l_manager.assignPlaneLinePlk(Ps, Rs, tic, ric, p_manager);
++    if (ENABLE_PLANE)
++        f_manager.assignPlanePointDepth(Ps, Rs, tic, ric, p_manager);
++    if (ENABLE_LINE && ENABLE_PLANE)
++        l_manager.assignPlaneLinePlk(Ps, Rs, tic, ric, p_manager);
+ 
+     TicToc t_add;
+     // 2. marginalization
+@@ -1045,6 +1130,8 @@ void SVIO::solveOdometry()
+         m_cnt = 0, v_cnt = 0;
+         for (auto &it_pair : l_manager.line_l)
+         {
++            if (!ENABLE_LINE)
++                break;
+             LinePerId& it_per_id = it_pair.second;
+             if (!(it_per_id.line_ml.size() >= MIN_USED_NUM && it_per_id.start_frame_id < WINDOW_SIZE - 2 && 
+                     it_per_id.has_init == true)) // && it_per_id.comfirm_plane_id == -1))
+@@ -1086,12 +1173,15 @@ void SVIO::solveOdometry()
+                 }
+             }
+         }
++        PHASE2_COUNTERS.struct_line_factor_margin.fetch_add(m_cnt, std::memory_order_relaxed);
+         ROS_DEBUG("marginalization: %d structual lines have been used with %d constraints!", v_cnt, m_cnt);
+ 
+         // 2.6 add plane residual block
+         int p_pm_cnt = 0, p_cnt = 0, p_pl_cnt = 0, p_pp_cnt = 0, p_normal_cnt = 0;
+         for (auto& it : p_manager.plane_l)
+         {
++            if (!ENABLE_PLANE)
++                break;
+             PlanePerId& p = it.second;
+             if (p.plane_ml.size() < 2 || p.plane_ml[0].frame_id != 0)
+                 continue;
+@@ -1106,7 +1196,7 @@ void SVIO::solveOdometry()
+                 p_pm_cnt++;
+             }
+ 
+-            if (p.s_type == vertical)
++            if (ENABLE_STRUCTURE && p.s_type == vertical)
+             {
+                 PlaneOnePoseVerticalFactor *f = new PlaneOnePoseVerticalFactor(Vector3d(0,0,1));
+                 ResidualBlockInfo *residual_block_info = new ResidualBlockInfo(f, loss_function,
+@@ -1114,7 +1204,7 @@ void SVIO::solveOdometry()
+                 marginalization_info->addResidualBlockInfo(residual_block_info);
+                 p_normal_cnt++;
+             }
+-            else if (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4)
++            else if (ENABLE_STRUCTURE && (p.s_type == atlanta_1 || p.s_type == atlanta_2 || p.s_type == atlanta_3 || p.s_type == atlanta_4))
+             {
+                 is_yaw_observed = true;
+ 
+@@ -1133,7 +1223,7 @@ void SVIO::solveOdometry()
+                 marginalization_info->addResidualBlockInfo(residual_block_info);
+                 p_normal_cnt++;
+             }
+-            else if (p.s_type == horizontal_1 || p.s_type == horizontal_2)
++            else if (ENABLE_STRUCTURE && (p.s_type == horizontal_1 || p.s_type == horizontal_2))
+             {
+                 Vector3d ref_dir = (p.s_type==horizontal_1)?Vector3d(0,0,1):Vector3d(0,0,-1);
+                 PlaneOnePoseParallelFactor *f = new PlaneOnePoseParallelFactor(ref_dir);
+@@ -1200,6 +1290,8 @@ void SVIO::solveOdometry()
+ 
+             p_cnt++;
+         }
++        PHASE2_COUNTERS.plane_factor_margin.fetch_add(p_pm_cnt, std::memory_order_relaxed);
++        PHASE2_COUNTERS.normal_factor_margin.fetch_add(p_normal_cnt, std::memory_order_relaxed);
+         ROS_DEBUG("marginalization: %d planes have been used with %d depth constraints, %d normal constraints, %d plane-line constraints, %d plane-point constraints", 
+                 p_cnt, p_pm_cnt, p_normal_cnt, p_pl_cnt, p_pp_cnt);
+ 
+@@ -1207,7 +1299,7 @@ void SVIO::solveOdometry()
+ #ifdef USE_VVP
+         m_cnt = 0;
+         auto vvp_it = l_manager.vvp_l.find(0);
+-        if (vvp_it != l_manager.vvp_l.end())
++        if (ENABLE_LINE && vvp_it != l_manager.vvp_l.end())
+         {
+             auto& vvp = vvp_it->second;
+             if (vvp.frame_id != 0)
+@@ -1419,11 +1511,14 @@ void SVIO::afterOptimize(AxisMap& a_map, bool is_yaw_observed, bool add_plane_po
+ 
+     for (auto& p_pair : p_manager.plane_l)
+     {
++        if (!ENABLE_PLANE)
++            break;
+         auto& p = p_pair.second;
+         p.cp2hesse();
+     }
+ 
+-    l_manager.refreshGeo(a_map);
++    if (ENABLE_LINE)
++        l_manager.refreshGeo(a_map);
+     // p_manager.applyTransformation(old_R0, old_P0, Rs[0], Ps[0]);
+ 
+     return;
+diff --git a/svio/state_estimation/svio.h b/svio/state_estimation/svio.h
+index 9197ce6..7194971 100644
+--- a/svio/state_estimation/svio.h
++++ b/svio/state_estimation/svio.h
+@@ -28,7 +28,6 @@
+ #include <geometry_msgs/PointStamped.h>
+ 
+ #include <pcl_conversions/pcl_conversions.h>
+-#include <pcl/ros/conversions.h>
+ #include <pcl/point_cloud.h>
+ #include <pcl/point_types.h>
+ #include <pcl/filters/voxel_grid.h>
+@@ -79,6 +78,7 @@ public:
+     // initialization functions 
+     virtual void processImage_Init(const Meas& vision_meas);
+     bool findNewAtlantaAxis();
++    void enforceRuntimeSwitchInvariants(const Meas& vision_meas, const char* stage) const;
+ 
+     bool initialStructure();
+     bool visualInitialAlign();
+diff --git a/svio/state_estimation/svio_stereo_node.cpp b/svio/state_estimation/svio_stereo_node.cpp
+index 7eb2a6d..1735629 100644
+--- a/svio/state_estimation/svio_stereo_node.cpp
++++ b/svio/state_estimation/svio_stereo_node.cpp
+@@ -51,6 +51,7 @@ std::mutex m_img_buf;
+ std::condition_variable con_img_buf;
+ queue<sensor_msgs::Image::ConstPtr> right_img_buf;
+ queue<sensor_msgs::Image::ConstPtr> left_img_buf;
++int drop_frame_cnt = 0;
+ 
+ std::vector<double> frontend_time;
+ std::vector<double> vio_times;
+@@ -198,7 +199,16 @@ void SGBM(cv::Mat left_img, cv::Mat right_img, cv::Mat& dpt_img)
+ void trackPoints(const cv::Mat& mono_img, const cv::Mat& right_img, double cur_time)
+ {
+     feature_tracker.trackImage(mono_img, cur_time);
+-    feature_tracker.associateDepthGMM(right_img);
++    if (USE_GMM)
++    {
++        feature_tracker.associateDepthGMM(right_img, USE_GMM_EXT);
++        PHASE2_COUNTERS.gmm_depth_calls.fetch_add(1, std::memory_order_relaxed);
++    }
++    else
++    {
++        feature_tracker.associateDepthSimple(right_img);
++        PHASE2_COUNTERS.simple_depth_calls.fetch_add(1, std::memory_order_relaxed);
++    }
+ }
+ 
+ void trackLines(const cv::Mat& mono_img)
+@@ -212,6 +222,7 @@ void detectPlanes(const cv::Mat& dpt_img)
+     plane_detector.runPlaneDetection();
+     plane_detector.buildColorBook();
+     plane_detector.buildMeasurement();
++    PHASE2_COUNTERS.plane_detect_calls.fetch_add(1, std::memory_order_relaxed);
+ }
+ 
+ void frontend_sync()
+@@ -247,6 +258,19 @@ void frontend_sync()
+             {
+                 time = time_left;
+ 
++                const bool pass_drop_gate = drop_frame_cnt == DROP_FRAME;
++                if (pass_drop_gate)
++                    drop_frame_cnt = 0;
++                else
++                    drop_frame_cnt++;
++
++                if (!pass_drop_gate || !shouldProcessFrameByFrequency(time))
++                {
++                    left_img_buf.pop();
++                    right_img_buf.pop();
++                    continue;
++                }
++
+                 sensor_msgs::Image img;
+                 img.header = left_img_buf.front()->header;
+                 img.height = left_img_buf.front()->height;
+@@ -277,6 +301,7 @@ void frontend_sync()
+         // 2. frontend processing
+         if (!right_img.empty() && !left_img.empty())
+         {
++            PHASE2_COUNTERS.processed_frames.fetch_add(1, std::memory_order_relaxed);
+             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+ 
+             // rectify
+@@ -299,11 +324,17 @@ void frontend_sync()
+             // exit(1);
+ 
+             std::thread thread_points{trackPoints, left_img, dpt_img, time};
+-            std::thread thread_lines{trackLines, left_img};
+-            std::thread thread_planes{detectPlanes, dpt_img};
++            std::thread thread_lines;
++            std::thread thread_planes;
++            if (ENABLE_LINE)
++                thread_lines = std::thread(trackLines, left_img);
++            if (ENABLE_PLANE)
++                thread_planes = std::thread(detectPlanes, dpt_img);
+             thread_points.join();
+-            thread_lines.join();
+-            thread_planes.join();
++            if (thread_lines.joinable())
++                thread_lines.join();
++            if (thread_planes.joinable())
++                thread_planes.join();
+ 
+             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+             double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+@@ -311,30 +342,45 @@ void frontend_sync()
+             ROS_DEBUG("frontend costs %f ms", tf*1000);
+ 
+             // associate points and lines with planes
+-            feature_tracker.associatePlane(plane_detector);
+-            line_tracker.associatePlane(plane_detector);
++            if (ENABLE_PLANE)
++            {
++                feature_tracker.associatePlane(plane_detector);
++                PHASE2_COUNTERS.plane_associate_calls.fetch_add(1, std::memory_order_relaxed);
++            }
++            if (ENABLE_LINE && ENABLE_PLANE)
++                line_tracker.associatePlane(plane_detector);
+ 
+-            line_tracker.recordStats();
++            if (ENABLE_LINE)
++                line_tracker.recordStats();
+ 
+             // publish frontend results
+             cv::Mat color_img;
+-            cv::cvtColor(left_img, color_img, CV_GRAY2BGR);
++            cv::cvtColor(left_img, color_img, cv::COLOR_GRAY2BGR);
+             cv::Mat imTrack = feature_tracker.drawImTrack(color_img);
+             pubPointImage(imTrack, time);
+-            imTrack = line_tracker.drawImTrack(color_img);
+-            pubLineImg(imTrack, time);
+-            imTrack = plane_detector.drawImDetect(color_img);
+-            pubPlaneSegmentation(imTrack, time);
++            if (ENABLE_LINE)
++            {
++                imTrack = line_tracker.drawImTrack(color_img);
++                pubLineImg(imTrack, time);
++            }
++            if (ENABLE_PLANE)
++            {
++                imTrack = plane_detector.drawImDetect(color_img);
++                pubPlaneSegmentation(imTrack, time);
++            }
+ 
+             // send measurements to backend
+             m_m_buf.lock();
+             Meas cur_meas;
+             cur_meas.time = time;
+-            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector);
++            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector, ENABLE_LINE, ENABLE_PLANE);
+             cur_meas.imColor = color_img;
+             mea_buf.push(cur_meas);
++            const uint64_t enqueued = PHASE2_COUNTERS.enqueued_frames.fetch_add(1, std::memory_order_relaxed) + 1;
+             m_m_buf.unlock();
+             con_m_buf.notify_one();
++            if (enqueued % 100 == 0)
++                logPhase2Counters(false);
+         }
+     }
+ }
+@@ -435,7 +481,7 @@ void backend_sync()
+             vio_times.push_back(tvio*1000);
+             ROS_DEBUG("VIO costs %f ms", tvio*1000);
+ 
+-            if (svio.solver_flag != INITIAL)
++            if (ENABLE_LINE && svio.solver_flag != INITIAL)
+             {
+                 cv::Mat imCluster = svio.l_manager.drawImCluster(vision_meas.imColor, svio.a_map, svio.frame_count-1);
+                 pubLineClusterImg(imCluster, vision_meas.time);
+@@ -449,8 +495,10 @@ void backend_sync()
+             pubKeyPoses(svio, vision_meas.time);
+             pubCameraPose(svio, vision_meas.time);
+             pubPointCloud(svio, vision_meas.time);
+-            pubPlanePointCloud(svio, vision_meas.time, true, true);
+-            pubLineCloud(svio, vision_meas.time);
++            if (ENABLE_PLANE)
++                pubPlanePointCloud(svio, vision_meas.time, true, true);
++            if (ENABLE_LINE)
++                pubLineCloud(svio, vision_meas.time);
+             pubTF(svio, vision_meas.time);
+             pubKeyframe(svio, vision_meas.time);
+ 
+@@ -474,8 +522,10 @@ int main(int argc, char **argv)
+ 
+     svio.setParameter(CAM_NAMES);
+     feature_tracker.readIntrinsicParameter(CAM_NAMES);
+-    line_tracker.setParameters(CAM_NAMES);
+-    plane_detector.setParameters(CAM_NAMES);
++    if (ENABLE_LINE)
++        line_tracker.setParameters(CAM_NAMES);
++    if (ENABLE_PLANE)
++        plane_detector.setParameters(CAM_NAMES);
+ 
+     ros::Subscriber sub_imu = n.subscribe(IMU_TOPIC, 2000, imu_callback, ros::TransportHints().tcpNoDelay());
+     ros::Subscriber sub_left = n.subscribe(LEFT_IMG_TOPIC, 2000, left_img_callback);
+@@ -485,7 +535,9 @@ int main(int argc, char **argv)
+     std::thread backend_process{backend_sync};
+     ros::spin();
+ 
+-    line_tracker.printStats();
++    logPhase2Counters(true);
++    if (ENABLE_LINE)
++        line_tracker.printStats();
+     
+     double sum_frontend_time = std::accumulate(frontend_time.begin(), frontend_time.end(), 0.0);
+     double mean_frontend_time = sum_frontend_time / frontend_time.size();
+diff --git a/svio/state_estimation/svio_syn_node.cpp b/svio/state_estimation/svio_syn_node.cpp
+index bfb1877..cf791b0 100644
+--- a/svio/state_estimation/svio_syn_node.cpp
++++ b/svio/state_estimation/svio_syn_node.cpp
+@@ -132,7 +132,16 @@ void trackPoints(const cv::Mat& mono_img, const cv::Mat& dpt_img, double cur_tim
+     std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+ 
+     feature_tracker.trackImage(mono_img, cur_time);
+-    feature_tracker.associateDepthGMM(dpt_img);
++    if (USE_GMM)
++    {
++        feature_tracker.associateDepthGMM(dpt_img, USE_GMM_EXT);
++        PHASE2_COUNTERS.gmm_depth_calls.fetch_add(1, std::memory_order_relaxed);
++    }
++    else
++    {
++        feature_tracker.associateDepthSimple(dpt_img);
++        PHASE2_COUNTERS.simple_depth_calls.fetch_add(1, std::memory_order_relaxed);
++    }
+ 
+     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+     double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+@@ -158,6 +167,7 @@ void detectPlanes(const cv::Mat& dpt_img)
+     plane_detector.runPlaneDetection();
+     plane_detector.buildColorBook();
+     plane_detector.buildMeasurement();
++    PHASE2_COUNTERS.plane_detect_calls.fetch_add(1, std::memory_order_relaxed);
+ 
+     std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+     double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+@@ -197,7 +207,13 @@ void frontend_sync()
+             {
+                 time = time_color;
+ 
+-                if (drop_frame_cnt == DROP_FRAME)
++                const bool pass_drop_gate = drop_frame_cnt == DROP_FRAME;
++                if (pass_drop_gate)
++                    drop_frame_cnt = 0;
++                else
++                    drop_frame_cnt++;
++
++                if (pass_drop_gate && shouldProcessFrameByFrequency(time))
+                 {
+                     sensor_msgs::Image img;
+                     img.header = color_img_buf.front()->header;
+@@ -211,7 +227,7 @@ void frontend_sync()
+                     color_img = ptr->image;
+                     color_img_buf.pop();
+ 
+-                    cv::cvtColor(color_img, mono_img, CV_BGR2GRAY);
++                    cv::cvtColor(color_img, mono_img, cv::COLOR_BGR2GRAY);
+ 
+                     img.header = dpt_img_buf.front()->header;
+                     img.height = dpt_img_buf.front()->height;
+@@ -224,14 +240,11 @@ void frontend_sync()
+                     dpt_img = ptr->image;
+                     dpt_img_buf.pop();
+ 
+-                    drop_frame_cnt = 0;
+                 } 
+                 else
+                 {
+                     color_img_buf.pop();
+                     dpt_img_buf.pop();
+-
+-                    drop_frame_cnt++;
+                 }
+             }
+         }
+@@ -241,14 +254,21 @@ void frontend_sync()
+         // 2. frontend processing
+         if (!dpt_img.empty() && !color_img.empty())
+         {
++            PHASE2_COUNTERS.processed_frames.fetch_add(1, std::memory_order_relaxed);
+             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+ 
+             std::thread thread_points{trackPoints, mono_img, dpt_img, time};
+-            std::thread thread_lines{trackLines, mono_img};
+-            std::thread thread_planes{detectPlanes, dpt_img};
++            std::thread thread_lines;
++            std::thread thread_planes;
++            if (ENABLE_LINE)
++                thread_lines = std::thread(trackLines, mono_img);
++            if (ENABLE_PLANE)
++                thread_planes = std::thread(detectPlanes, dpt_img);
+             thread_points.join();
+-            thread_lines.join();
+-            thread_planes.join();
++            if (thread_lines.joinable())
++                thread_lines.join();
++            if (thread_planes.joinable())
++                thread_planes.join();
+ 
+             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+             double tf = std::chrono::duration_cast<std::chrono::duration<double> >(t2 - t1).count();
+@@ -256,28 +276,43 @@ void frontend_sync()
+             ROS_DEBUG("frontend costs %f ms", tf*1000);
+ 
+             // associate points and lines with planes
+-            feature_tracker.associatePlane(plane_detector);
+-            line_tracker.associatePlane(plane_detector);
++            if (ENABLE_PLANE)
++            {
++                feature_tracker.associatePlane(plane_detector);
++                PHASE2_COUNTERS.plane_associate_calls.fetch_add(1, std::memory_order_relaxed);
++            }
++            if (ENABLE_LINE && ENABLE_PLANE)
++                line_tracker.associatePlane(plane_detector);
+ 
+-            line_tracker.recordStats();
++            if (ENABLE_LINE)
++                line_tracker.recordStats();
+ 
+             // publish frontend results
+             cv::Mat imTrack = feature_tracker.drawImTrack(color_img);
+             pubPointImage(imTrack, time);
+-            imTrack = line_tracker.drawImTrack(color_img);
+-            pubLineImg(imTrack, time);
+-            imTrack = plane_detector.drawImDetect(color_img);
+-            pubPlaneSegmentation(imTrack, time);
++            if (ENABLE_LINE)
++            {
++                imTrack = line_tracker.drawImTrack(color_img);
++                pubLineImg(imTrack, time);
++            }
++            if (ENABLE_PLANE)
++            {
++                imTrack = plane_detector.drawImDetect(color_img);
++                pubPlaneSegmentation(imTrack, time);
++            }
+ 
+             // send measurements to backend
+             m_m_buf.lock();
+             Meas cur_meas;
+             cur_meas.time = time;
+-            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector);
++            cur_meas.FillMeas(feature_tracker, line_tracker, plane_detector, ENABLE_LINE, ENABLE_PLANE);
+             cur_meas.imColor = color_img;
+             mea_buf.push(cur_meas);
++            const uint64_t enqueued = PHASE2_COUNTERS.enqueued_frames.fetch_add(1, std::memory_order_relaxed) + 1;
+             m_m_buf.unlock();
+             con_m_buf.notify_one();
++            if (enqueued % 100 == 0)
++                logPhase2Counters(false);
+         }
+     }
+ }
+@@ -378,7 +413,7 @@ void backend_sync()
+             vio_times.push_back(tvio*1000);
+             ROS_DEBUG("VIO costs %f ms", tvio*1000);
+ 
+-            if (svio.solver_flag != INITIAL)
++            if (ENABLE_LINE && svio.solver_flag != INITIAL)
+             {
+                 cv::Mat imCluster = svio.l_manager.drawImCluster(vision_meas.imColor, svio.a_map, svio.frame_count-1);
+                 pubLineClusterImg(imCluster, vision_meas.time);
+@@ -392,8 +427,10 @@ void backend_sync()
+             pubKeyPoses(svio, vision_meas.time);
+             pubCameraPose(svio, vision_meas.time);
+             pubPointCloud(svio, vision_meas.time);
+-            pubPlanePointCloud(svio, vision_meas.time, true, true);
+-            pubLineCloud(svio, vision_meas.time);
++            if (ENABLE_PLANE)
++                pubPlanePointCloud(svio, vision_meas.time, true, true);
++            if (ENABLE_LINE)
++                pubLineCloud(svio, vision_meas.time);
+             pubTF(svio, vision_meas.time);
+             pubKeyframe(svio, vision_meas.time);
+ 
+@@ -429,8 +466,10 @@ int main(int argc, char **argv)
+ 
+     svio.setParameter(CAM_NAMES);
+     feature_tracker.readIntrinsicParameter(CAM_NAMES);
+-    line_tracker.setParameters(CAM_NAMES);
+-    plane_detector.setParameters(CAM_NAMES);
++    if (ENABLE_LINE)
++        line_tracker.setParameters(CAM_NAMES);
++    if (ENABLE_PLANE)
++        plane_detector.setParameters(CAM_NAMES);
+ 
+     ros::Subscriber sub_imu = n.subscribe(IMU_TOPIC, 2000, imu_callback, ros::TransportHints().tcpNoDelay());
+     ros::Subscriber sub_color = n.subscribe(COLOR_TOPIC, 2000, color_img_callback);
+@@ -440,7 +479,9 @@ int main(int argc, char **argv)
+     std::thread backend_process{backend_sync};
+     ros::spin();
+ 
+-    line_tracker.printStats();
++    logPhase2Counters(true);
++    if (ENABLE_LINE)
++        line_tracker.printStats();
+     
+     std::ofstream foutA(VINS_STATS_PATH, std::ios::out);
+ 

@@ -1,0 +1,16 @@
+{
+  "completed": [
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 1,
+      "sequence": "circle",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "22dea78d6b4beb17bd05d4a3152d1bdd5f0e493f78c3543404abb52f40696559",
+      "terminal_status": "FAILURE_CONTAINER_EXIT"
+    }
+  ],
+  "freeze_sha256": "ac4062ceaab52fd091bae46c16950075f136702d4a5060f5c9d5e4c8ae82f0c4",
+  "next_ordinal": 2,
+  "schema": "g120-cross-dataset-v3-execution-state-v1"
+}

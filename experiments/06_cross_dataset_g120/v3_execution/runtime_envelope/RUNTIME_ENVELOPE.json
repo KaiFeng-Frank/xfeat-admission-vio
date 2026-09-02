@@ -1,0 +1,162 @@
+{
+  "camera_models_in": {
+    "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcamera_models_in.so",
+    "g120_build_link_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/build/SVIO/camera_models_in/CMakeFiles/camera_models_in.dir/link.txt",
+    "g120_build_link_sha256": "c4ddb0796dfd007cc7bdc9cb009a17b2fb2ad22d56dd60723609733f9f0928ab",
+    "sha256": "dc795b5c2c6fb350f2b7f50030a1cf51cdf0889672039d2332f9236447c24f4f",
+    "source_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/devel/lib/libcamera_models_in.so"
+  },
+  "ceres": {
+    "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libceres.so.1.14.0",
+    "sha256": "63479bfdab33d24ff48f902fe18d1e357b81066a7ede2189829fe3846b605ccc",
+    "source_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/runtime_lib/libceres.so.1.14.0"
+  },
+  "container_image": "gaussian_lic_noetic_baseline",
+  "container_image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+  "glog": {
+    "container_source": "viw:/usr/lib/x86_64-linux-gnu/libglog.so.0.0.0",
+    "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libglog.so.0.0.0",
+    "sha256": "e9746aa0eb6f9c43fb99c8797068fbe384bd599b9c8b30974f8da023cd86bcbc"
+  },
+  "ld_library_path_order": [
+    "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build",
+    "/runtime",
+    "inherited_after_frozen_setup"
+  ],
+  "mounts": {
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcamera_models_in.so": "/runtime/libcamera_models_in.so:ro",
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libceres.so.1.14.0": "/runtime/libceres.so.1:ro",
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libglog.so.0.0.0": "/runtime/libglog.so.0:ro"
+  },
+  "note": "Shared KAIST/OpenLORIS envelope. The fresh exact image receives only read-only hash-pinned runtime mounts; apt and derived images are forbidden.",
+  "schema": "g120-cross-dataset-runtime-envelope-v1",
+  "static_ldd": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--entrypoint",
+      "bash",
+      "-v",
+      "${SANDBOX_ROOT}:${SANDBOX_ROOT}:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libceres.so.1.14.0:/runtime/libceres.so.1:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libglog.so.0.0.0:/runtime/libglog.so.0:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcamera_models_in.so:/runtime/libcamera_models_in.so:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libspqr.so.2.0.9:/runtime/libspqr.so.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcholmod.so.3.0.14:/runtime/libcholmod.so.3:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libf77blas.so.3.10.3:/runtime/libf77blas.so.3:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcxsparse.so.3.2.0:/runtime/libcxsparse.so.3:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libgflags.so.2.2.2:/runtime/libgflags.so.2.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libunwind.so.8.0.1:/runtime/libunwind.so.8:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libsuitesparseconfig.so.5.7.1:/runtime/libsuitesparseconfig.so.5:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libamd.so.2.4.6:/runtime/libamd.so.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcolamd.so.2.9.6:/runtime/libcolamd.so.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libccolamd.so.2.9.6:/runtime/libccolamd.so.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcamd.so.2.4.6:/runtime/libcamd.so.2:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libmetis.so.5.1.0:/runtime/libmetis.so.5:ro",
+      "-v",
+      "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libatlas.so.3.10.3:/runtime/libatlas.so.3:ro",
+      "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+      "-lc",
+      "source /opt/ros/noetic/setup.bash; source '${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/devel/setup.bash'; export LD_LIBRARY_PATH='${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build:/runtime':${LD_LIBRARY_PATH:-}; ldd '${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node'"
+    ],
+    "normalized_output_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/STATIC_LDD.txt",
+    "normalized_output_sha256": "6555de7f5783ddc1e04a96f42d1b7ad1135611bfa792ebe704bddde390f53235",
+    "zero_missing": true
+  },
+  "transitive_runtime": [
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libspqr.so.2.0.9",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libspqr.so.2.0.9",
+      "mount_target": "/runtime/libspqr.so.2",
+      "sha256": "ebc63e3efb7223f0a14c7fe7bdf9a4bc9ff356d04e3cff845cc4f7040747c8df"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libcholmod.so.3.0.14",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcholmod.so.3.0.14",
+      "mount_target": "/runtime/libcholmod.so.3",
+      "sha256": "2fae4a48fab49868c2a7a5fec8bbb90efe30272a4e451e884f55a02df327b558"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libf77blas.so.3.10.3",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libf77blas.so.3.10.3",
+      "mount_target": "/runtime/libf77blas.so.3",
+      "sha256": "50c486355ff945c1aafa3e1405b2b7f06e379f506fd3de3ad37dfb615b138fbe"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libcxsparse.so.3.2.0",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcxsparse.so.3.2.0",
+      "mount_target": "/runtime/libcxsparse.so.3",
+      "sha256": "1594e8ae0b0fd6c566043afa37d73be54b8f48a2b23f554d55f191bb717b7558"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libgflags.so.2.2.2",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libgflags.so.2.2.2",
+      "mount_target": "/runtime/libgflags.so.2.2",
+      "sha256": "3366f570f8ce311509e544a8d7c5e2f3a9b8d5f220f5f4032278993122a506a8"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libunwind.so.8.0.1",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libunwind.so.8.0.1",
+      "mount_target": "/runtime/libunwind.so.8",
+      "sha256": "65a39804a4af7b1152d1800b1269cbe4ea56ac06336ef228659d239ef32c3a41"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libsuitesparseconfig.so.5.7.1",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libsuitesparseconfig.so.5.7.1",
+      "mount_target": "/runtime/libsuitesparseconfig.so.5",
+      "sha256": "be0139837fce47efe22257fc6497f7725dedab4aa77c5a0936099c071f325ef2"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libamd.so.2.4.6",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libamd.so.2.4.6",
+      "mount_target": "/runtime/libamd.so.2",
+      "sha256": "90a6577c0b59b25680e238cf2226265c3dbb45683303e853792ef03fde970d05"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libcolamd.so.2.9.6",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcolamd.so.2.9.6",
+      "mount_target": "/runtime/libcolamd.so.2",
+      "sha256": "0c3ae69c2dced6cb3dbf624cf3edf5aa54b2ed560771ab9797b315eeb95934a0"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libccolamd.so.2.9.6",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libccolamd.so.2.9.6",
+      "mount_target": "/runtime/libccolamd.so.2",
+      "sha256": "a841bd18769c4f218f70a5e96936276c6080536dba7200880d98e1199fa33c0c"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libcamd.so.2.4.6",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libcamd.so.2.4.6",
+      "mount_target": "/runtime/libcamd.so.2",
+      "sha256": "2da0fd13d53242a2dc3e4270b09c5fb809952e1ea0914dd8a417e40f265a7c95"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libmetis.so.5.1.0",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libmetis.so.5.1.0",
+      "mount_target": "/runtime/libmetis.so.5",
+      "sha256": "3201764476cd0835c59200442463e3ecde6b5e3169947b969647bb76dca518e3"
+    },
+    {
+      "container_source": "viw:/usr/lib/x86_64-linux-gnu/libatlas.so.3.10.3",
+      "formal_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/libatlas.so.3.10.3",
+      "mount_target": "/runtime/libatlas.so.3",
+      "sha256": "5b5475a494bcce804fcb051d781d47d90a6a072c59004d2fb2680ebd69b19214"
+    }
+  ]
+}

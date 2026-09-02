@@ -1,0 +1,75 @@
+{
+  "schema": "xfeat-klt-admission-atlanta-vcu-six-sequence-v1",
+  "freeze": "ADMISSION_FREEZE.json",
+  "sandbox_git_commit": "562cdfeaf6b361d49b7c6a331d1b50df5ae8e0cf",
+  "method": "KLT/F-RANSAC continuous identity; 10 Hz XFeat keypoints only receive priority when admitting new tracks; 150 live tracks; 20 px spacing; 20 px keyframe parallax; frozen A3 GMM+plane+Atlanta 10-state local BA",
+  "sequences": {
+    "motion1": {
+      "ate_rmse_cm": 27.0192087773845,
+      "cr": 0.9640726672470377,
+      "aoe_median_deg": 5.331797692645878,
+      "full_svio_ate_cm": 24.5,
+      "verdict": "LOSS",
+      "xfeat_sidecar_sha256": "d5ab2bd91a43edcdcc0cbc07b85098a075949b99c764df50440d0cca45c3ecdb",
+      "score_receipt": "scores/motion1/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "6d6fb2b91d4f6e34c82dbce53808508b61d9c95e1c368e92f97bc31793073518"
+    },
+    "motion2": {
+      "ate_rmse_cm": 27.0209736469280,
+      "cr": 0.9456385932210829,
+      "aoe_median_deg": 6.509217028247516,
+      "full_svio_ate_cm": 22.2,
+      "verdict": "LOSS",
+      "xfeat_sidecar_sha256": "a4ebf42ed073e04da2e431ad8240033235396e51293160523eac651e2a46dc36",
+      "score_receipt": "scores/motion2/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "bf1db436d808bca74fffa57fe1e759260c681ad626e24a591f10ac240005e533"
+    },
+    "motion3": {
+      "ate_rmse_cm": 13.8998722957774,
+      "cr": 0.9604185523012124,
+      "aoe_median_deg": 2.28183311503566,
+      "full_svio_ate_cm": 11.5,
+      "verdict": "LOSS",
+      "xfeat_sidecar_sha256": "0d94c2572ee0f579883ae5fb69237f9b0ed2eed51c9508ca56e5f607e44a1cfd",
+      "score_receipt": "scores/motion3/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "d02db307e4a8d8058f74cbc9bf093a81c8852549f1a3017a540369a4e1f174c8"
+    },
+    "motion4": {
+      "ate_rmse_cm": 30.1161203078372,
+      "cr": 0.9504293653487697,
+      "aoe_median_deg": 2.786800614403056,
+      "full_svio_ate_cm": 34.1,
+      "verdict": "WIN",
+      "xfeat_sidecar_sha256": "d78d56e3d32969992d17b591cd4cbe712844fe49761b1eac0290abc49eda51a2",
+      "score_receipt": "score_motion4_atlanta_admission/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "6b82373b6ef83c4ef2e14a56b1d833016861bec9a70c3862b7ca494c5f2820ab"
+    },
+    "motion5": {
+      "ate_rmse_cm": 16.2821475571775,
+      "cr": 0.9649953994146386,
+      "aoe_median_deg": 4.24529255214351,
+      "full_svio_ate_cm": 15.3,
+      "verdict": "LOSS",
+      "xfeat_sidecar_sha256": "e16df4a12c7fa1f31a4831288a3e4c2a307ddd6a557084f0933b509f3d97c868",
+      "score_receipt": "scores/motion5/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "b40afb910213a1148cb83f45bbca9242eb99b736af8e0e100f1b312805fcd7b0"
+    },
+    "motion6": {
+      "ate_rmse_cm": 18.0336711789903,
+      "cr": 0.9794809864376043,
+      "aoe_median_deg": 4.953181739451176,
+      "full_svio_ate_cm": 18.910242982,
+      "verdict": "WIN",
+      "xfeat_sidecar_sha256": "da0ce0481a29b4617a62d51864aae0eb2e6cc72fcaad442c62b3b63e1ed5cc2e",
+      "score_receipt": "scores/motion6/SCORE_RECEIPT.json",
+      "temporary_bag_sha256": "e77e2eb3bed05245aab8a549aa44cfc3bd2c0846f977b19680bb023c047844ad"
+    }
+  },
+  "win_count": 2,
+  "loss_count": 4,
+  "all_cr_at_least_0_94": true,
+  "majority_target": "FAIL",
+  "decision": "STOP_XFEAT_FRONTEND_LINE",
+  "production_writes": false,
+  "reserved_unseen_access": false
+}

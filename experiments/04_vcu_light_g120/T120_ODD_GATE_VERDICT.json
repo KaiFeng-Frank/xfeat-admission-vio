@@ -1,0 +1,44 @@
+{
+  "schema": "vcu-light-g120a-odd-gate-v1",
+  "status": "GO_LOCKED_EVALUATION_NO_FURTHER_REVISION",
+  "recorded_at": "2026-09-01T20:22:10+08:00",
+  "candidate_freeze_sha256": "a6cefdaa4ae71984c4a7bcb32aadd9ede051f239ac304a517004c502bfef3668",
+  "results_cm": {
+    "light1": {"g120a": 19.024580200373328, "matched_off": 27.199702740255904, "paper_svio": 69.3, "cr": 0.9848682614413201},
+    "light3": {"g120a": 11.739388249610448, "matched_off": 10.839848990438584, "paper_svio": 12.2, "cr": 0.9831354329249778},
+    "light5": {"g120a": 27.18895860702591, "matched_off": 39.2793198390035, "paper_svio": 65.7, "cr": 0.9581140224818799}
+  },
+  "verdict": {
+    "wins_vs_paper_svio": "3/3",
+    "causal_gains_vs_same_build_off": "2/3",
+    "causal_losses_vs_same_build_off": ["light3"],
+    "all_cr_at_least_0_95": true,
+    "locked_evaluation_release": true,
+    "algorithm_revision_after_this_point": false
+  },
+  "receipts_sha256": {
+    "g120a_light1": "d77529d72664409fb0f48a24ccd4f47594973ae40e2737e0f8290999f3367a50",
+    "g120a_light3": "19190bf3b5173003b4336dc02cffd74aea2f2a0f09e075cc7704224622ee2394",
+    "g120a_light5": "996285c405a3350d3f5b7493e637e6a8e525694eeb941da2fce4fd97269819af",
+    "off_light1": "c99e66d2e7d1f61ed3372eaec889b84251e245807abfbc8c83da8eea59e13e47",
+    "off_light3": "28c7805350419cdb44bb232fdf937ae186206f78a0725d95fcd7cb918278800b",
+    "off_light5": "f8daf0ed8125889a1fc15cca68724f16eaf2e2f1310afe97f1a7a61bcd019f2d"
+  },
+  "raw_trajectory_sha256": {
+    "g120a_light1": "c082a1aaa7f7bbb630ef25c812434fd8942ef3343a6e5fe6cf2e504a904fdb81",
+    "g120a_light3": "324a10c1c94c25e8cd6145abafdc5f7671ed977620afb01938aa6fd630e360f4",
+    "g120a_light5": "8a782920867871bb2d8b63e85a1376a2dfd389f9af85f081c397c1bdaa72e4fe",
+    "off_light1": "27b2e940e233b93a284be6c11a0d2660ec94f18a0df69d22d5d0775d4ecb37bc",
+    "off_light3": "d827b06facdc1197e72f69a878dfed6a873113286bb66dddf009a6eb9da314ee",
+    "off_light5": "4dd6a38ed3964d300391b178282ae50adb3ca8cc23ff6cd11c0549e4c92c69b3"
+  },
+  "disk_hygiene": {
+    "temporary_bags_removed_after_hashing": ["light1", "light3", "light5"],
+    "regenerable_sidecars_removed_after_use": ["light3", "light5"],
+    "external_temporary_root": "${EXTERNAL_ROOT}/light_tmp_20260901"
+  },
+  "safety": {
+    "production_writes": false,
+    "reserved_unseen_access": false
+  }
+}

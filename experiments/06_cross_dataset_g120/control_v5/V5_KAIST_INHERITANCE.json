@@ -1,0 +1,291 @@
+{
+  "completed": [
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 1,
+      "sequence": "circle",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "7def6d27e9681cf26c9bd5c014917cad4c868cf4b04cb36f3bb7e0fc2ed723d0",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 2,
+      "sequence": "circle",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "9e049f278bae20ebab1e476d90fc4eea0e806c3094a31f367decf85ac2285dc3",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 3,
+      "sequence": "circle_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "8dbe9f83199df12bf357379c6efa18b522429f3a5f4802f7906b36bbb0d196c2",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 4,
+      "sequence": "circle_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "c9698f6589031ab04e4c4288318965be3ecf489b2d43342036067756cc35f225",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 5,
+      "sequence": "circle_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "2180a223611dd64faf2b6c248537b9aa3517f1e4c102af7dab76fdbb31705c1d",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 6,
+      "sequence": "circle_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "b5fe206d062d86713cdcf74f03f2dd02c4e089635861366018ee37c5fbc97772",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 7,
+      "sequence": "infinite",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "07a161c58a974852ad64dc72ddbcd62d3ab388d6172e19046aa5ff34982793af",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 8,
+      "sequence": "infinite",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "dcfcb54d2470050fd8382c5ec3a138ff5701a5738a3577abf4e4418a7d059110",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 9,
+      "sequence": "infinite_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "6a542be103798934c3a8cbfd8436a1a9eeec64e19841227b1d70730bf475bddf",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 10,
+      "sequence": "infinite_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "af3144c62e0ed203f9f3a0089c2dc7a56992c7e70a03efda30258496a6c67cbe",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 11,
+      "sequence": "infinite_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "8e85a4187cc3729836017a71fc72031d6fe87dcf5b58c54593aefcb84bfc5ce0",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 12,
+      "sequence": "infinite_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "0fdff7aa789ec0029029ceb5b705e7de00f801dde217fa72836cd2667acdfe6e",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 13,
+      "sequence": "square",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "1ed335819ec2b2c7169fcb7604e94c182d5be17b54aeb6b96891606761afd0c7",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 14,
+      "sequence": "square",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "cf4873a20e7213b5effe3a31564d00451271f29266655ae6e449d173fbff4679",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 15,
+      "sequence": "square_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "8eb110585d9b51a5424eee017aec028edcf437a7d599f7a713972f234333f994",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 16,
+      "sequence": "square_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "4d021eb457355f169dd34907fec5bb394af3f7444c069adbd1fe3fca35c001c6",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 17,
+      "sequence": "square_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "9793c7f18af2d66b1228a7d6bf739ecb44eb177b07617da501f0f00710ef731b",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 18,
+      "sequence": "square_head",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square_head/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "3703c3fa46426df54da4e4dd46d71ebd6f6057466eca39c534c7333fe67e5b78",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 19,
+      "sequence": "rotation",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "8ef030abde68eaff797d25fd277cf8f9e0e2c98802a88fae20ce3d1590fc2275",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 20,
+      "sequence": "rotation",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/rotation/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "5d2ebe7070131a471f2aa299553f06cee77c5c4746c0b2f654eea2a4d6f28d1f",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 21,
+      "sequence": "rotation_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "440f6589b492bcad70fb6274201fb50c6a7c11af841bfb6a41237e3f3f52b849",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 22,
+      "sequence": "rotation_fast",
+      "terminal_receipt_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/rotation_fast/RUN_RECEIPT.json",
+      "terminal_receipt_sha256": "7ab11a068389446625572fc65f962a450dbafe5135eeba60066cdda932f93544",
+      "terminal_status": "PASS_RUN_NO_SCORE"
+    }
+  ],
+  "created_utc": "2026-09-01T19:40:28.686476+00:00",
+  "kaist_runner_seal": {
+    "bytes": 29958,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_SELF_TEST_SEAL.json",
+    "sha256": "211d37360ee115fe6bec1c42bbcef296323f9267dd3d544eb75c8fc9a3d27125"
+  },
+  "open_incident_excluded": {
+    "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v5/V4_OPEN_ROS_ENV_INCIDENT.json",
+    "required_schema": "g120-v4-open-ros-env-incident-v1"
+  },
+  "policy": {
+    "inherit_only_exact_22_v4_pass_rows": true,
+    "rerun_kaist": false,
+    "v4_open_rows_are_not_inherited": true
+  },
+  "release_receipts": [
+    {
+      "bytes": 5512,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/circle.released.json",
+      "sha256": "1ba3f121f7735608dfedf1c889c0e46d0e806633a41209a0fa4c6c50ad0aef35"
+    },
+    {
+      "bytes": 4838,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/circle_fast.released.json",
+      "sha256": "5c64ca2c20c37561b9fe3899ffe0e41aad51de552d5aaa6126ea4b9d69a2ad5b"
+    },
+    {
+      "bytes": 4838,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/circle_head.released.json",
+      "sha256": "22aebf388191b3fef676bbf3d631b34912f12a768fa290c42d62ce56f8743ae5"
+    },
+    {
+      "bytes": 4811,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/infinite.released.json",
+      "sha256": "983e7a7f079cd2e139a4177e0994286b8c460fd4a473b596df43f2cf907ec5c8"
+    },
+    {
+      "bytes": 4856,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/infinite_fast.released.json",
+      "sha256": "8550a175f5b6ebe5bd8188059cdc48b8f67b951793aec613b7dced28c83d05ec"
+    },
+    {
+      "bytes": 4856,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/infinite_head.released.json",
+      "sha256": "a51b749e4287480bbfe39e0e9fd6908cc80cbc3d93240e6012f7d73df46226a3"
+    },
+    {
+      "bytes": 4793,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/square.released.json",
+      "sha256": "09fe73597a95f667a88dffd751602a0b6daae9a10cc97ccedd5fd660871757d0"
+    },
+    {
+      "bytes": 4838,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/square_fast.released.json",
+      "sha256": "aadeeb5eb8dfbbc1f4ad78bf478605fa70eb386cea24d237071eb747ff96faac"
+    },
+    {
+      "bytes": 4840,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/square_head.released.json",
+      "sha256": "060b348983cb59ea7e39f07d6801aa676b0076073a453dbd4924cd2bf60eb43d"
+    },
+    {
+      "bytes": 4811,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/rotation.released.json",
+      "sha256": "7642614c5c94b55fb14bd1eecae5b72ce9846c8329b3757ce7b185ef86b1d68c"
+    },
+    {
+      "bytes": 4856,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/bag_receipts/rotation_fast.released.json",
+      "sha256": "d3a0fcd37bb0bd04a4d68418d80699c07442594d6169eb98cea1fd1def59adcb"
+    }
+  ],
+  "schema": "g120-v5-kaist-inheritance-v1",
+  "source_v4_freeze": {
+    "bytes": 12213,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+    "sha256": "84c67a67a6f2b3513865d1744ee0ca0cab99ece108db5554ecd6607ff29e5d2b"
+  },
+  "source_v4_state_after_open_incident": {
+    "bytes": 16152,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+    "sha256": "760c0af1d19084144cec1d778cff520bd82916f1842491d7e026bb3273719853"
+  },
+  "staged_report_freeze_report_only": {
+    "bytes": 1188,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report/STAGED_KAIST_REPORT_FREEZE.json",
+    "sha256": "75fd029087f6c2670b262818b9fcb038828ba88cb62a5e244b2663d4dffaf82f"
+  },
+  "status": "VALID_V4_KAIST_22_PASS_INHERITED"
+}

@@ -1,0 +1,281 @@
+{
+  "directory_exactness": {
+    "extras": 0,
+    "inputs": true,
+    "receipts": true,
+    "xfs": true
+  },
+  "estimator_run": false,
+  "ground_truth_opened_by_builders": false,
+  "ordered_sequences": [
+    "office1-1",
+    "office1-2",
+    "office1-3",
+    "office1-4",
+    "office1-5",
+    "office1-6",
+    "office1-7",
+    "home1-1",
+    "home1-2",
+    "home1-3",
+    "home1-4",
+    "home1-5"
+  ],
+  "pre_materialization_seal": {
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/SELF_TEST_PASS.json",
+    "sha256": "444e2b91e65043703068ff430e33998b8b0e3795db2ed8bf41b2284217dcda25"
+  },
+  "rows": [
+    {
+      "bag": {
+        "bytes": 1239505147,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-1.bag",
+        "sha256": "f85cbd6b09f2a95e71a3fb875358e25386e1326f609040b2f05333f62d17cce9"
+      },
+      "imu": 10785,
+      "pairs": 804,
+      "receipt": {
+        "bytes": 4437,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-1.json",
+        "sha256": "a0774bab7442d6526a4a3a568eabf6ca58af1fa1a1632f280fcedc3e990cb1a1"
+      },
+      "sequence": "office1-1",
+      "xfs": {
+        "bytes": 107745688,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-1.xfs",
+        "sha256": "8143b33997df46e0d91a729636dac1b2c208399567efdd59df27a6770a017868"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 1379788332,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-2.bag",
+        "sha256": "a66f7102a673836535686f35667378d6b3a9c907fad4bf6994c4b8400800f676"
+      },
+      "imu": 11984,
+      "pairs": 895,
+      "receipt": {
+        "bytes": 4437,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-2.json",
+        "sha256": "76ad0ee1e3b5bd67fa23a8a1ca4d12b675ed37f0495989536d476207db7fbe12"
+      },
+      "sequence": "office1-2",
+      "xfs": {
+        "bytes": 119940780,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-2.xfs",
+        "sha256": "45dc45d9213b161bd9cf73951b3b90a2f9f5305136ae8e9d85d3aab14afa39f7"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 553456664,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-3.bag",
+        "sha256": "008544d573c8a90f8d2d715071e91c6cf907a76756ed2e8bad007b1e27874a89"
+      },
+      "imu": 4794,
+      "pairs": 359,
+      "receipt": {
+        "bytes": 4431,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-3.json",
+        "sha256": "72b77b14ff25ce113a23d48a422308a4bdf78ee172c4727c97db266736d5bc24"
+      },
+      "sequence": "office1-3",
+      "xfs": {
+        "bytes": 48110348,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-3.xfs",
+        "sha256": "c9a16cfe2efea8c91e1b6877d4dda905b3093cf3d9d85235db4fda51d5cccf4f"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 1341213235,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-4.bag",
+        "sha256": "b70f5db3c23c08946d3761f1680a7f127dbbf87d02b9e1cea811515368ddbd80"
+      },
+      "imu": 11560,
+      "pairs": 870,
+      "receipt": {
+        "bytes": 4437,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-4.json",
+        "sha256": "cc0fe7d04f3e25ee0bff5d0c77917813b6e6a19f39e882a55cfc2c81a1095a20"
+      },
+      "sequence": "office1-4",
+      "xfs": {
+        "bytes": 116590480,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-4.xfs",
+        "sha256": "4f39835c026d229445045ff9364fff157882f64c76fa409b9576553561a16857"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 2448105981,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-5.bag",
+        "sha256": "fdf63f2a0084f55043bd943ece3c674c9d307b6a176b865eb7f63e4c79258046"
+      },
+      "imu": 21134,
+      "pairs": 1588,
+      "receipt": {
+        "bytes": 4447,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-5.json",
+        "sha256": "a57b52328c157f08abb8a9af369c11f0bafcbdc87aec8a5af1694d78716bb9b6"
+      },
+      "sequence": "office1-5",
+      "xfs": {
+        "bytes": 212811096,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-5.xfs",
+        "sha256": "822f385cf7273e182375524bd0109ef7c76653e2388ce784d866550d33980836"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 1660334227,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-6.bag",
+        "sha256": "917ccb84f1698a56f00dcb328045d011556d936c7b861fdd42f16c2cf635a311"
+      },
+      "imu": 14328,
+      "pairs": 1077,
+      "receipt": {
+        "bytes": 4447,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-6.json",
+        "sha256": "14705b239c79c8474ca3ebfface39762fc7a2dfa3bca626fb9c3204041f103b1"
+      },
+      "sequence": "office1-6",
+      "xfs": {
+        "bytes": 144330964,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-6.xfs",
+        "sha256": "e69323e1cfd4f54d5ecb3f883040902053819f1809cdb10f4422e2c32343c6cb"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 1748222491,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/office1-7.bag",
+        "sha256": "0f299ef1f38fcfe36baf610126bbf281e6b2d68d254c3a4929159b49b8591f78"
+      },
+      "imu": 15128,
+      "pairs": 1134,
+      "receipt": {
+        "bytes": 4447,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/office1-7.json",
+        "sha256": "08916348eb2b73a8c89128775470ab39bbfe5cca9a4d8868950901fe29530baf"
+      },
+      "sequence": "office1-7",
+      "xfs": {
+        "bytes": 151969648,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/office1-7.xfs",
+        "sha256": "0799cc69010a3c2267e6eeff61107f5dfb3c254e1fd75a9bb80ff6847ca1dfd0"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 7066803673,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/home1-1.bag",
+        "sha256": "a3ab5059fa773497f2eda1267292c0e84126a47698dcb0fd8a4d65aee1fa6193"
+      },
+      "imu": 60989,
+      "pairs": 4584,
+      "receipt": {
+        "bytes": 4434,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/home1-1.json",
+        "sha256": "cdcd02cc42da1595b8efd686da38b0f96302d1f02aefac263e4286694071810f"
+      },
+      "sequence": "home1-1",
+      "xfs": {
+        "bytes": 614311048,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/home1-1.xfs",
+        "sha256": "bc35a4596b45fb7a70e3c726d9bbeb0cdb24cb5ba0db9806f73ff042af7f5598"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 4618675601,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/home1-2.bag",
+        "sha256": "5c5e8970b24fb104cbe8a902333207ba37cae0f1054e9d5eca8960d091819c12"
+      },
+      "imu": 39776,
+      "pairs": 2996,
+      "receipt": {
+        "bytes": 4434,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/home1-2.json",
+        "sha256": "668b016aeff83d993f8684ec01ccb821e40eb45e73ba1aba87dbd6b7c74274e8"
+      },
+      "sequence": "home1-2",
+      "xfs": {
+        "bytes": 401499992,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/home1-2.xfs",
+        "sha256": "826565a2feed60e941e8eeb71ae8f8ee8f2c7e5aa4c516d430ed251a3a6f9a5f"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 4054469234,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/home1-3.bag",
+        "sha256": "73a0aaea4098f22395ed3908c2524a6334e000be014e52db1f4dcdfbdd43e556"
+      },
+      "imu": 34979,
+      "pairs": 2630,
+      "receipt": {
+        "bytes": 4434,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/home1-3.json",
+        "sha256": "1f651ae87edf635836cc5565979aa1ed02f0dd469bf166f5e857dc2ca3fe2f55"
+      },
+      "sequence": "home1-3",
+      "xfs": {
+        "bytes": 352451600,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/home1-3.xfs",
+        "sha256": "3396bf501b5b28df8649282c9db2bfc88fcf6951b9f05c20d2a542c04011a4a4"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 3280576461,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/home1-4.bag",
+        "sha256": "3e8f59bbd2bdd6b523fef83f6874e3ba650ebcf173f63b1d4562bee0b29937c6"
+      },
+      "imu": 28304,
+      "pairs": 2128,
+      "receipt": {
+        "bytes": 4606,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/home1-4.json",
+        "sha256": "f203e08c05d59736b93c76b446fcc1f71b79bab339fcf179968ee30ba51d492a"
+      },
+      "sequence": "home1-4",
+      "xfs": {
+        "bytes": 285177576,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/home1-4.xfs",
+        "sha256": "e8369d069c1cc1536dfeb1e73c9a7f887225d0e046814deef361f4f7e984ed73"
+      }
+    },
+    {
+      "bag": {
+        "bytes": 1196321027,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/inputs/home1-5.bag",
+        "sha256": "7bba4904d89d0970a2ed501592f2d7a1b1f1069916edc1c5839aead3ca31b697"
+      },
+      "imu": 10363,
+      "pairs": 776,
+      "receipt": {
+        "bytes": 4423,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/receipts/home1-5.json",
+        "sha256": "653454687d87157e3d1229eae22695341b9f29eb102950be07ef2423291277f9"
+      },
+      "sequence": "home1-5",
+      "xfs": {
+        "bytes": 103993352,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/openloris/xfs/home1-5.xfs",
+        "sha256": "564b2d0d331cb9098eef61d3c7f04aba0c6fbd88280cd374a596a12826041406"
+      }
+    }
+  ],
+  "schema": "g120a-openloris-materialized-input-cohort-v1",
+  "score_computed": false,
+  "source_registry_sha256": "c64f6336ce26775a02d3709eb6105a5be658de14e3a78402945b43d87bd008d7",
+  "status": "PASS_12_OF_12",
+  "totals": {
+    "bag_bytes": 30587472073,
+    "imu": 264124,
+    "pairs": 19841,
+    "sequences": 12,
+    "xfs_bytes": 2658932572
+  }
+}

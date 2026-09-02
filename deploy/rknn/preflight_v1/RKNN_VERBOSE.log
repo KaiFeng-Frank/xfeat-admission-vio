@@ -1,0 +1,41 @@
+D Save log info to: /tmp/xfeat-export-final.o735US/rknn2/RKNN_VERBOSE.log
+I rknn-toolkit2 version: 2.3.2
+[1;33mW[0m [1;33mload_onnx: The config.mean_values is None, zeros will be set for input 0![0m
+[1;33mW[0m [1;33mload_onnx: The config.std_values is None, ones will be set for input 0![0m
+D base_optimize ...
+D base_optimize done.
+D 
+D fold_constant ...
+D fold_constant done.
+D fold_constant remove nodes = ['/Concat_1', '/Slice_1', '/Shape_1', '/Concat', '/Slice', '/Shape']
+D Fixed the shape information of some tensor!
+D 
+D correct_ops ...
+D correct_ops done.
+D 
+D fuse_ops ...
+D fuse_ops results:
+D     convert_reducemean_to_einsum: remove node = ['/ReduceMean'], add node = ['/ReduceMean#1', '/ReduceMean#1_rs']
+D     convert_in_to_exnorm: remove node = ['/norm/InstanceNormalization'], add node = ['/ReduceMean_output_0_tp', '/ReduceMean_output_0_tp_rs', '/norm/InstanceNormalization#1', '/norm/InstanceNormalization#1_rs', '/norm/InstanceNormalization#1_rs_tp']
+D     squeeze_1_in_nd_transpose: remove node = [], add node = ['/Reshape_output_0_rs', '/Transpose_output_0-rs']
+D     convert_2in_einsum_to_exmatmul: remove node = ['/ReduceMean#1'], add node = ['image_rs', 'image_rs_mm', 'image_rs_mm_tp', 'image_rs_mm_tp_rs']
+D     fuse_transpose_reshape: remove node = ['image_rs_mm_tp']
+D     fuse_reshape_transpose: remove node = ['/ReduceMean_output_0_tp', '/norm/InstanceNormalization#1_rs_tp']
+D     fuse_two_reshape: remove node = ['/Reshape', '/Transpose_output_0-rs']
+D     fuse_two_reshape: remove node = ['image_rs_mm_tp_rs']
+D     swap_norm_reshape: remove node = ['/norm/InstanceNormalization#1', '/norm/InstanceNormalization#1_rs', '/ReduceMean_output_0_tp_rs'], add node = ['/norm/InstanceNormalization#1_rs', '/norm/InstanceNormalization#1']
+D     fuse_two_reshape: remove node = ['/ReduceMean#1_rs']
+D     swap_reshape_norm: remove node = ['/norm/InstanceNormalization#1_rs', '/norm/InstanceNormalization#1'], add node = ['/norm/InstanceNormalization#1', '/norm/InstanceNormalization#1_rs']
+D     convert_exmatmul_to_conv: remove node = ['image_rs_mm'], add node = ['image_rs_mm#1']
+D     swap_reshape_conv: remove node = ['image_rs', 'image_rs_mm#1'], add node = ['image_rs_mm#1', 'image_rs']
+D     swap_reshape_norm: remove node = ['image_rs', '/norm/InstanceNormalization#1', '/norm/InstanceNormalization#1_rs'], add node = ['/norm/InstanceNormalization#1', 'image_rs']
+D     remove_invalid_reshape: remove node = ['image_rs']
+D     fold_constant ...
+D     fold_constant done.
+D fuse_ops done.
+D 
+D sparse_weight ...
+D sparse_weight done.
+D 
+I rknn building ...
+I rknn building done.

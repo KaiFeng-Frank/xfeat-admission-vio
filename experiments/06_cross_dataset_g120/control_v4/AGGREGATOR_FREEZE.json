@@ -1,0 +1,290 @@
+{
+  "accepted_v4_receipt_schemas": {
+    "execution_freeze": "g120-cross-dataset-v4-execution-freeze-v1",
+    "execution_state": "g120-cross-dataset-v4-execution-state-v1",
+    "kaist_attempt": "g120-kaist-formal-attempt-v4",
+    "kaist_normalization": "g120-kaist-time-restoration-v4",
+    "kaist_registered_score": "table2.addendum-score.v1",
+    "kaist_staged_release": "g120-kaist-staged-bag-release-v4",
+    "kaist_terminal": "g120-kaist-formal-run-v4",
+    "openloris_run": "g120a-openloris-formal-run-v4",
+    "openloris_score": "g120a-openloris-formal-score-v4",
+    "openloris_terminal": "g120-cross-dataset-v4-terminal-receipt-v1"
+  },
+  "aggregator": {
+    "bytes": 73566,
+    "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/aggregate_results.py",
+    "sha256": "3fc3a4feb5f31ddb2f1047ab966175c3bf487afe6af8ad33f45a14994a5f21de"
+  },
+  "candidate": {
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "xfeat_module_sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3"
+  },
+  "dependency_order": [
+    "final V4 aggregator/sealer/freeze-creator code",
+    "KAIST runner seal binds code but not AGGREGATOR_FREEZE",
+    "AGGREGATOR_FREEZE binds KAIST and OpenLORIS seals",
+    "V4_EXECUTION_FREEZE binds AGGREGATOR_FREEZE"
+  ],
+  "execution_boundary": {
+    "aggregator_invokes_scorer": false,
+    "all_58_terminal_before_any_score": true,
+    "all_pass_runs_must_have_hash_bound_scores_before_verdict": true,
+    "estimator_run": false,
+    "ground_truth_read_by_selftest": false,
+    "reserved_unseen_access": false,
+    "scoring_run": false
+  },
+  "fixed_gates": {
+    "attribution_delta": "ATE_ON_CM_MINUS_ATE_OFF_CM",
+    "candidate_min_temporal_coverage": 0.5,
+    "candidate_vs_comparator_coverage_tolerance": 0.02,
+    "failure_or_nonnumeric_candidate_is_loss": true,
+    "families_must_pass_independently": true,
+    "kaist_broad_pass": {
+      "rows": 11,
+      "wins": 7
+    },
+    "learning_credit_requires_system_win_and_on_strictly_better_than_off": true,
+    "minimum_associations": 3,
+    "nonnumeric_comparator_cannot_yield_a_win": true,
+    "openloris_broad_pass": {
+      "rows": 12,
+      "wins": 8
+    },
+    "pooled_cross_family_mean": false,
+    "strict_lower_ate_required": true
+  },
+  "fixed_output": {
+    "atomic_directory_publish": true,
+    "directory": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/cross_dataset_verdict",
+    "manifest": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/cross_dataset_verdict/SHA256SUMS",
+    "schema": "g120-cross-dataset-v4-verdict-v1",
+    "verdict": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/cross_dataset_verdict/VERDICT.json"
+  },
+  "registered_inputs": [
+    {
+      "bytes": 2652913,
+      "path": "${PRIVATE_ROOT}/docs/exp_registry_20260828/xfeat_rknn_conversion_preflight_v1/xfeat_backbone_1x3x480x640_opset19.onnx",
+      "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+    },
+    {
+      "bytes": 6342,
+      "path": "${PRIVATE_ROOT}/results/table2_evidence_20260818/svio_common_noise_20260822/_provenance/table3_svio_corrected_20260822.csv",
+      "sha256": "e5da39a1ad5590951b3ad1b62c1862d750a4567149e85379f130b243add868bb"
+    },
+    {
+      "bytes": 9367,
+      "path": "${PRIVATE_ROOT}/results/tro_v3_table2_addendum_20260824_r1/freeze/scripts/table2_addendum_score.py",
+      "sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890"
+    },
+    {
+      "bytes": 13856,
+      "path": "${PRIVATE_ROOT}/results/tro_v3_table2_addendum_20260824_r1/freeze/t3/scripts/tro_t3_score.py",
+      "sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07"
+    },
+    {
+      "bytes": 30233,
+      "path": "${PRIVATE_ROOT}/tools/xfeat_sparse_onnx.py",
+      "sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3"
+    },
+    {
+      "bytes": 3015,
+      "path": "${SANDBOX_ROOT}/G120_CROSS_FAMILY_VERDICT.json",
+      "sha256": "b5de35e7738392015dea4af677b7dc27aa198ac5ac26d7ad77c9a34f9018c500"
+    },
+    {
+      "bytes": 1813,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/PROTOCOL_V3_CORRECTION.json",
+      "sha256": "9c12f99562a63f4f5cbc763231ea862f3ff9a5027f24d04eb178625197033050"
+    },
+    {
+      "bytes": 312,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/PROTOCOL_V3_SHA256SUMS",
+      "sha256": "ec9e6a2889a9b384b3d4ca6802f9aa6c405dc974b7a140324fb7cb280dabc018"
+    },
+    {
+      "bytes": 1560,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/V4_PROTOCOL_CORRECTION.json",
+      "sha256": "65e64a2a4b54834ee89dc75f8ba932bf7e063b93197f1202b691b7109d48115a"
+    },
+    {
+      "bytes": 16357,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/execution_order.py",
+      "sha256": "aeca5fc6a378b0264b7541fee7a4ff231cf0d5ed10a736cac4e0d36d14d352c9"
+    },
+    {
+      "bytes": 11553,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/FREEZE.json",
+      "sha256": "bbe298386abedd387653e106c4b677e6d003534fa55e716b165499e56cb44770"
+    },
+    {
+      "bytes": 7584,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/PROTOCOL.md",
+      "sha256": "b0f41d0a817685ea79d6fe71e0f0bc94962b1a22373e381f46f7af7071a9f75c"
+    },
+    {
+      "bytes": 5448,
+      "path": "${SANDBOX_ROOT}/g120_motion_regression/FINAL_SHA256SUMS",
+      "sha256": "e21529c94f4a653ffd1e7c74eefdbeae6ea06ec4e0bfc9b0a2a875a0c64eee49"
+    },
+    {
+      "bytes": 6066,
+      "path": "${SANDBOX_ROOT}/g120_motion_regression/G120_MOTION_FINAL_VERDICT.json",
+      "sha256": "8f99af7cf82d5a26ade63480e924766719eeff8f3e960c5217586c6298cf1976"
+    },
+    {
+      "bytes": 10592,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/INPUT_COHORT_SEAL.json",
+      "sha256": "017e276c1d757555d9f9c4f9387338ae07f13d36fcaf6e43f174b76fd3f6c31c"
+    },
+    {
+      "bytes": 6699,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/SELF_TEST_PASS.json",
+      "sha256": "444e2b91e65043703068ff430e33998b8b0e3795db2ed8bf41b2284217dcda25"
+    },
+    {
+      "bytes": 7758,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/SOURCE_REGISTRY.json",
+      "sha256": "c64f6336ce26775a02d3709eb6105a5be658de14e3a78402945b43d87bd008d7"
+    },
+    {
+      "bytes": 7546,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/RUNNER_SELF_TEST_PASS.json",
+      "sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a"
+    },
+    {
+      "bytes": 6706,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/SCORER_SEAL.json",
+      "sha256": "acc4f908c6f752b7d000c4fa9320328116d6c679cd25e3eae9054a644643e14f"
+    },
+    {
+      "bytes": 14878,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/score_openloris.py",
+      "sha256": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66"
+    },
+    {
+      "bytes": 12848,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/FINAL_SHA256SUMS",
+      "sha256": "7521012c9814c812c0c20aa6fb2b5e11c2c059ebc095172e2d279e74dddeb6fe"
+    },
+    {
+      "bytes": 8252,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/LIGHT_G120_FINAL_VERDICT.json",
+      "sha256": "7573fce11132785947b7f91e0ad190e6663d8c68a11609a0b93adb07ef966da6"
+    },
+    {
+      "bytes": 3303,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/T120_GATE.patch",
+      "sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915"
+    },
+    {
+      "bytes": 327883064,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+      "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+    },
+    {
+      "bytes": 22731408,
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+      "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+    },
+    {
+      "bytes": 6838,
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/FULL_LINE_VERDICT.json",
+      "sha256": "f8b938de9bfafa9715dbfa16e5cc75fff93cad8bb9d6546dd526a9f4dce80636"
+    },
+    {
+      "bytes": 4249,
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/config_full_line.yaml",
+      "sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008"
+    },
+    {
+      "bytes": 32003680,
+      "path": "${CONDA_ROOT}/bin/python3.13",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44"
+    },
+    {
+      "bytes": 20128,
+      "path": "${PRIVATE_ROOT}/external_freeze_20260818/scripts/eval_openloris.py",
+      "sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3"
+    },
+    {
+      "bytes": 9828,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/RUNTIME_ENVELOPE.json",
+      "sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211"
+    },
+    {
+      "bytes": 6448,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/incidents/V3_SHUTDOWN_TRAP_INCIDENT.json",
+      "sha256": "c5fb8abd0bc30cf461590f12b1f2c57a6ede8abc81f7183c4100471d5a441ffa"
+    }
+  ],
+  "schema": "g120-cross-dataset-v4-aggregator-freeze-v1",
+  "sealer": {
+    "bytes": 25115,
+    "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/seal_aggregator.py",
+    "sha256": "a235838445d9a8481780014a2c9d658bda1f93b8d87de639c362c613d7f5ffc1"
+  },
+  "selftest": {
+    "result": {
+      "estimator_run": false,
+      "ground_truth_read": false,
+      "schema": "g120-cross-dataset-v4-aggregator-selftest-v1",
+      "scoring_run": false,
+      "status": "PASS_SYNTHETIC_NO_ESTIMATOR_NO_SCORE_NO_GT",
+      "tests": 60
+    },
+    "script": {
+      "bytes": 33122,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/selftest_aggregate_results.py",
+      "sha256": "73a1d153370e8092fffc8e88796a9d58f2c8fff90bb038805d2906eb7419d372"
+    },
+    "stdout_sha256": "f7f4c60155f5efb6052bd4366f340bcc4aaf74363ef46291a917dcde19999aa8"
+  },
+  "status": "PASS_FROZEN_BEFORE_ESTIMATOR_AND_SCORE",
+  "v3_execution_receipts_accepted": false,
+  "v4_bindings": {
+    "campaign_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902",
+    "controller": {
+      "bytes": 16357,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/execution_order.py",
+      "sha256": "aeca5fc6a378b0264b7541fee7a4ff231cf0d5ed10a736cac4e0d36d14d352c9"
+    },
+    "execution_freeze": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+    "execution_state": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+    "freeze_creator": {
+      "bytes": 16239,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/create_v4_execution_freeze.py",
+      "sha256": "2f871b20aac92836ee7efaad19a8a3f49138359f5a94026ba61c35e73f57c2f9"
+    },
+    "kaist_runner_seal": {
+      "bytes": 29958,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_SELF_TEST_SEAL.json",
+      "sha256": "211d37360ee115fe6bec1c42bbcef296323f9267dd3d544eb75c8fc9a3d27125"
+    },
+    "kaist_score_wrapper": {
+      "bytes": 14417,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/score_kaist.py",
+      "sha256": "8d15668455dbe42d62a5fd311050c2b80f0af68477bc44e997596661d35d0eab"
+    },
+    "openloris_runner_seal": {
+      "bytes": 7546,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/RUNNER_SELF_TEST_PASS.json",
+      "sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a"
+    },
+    "openloris_score_wrapper": {
+      "bytes": 14878,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/score_openloris.py",
+      "sha256": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66"
+    },
+    "openloris_scorer_seal": {
+      "bytes": 6706,
+      "path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/SCORER_SEAL.json",
+      "sha256": "acc4f908c6f752b7d000c4fa9320328116d6c679cd25e3eae9054a644643e14f"
+    }
+  }
+}

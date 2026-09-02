@@ -1,0 +1,192 @@
+{
+  "configs": [
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle",
+      "sequence": "circle",
+      "sha256": "8824291a40b0f0695618d5e054aaa4c31ced1f226d60bc3125e26e482606f584"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "568b3e14eeed5542455539b0677bd515e1c821c9bfe48e10c6fe7a5a9c9de719"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_head",
+      "sequence": "circle_head",
+      "sha256": "cac46c37bf2c6fe2638995f574fbce215b35d3d71c69ac9a02944ccd303e6783"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite",
+      "sequence": "infinite",
+      "sha256": "f28ab830220f3e66309106c79c99bda431934ef649b872935140d52bc12194b1"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "1d9ac8e06ffd9af4dae92e8d80bdcd774bd4f013c7b5377168988290069b76ad"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "187202dd587a8bfcce9d502c08e5f8f6f8fc0b5e7e251ee848f77bc526070811"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square",
+      "sequence": "square",
+      "sha256": "2c7ca51dfccad4080970ee1b58c042311f7d25c7f029f30124afbdda700a836e"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square_fast",
+      "sequence": "square_fast",
+      "sha256": "958eb44b24b87884b665adc40e5d929525b214e541ccd614aef7282588b7d650"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square_head",
+      "sequence": "square_head",
+      "sha256": "f3106b22aca8a9e97f1e936f03f9c263d7d81ade7f35a4cd5e625e8784697ca1"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation",
+      "sequence": "rotation",
+      "sha256": "45b28565ff2a4876edb88c237f43f5e82f34ff5ee654d4325ff49746a7512fa6"
+    },
+    {
+      "arm": "on",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "5405b73a03a256af0a11bd51e31c41f62a31cfbb1cc5320e931ba2c48e7621c5"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle",
+      "sequence": "circle",
+      "sha256": "11666daf33d837fd1aaf24561b3dbc4112c23af8801ed2e6de7347f5fd733aaf"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle_fast",
+      "sequence": "circle_fast",
+      "sha256": "3bbffeadea7059fac845800c79a53bb6712ff88d4d30ad4e22751825553568f9"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/circle_head",
+      "sequence": "circle_head",
+      "sha256": "cf39e36cf546818eba835e4094e46d2523f1c11d6fa4bfb05709b79bf23a2574"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite",
+      "sequence": "infinite",
+      "sha256": "472b8270c7edacf3bd65e0f4d79643a8c691f8ed62b5ea16ac9b1c34f79a45c4"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_fast",
+      "sequence": "infinite_fast",
+      "sha256": "705d4a5d36848d1656b7c2cb7eb6a2d67084e7598c2a427830fbdc30971ee5a2"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_head",
+      "sequence": "infinite_head",
+      "sha256": "b97e4de2ed68f7ca64299efc2819447fe010639587f0ee5e39172b27a2150314"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square",
+      "sequence": "square",
+      "sha256": "b3b1a437f7edaf9f90756950ae3bd10194760058a6fbe86abe58a18fcad670da"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square_fast",
+      "sequence": "square_fast",
+      "sha256": "23987e2b43fb8ea860742f8e9452f754f4c37e4ccc862ff6714402865f74cdad"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square_head",
+      "sequence": "square_head",
+      "sha256": "aa4094b9f39b4a002f9a0998e1d6e095540c052ae6838b202ef436ccc0ae610c"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/rotation",
+      "sequence": "rotation",
+      "sha256": "cdb4c4bfcdd79a3b29a1ac5fcd04213ba562c496bc2a47e6b08d2b4cde72ab16"
+    },
+    {
+      "arm": "off",
+      "run_dir": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/rotation_fast",
+      "sequence": "rotation_fast",
+      "sha256": "08afbeab6b87d11f73875036c56e0487bef4e7414eace7fcb94c7ca91a67ad89"
+    }
+  ],
+  "corrected_sensor_profile": {
+    "depth_range_m": [
+      0.3,
+      4.0
+    ],
+    "distortion": [
+      0.006896928127777268,
+      -0.009144207062654397,
+      0.000254113977103925,
+      0.0021434982252719545
+    ],
+    "imu_noise": [
+      0.1,
+      0.01,
+      0.001,
+      0.0001
+    ]
+  },
+  "estimator_run": false,
+  "global_all_58_terminal_gate_precedes_gt": true,
+  "ground_truth_read": false,
+  "image_shift_ns": -29958533,
+  "normalization_receipt_binds_v4_freeze_state_seal_run_wrapper": true,
+  "null_and_incomplete_runner_seals_rejected": true,
+  "registered_rotation_cutoff_s": 1624246998.4844894,
+  "registered_scorer_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+  "runtime_envelope_sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211",
+  "runtime_full_sidecar_consumption_proof_selftested": true,
+  "schema": "g120-kaist-formal-selftest-v4-v1",
+  "score_eligibility_requires_runtime_sidecar_consumption_proof": true,
+  "scoring_run": false,
+  "shared_order_controller_isolated_selftest": true,
+  "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+  "staged_bag_conversion_uses_shared_lock_and_exact_next_gate": true,
+  "staged_bag_release_uses_shared_serial_lock": true,
+  "static_fresh_container_ldd_runner_arms_verified": [
+    "on",
+    "off"
+  ],
+  "status": "PASS_NO_GT_NO_ESTIMATOR_NO_SCORE",
+  "terminal_failure_classification_verified": true,
+  "time_restoration": "t_eval=t_svio_output-(-0.029958533)",
+  "transient_max_frame_artifacts": {
+    "bag_sha256": "5ca49821e9da7118bb5b260f9a0850104be0d986b9c54db118d673983bda1eb0",
+    "registered_crop_sha256": "1490841edc77183cf6b9c205f41732094f4181a9ac2ff25f51c593724b6e15d7",
+    "restored_sha256": "b807cd2563733ec6b539a1550b4129d285b2f4a4d2a09c2fef9650f2b9ec04e6",
+    "xfs_sha256": "9127dfdb7357713f338e30f0198b6d61ba4b7dda5cb3eb98f97f1dbc8cd0f97a"
+  },
+  "v3_circle_bag_reuse_copy_contract_verified": true,
+  "v3_circle_bag_reuse_copy_synthetic_regression_verified": true,
+  "v3_input_ro_and_v4_output_isolation_structure_verified": true,
+  "v4_exact_order_and_preplay_readiness_structure_verified": true,
+  "v4_only_attempt_terminal_release_schemas_verified": true,
+  "v4_post_complete_exit_134_regression_verified": true,
+  "v4_temporal_shutdown_proof_required_for_scoring": true,
+  "xfs_bag_full_color_key_digest_verified": true
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "g120a-vcu-motion-regression-verdict-v1",
+  "status": "PASS_BROAD_WIN_5_OF_6",
+  "freeze_sha256": "7d8d0182bb983494a66c7142af8b751075df39ff0171fb7115fd6936fa6a78bf",
+  "primary_metric": "formal Table-II SE3 ATE RMSE, GT interpolated to estimate timestamps, no scale, native body",
+  "aggregate": {
+    "g120a_mean_ate_cm": 19.253069383126736,
+    "full_svio_mean_ate_cm": 21.079738194120086,
+    "old_full_open_mean_ate_cm": 19.05373957522071,
+    "wins_vs_full_svio": 5,
+    "losses_vs_full_svio": 1,
+    "mean_reduction_vs_full_svio_cm": 1.8266688109933504,
+    "mean_reduction_vs_full_svio_percent": 8.665519439434377,
+    "mean_delta_vs_old_full_open_cm": 0.19932980790602528,
+    "mean_cr": 0.9606351610740379,
+    "mean_aoe_median_deg": 3.9380540031565756,
+    "minimum_observed_cr": 0.9448322646658197,
+    "cr_used_as_decision_gate": false
+  },
+  "sequences": {
+    "motion1": {
+      "g120a_ate_cm": 24.095693713508968,
+      "full_svio_ate_cm": 24.46765499478107,
+      "old_full_open_ate_cm": 20.26585189557661,
+      "gain_vs_full_svio_cm": 0.37196128127210315,
+      "cr": 0.9640726672470377,
+      "aoe_median_deg": 4.167886477106185,
+      "verdict": "WIN",
+      "receipt_sha256": "14a433eb722101a68af8d169dccbb3bebad5b6befdb49f2f86c1bd541d310a5a",
+      "raw_sha256": "3f56e8bcbaa1f32f7029ba26dfcd138826e3806494e3bd1d1ab4cf7e001fe166",
+      "normalized_sha256": "4c157b25adece244a18047a47163dccaa25c82f085722ec0f24455b4338d9447",
+      "bag_sha256": "6d6fb2b91d4f6e34c82dbce53808508b61d9c95e1c368e92f97bc31793073518"
+    },
+    "motion2": {
+      "g120a_ate_cm": 18.550112501536827,
+      "full_svio_ate_cm": 22.218677496280996,
+      "old_full_open_ate_cm": 18.15819890496999,
+      "gain_vs_full_svio_cm": 3.6685649947441696,
+      "cr": 0.9448322646658197,
+      "aoe_median_deg": 6.302117685522546,
+      "verdict": "WIN",
+      "receipt_sha256": "247dec378a7ede2963a4538f58eac476d6b3434df942e4bc6aba3c2b5f0fd4f3",
+      "raw_sha256": "59f3f0afecab5af2243ec48c63df1965d14bffa8e28f30027147987d49f54e77",
+      "normalized_sha256": "6d32ff53d3a546f184ce41e5c0ad7c05494062056e3cca940c1515738bd56a87",
+      "bag_sha256": "bf1db436d808bca74fffa57fe1e759260c681ad626e24a591f10ac240005e533"
+    },
+    "motion3": {
+      "g120a_ate_cm": 10.175535531530954,
+      "full_svio_ate_cm": 11.455669368036107,
+      "old_full_open_ate_cm": 12.554945570813194,
+      "gain_vs_full_svio_cm": 1.2801338365051524,
+      "cr": 0.9593643234544507,
+      "aoe_median_deg": 1.7784809745622963,
+      "verdict": "WIN",
+      "receipt_sha256": "67917ceb5ceadb7cfb3720cdbcb39be39023a2ebf067535182f958c406e9a2d1",
+      "raw_sha256": "f375ac169f4d01cc79bd60bf76bd742206dc68be707b53752b38065d68e862be",
+      "normalized_sha256": "196994714a882f2d7fe812ffa139620d50f4c8cf48b00be7ce46576d7c68ac48",
+      "bag_sha256": "d02db307e4a8d8058f74cbc9bf093a81c8852549f1a3017a540369a4e1f174c8"
+    },
+    "motion4": {
+      "g120a_ate_cm": 31.937389013531643,
+      "full_svio_ate_cm": 34.08824171823549,
+      "old_full_open_ate_cm": 30.940081636460704,
+      "gain_vs_full_svio_cm": 2.150852704703844,
+      "cr": 0.9504293653487697,
+      "aoe_median_deg": 2.9498510687713897,
+      "verdict": "WIN",
+      "receipt_sha256": "7239b0b43ebfed1ca31bebc99b1936e95931a7ff8f3b745553fdcbf844c04a36",
+      "raw_sha256": "9deaa6716fc864e79c8d442abdc418ee2285ba3ddf09e540e25e57d6a2150e3e",
+      "normalized_sha256": "9a4b5a90ff69ddd3aa86d3b957f089a75e7f0336cf35bb3dff9c1dd82ab515b6",
+      "bag_sha256": "6b82373b6ef83c4ef2e14a56b1d833016861bec9a70c3862b7ca494c5f2820ab"
+    },
+    "motion5": {
+      "g120a_ate_cm": 15.477616143284955,
+      "full_svio_ate_cm": 15.337942605380054,
+      "old_full_open_ate_cm": 14.132345659365726,
+      "gain_vs_full_svio_cm": -0.13967353790490122,
+      "cr": 0.9649953994146386,
+      "aoe_median_deg": 3.952163951494946,
+      "verdict": "LOSS",
+      "receipt_sha256": "c3314d7396dbede472ce86b562e9cb92be7d1d432685fffa6f6d326524982f90",
+      "raw_sha256": "ca2ad7756d1de93fb68425932601a406b059620b0ad0def0512b7b5217aa7189",
+      "normalized_sha256": "a9f2e7d9e2d5d2884ecc90abd5dcf04e47520ca0edf1ed386afc7e8c977c859a",
+      "bag_sha256": "b40afb910213a1148cb83f45bbca9242eb99b736af8e0e100f1b312805fcd7b0"
+    },
+    "motion6": {
+      "g120a_ate_cm": 15.282069395367065,
+      "full_svio_ate_cm": 18.910242982006793,
+      "old_full_open_ate_cm": 18.27101378413804,
+      "gain_vs_full_svio_cm": 3.6281735866397273,
+      "cr": 0.9801169463135109,
+      "aoe_median_deg": 4.47782386148209,
+      "verdict": "WIN",
+      "receipt_sha256": "5a46ff9f30bc5da200ed7e0275095dc716b9c3b176b2cc70bf2214738c218aed",
+      "raw_sha256": "b0e3b51f65e88547f58939cd6a6c811e2499adb043ed29e7e31f8da5d0b507e5",
+      "normalized_sha256": "a36bd41ccd6c13dc26c498ade79c00352a35de698a1425b95ec442af90429876",
+      "bag_sha256": "e77e2eb3bed05245aab8a549aa44cfc3bd2c0846f977b19680bb023c047844ad"
+    }
+  },
+  "interpretation": {
+    "system_claim": "the exact G120-A candidate retains a broad 5/6 win over the frozen full-SVIO motion comparator",
+    "tradeoff": "relative to the old always-open candidate, G120-A improves motion3 and motion6, regresses motion1/2/4/5, and is 0.20 cm worse in mean ATE; this is the price of one global gate that also wins all six light sequences",
+    "comparator_source_path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/FULL_LINE_VERDICT.json",
+    "comparator_source_sha256": "f8b938de9bfafa9715dbfa16e5cc75fff93cad8bb9d6546dd526a9f4dce80636",
+    "single_execution_no_variance": true,
+    "production_estimator_integration": false,
+    "rk3588s_runtime_measured": false
+  },
+  "execution_caveat": {
+    "retained_rosbag_logs_ending_done": 6,
+    "runner_stdout_play_status_zero_observed_but_not_separately_archived": true,
+    "shutdown": "the inherited node aborts during controlled teardown after trajectory completion",
+    "temporary_bags_removed_after_hash_recording": true
+  },
+  "safety": {
+    "production_writes": false,
+    "reserved_unseen_access": false
+  }
+}

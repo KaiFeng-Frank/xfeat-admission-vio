@@ -1,0 +1,63 @@
+{
+  "schema": "g120a-vcu-motion-regression-freeze-v1",
+  "status": "FROZEN_BEFORE_ANY_G120A_MOTION_RUN_OR_SCORE",
+  "frozen_at": "2026-09-01T20:54:20+08:00",
+  "purpose": "verify that the exact G120-A candidate selected and locked on VCU light retains a broad win on VCU motion; no further algorithm or gate revision is allowed",
+  "candidate": {
+    "light_candidate_freeze_sha256": "a6cefdaa4ae71984c4a7bcb32aadd9ede051f239ac304a517004c502bfef3668",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "rule": "XFeat admission on the existing 10 Hz tick only after two consecutive valid post-F-RANSAC survivor counts below 120",
+    "per_sequence_tuning": false
+  },
+  "evaluation_set": ["motion1", "motion2", "motion3", "motion4", "motion5", "motion6"],
+  "roles": "all six are locked regression sequences; none may inform a revision",
+  "frozen_full_svio_comparator_ate_cm": {
+    "motion1": 24.46765499478107,
+    "motion2": 22.218677496280996,
+    "motion3": 11.455669368036107,
+    "motion4": 34.08824171823549,
+    "motion5": 15.337942605380054,
+    "motion6": 18.910242982006793
+  },
+  "comparator_source_sha256": "f8b938de9bfafa9715dbfa16e5cc75fff93cad8bb9d6546dd526a9f4dce80636",
+  "decision_rule": {
+    "sequence_win": "G120-A formal Table-II SE3 ATE RMSE is lower than the frozen full-SVIO ATE",
+    "broad_win": "at least 4/6 sequence wins",
+    "aggregate_support": "G120-A six-sequence mean ATE is lower than the frozen full-SVIO mean 21.079738194120086 cm",
+    "cr": "reported for every sequence; no new CR threshold is introduced into this regression because the inherited motion verdict did not use one"
+  },
+  "xfs_sha256": {
+    "motion1": "d5ab2bd91a43edcdcc0cbc07b85098a075949b99c764df50440d0cca45c3ecdb",
+    "motion2": "a4ebf42ed073e04da2e431ad8240033235396e51293160523eac651e2a46dc36",
+    "motion3": "0d94c2572ee0f579883ae5fb69237f9b0ed2eed51c9508ca56e5f607e44a1cfd",
+    "motion4": "d78d56e3d32969992d17b591cd4cbe712844fe49761b1eac0290abc49eda51a2",
+    "motion5": "e16df4a12c7fa1f31a4831288a3e4c2a307ddd6a557084f0933b509f3d97c868",
+    "motion6": "da0ce0481a29b4617a62d51864aae0eb2e6cc72fcaad442c62b3b63e1ed5cc2e"
+  },
+  "configs_sha256": {
+    "motion1": "4cfec6aba5c586cd3d02ff63eb240aecc194117c790ba8609be77eaad93cf2a1",
+    "motion2": "438a1a0bf2f3abf4abe1b9b317f8418401560f06b150432daf5bd36074280d5c",
+    "motion3": "05af0049baf9028fd17fb42c08aa20e25876e10caf0640ea6211b529bc9fcdd8",
+    "motion4": "916dc6aa52f9c02cecfdd4b54ad3bfdafdea064e7cbe4cf56aad6d22eddb2df2",
+    "motion5": "fdae17f12c7672859e1ca6b0aec705512e84e570a17effb1463e48159092c18d",
+    "motion6": "056bc0dde3c0a49ea7a7384db712882d36ccc7658ae3d21a95191ac3689c4f98"
+  },
+  "protocol_sha256": {
+    "contract": "ad6cca739d0cdcf0048de152d8420ae343c6ef3738e1536d933e04d14b5daa85",
+    "renderer": "5946f4216abfb9f004de94c4854e2f6f78706631c0752b9bb4affd00ca1f1f7d",
+    "prepare_configs": "69057b6fc1805a3f96fe6ae19f10a004e5511007fa798b4de9b73ca3a79340af",
+    "external_converter": "57640f60809597c57802b8730659916841bbfd00c048e2c994d9d39aea05475d",
+    "runner": "16cbd91e81658ce9cbfbf8985a9915364e306b7d519e29e46ca469b199b631a5",
+    "scorer_wrapper": "1b122a7006fb017478b06ce1a1f4a5d89b588866928b4e8c721d176596377035"
+  },
+  "discipline": {
+    "single_execution_per_sequence": true,
+    "no_revision_after_any_result": true,
+    "temporary_bags_on_external_ssd": true,
+    "production_writes": false,
+    "reserved_unseen_access": false
+  }
+}

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.xfs
+*.bag
+*.rknn
+build/
+devel/
+install/
+.catkin_workspace
+/scratch/

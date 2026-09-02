@@ -1,0 +1,117 @@
+{
+  "adapter_receipt": {
+    "counts": {
+      "/d400/aligned_depth/image": 4612,
+      "/d400/color/image": 4612,
+      "/d400/imu": 18261
+    },
+    "estimator_run": false,
+    "first_input_header_ns": {
+      "/d400/aligned_depth/image": 1624246027146647865,
+      "/d400/color/image": 1624246027146647865,
+      "/d400/imu": 1624246027129323565
+    },
+    "first_input_record_ns": {
+      "/d400/aligned_depth/image": 1624246027146647865,
+      "/d400/color/image": 1624246027146647865,
+      "/d400/imu": 1624246027129323565
+    },
+    "first_output_header_ns": {
+      "/d400/aligned_depth/image": 1624246027116689332,
+      "/d400/color/image": 1624246027116689332,
+      "/d400/imu": 1624246027129323565
+    },
+    "first_output_record_ns": {
+      "/d400/aligned_depth/image": 1624246027116689332,
+      "/d400/color/image": 1624246027116689332,
+      "/d400/imu": 1624246027129323565
+    },
+    "ground_truth_read": false,
+    "image_shift_applied_to": [
+      "header_timestamp",
+      "bag_record_timestamp"
+    ],
+    "image_shift_ns": -29958533,
+    "imu_policy": "byte-values-preserved; header and record timestamps unshifted",
+    "last_input_header_ns": {
+      "/d400/aligned_depth/image": 1624246185926507734,
+      "/d400/color/image": 1624246185926507734,
+      "/d400/imu": 1624246209772785412
+    },
+    "last_input_record_ns": {
+      "/d400/aligned_depth/image": 1624246185926507734,
+      "/d400/color/image": 1624246185926507734,
+      "/d400/imu": 1624246209772785412
+    },
+    "last_output_header_ns": {
+      "/d400/aligned_depth/image": 1624246185896549201,
+      "/d400/color/image": 1624246185896549201,
+      "/d400/imu": 1624246209772785412
+    },
+    "last_output_record_ns": {
+      "/d400/aligned_depth/image": 1624246185896549201,
+      "/d400/color/image": 1624246185896549201,
+      "/d400/imu": 1624246209772785412
+    },
+    "max_frames_per_image_stream": 0,
+    "numpy": "2.4.4",
+    "output_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+    "output_bag_bytes": 7093555832,
+    "output_bag_sha256": "fcaf70fad3c1cc3e0c7a57f7ebf70ee199acfc322e8fb99024997c5777d71178",
+    "python_executable": "${CONDA_ROOT}/bin/python3.13",
+    "python_executable_sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+    "rosbags": "0.11.1",
+    "schema": "g120-kaist-ros2-to-ros1-adapter-v1",
+    "scoring_run": false,
+    "sequence": "infinite_head",
+    "shifted_color_stamp_sequence": {
+      "count": 4612,
+      "encoding": "concatenated_little_endian_signed_int64_ns",
+      "sha256": "cb6f3f08ee4e641fe7cbeaf0b9b939be36965de31ea321dd0eb0bd6d9a9d6a2d"
+    },
+    "source_bag": "${DATA_ROOT}/kaist_vio/infinite_head_ros2",
+    "source_bag_identity": {
+      "files": [
+        {
+          "bytes": 7099637760,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2/infinite_head_ros2.db3",
+          "sha256": "d9b7183c793e2479150022603704c98ab3cfea9021bb38a873d166228d5524be"
+        },
+        {
+          "bytes": 1397,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2/metadata.yaml",
+          "sha256": "14a32b3b340f2c07aaaf54e9f38f073f44e0ea202bca4628cef592cf8ec8c2cd"
+        }
+      ],
+      "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+      "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "path": "${DATA_ROOT}/kaist_vio/infinite_head_ros2"
+    },
+    "status": "PASS_FULL_ADAPTATION",
+    "topics_unchanged": [
+      "/d400/color/image",
+      "/d400/aligned_depth/image",
+      "/d400/imu"
+    ]
+  },
+  "deleted_staged_bag_sha256": "fcaf70fad3c1cc3e0c7a57f7ebf70ee199acfc322e8fb99024997c5777d71178",
+  "recovery": "full shifted bag is reproducible from the hash-bound ROS2 source and adapter",
+  "schema": "g120-kaist-staged-bag-release-v4",
+  "sequence": "infinite_head",
+  "staged_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+  "staged_input_disposition": "DELETED_REPRODUCIBLE_V4_TEMPORARY",
+  "terminal_runs": {
+    "off": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_head/RUN_RECEIPT.json",
+      "receipt_sha256": "0fdff7aa789ec0029029ceb5b705e7de00f801dde217fa72836cd2667acdfe6e",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "89f10bb41ec6b00f00f8a026083f5e2d7be5507e3d17d0c6c0a34ffac62f6399"
+    },
+    "on": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_head/RUN_RECEIPT.json",
+      "receipt_sha256": "8e85a4187cc3729836017a71fc72031d6fe87dcf5b58c54593aefcb84bfc5ce0",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "e56137f9f7bd972a0c100e4216d886be82ac569c244df33491233b9c7a72e62c"
+    }
+  }
+}

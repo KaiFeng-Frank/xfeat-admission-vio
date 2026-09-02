@@ -1,0 +1,124 @@
+{
+  "affected_job": {
+    "arm": "on",
+    "family": "kaist",
+    "ordinal": 1,
+    "sequence": "circle"
+  },
+  "artifacts": {
+    "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/create_v3_shutdown_incident.py": {
+      "bytes": 9552,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/create_v3_shutdown_incident.py",
+      "sha256": "586cdbd038ffa067a49262760ce59611fad6fcd592c4fab72520afc1452468d9"
+    },
+    "${SANDBOX_ROOT}/g120_cross_dataset_protocol/PROTOCOL.md": {
+      "bytes": 7584,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/PROTOCOL.md",
+      "sha256": "b0f41d0a817685ea79d6fe71e0f0bc94962b1a22373e381f46f7af7071a9f75c"
+    },
+    "${SANDBOX_ROOT}/g120_kaist_duel/run_g120.sh": {
+      "bytes": 10491,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/run_g120.sh",
+      "sha256": "3362a3e441d5cdb0fbb533a23d0508faf5e88b30788f0c9ebda0ca9fc6d613f9"
+    },
+    "${SANDBOX_ROOT}/g120_kaist_duel/run_g120_inside_container.sh": {
+      "bytes": 9885,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/run_g120_inside_container.sh",
+      "sha256": "f85d2c508ea7dedc0640548dec1a0971775cd3050be7698d03677ba2ce539907"
+    },
+    "${SANDBOX_ROOT}/g120_kaist_duel/validate_run.py": {
+      "bytes": 18736,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/validate_run.py",
+      "sha256": "9ae00e095e391d07d957dcde31b90a0ff4a1c8ab2295108ddd869400423e8182"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_FREEZE.json": {
+      "bytes": 9423,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_FREEZE.json",
+      "sha256": "ac4062ceaab52fd091bae46c16950075f136702d4a5060f5c9d5e4c8ae82f0c4"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_STATE.json": {
+      "bytes": 569,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_STATE.json",
+      "sha256": "b3e306c358dd40970cbc27e4eeb98e43093fbb72a8add60ba0d232c6473c9950"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/ATTEMPT.json": {
+      "bytes": 3727,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/ATTEMPT.json",
+      "sha256": "e4427be6a12bd8ad1a6ecd498ee04bda36231c4dcb0b7d3aba04fc114f47e3fe"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_FAILURE.env": {
+      "bytes": 40,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_FAILURE.env",
+      "sha256": "bae3f19d96a2a796f420128c6b0283389956d1bcf45e46a1b037bff788340957"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_RECEIPT.json": {
+      "bytes": 7854,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/RUN_RECEIPT.json",
+      "sha256": "22dea78d6b4beb17bd05d4a3152d1bdd5f0e493f78c3543404abb52f40696559"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/container.log": {
+      "bytes": 230,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/container.log",
+      "sha256": "e09527db12f31a30f801a39c38997a93ee3f091590bc2df1ef2bf4962c27fc75"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/rosbag_play.log": {
+      "bytes": 2149822,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/rosbag_play.log",
+      "sha256": "f95048b7f9b5ec3474961194618bd40655b65ef1d901ec7e5f4f392bcc84f9f6"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio.log": {
+      "bytes": 11247603,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio.log",
+      "sha256": "f1605e8c777ed92f6dff1407ab8a035741c6d60dd9a1be39ea1fce9b438f5e5e"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio_no_loop.csv": {
+      "bytes": 424027,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/runs/on/circle/svio_no_loop.csv",
+      "sha256": "83fa52674fafc347bcf8048b3beb8d6183e7a74cf5d27a12db769020caabfe21"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag": {
+      "bytes": 7009378515,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag",
+      "sha256": "635517e8ed67f42178f5c9bd31aeab4937de8194c8e7509afb669ad95c9515c7"
+    },
+    "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag.json": {
+      "bytes": 3408,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/staged_bag/current.bag.json",
+      "sha256": "185d5d2884654624aeeceeeda7ceb33004988894bb40fe9ea503854f57b1d544"
+    }
+  },
+  "observed": {
+    "container_status": 134,
+    "estimator_end_marker": true,
+    "playback_done": true,
+    "post_trajectory_abort_text": "terminate called without an active exception",
+    "shutdown_env_absent_because_err_trap_fired_first": true,
+    "trajectory": {
+      "finite": true,
+      "first_shifted_s": 1624245085.063656,
+      "last_shifted_s": 1624245226.5031612,
+      "quaternion_norm_valid": true,
+      "rows": 4046,
+      "strictly_increasing": true
+    }
+  },
+  "retry_under_v3": false,
+  "root_cause": {
+    "detail": "The global ERR trap fires on wait(node_pid)=134 even under set +e, before node_status capture and the declared 0/130/134/143 allowlist.",
+    "kind": "BASH_ERR_TRAP_REACHABILITY_BUG",
+    "scientific_algorithm_change_required": false
+  },
+  "schema": "g120-cross-dataset-v3-invalidated-incident-v1",
+  "scientific_result": "NONE_DO_NOT_SCORE",
+  "status": "V3_INVALIDATED_MECHANICAL_RUNNER_CONTRADICTION",
+  "v3_completed_jobs": 1,
+  "v3_frozen_artifacts_preserved_in_place": true,
+  "v3_next_ordinal_at_stop": 2,
+  "v4_restart_policy": {
+    "minimal_runner_shutdown_fix_only": true,
+    "new_campaign_from_ordinal_one": true,
+    "new_external_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902",
+    "new_freeze_state_run_and_verdict_identities": true,
+    "reuse_only_hash_sealed_inputs_by_reference": true
+  }
+}

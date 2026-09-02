@@ -1,0 +1,280 @@
+{
+  "compiler_layer_table_parse": "PASS",
+  "compiler_workdir_policy": "FRESH_TEMPORARY_REMOVED_AFTER_RUN",
+  "converter_sha256": "d774d95ecb1fd4f8d3d8dd999f54cf74bca9e9deecc2f60f0936c0ec9ca79418",
+  "cpu_io_row_count": 4,
+  "do_quantization": false,
+  "forbidden_compiler_diagnostics": [],
+  "full_console_sha256": "032c86af79061e32fb0e5cece565283dada531572d702eeedb61e83fcccd4993",
+  "layer_row_count": 41,
+  "layer_rows": [
+    {
+      "data_type": "FLOAT16",
+      "id": 0,
+      "op_type": "InputOperator",
+      "target": "CPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 1,
+      "op_type": "Conv",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 2,
+      "op_type": "exNorm",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 3,
+      "op_type": "AveragePool",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 4,
+      "op_type": "Conv",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 5,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 6,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 7,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 8,
+      "op_type": "ConvReluAdd",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 9,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 10,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 11,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 12,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 13,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 14,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 15,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 16,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 17,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 18,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 19,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 20,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 21,
+      "op_type": "Reshape",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 22,
+      "op_type": "Transpose",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 23,
+      "op_type": "Reshape",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 24,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 25,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 26,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 27,
+      "op_type": "Conv",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 28,
+      "op_type": "OutputOperator",
+      "target": "CPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 29,
+      "op_type": "Resize",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 30,
+      "op_type": "Add",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 31,
+      "op_type": "Resize",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 32,
+      "op_type": "Add",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 33,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 34,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 35,
+      "op_type": "Conv",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 36,
+      "op_type": "OutputOperator",
+      "target": "CPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 37,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 38,
+      "op_type": "ConvRelu",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 39,
+      "op_type": "ConvSigmoid",
+      "target": "NPU"
+    },
+    {
+      "data_type": "FLOAT16",
+      "id": 40,
+      "op_type": "OutputOperator",
+      "target": "CPU"
+    }
+  ],
+  "limitations": [
+    "no RK3588/RK3588S board inference was run",
+    "no ONNX-to-RKNN numeric parity was measured",
+    "no latency, memory, thermal, deadline, matching, geometry, or trajectory result exists",
+    "RKNN compiler output is not byte-deterministic across identical conversions"
+  ],
+  "npu_compute_row_count": 37,
+  "onnx_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+  "rknn_sha256": "a59da79592194e11b43190d908d46a672f098ff134260d6f48be020d04913f73",
+  "rknn_size_bytes": 3454045,
+  "schema": "xfeat-rknn-conversion-v232",
+  "scientific_authorization": "NONE",
+  "stages": {
+    "build": 0,
+    "config": 0,
+    "export_rknn": 0,
+    "load_onnx": 0
+  },
+  "status": "RKNN_CONVERSION_PASS_BOARD_NOT_RUN",
+  "target_platform": "rk3588",
+  "toolkit_version": "2.3.2",
+  "verbose_log_sha256": "4b2688e49a709a879d66fa079cfb961c0a0ae139254d83b75e8769d82d113c1d"
+}

@@ -1,0 +1,34 @@
+{
+ "files": {
+  "experiments/02_vcu_motion_full_line/FULL_LINE_VERDICT.json": {
+   "original_bytes": 6838,
+   "original_sha256": "f8b938de9bfafa9715dbfa16e5cc75fff93cad8bb9d6546dd526a9f4dce80636",
+   "public_sha256": "e7c74b238eb80d96f0eaaa130a2b3ed61b513dc3827313250faefbfbd2fb4aa7"
+  },
+  "experiments/02_vcu_motion_full_line/VERDICT.md": {
+   "original_bytes": 1550,
+   "original_sha256": "f0fe18e06110013ac43cdf401fe3c079e9ea1834bcaa54e3e0e9ad2c20c3ac62",
+   "public_sha256": "c88e6bcb04efa3bb3c114caa6e10c857b2b9e8dd330e8591e0eaccb355ebefe6"
+  }
+ },
+ "reason": "fields quoting a third estimator whose results are under peer review were removed from the public tree; byte-exact originals are retained privately",
+ "removed_json_fields": [
+  "sequences.motion1.ct_ate_cm",
+  "sequences.motion1.delta_vs_ct_cm",
+  "sequences.motion2.ct_ate_cm",
+  "sequences.motion2.delta_vs_ct_cm",
+  "sequences.motion3.ct_ate_cm",
+  "sequences.motion3.delta_vs_ct_cm",
+  "sequences.motion4.ct_ate_cm",
+  "sequences.motion4.delta_vs_ct_cm",
+  "sequences.motion5.ct_ate_cm",
+  "sequences.motion5.delta_vs_ct_cm",
+  "sequences.motion6.ct_ate_cm",
+  "sequences.motion6.delta_vs_ct_cm",
+  "aggregate.win_loss_vs_ct",
+  "aggregate.ct_mean_ate_cm",
+  "aggregate.mean_gain_vs_ct_cm",
+  "aggregate.mean_gain_vs_ct_percent"
+ ],
+ "schema": "xfeat-admission-vio-scrub-record-v1"
+}

@@ -1,0 +1,271 @@
+{
+  "arm": "on",
+  "attempt": {
+    "bytes": 3759,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/ATTEMPT.json",
+    "sha256": "52605c544099825838bf60eb5b61df33cc622aeaa4fe40950c625682741cf081"
+  },
+  "attempt_identity": {
+    "arm": "on",
+    "armed_utc": "2026-09-01T19:05:09.050802+00:00",
+    "candidate": {
+      "binary": {
+        "bytes": 22731408,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+        "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+      },
+      "libsvio": {
+        "bytes": 327883064,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+        "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+      }
+    },
+    "config": {
+      "bytes": 4367,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/rotation.yaml",
+      "sha256": "45b28565ff2a4876edb88c237f43f5e82f34ff5ee654d4325ff49746a7512fa6"
+    },
+    "container_image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+    "family": "kaist",
+    "image_shift_ns": -29958533,
+    "kaist_self_test_seal": {
+      "bytes": 29958,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_SELF_TEST_SEAL.json",
+      "sha256": "211d37360ee115fe6bec1c42bbcef296323f9267dd3d544eb75c8fc9a3d27125"
+    },
+    "runtime_envelope": {
+      "bytes": 9828,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/RUNTIME_ENVELOPE.json",
+      "sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211"
+    },
+    "schema": "g120-kaist-formal-attempt-v4",
+    "scoring_run": false,
+    "sequence": "rotation",
+    "sidecar": {
+      "artifact": {
+        "bytes": 610960748,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation.xfs",
+        "sha256": "c5098210a5d28fe549c1e6da3f880ae3e28f8ce01fe62df829e107a19735df7a"
+      },
+      "frames": 4559,
+      "receipt": {
+        "bytes": 2554,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation.xfs.json",
+        "sha256": "d79934dc1dab971eecf969fe4bb3c47b26a89c25eb09aa29e1f779c259b2d89d"
+      }
+    },
+    "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+    "staged_bag": {
+      "adapter_receipt": {
+        "bytes": 3423,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag.json",
+        "sha256": "110205386d6bfa5edf2fdca5cd2bbfd0c1ef9d9220d8d0e1fc6779984182d6c4"
+      },
+      "artifact": {
+        "bytes": 7011638729,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+        "sha256": "563864dfca1f9a6a2eb573e2452923ea36cbb8d0a23d869f3327920df43eba31"
+      },
+      "counts": {
+        "/d400/aligned_depth/image": 4559,
+        "/d400/color/image": 4559,
+        "/d400/imu": 16994
+      },
+      "source_bag_identity": {
+        "files": [
+          {
+            "bytes": 1387,
+            "path": "${DATA_ROOT}/kaist_vio/rotation_ros2/metadata.yaml",
+            "sha256": "858b774701c3e8379d2f62d6c59b5588edae6e0356ff34cff58599413c40ebaf"
+          },
+          {
+            "bytes": 7017652224,
+            "path": "${DATA_ROOT}/kaist_vio/rotation_ros2/rotation_ros2.db3",
+            "sha256": "b7460c5efb88bd59edea44d2997277675824ce454f03d8938b010934ba45fad4"
+          }
+        ],
+        "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+        "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+        "path": "${DATA_ROOT}/kaist_vio/rotation_ros2"
+      }
+    },
+    "status": "ARMED_BEFORE_CONTAINER_LAUNCH",
+    "v4_freeze": {
+      "bytes": 12213,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+      "sha256": "84c67a67a6f2b3513865d1744ee0ca0cab99ece108db5554ecd6607ff29e5d2b"
+    }
+  },
+  "completion": {
+    "node_readiness_verified_before_play": true,
+    "rosbag_done_marker": true,
+    "runtime_maps_verified": true,
+    "trajectory_finite_strictly_increasing": true
+  },
+  "container_status": 0,
+  "controlled_shutdown": {
+    "allowed_estimator_exits": [
+      0,
+      130,
+      134,
+      143
+    ],
+    "caveats": [
+      "ESTIMATOR_EXIT_134_AFTER_COMPLETE_PLAYBACK_AND_CONTROLLED_SIGNAL",
+      "POST_SIGNAL_TERMINATION_TEXT_CONFINED_TO_LOG_SUFFIX"
+    ],
+    "estimator_escalation": "INT",
+    "estimator_exit": 134,
+    "post_signal_controlled_abort_markers": [
+      "terminate called"
+    ],
+    "post_signal_log_suffix_bytes": 2193,
+    "post_signal_log_suffix_sha256": "660b8c28c3b6fc8931d8db45244c3ed30a1b3f0f54642661d147b2d03c0997af",
+    "pre_shutdown_receipt_sha256": "660c92cb8200cf3c53e13d151fe5cee48da5cbdf1adaada86e66034ba0e3e876",
+    "pre_signal_log_is_exact_prefix": true,
+    "schema": "g120-kaist-v4-controlled-shutdown-v1",
+    "status": "PASS_CONTROLLED_SHUTDOWN",
+    "trajectory": {
+      "arm": "on",
+      "finite_rows": 3727,
+      "status": "PASS_FINITE_TRAJECTORY"
+    }
+  },
+  "family": "kaist",
+  "owned_roscore": {
+    "ros_master_uri": "http://127.0.0.1:12231",
+    "roscore_pid": "114"
+  },
+  "pre_shutdown_gate": {
+    "estimator_alive_before_signal": true,
+    "estimator_pre_signal_log_bytes": 11453342,
+    "estimator_pre_signal_log_sha256": "4273c17e5f2c7e8570b693015debe88ab1642fb127aa94a6ca7881d05b54a14b",
+    "play_exit": 0,
+    "playback_log_bytes": 1948333,
+    "playback_log_sha256": "cd87d1476754dd59785fa9e2a69f859ea6abd368a09c4d889c69c20c8851a769",
+    "playback_terminal_marker": "Done.",
+    "pre_signal_fatal_signature": false,
+    "schema": "g120-kaist-v4-pre-shutdown-v1",
+    "status": "PASS_COMPLETE_PLAYBACK_AND_LIVE_ESTIMATOR"
+  },
+  "run_artifacts": {
+    "CONTROLLED_SHUTDOWN_CHECK.json": {
+      "bytes": 834,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/CONTROLLED_SHUTDOWN_CHECK.json",
+      "sha256": "d4eb794bf1d022b123f805bc9f609692c9a04f485ae6cc2a2c91546e66e81258"
+    },
+    "PRE_SHUTDOWN_CHECK.json": {
+      "bytes": 519,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/PRE_SHUTDOWN_CHECK.json",
+      "sha256": "660c92cb8200cf3c53e13d151fe5cee48da5cbdf1adaada86e66034ba0e3e876"
+    },
+    "V4_AUTHORIZATION.json": {
+      "bytes": 201,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/V4_AUTHORIZATION.json",
+      "sha256": "121dfd453e4abd10cbc027b3f39b0af9a1516c6d697db76a4df9e91fe94f0c4f"
+    },
+    "container.log": {
+      "bytes": 658,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/container.log",
+      "sha256": "e4af9b8e5cfedecfd37b389eeb491cbae5d528aad5b1b5acc1f18ee5f582d7d2"
+    },
+    "ldd.txt": {
+      "bytes": 14255,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/ldd.txt",
+      "sha256": "cb3c0029967ccd686d7ee956d084a823f7d7b4ea28f1ff3094a19627578670d4"
+    },
+    "node_readiness.txt": {
+      "bytes": 1502,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/node_readiness.txt",
+      "sha256": "4bad7e623be202309b5b49418fbffcf83cacec920ac121614ff1ac87360cb97a"
+    },
+    "rosbag_play.log": {
+      "bytes": 1948333,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/rosbag_play.log",
+      "sha256": "cd87d1476754dd59785fa9e2a69f859ea6abd368a09c4d889c69c20c8851a769"
+    },
+    "roscore.log": {
+      "bytes": 1579,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/roscore.log",
+      "sha256": "7358c6d8d2e24841f9a0a5bce55ebcd67b5f11066605074782a08569947dfd31"
+    },
+    "roscore_identity.env": {
+      "bytes": 54,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/roscore_identity.env",
+      "sha256": "85b0d7c0567a11bd60dc894bf71da838ab8be33cb9a890f42505c5d5eb13aa42"
+    },
+    "runtime_hashes.txt": {
+      "bytes": 1771,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/runtime_hashes.txt",
+      "sha256": "47366adb6f1f535bf884924379c1b25f9faff54830ec6e0d0885dcf2c89326e5"
+    },
+    "runtime_maps.txt": {
+      "bytes": 9103,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/runtime_maps.txt",
+      "sha256": "cab8210c3990064828230c4bf4810bb1d82f0d914776db2add151cd19927a768"
+    },
+    "shutdown.env": {
+      "bytes": 49,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/shutdown.env",
+      "sha256": "bd92683ed3d925e32a0ae7c941bbb958a7ab46a2b56172264cb4d0c32f7ad9ec"
+    },
+    "stats.csv": {
+      "bytes": 350,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/stats.csv",
+      "sha256": "466159a4dc3a45451aefa49d14fc93041a34232b4a5d4664251a469815e8bf72"
+    },
+    "svio.log": {
+      "bytes": 11455535,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/svio.log",
+      "sha256": "2e00c64d87a129325d09981eaed76c775489b8640715d0d2748c08796aba5484"
+    },
+    "svio_no_loop.csv": {
+      "bytes": 389280,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/svio_no_loop.csv",
+      "sha256": "114e587e1149c16493cae3350f93740ddbcce091edb9edd4cd18edc096776f84"
+    },
+    "svio_pre_shutdown.log": {
+      "bytes": 11453342,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/svio_pre_shutdown.log",
+      "sha256": "4273c17e5f2c7e8570b693015debe88ab1642fb127aa94a6ca7881d05b54a14b"
+    },
+    "xfeat_environment.txt": {
+      "bytes": 122,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/xfeat_environment.txt",
+      "sha256": "8a98db08b33c85140f487114e4d194abb0e0b085a0e6ad45056f1eadde3f86b3"
+    }
+  },
+  "schema": "g120-kaist-formal-run-v4",
+  "scoring_run": false,
+  "sequence": "rotation",
+  "shutdown": {
+    "node_status": 134,
+    "play_status": 0,
+    "termination": "SIGINT"
+  },
+  "sidecar_runtime_consumption": {
+    "arm": "on",
+    "destructor_frames": null,
+    "enabled_header_count": 1,
+    "expected_periodic_floor": 4500,
+    "frame_one_seen": true,
+    "header_frames": 4559,
+    "header_mode": "klt_10hz_admission",
+    "header_path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation.xfs",
+    "max_hybrid_frame": 4500,
+    "proof": "PERIODIC_RECEIPT_SUFFIX_LT_100",
+    "unobserved_suffix_upper_bound_frames": 59,
+    "xfs_error_markers_absent": true
+  },
+  "status": "PASS_RUN_NO_SCORE",
+  "terminal": true,
+  "trajectory": {
+    "bytes": 389280,
+    "first_shifted_s": 1624246878.4318073,
+    "last_shifted_s": 1624247020.0758038,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/rotation/svio_no_loop.csv",
+    "rows": 3727,
+    "sha256": "114e587e1149c16493cae3350f93740ddbcce091edb9edd4cd18edc096776f84"
+  },
+  "validation_error": null
+}

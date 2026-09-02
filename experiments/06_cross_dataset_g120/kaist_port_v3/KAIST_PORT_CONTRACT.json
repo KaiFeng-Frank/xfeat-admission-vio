@@ -1,0 +1,59 @@
+{
+  "schema": "g120-kaist-sandbox-port-contract-v1",
+  "status": "IMPLEMENTATION_CONTRACT_NO_FULL_RUN_AUTHORIZED",
+  "candidate": {
+    "name": "G120-A",
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "gate_patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "xfeat_model_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "xfeat_module_sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3",
+    "binary_variants": 1,
+    "algorithm_parameter_variants": 1,
+    "per_sequence_tuning": false,
+    "sequence_identity_input": false,
+    "ground_truth_input": false
+  },
+  "gate": {
+    "max_cnt": 150,
+    "source_expression": "(4 * MAX_CNT) / 5",
+    "survivor_threshold": 120,
+    "rule": "admit on the existing 10 Hz tick only after two consecutive valid post-F-RANSAC survivor counts below 120"
+  },
+  "kaist_sensor_adapter": {
+    "calibration_source_sha256": {
+      "cam-imu.yaml": "81f162c0c7983c463c58246aea64cd864d4a44c17ac8525f884ad82509873d02",
+      "imu-params.yaml": "0bf07d9e23c624ec3af51caec26b673069dbfcc05c76740e45ef48b813f56a29"
+    },
+    "sequences": [
+      "circle", "circle_fast", "circle_head", "infinite", "infinite_fast",
+      "infinite_head", "square", "square_fast", "square_head", "rotation",
+      "rotation_fast"
+    ],
+    "color_topic": "/d400/color/image",
+    "depth_topic": "/d400/aligned_depth/image",
+    "imu_topic": "/d400/imu",
+    "image_shift_ns": -29958533,
+    "shift_scope": ["color_header", "color_record", "depth_header", "depth_record"],
+    "imu_timestamp_policy": "unchanged",
+    "allowed_config_changes": [
+      "camera name/intrinsics", "camera-IMU extrinsics", "virtual depth camera pose",
+      "sensor topics", "accelerometer units", "published IMU noise/random-walk",
+      "rolling-shutter readout", "depth sensor range", "output path"
+    ],
+    "algorithm_fields_inherited_unchanged": [
+      "max_cnt", "min_dist", "freq_gate", "freq", "F_threshold", "flow_back",
+      "solver limits", "keyframe parallax", "structural thresholds", "GMM/line/plane switches"
+    ]
+  },
+  "execution_boundary": {
+    "only_max_frames_input_smoke_authorized": true,
+    "full_estimator_run": false,
+    "scoring_run": false,
+    "ground_truth_read": false,
+    "production_writes": false,
+    "reserved_nya_02_eee_02_access": false,
+    "bulky_output_root": "${EXTERNAL_ROOT}/g120_kaist_runtime_20260901"
+  }
+}

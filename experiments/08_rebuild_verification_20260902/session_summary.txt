@@ -1,0 +1,7 @@
+== apt libceres-dev ==
+APT_EXIT=0
+ls: cannot access '/usr/lib/x86_64-linux-gnu/libceres*': No such file or directory
+BUILD_EXIT=0
+PLAY_STATUS=0 NODE_STATUS=134 ARM=on
+PLAY_STATUS=0 NODE_STATUS=134 ARM=off
+SESSION_EXIT=0

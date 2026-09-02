@@ -1,0 +1,132 @@
+{
+  "actual_ros1_bags_reopened_and_payload_compared": true,
+  "algorithm_parameter_variants": 1,
+  "binary_variants": 1,
+  "calibration_source_sha256": {
+    "cam-imu.yaml": "81f162c0c7983c463c58246aea64cd864d4a44c17ac8525f884ad82509873d02",
+    "imu-params.yaml": "0bf07d9e23c624ec3af51caec26b673069dbfcc05c76740e45ef48b813f56a29"
+  },
+  "full_estimator_run": false,
+  "gate_semantics": "MAX_CNT=150; (4*MAX_CNT)/5=120",
+  "ground_truth_read": false,
+  "image_shift_ns": -29958533,
+  "rk3588s_run": false,
+  "rows": [
+    {
+      "adapter_bag_sha256": "5ca49821e9da7118bb5b260f9a0850104be0d986b9c54db118d673983bda1eb0",
+      "config_sha256": "ad3d27e0dd7a5a7ff38ee0aa14999e2d07e76930b818ccc0a30fdb5d987e673b",
+      "imu_messages_in_adapter_smoke": 4,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "circle",
+      "shifted_first_color_stamp_ns": 1624245067689218860,
+      "sidecar_sha256": "9127dfdb7357713f338e30f0198b6d61ba4b7dda5cb3eb98f97f1dbc8cd0f97a"
+    },
+    {
+      "adapter_bag_sha256": "291bf316081f779547542f1b54c0a9c695527c12c40292f631e3c6bf4f8b0557",
+      "config_sha256": "d4aa9f6d5a8eeb71658d1b4c458f1ddc0d9535130eb86fbcb6544f3372bc01a1",
+      "imu_messages_in_adapter_smoke": 3,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "circle_fast",
+      "shifted_first_color_stamp_ns": 1624245261450188555,
+      "sidecar_sha256": "9958c4bd564b6af065322823bb6eebef62353305a58a3109292d9887f078ac23"
+    },
+    {
+      "adapter_bag_sha256": "d1deb37366f62df04d0c8bc0769435d14c4424d5f4287a690b515e607265b638",
+      "config_sha256": "77080a65d8f5d04dc57ace52687db8727a3b625d81cf1fa071f482a01c190cf7",
+      "imu_messages_in_adapter_smoke": 5,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "circle_head",
+      "shifted_first_color_stamp_ns": 1624245447427185399,
+      "sidecar_sha256": "ad2eb926525af5076214dbb75f7df99fe0b49e6e69fec608b662e735bfef3797"
+    },
+    {
+      "adapter_bag_sha256": "23c97c75a244a653e3dd7ece9355a22d04e0dd851957880a4e396153194b5d81",
+      "config_sha256": "5c2a215b87fadd91ddc742e8e388487e5a91970beee7cd91729ea32ace2d59b3",
+      "imu_messages_in_adapter_smoke": 6,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "infinite",
+      "shifted_first_color_stamp_ns": 1624245622563046568,
+      "sidecar_sha256": "5377793858c756d752d2cd26906f6f95dab128228a0b1f0e6b574531f5353a12"
+    },
+    {
+      "adapter_bag_sha256": "1519486315b9bf6c414ed3fa3ea7062a9c6b98891d639ed78a7931acfc0ecf65",
+      "config_sha256": "d7d3649a836737516b6356d1e222cb0937c9d9683e6a7d0bf3eaff6cc2f546b6",
+      "imu_messages_in_adapter_smoke": 2,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "infinite_fast",
+      "shifted_first_color_stamp_ns": 1624245813467597076,
+      "sidecar_sha256": "e5146c67775ba5f7617a6d8dc7d1e40d18439f1be3375a6292cda2368bf1eaf4"
+    },
+    {
+      "adapter_bag_sha256": "476e08eaca53c3e6b462ca7c406df0f376364c09971cc5e15272f90f6b2c0605",
+      "config_sha256": "ff039f88a7dbe8764d815e2771fd4905d1385ebae5c556db59beb4c5c30e9f1c",
+      "imu_messages_in_adapter_smoke": 3,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "infinite_head",
+      "shifted_first_color_stamp_ns": 1624246027116689332,
+      "sidecar_sha256": "03741d494b51d71fc6a6639fea1e947109e87bf8f7d3fe69a1178de7c2c77d8b"
+    },
+    {
+      "adapter_bag_sha256": "627cb7ff244dd39fb45a960d7abdc1c2af0d456c0adb992f58f4942459cea0a7",
+      "config_sha256": "9ba25b60f94a028ee2111930e9a7b9840eb36bc3bf95ba43afa58f860a053835",
+      "imu_messages_in_adapter_smoke": 1,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "square",
+      "shifted_first_color_stamp_ns": 1624246211761014882,
+      "sidecar_sha256": "85ec66db6d23b2411b494492106e4279701cb5892858b14a50dfe05f5211706d"
+    },
+    {
+      "adapter_bag_sha256": "a7c75bba456063cfb0ac512c0e32387cf1ba38c4dc7efe847eef9d8d1771bd78",
+      "config_sha256": "18ad4790d7b6161cecbc8545a223d72729306df347ed7cba9ec27791ea090cf8",
+      "imu_messages_in_adapter_smoke": 3,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "square_fast",
+      "shifted_first_color_stamp_ns": 1624246400849491579,
+      "sidecar_sha256": "bd293800db21a92cbb9ba15839e466e677bf4d9b0d1284b0f6fa167968da4963"
+    },
+    {
+      "adapter_bag_sha256": "fd8f96997cef5164773bb7427cc9c9d33467d34ea41a100eb2b678c1c420c9d4",
+      "config_sha256": "cc3e49c110ed40253b842000d632868505cbd4c2b3f015e6e355b1f532e4aeb8",
+      "imu_messages_in_adapter_smoke": 2,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "square_head",
+      "shifted_first_color_stamp_ns": 1624246568474153134,
+      "sidecar_sha256": "49d034b64997a32d5a79dd8e3c462596f753dc95dcce08b9aea00b9c9eb585c5"
+    },
+    {
+      "adapter_bag_sha256": "c564b560d368edc56cf3e7049150c6a0354e373a922788ca81632aa421b2f425",
+      "config_sha256": "5748a1df77511b3786ecda07d9118e6502e041529690374d5a931773584bf1b8",
+      "imu_messages_in_adapter_smoke": 2,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "rotation",
+      "shifted_first_color_stamp_ns": 1624246850124530954,
+      "sidecar_sha256": "02d8e2bc8f29ca549c1d4dd60c94fb611affa3e75e673d099705d19e83db2336"
+    },
+    {
+      "adapter_bag_sha256": "230759da5497c33b0493f456c680a38a75ab67dd278ca0f578d39b4b4c81961f",
+      "config_sha256": "45e9c7be99a23092328eb5de9efae2870610a5b88f8676c5815073718baef340",
+      "imu_messages_in_adapter_smoke": 5,
+      "proposals": 500,
+      "ros1_payload_roundtrip_verified": true,
+      "sequence": "rotation_fast",
+      "shifted_first_color_stamp_ns": 1624247022185104042,
+      "sidecar_sha256": "bd41e7bd19baee767d874aa8e079dbc01d4633c143fbd9e5fac1702c1c239806"
+    }
+  ],
+  "same_algorithm_candidate": "G120-A",
+  "schema": "g120-kaist-port-smoke-summary-v3",
+  "scope": "input adapter, exact XFeat materializer, config renderer only",
+  "scoring_run": false,
+  "sequence_count": 11,
+  "status": "PASS_11_OF_11_MAX_FRAMES_NO_GT_SMOKE"
+}

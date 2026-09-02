@@ -1,0 +1,40 @@
+{
+  "estimator_run": false,
+  "ground_truth_read": false,
+  "pinned_model": {
+    "path": "${PRIVATE_ROOT}/docs/exp_registry_20260828/xfeat_rknn_conversion_preflight_v1/xfeat_backbone_1x3x480x640_opset19.onnx",
+    "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+  },
+  "pinned_tool": {
+    "path": "${PRIVATE_ROOT}/tools/xfeat_sparse_onnx.py",
+    "sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3"
+  },
+  "rk3588s_run": false,
+  "schema": "g120a-openloris-consumed-xfs-smoke-v1",
+  "score_computed": false,
+  "source_npz": {
+    "path": "${EXTERNAL_ROOT}/g120_openloris_smoke_20260901/consumed_pairs.npz",
+    "sha256": "8fdcaee087c40f4414a49eed00dd5414a264a4465283ce39a030c6283e564f9b"
+  },
+  "status": "PASS_EXACT_CONSUMED_RGB_XFS",
+  "verification": {
+    "proposal_counts": [
+      500,
+      500,
+      500,
+      500
+    ],
+    "stamps_ns": [
+      1560000110937641000,
+      1560000110971004000,
+      1560000111004368000,
+      1560000111037731000
+    ],
+    "status": "PASS"
+  },
+  "xfs": {
+    "bytes": 536088,
+    "path": "${EXTERNAL_ROOT}/g120_openloris_smoke_20260901/office1-3_first4.xfs",
+    "sha256": "79f85c21077c86297507cb050d8f0a5c01c093ef61738be11c3272152cb86c1e"
+  }
+}

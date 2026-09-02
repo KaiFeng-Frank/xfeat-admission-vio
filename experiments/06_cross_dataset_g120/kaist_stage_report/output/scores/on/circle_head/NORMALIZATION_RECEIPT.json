@@ -1,0 +1,60 @@
+{
+  "all_58_terminal_before_score": false,
+  "arm": "on",
+  "body_frame_transform": "none_native_body",
+  "exact_pause": "22_of_58_next_openloris_ordinal_23",
+  "execution_freeze": {
+    "bytes": 12213,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_FREEZE.json",
+    "sha256": "84c67a67a6f2b3513865d1744ee0ca0cab99ece108db5554ecd6607ff29e5d2b"
+  },
+  "execution_state_at_pause": {
+    "bytes": 8742,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+    "sha256": "2c3fcfb0969ff043bd97a0ef6190f183361f61359e33bc596893ba7d54d79b2a"
+  },
+  "first_restored_s": 1624245456.5257025,
+  "image_shift_sec": -0.029958533,
+  "kaist_runner_seal": {
+    "bytes": 29958,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_SELF_TEST_SEAL.json",
+    "sha256": "211d37360ee115fe6bec1c42bbcef296323f9267dd3d544eb75c8fc9a3d27125"
+  },
+  "last_restored_s": 1624245596.3282135,
+  "normalized_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report/scores/on/circle_head/trajectory_restored.tum",
+  "normalized_sha256": "78a6a67610e043dc9d952873ff2cd95300b30eec8419744fc46f532af30858c0",
+  "official_v4_aggregator_eligible": false,
+  "quaternion_transform": "qw_qx_qy_qz_to_qx_qy_qz_qw",
+  "raw_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_head/svio_no_loop.csv",
+  "raw_sha256": "d15dfd58c2622c0ddc6ac262ecba398a339038f2bc52be66a3b8cf4517b2bb4b",
+  "rows": 4047,
+  "run_receipt": {
+    "bytes": 11520,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/circle_head/RUN_RECEIPT.json",
+    "sha256": "2180a223611dd64faf2b6c248537b9aa3517f1e4c102af7dab76fdbb31705c1d"
+  },
+  "schema": "g120-kaist-staged-time-restoration-v1",
+  "score_wrapper": {
+    "bytes": 11471,
+    "path": "${SANDBOX_ROOT}/g120_kaist_stage_report_20260902/staged_score_kaist.py",
+    "sha256": "9cc04ba7d7513b35c182a851be766ff0c106e7b635107b3afdb49348c079aa57"
+  },
+  "sealed_v4_score_wrapper": {
+    "bytes": 14417,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/score_kaist.py",
+    "sha256": "8d15668455dbe42d62a5fd311050c2b80f0af68477bc44e997596661d35d0eab"
+  },
+  "sequence": "circle_head",
+  "staged_report_amendment": {
+    "bytes": 20757,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report/STAGED_KAIST_REPORT_AMENDMENT.json",
+    "sha256": "f2fdc3bf80592fdbb55b5c9502812ad9596f1f5a66d831b20fdc9a62a8a78eff"
+  },
+  "staged_report_freeze": {
+    "bytes": 1188,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902_kaist_stage_report/STAGED_KAIST_REPORT_FREEZE.json",
+    "sha256": "75fd029087f6c2670b262818b9fcb038828ba88cb62a5e244b2663d4dffaf82f"
+  },
+  "status": "REPORT_ONLY_NOT_FINAL_V4_AGGREGATOR_INPUT",
+  "timestamp_transform": "t_eval=t_svio_output-image_shift_sec"
+}

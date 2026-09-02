@@ -1,0 +1,192 @@
+{
+  "adapter_xfeat_e2e": {
+    "counts": {
+      "color": 2,
+      "depth": 2,
+      "imu": 2
+    },
+    "pairer_replay": {
+      "drops": 0,
+      "exact_pair_ledger": true,
+      "pairs": 2,
+      "queued_at_eof": 0
+    },
+    "status": "PASS",
+    "xfs_proposals": {
+      "max": 489,
+      "min": 489,
+      "records": 2,
+      "sum": 978
+    }
+  },
+  "estimator_execution_gate": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/V3_EXECUTION_FREEZE.json (absent by design)",
+  "estimator_execution_unlocked": false,
+  "estimator_run": false,
+  "ground_truth_contact": "hash-only verification for source registration; no parsing/evaluation",
+  "input_cohort_seal": {
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/INPUT_COHORT_SEAL.json",
+    "sha256": "017e276c1d757555d9f9c4f9387338ae07f13d36fcaf6e43f174b76fd3f6c31c",
+    "status": "PASS_12_OF_12",
+    "totals": {
+      "bag_bytes": 30587472073,
+      "imu": 264124,
+      "pairs": 19841,
+      "sequences": 12,
+      "xfs_bytes": 2658932572
+    },
+    "verification_stdout_sha256": "71fc40948a2d5620eb1085f780ad96dce566eba5c796da1d1d0c0621baf464c8"
+  },
+  "input_materialization_seal": {
+    "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/SELF_TEST_PASS.json",
+    "sha256": "444e2b91e65043703068ff430e33998b8b0e3795db2ed8bf41b2284217dcda25"
+  },
+  "paper_sequences": [
+    "office1-1",
+    "office1-2",
+    "office1-3",
+    "office1-4",
+    "office1-5",
+    "office1-6",
+    "office1-7",
+    "home1-1",
+    "home1-2",
+    "home1-3",
+    "home1-4",
+    "home1-5"
+  ],
+  "path": "${SANDBOX_ROOT}/g120_openloris_duel/formal/RUNNER_SELF_TEST_PASS.json",
+  "pinned_artifacts": {
+    "candidate": {
+      "base_config": {
+        "bytes": 4249,
+        "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/config_full_line.yaml",
+        "sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008"
+      },
+      "binary": {
+        "bytes": 22731408,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+        "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+      },
+      "extractor": {
+        "bytes": 30233,
+        "path": "${PRIVATE_ROOT}/tools/xfeat_sparse_onnx.py",
+        "sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3"
+      },
+      "libcamera_models": {
+        "bytes": 2970640,
+        "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/devel/lib/libcamera_models_in.so",
+        "sha256": "dc795b5c2c6fb350f2b7f50030a1cf51cdf0889672039d2332f9236447c24f4f"
+      },
+      "libsvio": {
+        "bytes": 327883064,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+        "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+      },
+      "model": {
+        "bytes": 2652913,
+        "path": "${PRIVATE_ROOT}/docs/exp_registry_20260828/xfeat_rknn_conversion_preflight_v1/xfeat_backbone_1x3x480x640_opset19.onnx",
+        "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+      },
+      "patch": {
+        "bytes": 3303,
+        "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/T120_GATE.patch",
+        "sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915"
+      }
+    },
+    "released_svio": {
+      "binary": {
+        "bytes": 22702256,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/container/root/svio_ws/devel/lib/svio/svio_syn_node",
+        "sha256": "e47f1976462df91f186a4d0d2a8bef0e06d06f5c69b44c3f1a292da9f0ad541d"
+      },
+      "config": {
+        "bytes": 3880,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/container/root/svio_ws/src/SVIO/config/openloris_vio.yaml",
+        "sha256": "aab438e89202d8d5c1335818cabea1599ff927de8dadd2433891124a95cfe8ab"
+      },
+      "libcamera_models": {
+        "bytes": 2970640,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/container/root/svio_ws/devel/lib/libcamera_models_in.so",
+        "sha256": "03ec58635897c4b9c778c5a94750dec16264e93fab891a8888763fedd4e6fdff"
+      },
+      "libsvio": {
+        "bytes": 326333880,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/container/root/svio_ws/devel/lib/libsvio.so",
+        "sha256": "e281837084669e05a7708be67179678f3e6835ebf7bdd05e5e158beece511669"
+      }
+    },
+    "scoring": {
+      "extrinsic": {
+        "bytes": 683,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/config/openloris_imu.yaml",
+        "sha256": "faa608fd0e8519906f5ad61d53bab4c559b15b5b0480edbdaf01f30cb97d515b"
+      },
+      "registered_normalizer_reference": {
+        "bytes": 64460,
+        "path": "${PRIVATE_ROOT}/shadow_port/scripts/ingest_home_external_upstream_r17.py",
+        "sha256": "c2e27aabfd8cf089c084b3e69e7065c0ebb206f7421febe2caab7866188a5bb3",
+        "transform_id": "openloris_imu_to_base_v1"
+      },
+      "scorer": {
+        "bytes": 20128,
+        "path": "${PRIVATE_ROOT}/external_freeze_20260818/scripts/eval_openloris.py",
+        "sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3"
+      }
+    }
+  },
+  "runner_guards": {
+    "container_sha256": "7bf957ac5953762b663eebe9dc2140d3933218c1044e4ce9470b13c497a477c7",
+    "foreign_cwd": "/tmp",
+    "gate_exit": 1,
+    "host_sha256": "03013fc72979887bc6bcdb2974bc45f4ac32a85a7a591c618ce314d4dda60b2f",
+    "scorer_sha256": "bbea2bcfe5bbfaed3cd7e6fe3e966d597dc2b3ca2f331e582f27e3b78cc7cbb2",
+    "status": "PASS_FOREIGN_CWD_AND_STRUCTURAL_GUARDS",
+    "xfeat_consumption_audit_sha256": "da0a3be51ab6921d960c4659a057d4de65c0bdd064fb343536961647ed12df23"
+  },
+  "runtime_closure": {
+    "arms": {
+      "g120": {
+        "ldd_sha256": "7b0c0d6e7feada94383a58ceb237a914655111005b69b2044a4e9b02a31e25ad",
+        "status": "PASS_ZERO_MISSING"
+      },
+      "released": {
+        "ldd_sha256": "d3a5e2ed952b325c594f9f20635bbed04a112c5e8303f135fd55e056fa7b796d",
+        "status": "PASS_ZERO_MISSING"
+      }
+    },
+    "image_id": "sha256:5dd1b4d01edae120a2dc394b374e1c895633256ce0e356aa9ae3b3d99f464bc5",
+    "runtime_receipt_sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211"
+  },
+  "schema": "g120a-openloris-runner-selftest-v1",
+  "score_computed": false,
+  "sealed_code_sha256": {
+    "audit_xfeat_log.py": "da0a3be51ab6921d960c4659a057d4de65c0bdd064fb343536961647ed12df23",
+    "build_formal_input.py": "fc516ddd8f319091b42334dd44746813fca921bdfe03e22080add991f171f114",
+    "config/openloris_g120_640.yaml": "7717ba18094cb4ef69e43ebf7c7e22103ea18e9ad345388f10e66bd970268c08",
+    "formal/SOURCE_REGISTRY.json": "c64f6336ce26775a02d3709eb6105a5be658de14e3a78402945b43d87bd008d7",
+    "formal_contract.py": "ee07b479a2c9b7c1c277bb445a6e7cef59133353fb8270162d644ea20a0c07a1",
+    "formal_selftest.py": "750af7af379d03c349588bc40fd52502f215c3a3f79cc03920c78ff7be79b74c",
+    "pairing_core.py": "df3569f9054962540e3236e61a7de295ddcd6aec3af981dbd1a321f1388b7f75",
+    "render_run_config.py": "0d5caa2208eef80ddcc6df71e57d35a94b6b410154d87507e298b2ee34e24a1c",
+    "run_build_all.sh": "4d88e7f3b8bee92d8714d67dbc8247285c92c82f872e6e3abc91135564bd707a",
+    "run_inside_container.sh": "7bf957ac5953762b663eebe9dc2140d3933218c1044e4ce9470b13c497a477c7",
+    "run_openloris_arm.sh": "03013fc72979887bc6bcdb2974bc45f4ac32a85a7a591c618ce314d4dda60b2f",
+    "score_openloris.py": "bbea2bcfe5bbfaed3cd7e6fe3e966d597dc2b3ca2f331e582f27e3b78cc7cbb2",
+    "seal_materialized_inputs.py": "8b05e2cbb0d3b6587867f68d9ae69f078bd90340423fbacebca0531e93e24205",
+    "tests/test_formal_port.py": "cb973d4222620acb82fb1d45f2e4397c18fc6aa3002d7e0969b66bef5f7c4e42",
+    "tests/test_pairing_core.py": "334921dfe4acff94c28c264e7135e7f9e3065f842788c9ddfc7973f106f4abd4"
+  },
+  "shared_execution_order_controller": {
+    "bytes": 14554,
+    "path": "${SANDBOX_ROOT}/g120_cross_dataset_control/execution_order.py",
+    "sha256": "f8eb3b9a124bdeb377fdd9a96e4c19815e747a7e1eb41965e5b43a57eccb8ad2"
+  },
+  "sidecar_generation_unlocked": true,
+  "source_registry_full_hash_verification": "PASS_12_OF_12",
+  "source_registry_sha256": "c64f6336ce26775a02d3709eb6105a5be658de14e3a78402945b43d87bd008d7",
+  "status": "PASS",
+  "unit_tests": {
+    "status": "PASS",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

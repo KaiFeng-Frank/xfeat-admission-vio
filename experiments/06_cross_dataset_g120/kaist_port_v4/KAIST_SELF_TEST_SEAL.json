@@ -1,0 +1,660 @@
+{
+  "critical_code_contract_source": [
+    {
+      "bytes": 13043,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/contract.py",
+      "sha256": "49c5fbcb156781795199e28b1ccbd73ff88a1bce625a5030aad883184614b7f1"
+    },
+    {
+      "bytes": 6185,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/render_config.py",
+      "sha256": "b57011f39d0c3983c3333104dc304ea2546721c1ee609377511ea27a2df1aa20"
+    },
+    {
+      "bytes": 8329,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/materialize_kaist_xfeat_sidecar.py",
+      "sha256": "5d6bc9a6ab6814670cf6a3a1c0f076f86eded2dfccb9edc3caacaa18e61a9dc5"
+    },
+    {
+      "bytes": 12576,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/adapt_kaist_ros2_to_ros1.py",
+      "sha256": "9d56447459ccc7c5b032fc1c32a134a78a6de9c5c2c8474a0126b0a27948fd50"
+    },
+    {
+      "bytes": 15028,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_contract.py",
+      "sha256": "2874026064a9cd65a394780bb292f2ea2b8916f935f38a6da0fa4ff484365319"
+    },
+    {
+      "bytes": 11526,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/prepare_formal_root.py",
+      "sha256": "aafb736de94dfc7274a295e507b7b2cc947325dc06b71bb5089a0dd8ed7ac8db"
+    },
+    {
+      "bytes": 452,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/prepare_configs.sh",
+      "sha256": "2d5b8dc5b25866d10ba0fcd52233cf3d18a2b399d1fbaab5a67c40ad75f01746"
+    },
+    {
+      "bytes": 771,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/prepare_formal_configs.sh",
+      "sha256": "b0a984df5c96be267ab28c872b0af356f0d35ee1caa98b4e3cba76c50cf9a36a"
+    },
+    {
+      "bytes": 1518,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/materialize_all_sidecars.sh",
+      "sha256": "0666dfc9a137578e276da1fef73e0caae4bc163c3cd59e2d320abf15d8219c52"
+    },
+    {
+      "bytes": 810,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/start_full_sidecars.sh",
+      "sha256": "b79575fe7e56af3966b4da74ace12da60ea31d50295ab5d1877af9497d026496"
+    },
+    {
+      "bytes": 2566,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/convert_one_bag.sh",
+      "sha256": "d05387098584f65a10c5a6b1f5e36148c32ed7445e0472e8ec0ee50e878bf965"
+    },
+    {
+      "bytes": 6675,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/reuse_v3_circle_bag.py",
+      "sha256": "e20fbce3ded540a7a73963453471d0884f72987f315fb6a57ca5f8328be6b856"
+    },
+    {
+      "bytes": 4233,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/selftest_reuse_v3_circle_bag.py",
+      "sha256": "2af320c95e8b73cff3feffd572056af2e50d57efa3aabbc6c727ebe2e4e5f029"
+    },
+    {
+      "bytes": 3951,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/verify_v3_circle_reuse_copy_contract.py",
+      "sha256": "a973246bfb265fd9a729588c4d68ac6046283790bbba77497c0aca6082185804"
+    },
+    {
+      "bytes": 10739,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/run_g120.sh",
+      "sha256": "f51ad24f59b8f04536f420a1ba5d5e9e1ea845055ff3cc93afeee8bf05b299bf"
+    },
+    {
+      "bytes": 11586,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/run_g120_inside_container.sh",
+      "sha256": "e642a4e9dd03074f0373ba93ba1c4b2589c4af6dd5ea531318e53d3956a95f18"
+    },
+    {
+      "bytes": 10500,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/shutdown_contract.py",
+      "sha256": "0ffdb16954d3b4cb27f9882d5d8ebb366ad7471fde4384fa738f818fe0a6a08e"
+    },
+    {
+      "bytes": 20487,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/validate_run.py",
+      "sha256": "7c5c13db2eb51dba2744e201457e5bc49598ee453dd35ae7b0419e4b5ca8c542"
+    },
+    {
+      "bytes": 3275,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/release_staged_bag.py",
+      "sha256": "bfbc0f6da6d8d319e8df1a72041ec413948eb070065ca8d3aa20a01e892dccc2"
+    },
+    {
+      "bytes": 14417,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/score_kaist.py",
+      "sha256": "8d15668455dbe42d62a5fd311050c2b80f0af68477bc44e997596661d35d0eab"
+    },
+    {
+      "bytes": 17298,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_selftest.py",
+      "sha256": "292831297a27d1ef85bc98221ee4b473986ccacb4fd7d52a21393f52d305f46e"
+    },
+    {
+      "bytes": 7803,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/selftest_shutdown_exit.py",
+      "sha256": "3d82af1e54b1a2cfddf11c7899ee8eff617fe72ebbdb7ec30ff4259aa1993526"
+    },
+    {
+      "bytes": 13073,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/seal_kaist_selftest.py",
+      "sha256": "18158097521cf8613341edc80de89742a2fe685b81a3d2a0cc775d70c626e539"
+    },
+    {
+      "bytes": 5657,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/FORMAL_EXECUTION_CONTRACT.json",
+      "sha256": "c7b1bc0c43a1091df5332ea8424c84a49668a4451268cbac166c9f56dc989c82"
+    },
+    {
+      "bytes": 6516,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+      "sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530"
+    },
+    {
+      "bytes": 16357,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/execution_order.py",
+      "sha256": "aeca5fc6a378b0264b7541fee7a4ff231cf0d5ed10a736cac4e0d36d14d352c9"
+    },
+    {
+      "bytes": 7405,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/selftest_execution_order.py",
+      "sha256": "34513ad46e19df9e771ee46845b176172e88943a64f7ae02dd75c182d4714078"
+    },
+    {
+      "bytes": 16239,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/create_v4_execution_freeze.py",
+      "sha256": "2f871b20aac92836ee7efaad19a8a3f49138359f5a94026ba61c35e73f57c2f9"
+    },
+    {
+      "bytes": 9552,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/create_v3_shutdown_incident.py",
+      "sha256": "586cdbd038ffa067a49262760ce59611fad6fcd592c4fab72520afc1452468d9"
+    },
+    {
+      "bytes": 73566,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/aggregate_results.py",
+      "sha256": "3fc3a4feb5f31ddb2f1047ab966175c3bf487afe6af8ad33f45a14994a5f21de"
+    },
+    {
+      "bytes": 33122,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/selftest_aggregate_results.py",
+      "sha256": "73a1d153370e8092fffc8e88796a9d58f2c8fff90bb038805d2906eb7419d372"
+    },
+    {
+      "bytes": 25115,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/seal_aggregator.py",
+      "sha256": "a235838445d9a8481780014a2c9d658bda1f93b8d87de639c362c613d7f5ffc1"
+    },
+    {
+      "bytes": 1560,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/V4_PROTOCOL_CORRECTION.json",
+      "sha256": "65e64a2a4b54834ee89dc75f8ba932bf7e063b93197f1202b691b7109d48115a"
+    },
+    {
+      "bytes": 1813,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control/PROTOCOL_V3_CORRECTION.json",
+      "sha256": "9c12f99562a63f4f5cbc763231ea862f3ff9a5027f24d04eb178625197033050"
+    },
+    {
+      "bytes": 312,
+      "path": "${SANDBOX_ROOT}/g120_cross_dataset_control/PROTOCOL_V3_SHA256SUMS",
+      "sha256": "ec9e6a2889a9b384b3d4ca6802f9aa6c405dc974b7a140324fb7cb280dabc018"
+    },
+    {
+      "bytes": 6448,
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/incidents/V3_SHUTDOWN_TRAP_INCIDENT.json",
+      "sha256": "c5fb8abd0bc30cf461590f12b1f2c57a6ede8abc81f7183c4100471d5a441ffa"
+    }
+  ],
+  "estimator_run": false,
+  "execution_guards": {
+    "all_58_terminal_before_score": true,
+    "circle_reuse_copy_full_hash_and_provenance_required": true,
+    "create_once_terminal_pass_or_failure_receipt": true,
+    "cross_dataset_aggregator_frozen_before_v4": true,
+    "cross_dataset_aggregator_invokes_estimator_or_scorer": false,
+    "exact_next_job_required": true,
+    "no_automatic_retry": true,
+    "owned_roscore_and_topic_readiness_required": true,
+    "runtime_sidecar_consumption_proof_required": true,
+    "shared_serial_lock_required": true,
+    "shared_v4_freeze_required": true,
+    "uniform_v4_staged_bag_container_mount": true,
+    "v3_input_cohort_mounted_read_only": true,
+    "v3_invalidated_incident_hash_bound": true,
+    "v4_outputs_use_noncolliding_root": true,
+    "xfs_bag_full_shifted_color_key_digest_required": true
+  },
+  "formal_configs": [
+    {
+      "bytes": 4365,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/circle.yaml",
+      "sha256": "8824291a40b0f0695618d5e054aaa4c31ced1f226d60bc3125e26e482606f584"
+    },
+    {
+      "bytes": 4370,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/circle_fast.yaml",
+      "sha256": "568b3e14eeed5542455539b0677bd515e1c821c9bfe48e10c6fe7a5a9c9de719"
+    },
+    {
+      "bytes": 4370,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/circle_head.yaml",
+      "sha256": "cac46c37bf2c6fe2638995f574fbce215b35d3d71c69ac9a02944ccd303e6783"
+    },
+    {
+      "bytes": 4367,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/infinite.yaml",
+      "sha256": "f28ab830220f3e66309106c79c99bda431934ef649b872935140d52bc12194b1"
+    },
+    {
+      "bytes": 4372,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/infinite_fast.yaml",
+      "sha256": "1d9ac8e06ffd9af4dae92e8d80bdcd774bd4f013c7b5377168988290069b76ad"
+    },
+    {
+      "bytes": 4372,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/infinite_head.yaml",
+      "sha256": "187202dd587a8bfcce9d502c08e5f8f6f8fc0b5e7e251ee848f77bc526070811"
+    },
+    {
+      "bytes": 4365,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/square.yaml",
+      "sha256": "2c7ca51dfccad4080970ee1b58c042311f7d25c7f029f30124afbdda700a836e"
+    },
+    {
+      "bytes": 4370,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/square_fast.yaml",
+      "sha256": "958eb44b24b87884b665adc40e5d929525b214e541ccd614aef7282588b7d650"
+    },
+    {
+      "bytes": 4370,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/square_head.yaml",
+      "sha256": "f3106b22aca8a9e97f1e936f03f9c263d7d81ade7f35a4cd5e625e8784697ca1"
+    },
+    {
+      "bytes": 4367,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/rotation.yaml",
+      "sha256": "45b28565ff2a4876edb88c237f43f5e82f34ff5ee654d4325ff49746a7512fa6"
+    },
+    {
+      "bytes": 4372,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/on/rotation_fast.yaml",
+      "sha256": "5405b73a03a256af0a11bd51e31c41f62a31cfbb1cc5320e931ba2c48e7621c5"
+    },
+    {
+      "bytes": 4366,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/circle.yaml",
+      "sha256": "11666daf33d837fd1aaf24561b3dbc4112c23af8801ed2e6de7347f5fd733aaf"
+    },
+    {
+      "bytes": 4371,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/circle_fast.yaml",
+      "sha256": "3bbffeadea7059fac845800c79a53bb6712ff88d4d30ad4e22751825553568f9"
+    },
+    {
+      "bytes": 4371,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/circle_head.yaml",
+      "sha256": "cf39e36cf546818eba835e4094e46d2523f1c11d6fa4bfb05709b79bf23a2574"
+    },
+    {
+      "bytes": 4368,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/infinite.yaml",
+      "sha256": "472b8270c7edacf3bd65e0f4d79643a8c691f8ed62b5ea16ac9b1c34f79a45c4"
+    },
+    {
+      "bytes": 4373,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/infinite_fast.yaml",
+      "sha256": "705d4a5d36848d1656b7c2cb7eb6a2d67084e7598c2a427830fbdc30971ee5a2"
+    },
+    {
+      "bytes": 4373,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/infinite_head.yaml",
+      "sha256": "b97e4de2ed68f7ca64299efc2819447fe010639587f0ee5e39172b27a2150314"
+    },
+    {
+      "bytes": 4366,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/square.yaml",
+      "sha256": "b3b1a437f7edaf9f90756950ae3bd10194760058a6fbe86abe58a18fcad670da"
+    },
+    {
+      "bytes": 4371,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/square_fast.yaml",
+      "sha256": "23987e2b43fb8ea860742f8e9452f754f4c37e4ccc862ff6714402865f74cdad"
+    },
+    {
+      "bytes": 4371,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/square_head.yaml",
+      "sha256": "aa4094b9f39b4a002f9a0998e1d6e095540c052ae6838b202ef436ccc0ae610c"
+    },
+    {
+      "bytes": 4368,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/rotation.yaml",
+      "sha256": "cdb4c4bfcdd79a3b29a1ac5fcd04213ba562c496bc2a47e6b08d2b4cde72ab16"
+    },
+    {
+      "bytes": 4373,
+      "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/formal_configs/off/rotation_fast.yaml",
+      "sha256": "08afbeab6b87d11f73875036c56e0487bef4e7414eace7fcb94c7ca91a67ad89"
+    }
+  ],
+  "frozen_candidate_and_calibration": [
+    {
+      "bytes": 30233,
+      "expected_sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3",
+      "path": "${PRIVATE_ROOT}/tools/xfeat_sparse_onnx.py",
+      "sha256": "dea06a85e0a3e68c4e501d289af350daa609493c500f04e2dc0113d4aa3161d3"
+    },
+    {
+      "bytes": 3303,
+      "expected_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/T120_GATE.patch",
+      "sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915"
+    },
+    {
+      "bytes": 327883064,
+      "expected_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/libsvio.so",
+      "sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc"
+    },
+    {
+      "bytes": 22731408,
+      "expected_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+      "path": "${SANDBOX_ROOT}/vcu_light_full_line_duel/t120_build/svio_syn_node",
+      "sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0"
+    },
+    {
+      "bytes": 2652913,
+      "expected_sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+      "path": "${SANDBOX_ROOT}/xfeat_backbone.onnx",
+      "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+    },
+    {
+      "bytes": 4249,
+      "expected_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/full_line/config_full_line.yaml",
+      "sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008"
+    },
+    {
+      "bytes": 3826,
+      "expected_sha256": "c4ddb0796dfd007cc7bdc9cb009a17b2fb2ad22d56dd60723609733f9f0928ab",
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/build/SVIO/camera_models_in/CMakeFiles/camera_models_in.dir/link.txt",
+      "sha256": "c4ddb0796dfd007cc7bdc9cb009a17b2fb2ad22d56dd60723609733f9f0928ab"
+    },
+    {
+      "bytes": 2970640,
+      "expected_sha256": "dc795b5c2c6fb350f2b7f50030a1cf51cdf0889672039d2332f9236447c24f4f",
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/devel/lib/libcamera_models_in.so",
+      "sha256": "dc795b5c2c6fb350f2b7f50030a1cf51cdf0889672039d2332f9236447c24f4f"
+    },
+    {
+      "bytes": 260,
+      "expected_sha256": "42e35f97c20127488ca0b80af92e9711e37a5cadcd381e5a8b7968dba58864a9",
+      "path": "${SANDBOX_ROOT}/xfeat_rgbd_imu_local_ba_motion4/svio_ws/devel/setup.bash",
+      "sha256": "42e35f97c20127488ca0b80af92e9711e37a5cadcd381e5a8b7968dba58864a9"
+    },
+    {
+      "bytes": 1968,
+      "expected_sha256": "81f162c0c7983c463c58246aea64cd864d4a44c17ac8525f884ad82509873d02",
+      "path": "${DATA_ROOT}/kaist_vio/config/cam-imu.yaml",
+      "sha256": "81f162c0c7983c463c58246aea64cd864d4a44c17ac8525f884ad82509873d02"
+    },
+    {
+      "bytes": 455,
+      "expected_sha256": "0bf07d9e23c624ec3af51caec26b673069dbfcc05c76740e45ef48b813f56a29",
+      "path": "${DATA_ROOT}/kaist_vio/config/imu-params.yaml",
+      "sha256": "0bf07d9e23c624ec3af51caec26b673069dbfcc05c76740e45ef48b813f56a29"
+    }
+  ],
+  "full_sidecars": [
+    {
+      "frames": 4557,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2540,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle.xfs.json",
+        "sha256": "1f805985e1575371e5e3275a59c19c80537f11e55ed9050b55296a982f33cf64"
+      },
+      "sequence": "circle",
+      "shifted_color_stamp_sequence": {
+        "count": 4557,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "b0d1d6d7a11db6945a9364c6505b2f8dec0957de3a93a9a0a736c309ec171c7f"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 610692724,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle.xfs",
+        "sha256": "1a0073430e6ef84c2ca32fe026eff8900c36bc10089c0130e716eeecc149a45a"
+      }
+    },
+    {
+      "frames": 4393,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2575,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle_fast.xfs.json",
+        "sha256": "ae407e33d1d10f179c626ef219856ea1ae7b8357e0e7a2b634004a7562ee96de"
+      },
+      "sequence": "circle_fast",
+      "shifted_color_stamp_sequence": {
+        "count": 4393,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "048e679e5d940cb55d16f5f85340610afa9ad7a16fff2d0badf81418360c674f"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 588714756,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle_fast.xfs",
+        "sha256": "913b17eec52688d140a0d99544f58f142b2b76059b964dc799fe34fe72919139"
+      }
+    },
+    {
+      "frames": 4333,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2573,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle_head.xfs.json",
+        "sha256": "6840a7aafcf7f5aa69b0c177b8ad4f40cdc24afbaee41e380e6b2a0b724ad431"
+      },
+      "sequence": "circle_head",
+      "shifted_color_stamp_sequence": {
+        "count": 4333,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "684a35a92670c8a83f65d45f6d83dc952d8aeca00dd1a5b1f60c7f520947583f"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 580674036,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/circle_head.xfs",
+        "sha256": "7ce119fcfadc3ecd52c0133794b7d8d3eb7d6e2af72ed6d4ddcdacde438b3eec"
+      }
+    },
+    {
+      "frames": 4345,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2553,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite.xfs.json",
+        "sha256": "04e548391cdbfd0d8e1eb7e7c19f93670ed1783d7ee84c15d9c3ccc58a031854"
+      },
+      "sequence": "infinite",
+      "shifted_color_stamp_sequence": {
+        "count": 4345,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "3a63da2ad3417f47862b2b340b8039cbc4ee3155a5b47aaf41689221724445c5"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 582282180,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite.xfs",
+        "sha256": "cacf05588571173c0e737bdcefb038fec33106d59de5c524f4ddecf199d6338c"
+      }
+    },
+    {
+      "frames": 6128,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2589,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite_fast.xfs.json",
+        "sha256": "eb20d401b12889938be4d105ac99b86bffd3a8e7341647228cc1dff0b2d65390"
+      },
+      "sequence": "infinite_fast",
+      "shifted_color_stamp_sequence": {
+        "count": 6128,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "81efa9300fd925d0befd7ffa8087cb59590d0fe1a4609db06d3e1e23079160cd"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 821225576,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite_fast.xfs",
+        "sha256": "bd0ab11c506adfe089bd43b5b7c28466acf78eca99967f71a04cef1cad72140b"
+      }
+    },
+    {
+      "frames": 4612,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2589,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite_head.xfs.json",
+        "sha256": "49bb02715364b8c6e1e0ed11dbe80ddf963d435ca81bfc14d9fa7a0c8a5f30d2"
+      },
+      "sequence": "infinite_head",
+      "shifted_color_stamp_sequence": {
+        "count": 4612,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "cb6f3f08ee4e641fe7cbeaf0b9b939be36965de31ea321dd0eb0bd6d9a9d6a2d"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 618063384,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/infinite_head.xfs",
+        "sha256": "054ac6ee9f6f571d0c34b186e49ab1acca64b539e8238786232c6de053de6230"
+      }
+    },
+    {
+      "frames": 4729,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2540,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square.xfs.json",
+        "sha256": "33f83861816f79c22a16bb36eb33989fdb26a4718f2c19f7e8a06a7ce73650bd"
+      },
+      "sequence": "square",
+      "shifted_color_stamp_sequence": {
+        "count": 4729,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "f515807b6521be750906844305908991b0f565fa41673ce7356c33e49181b002"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 633742788,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square.xfs",
+        "sha256": "ae3e9d84dfb8b445b2bf83c2e389490311102f3709250c622c896e16064329c0"
+      }
+    },
+    {
+      "frames": 4240,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2574,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square_fast.xfs.json",
+        "sha256": "f17df99db0edacab5ec84c09a6fee74e94ee95ab9a51efd7c87ffad901b85ef4"
+      },
+      "sequence": "square_fast",
+      "shifted_color_stamp_sequence": {
+        "count": 4240,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "a48fc12e58c98ad0134e55823d1cd53634c194c49d0f657fbe20000e9aba738f"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 568210920,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square_fast.xfs",
+        "sha256": "7d3b0deb9307dcf25c9331a57de23163f10e57a411c99af2a3e77ac036d8e6ae"
+      }
+    },
+    {
+      "frames": 8126,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2577,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square_head.xfs.json",
+        "sha256": "6bb378ab8d48ed48b236ab06bd863d73243de8c9b474736f7bf9de00a652146b"
+      },
+      "sequence": "square_head",
+      "shifted_color_stamp_sequence": {
+        "count": 8126,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "6479753e453682b7e90eeaa234652e4d952839666e5b87018af2ec92c9caf778"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 1088981552,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/square_head.xfs",
+        "sha256": "0ad72da3344ecd35a2b60e2b62beac09b90959ff522211bc173074325eca6c97"
+      }
+    },
+    {
+      "frames": 4559,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2554,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation.xfs.json",
+        "sha256": "d79934dc1dab971eecf969fe4bb3c47b26a89c25eb09aa29e1f779c259b2d89d"
+      },
+      "sequence": "rotation",
+      "shifted_color_stamp_sequence": {
+        "count": 4559,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "05e4db8b4114da94a4c63ac913f0c2b608c391f35778bcc6a06224e3a81f0c19"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 610960748,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation.xfs",
+        "sha256": "c5098210a5d28fe549c1e6da3f880ae3e28f8ce01fe62df829e107a19735df7a"
+      }
+    },
+    {
+      "frames": 3667,
+      "full_record_framing_and_eof_verified": true,
+      "receipt": {
+        "bytes": 2588,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation_fast.xfs.json",
+        "sha256": "c11e7c206f6a9575ed118dc8007118738c9d8a30dab4e45faadd7c0294e680fa"
+      },
+      "sequence": "rotation_fast",
+      "shifted_color_stamp_sequence": {
+        "count": 3667,
+        "encoding": "concatenated_little_endian_signed_int64_ns",
+        "sha256": "c9ab44ee4906847fd1af998d403cccc212aaef0a4c9ae3222dc7480021286501"
+      },
+      "source_bag_manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "xfs": {
+        "bytes": 491422044,
+        "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/kaist/sidecars/rotation_fast.xfs",
+        "sha256": "fb93a8c510bd0591a186ed351b677e809f9e34399372ec07eca9ce7b662196d6"
+      }
+    }
+  ],
+  "ground_truth_read": false,
+  "registered_scorers": [
+    {
+      "bytes": 50132,
+      "expected_sha256": "c5a9db1c258602f292941c22caa169753542e4baf2af152d4add4d77655fbaf8",
+      "path": "${PRIVATE_ROOT}/results/tro_v3_table2_addendum_20260824_r1/freeze/scripts/table2_addendum_common.py",
+      "sha256": "c5a9db1c258602f292941c22caa169753542e4baf2af152d4add4d77655fbaf8"
+    },
+    {
+      "bytes": 9367,
+      "expected_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+      "path": "${PRIVATE_ROOT}/results/tro_v3_table2_addendum_20260824_r1/freeze/scripts/table2_addendum_score.py",
+      "sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890"
+    },
+    {
+      "bytes": 13856,
+      "expected_sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07",
+      "path": "${PRIVATE_ROOT}/results/tro_v3_table2_addendum_20260824_r1/freeze/t3/scripts/tro_t3_score.py",
+      "sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07"
+    }
+  ],
+  "runtime_envelope": {
+    "bytes": 9828,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/RUNTIME_ENVELOPE.json",
+    "sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211"
+  },
+  "runtime_static_ldd": {
+    "bytes": 10433,
+    "path": "${EXTERNAL_ROOT}/g120_cross_dataset_20260901/runtime_envelope/STATIC_LDD.txt",
+    "sha256": "6555de7f5783ddc1e04a96f42d1b7ad1135611bfa792ebe704bddde390f53235"
+  },
+  "schema": "g120-kaist-v4-runner-self-test-seal-v1",
+  "scoring_run": false,
+  "selftest": {
+    "bytes": 7923,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_FORMAL_SELFTEST_V4.json",
+    "sha256": "164e8a06bfa2a82167aed6b90eedc58482fb7fc8a10b9ddb2360f8e22726d1b1"
+  },
+  "source_bag_manifest": {
+    "bytes": 6516,
+    "path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+    "sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530"
+  },
+  "status": "PASS_READY_FOR_FINAL_V4_FREEZE_NO_ESTIMATOR_NO_SCORE"
+}

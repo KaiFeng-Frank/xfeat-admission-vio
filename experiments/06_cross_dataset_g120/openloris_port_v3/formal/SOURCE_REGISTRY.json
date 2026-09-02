@@ -1,0 +1,83 @@
+{
+  "schema": "g120a-openloris-source-registry-v1",
+  "cohort": "paper OpenLORIS: office1-1..7 plus home1-1..5",
+  "notes": [
+    "home1-4 is the corrected external USB-backup source, not a local placeholder or incomplete mirror",
+    "ground-truth identities are registered for the later scorer; build_formal_input.py does not open GT"
+  ],
+  "sequences": {
+    "office1-1": {
+      "sequence": "office1-1",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-1/office1-1_0.db3", "bytes": 1653915648, "sha256": "bfbfb69870f6ed1be6e164d5c1ce7ab4e0d676ce68ca411025079eb2c8128b38"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-1/metadata.yaml", "bytes": 1445, "sha256": "bf7c15c2058d7056562baa3aa8b134d36f24cbbae266f0a0f8181d4590ac3fc7"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-1/groundtruth.txt", "bytes": 1047432, "sha256": "20db51ef8eda1fc9d05d62060f0f644ee150254e22ae706dedb8e3f6100fa5bc"}
+    },
+    "office1-2": {
+      "sequence": "office1-2",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-2/office1-2_0.db3", "bytes": 1837858816, "sha256": "9c7bbc6fc6b51f01636eb516b968cb0cd387fac727db6c4740766b26ac16bd85"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-2/metadata.yaml", "bytes": 1445, "sha256": "8b4c8eb408607491a03fad23380fcf5830e7e03c6dc9763eb1182edc940b041c"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-2/groundtruth.txt", "bytes": 1101980, "sha256": "7abd146e1f3c7683721253a501c665f2d61c52767c0d1a997d5a05d0dfb7de86"}
+    },
+    "office1-3": {
+      "sequence": "office1-3",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-3/office1-3_0.db3", "bytes": 735997952, "sha256": "c696f0b1e50e5f041acd61eae650e6be801925496beec88771b0025bb1e50e40"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-3/metadata.yaml", "bytes": 1442, "sha256": "c0b0b1f51d74a27c08c11ab9f242dc73e8ed53bfd39e81f910869a923e6c4962"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-3/groundtruth.txt", "bytes": 459551, "sha256": "53ad8a25f493794862acd841a8af25aa833227fa42057495fac81bd56269319d"}
+    },
+    "office1-4": {
+      "sequence": "office1-4",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-4/office1-4_0.db3", "bytes": 1778528256, "sha256": "115983eb19c63b39a29bef494b0f6fec2f43b9b9c1ba05c9a579bc5960db97d2"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-4/metadata.yaml", "bytes": 1445, "sha256": "e9130aab8e73aca7129eb64fd9a3d71cc4d10677213a96c6b92f0e2ad9b1edba"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-4/groundtruth.txt", "bytes": 1112238, "sha256": "a5fe84dbf72e5896e675aff996a8353168eb4e238580d2bdd93c36e8ab8cf94d"}
+    },
+    "office1-5": {
+      "sequence": "office1-5",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-5/office1-5_0.db3", "bytes": 3248394240, "sha256": "83eca89e15aa469c3512ea122162eaa74a379bc1350f037a65e2e84ab163bdab"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-5/metadata.yaml", "bytes": 1448, "sha256": "acb111570051414c971838e356504163be9b8041ddb79a121257de54b5439f45"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-5/groundtruth.txt", "bytes": 2036069, "sha256": "a3b829dd85a5a021753ca28b3950b1356fc516a6f58242530d6c260384ad2a30"}
+    },
+    "office1-6": {
+      "sequence": "office1-6",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-6/office1-6_0.db3", "bytes": 2207023104, "sha256": "499336dac431e9044d31b33bbd31f026865b61e0826c29ba4556dad00c68f880"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-6/metadata.yaml", "bytes": 1447, "sha256": "3e242007647789e029fcefb3a44ba123e7eed9e8526e01a874998ece5d55479e"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-6/groundtruth.txt", "bytes": 1386159, "sha256": "c1b7dec3915100731e3857debeaeeb3abbfd0ca3c47c2589abfd7443deb20682"}
+    },
+    "office1-7": {
+      "sequence": "office1-7",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/office1-7/office1-7_0.db3", "bytes": 2332524544, "sha256": "2cb51a13f75b092247b03ff0079da9d0e2f3bcaff97c89291a516312e61ece90"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/office1-7/metadata.yaml", "bytes": 1447, "sha256": "428921e6bab9ac67bc4e48fc4470c2222e797916ea209a36bdc4606f78599cb9"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/office1-7/groundtruth.txt", "bytes": 1473793, "sha256": "2c3f3985f457fea50001fb0ce51c9a4f0560494127b12f3ec8cad0f038160a60"}
+    },
+    "home1-1": {
+      "sequence": "home1-1",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/home1-1/home1-1_0.db3", "bytes": 9377079296, "sha256": "308fe3afb87a8df0d22749e42edb2b2e84b0827031d29388ddb59db589054205"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/home1-1/metadata.yaml", "bytes": 1446, "sha256": "a8ea318ba7e588633eeb600a1c85e3ea9713fe7e944ee0ab504220e9b00a7993"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/home1-1/groundtruth.txt", "bytes": 334222, "sha256": "e8347e27e1b50976eecbed21a2072c37e775e465452eafb622ba976b0e464d61"}
+    },
+    "home1-2": {
+      "sequence": "home1-2",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/home1-2/home1-2_0.db3", "bytes": 6128701440, "sha256": "9144281d27ed727b5885902367a06de8db499bc8bb8bc09ed6d19659abf6280c"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/home1-2/metadata.yaml", "bytes": 1444, "sha256": "1b478b520703ee48535023ca3b5dda0345ba4dcffa2c9965083ec2c81f97e405"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/home1-2/groundtruth.txt", "bytes": 98848, "sha256": "42d04ce7491366de91e636343e483639219295bec3870feaa2ea9e7e2badb8d2"}
+    },
+    "home1-3": {
+      "sequence": "home1-3",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/home1-3/home1-3_0.db3", "bytes": 5392781312, "sha256": "e208624971b272a888d37ba2a64e123122483375226baf3b7ef7fefb9bea1823"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/home1-3/metadata.yaml", "bytes": 1444, "sha256": "c049e69a03e90de36ab7c8a958e74d9b257c30fcd675326f17965ff420a865f4"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/home1-3/groundtruth.txt", "bytes": 253396, "sha256": "24040281532e3bc7fd2b147a80ab0f21708418238f85c4f516fabd4d6639b41f"}
+    },
+    "home1-4": {
+      "sequence": "home1-4",
+      "source_class": "corrected_external_usb_backup",
+      "db3": {"path": "${EXTERNAL_ROOT}/usb_117g_backup_20260822_6745-2301/home_v3_20260818/bags/home1-4/home1-4_0.db3", "bytes": 4352278528, "sha256": "427797fd5bb2f7dbeaf92060bd3c3d99d1b78c3cce376bdbf5d8676e4a7baee7"},
+      "metadata": {"path": "${EXTERNAL_ROOT}/usb_117g_backup_20260822_6745-2301/home_v3_20260818/bags/home1-4/metadata.yaml", "bytes": 1444, "sha256": "aa600a3a24612a9b646ff9c32b245a83bc75d12cca2ba4aee4922c60859d52c0"},
+      "ground_truth": {"path": "${EXTERNAL_ROOT}/usb_117g_backup_20260822_6745-2301/home_v3_20260818/raw/home1-4/groundtruth.txt", "bytes": 161365, "sha256": "99225886aecddc04b75ac33a10fc8f8b7d1e34aaf2976b30c6f4eb8393a39d8b"}
+    },
+    "home1-5": {
+      "sequence": "home1-5",
+      "db3": {"path": "${DATA_ROOT}/openloris_ros2/home1-5/home1-5_0.db3", "bytes": 1592541184, "sha256": "9817b45a2e0e65b1180755811c7aa3b0e74841ed8091908392226b4d7e2b44f7"},
+      "metadata": {"path": "${DATA_ROOT}/openloris_ros2/home1-5/metadata.yaml", "bytes": 1441, "sha256": "1f8924121ddb65740cf5b1eca08084e793bc0d28d01df1f111370044a2c2d9e8"},
+      "ground_truth": {"path": "${DATA_ROOT}/openloris/home1-5/groundtruth.txt", "bytes": 38796, "sha256": "d21af7df33d20302fdcdb7740bf6447ec31a737ef55f1da1f7c00bd5eb387b0c"}
+    }
+  }
+}

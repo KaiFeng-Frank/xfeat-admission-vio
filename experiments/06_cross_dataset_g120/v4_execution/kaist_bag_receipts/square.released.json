@@ -1,0 +1,117 @@
+{
+  "adapter_receipt": {
+    "counts": {
+      "/d400/aligned_depth/image": 4729,
+      "/d400/color/image": 4729,
+      "/d400/imu": 18676
+    },
+    "estimator_run": false,
+    "first_input_header_ns": {
+      "/d400/aligned_depth/image": 1624246211790973415,
+      "/d400/color/image": 1624246211790973415,
+      "/d400/imu": 1624246211787047548
+    },
+    "first_input_record_ns": {
+      "/d400/aligned_depth/image": 1624246211790973415,
+      "/d400/color/image": 1624246211790973415,
+      "/d400/imu": 1624246211787047548
+    },
+    "first_output_header_ns": {
+      "/d400/aligned_depth/image": 1624246211761014882,
+      "/d400/color/image": 1624246211761014882,
+      "/d400/imu": 1624246211787047548
+    },
+    "first_output_record_ns": {
+      "/d400/aligned_depth/image": 1624246211761014882,
+      "/d400/color/image": 1624246211761014882,
+      "/d400/imu": 1624246211787047548
+    },
+    "ground_truth_read": false,
+    "image_shift_applied_to": [
+      "header_timestamp",
+      "bag_record_timestamp"
+    ],
+    "image_shift_ns": -29958533,
+    "imu_policy": "byte-values-preserved; header and record timestamps unshifted",
+    "last_input_header_ns": {
+      "/d400/aligned_depth/image": 1624246372470393025,
+      "/d400/color/image": 1624246372470393025,
+      "/d400/imu": 1624246398587792090
+    },
+    "last_input_record_ns": {
+      "/d400/aligned_depth/image": 1624246372470393025,
+      "/d400/color/image": 1624246372470393025,
+      "/d400/imu": 1624246398587792090
+    },
+    "last_output_header_ns": {
+      "/d400/aligned_depth/image": 1624246372440434492,
+      "/d400/color/image": 1624246372440434492,
+      "/d400/imu": 1624246398587792090
+    },
+    "last_output_record_ns": {
+      "/d400/aligned_depth/image": 1624246372440434492,
+      "/d400/color/image": 1624246372440434492,
+      "/d400/imu": 1624246398587792090
+    },
+    "max_frames_per_image_stream": 0,
+    "numpy": "2.4.4",
+    "output_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+    "output_bag_bytes": 7273490978,
+    "output_bag_sha256": "38d7e5c88f3d63508338701ad3c39d8b7252cf26592c086bf3e38a1907a3fe93",
+    "python_executable": "${CONDA_ROOT}/bin/python3.13",
+    "python_executable_sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+    "rosbags": "0.11.1",
+    "schema": "g120-kaist-ros2-to-ros1-adapter-v1",
+    "scoring_run": false,
+    "sequence": "square",
+    "shifted_color_stamp_sequence": {
+      "count": 4729,
+      "encoding": "concatenated_little_endian_signed_int64_ns",
+      "sha256": "f515807b6521be750906844305908991b0f565fa41673ce7356c33e49181b002"
+    },
+    "source_bag": "${DATA_ROOT}/kaist_vio/square_ros2",
+    "source_bag_identity": {
+      "files": [
+        {
+          "bytes": 1383,
+          "path": "${DATA_ROOT}/kaist_vio/square_ros2/metadata.yaml",
+          "sha256": "684621067e588c7badc5cba9a1b41e2a0357e59bbe44be0cc0d1b23b83b1326b"
+        },
+        {
+          "bytes": 7279722496,
+          "path": "${DATA_ROOT}/kaist_vio/square_ros2/square_ros2.db3",
+          "sha256": "ac34901114f39b5932cc7f4e640842e9e525c95a437906c417f253a4b88566e2"
+        }
+      ],
+      "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+      "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "path": "${DATA_ROOT}/kaist_vio/square_ros2"
+    },
+    "status": "PASS_FULL_ADAPTATION",
+    "topics_unchanged": [
+      "/d400/color/image",
+      "/d400/aligned_depth/image",
+      "/d400/imu"
+    ]
+  },
+  "deleted_staged_bag_sha256": "38d7e5c88f3d63508338701ad3c39d8b7252cf26592c086bf3e38a1907a3fe93",
+  "recovery": "full shifted bag is reproducible from the hash-bound ROS2 source and adapter",
+  "schema": "g120-kaist-staged-bag-release-v4",
+  "sequence": "square",
+  "staged_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+  "staged_input_disposition": "DELETED_REPRODUCIBLE_V4_TEMPORARY",
+  "terminal_runs": {
+    "off": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/square/RUN_RECEIPT.json",
+      "receipt_sha256": "cf4873a20e7213b5effe3a31564d00451271f29266655ae6e449d173fbff4679",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "23b39fe7dadb052e2128fb02ec6708e8587b3e36e70d36dfbaead9ab4218a9f0"
+    },
+    "on": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/square/RUN_RECEIPT.json",
+      "receipt_sha256": "1ed335819ec2b2c7169fcb7604e94c182d5be17b54aeb6b96891606761afd0c7",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "aae93d4c6f2c35070dc6fd8907265bfe573f83ee4288176c4c3901bfca5e474a"
+    }
+  }
+}

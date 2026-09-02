@@ -1,0 +1,36 @@
+--- a/svio/feature_tracking/feature_tracker.h
++++ b/svio/feature_tracking/feature_tracker.h
+@@
+     uint64_t xfeat_propagated_total_ = 0;
+     uint64_t xfeat_emitted_total_ = 0;
++    uint32_t xfeat_low_health_streak_ = 0;
+     vector<array<float, 64>> hybrid_anchor_desc_;
+--- a/svio/feature_tracking/feature_tracker.cpp
++++ b/svio/feature_tracking/feature_tracker.cpp
+@@
+     hybrid_anchor_desc_.swap(kept_desc);
+     hybrid_has_anchor_.swap(kept_has);
+ 
+-    if (xfeat_tick)
++    // Learned admission is reserved for sustained severe KLT/F-RANSAC
++    // shortage.  Ninety tracks is 60% of the frozen 150-track budget; the
++    // second consecutive low-health frame rejects isolated one-frame dips.
++    const size_t xfeat_survivors = cur_pts.size();
++    if (xfeat_survivors < 90u)
++        xfeat_low_health_streak_ = std::min<uint32_t>(2u, xfeat_low_health_streak_ + 1u);
++    else
++        xfeat_low_health_streak_ = 0u;
++    const bool xfeat_admit = xfeat_tick &&
++        (!xfeat_admission_only_ || xfeat_low_health_streak_ >= 2u);
++
++    if (xfeat_admit)
+@@
+-        ROS_WARN("XFEAT-HYBRID frame=%llu mode=%s tick=%d emitted=%zu validated=%d anchored=%zu",
++        ROS_WARN("XFEAT-HYBRID frame=%llu mode=%s tick=%d admit=%d survivors=%zu emitted=%zu validated=%d anchored=%zu",
+                  static_cast<unsigned long long>(xfeat_frames_read_),
+                  xfeat_admission_only_ ? "admission" : "validate",
+-                 xfeat_tick ? 1 : 0, cur_pts.size(), xfeat_validated,
++                 xfeat_tick ? 1 : 0, xfeat_admit ? 1 : 0, xfeat_survivors,
++                 cur_pts.size(), xfeat_validated,
+                  static_cast<size_t>(std::count(hybrid_has_anchor_.begin(),
+                                                 hybrid_has_anchor_.end(), 1)));

@@ -1,0 +1,39 @@
+{
+  "schema": "g120-cross-dataset-protocol-v3-correction-v1",
+  "status": "NARROW_CORRECTION_PRESERVES_V2_HISTORY",
+  "historical_protocol": {
+    "freeze_path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/FREEZE.json",
+    "freeze_sha256": "bbe298386abedd387653e106c4b677e6d003534fa55e716b165499e56cb44770",
+    "protocol_path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/PROTOCOL.md",
+    "protocol_sha256": "b0f41d0a817685ea79d6fe71e0f0bc94962b1a22373e381f46f7af7071a9f75c",
+    "stale_manifest_path": "${SANDBOX_ROOT}/g120_cross_dataset_protocol/SHA256SUMS",
+    "stale_manifest_sha256": "2cb91d4245a3aa7d2eba972a33afa8f4f038028a1f2e99687aa28226698a2cc4",
+    "stale_manifest_is_not_an_identity_authority": true
+  },
+  "corrections": {
+    "artifact_identity": "The actual hashes above supersede only the two stale rows in the historical SHA256SUMS file.",
+    "kaist_metric": {
+      "registered_wrapper_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+      "underlying_t3_scorer_sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07"
+    },
+    "openloris_metric": {
+      "scorer_sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3"
+    },
+    "execution_arm_label_mapping": {
+      "kaist": {"on": "g120_on", "off": "g120_matched_off"},
+      "openloris": {
+        "g120_on": "g120_on",
+        "g120_off": "g120_matched_off",
+        "released_svio": "formal_svio_resized"
+      }
+    },
+    "single_scorer_wording_withdrawn": true
+  },
+  "unchanged": [
+    "candidate and cohort",
+    "sequence and arm order",
+    "metric definitions and gates",
+    "single-run/no-retry rule",
+    "no production writes and reserved-unseen exclusion"
+  ]
+}

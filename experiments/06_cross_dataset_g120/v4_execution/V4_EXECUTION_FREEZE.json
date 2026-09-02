@@ -1,0 +1,427 @@
+{
+  "accepted_v4_receipt_schemas": {
+    "execution_freeze": "g120-cross-dataset-v4-execution-freeze-v1",
+    "execution_state": "g120-cross-dataset-v4-execution-state-v1",
+    "kaist_attempt": "g120-kaist-formal-attempt-v4",
+    "kaist_normalization": "g120-kaist-time-restoration-v4",
+    "kaist_registered_score": "table2.addendum-score.v1",
+    "kaist_staged_release": "g120-kaist-staged-bag-release-v4",
+    "kaist_terminal": "g120-kaist-formal-run-v4",
+    "openloris_run": "g120a-openloris-formal-run-v4",
+    "openloris_score": "g120a-openloris-formal-score-v4",
+    "openloris_terminal": "g120-cross-dataset-v4-terminal-receipt-v1"
+  },
+  "aggregator_fixed_gates": {
+    "attribution_delta": "ATE_ON_CM_MINUS_ATE_OFF_CM",
+    "candidate_min_temporal_coverage": 0.5,
+    "candidate_vs_comparator_coverage_tolerance": 0.02,
+    "failure_or_nonnumeric_candidate_is_loss": true,
+    "families_must_pass_independently": true,
+    "kaist_broad_pass": {
+      "rows": 11,
+      "wins": 7
+    },
+    "learning_credit_requires_system_win_and_on_strictly_better_than_off": true,
+    "minimum_associations": 3,
+    "nonnumeric_comparator_cannot_yield_a_win": true,
+    "openloris_broad_pass": {
+      "rows": 12,
+      "wins": 8
+    },
+    "pooled_cross_family_mean": false,
+    "strict_lower_ate_required": true
+  },
+  "aggregator_freeze_path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/AGGREGATOR_FREEZE.json",
+  "aggregator_freeze_sha256": "e74886019261a2cdac79db2f3927b50521e46af31b6d3e42de95539d00da1733",
+  "aggregator_output_directory": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/cross_dataset_verdict",
+  "aggregator_script_path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/aggregate_results.py",
+  "aggregator_script_sha256": "3fc3a4feb5f31ddb2f1047ab966175c3bf487afe6af8ad33f45a14994a5f21de",
+  "aggregator_verdict_schema": "g120-cross-dataset-v4-verdict-v1",
+  "automatic_retry": false,
+  "campaign_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902",
+  "cross_dataset_verdict_directory": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/cross_dataset_verdict",
+  "estimator_execution_authorized": true,
+  "execution_order": [
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 1,
+      "sequence": "circle"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 2,
+      "sequence": "circle"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 3,
+      "sequence": "circle_fast"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 4,
+      "sequence": "circle_fast"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 5,
+      "sequence": "circle_head"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 6,
+      "sequence": "circle_head"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 7,
+      "sequence": "infinite"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 8,
+      "sequence": "infinite"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 9,
+      "sequence": "infinite_fast"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 10,
+      "sequence": "infinite_fast"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 11,
+      "sequence": "infinite_head"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 12,
+      "sequence": "infinite_head"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 13,
+      "sequence": "square"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 14,
+      "sequence": "square"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 15,
+      "sequence": "square_fast"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 16,
+      "sequence": "square_fast"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 17,
+      "sequence": "square_head"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 18,
+      "sequence": "square_head"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 19,
+      "sequence": "rotation"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 20,
+      "sequence": "rotation"
+    },
+    {
+      "arm": "on",
+      "family": "kaist",
+      "ordinal": 21,
+      "sequence": "rotation_fast"
+    },
+    {
+      "arm": "off",
+      "family": "kaist",
+      "ordinal": 22,
+      "sequence": "rotation_fast"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 23,
+      "sequence": "office1-1"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 24,
+      "sequence": "office1-1"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 25,
+      "sequence": "office1-1"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 26,
+      "sequence": "office1-2"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 27,
+      "sequence": "office1-2"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 28,
+      "sequence": "office1-2"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 29,
+      "sequence": "office1-3"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 30,
+      "sequence": "office1-3"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 31,
+      "sequence": "office1-3"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 32,
+      "sequence": "office1-4"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 33,
+      "sequence": "office1-4"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 34,
+      "sequence": "office1-4"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 35,
+      "sequence": "office1-5"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 36,
+      "sequence": "office1-5"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 37,
+      "sequence": "office1-5"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 38,
+      "sequence": "office1-6"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 39,
+      "sequence": "office1-6"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 40,
+      "sequence": "office1-6"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 41,
+      "sequence": "office1-7"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 42,
+      "sequence": "office1-7"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 43,
+      "sequence": "office1-7"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 44,
+      "sequence": "home1-1"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 45,
+      "sequence": "home1-1"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 46,
+      "sequence": "home1-1"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 47,
+      "sequence": "home1-2"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 48,
+      "sequence": "home1-2"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 49,
+      "sequence": "home1-2"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 50,
+      "sequence": "home1-3"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 51,
+      "sequence": "home1-3"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 52,
+      "sequence": "home1-3"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 53,
+      "sequence": "home1-4"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 54,
+      "sequence": "home1-4"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 55,
+      "sequence": "home1-4"
+    },
+    {
+      "arm": "g120_on",
+      "family": "openloris",
+      "ordinal": 56,
+      "sequence": "home1-5"
+    },
+    {
+      "arm": "g120_off",
+      "family": "openloris",
+      "ordinal": 57,
+      "sequence": "home1-5"
+    },
+    {
+      "arm": "released_svio",
+      "family": "openloris",
+      "ordinal": 58,
+      "sequence": "home1-5"
+    }
+  ],
+  "execution_order_controller_path": "${SANDBOX_ROOT}/g120_cross_dataset_control_v4/execution_order.py",
+  "execution_order_controller_sha256": "aeca5fc6a378b0264b7541fee7a4ff231cf0d5ed10a736cac4e0d36d14d352c9",
+  "execution_state_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/V4_EXECUTION_STATE.json",
+  "kaist_registered_scorer_sha256": "1bdd755efda7740bd9ee6bea76e99daba1f23af094a15cbcd4575ef2bf852890",
+  "kaist_run_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs",
+  "kaist_score_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/scores",
+  "kaist_score_wrapper_path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/score_kaist.py",
+  "kaist_score_wrapper_sha256": "8d15668455dbe42d62a5fd311050c2b80f0af68477bc44e997596661d35d0eab",
+  "kaist_self_test_seal_path": "${SANDBOX_ROOT}/g120_kaist_duel_v4/KAIST_SELF_TEST_SEAL.json",
+  "kaist_self_test_seal_sha256": "211d37360ee115fe6bec1c42bbcef296323f9267dd3d544eb75c8fc9a3d27125",
+  "kaist_underlying_t3_scorer_sha256": "c695f08b19f75239b2150ecf841fb2dad55e75d4566e6ca14e6ef84cea444e07",
+  "openloris_input_cohort_seal_sha256": "017e276c1d757555d9f9c4f9387338ae07f13d36fcaf6e43f174b76fd3f6c31c",
+  "openloris_input_materialization_seal_sha256": "444e2b91e65043703068ff430e33998b8b0e3795db2ed8bf41b2284217dcda25",
+  "openloris_run_and_score_root": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/openloris/runs",
+  "openloris_runner_seal_sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a",
+  "openloris_score_wrapper_path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/score_openloris.py",
+  "openloris_score_wrapper_sha256": "e21765626aa809d8975f91469a1511a841812dbe3c4a58482d7afd4515fc0b66",
+  "openloris_scorer_seal_path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/SCORER_SEAL.json",
+  "openloris_scorer_seal_sha256": "acc4f908c6f752b7d000c4fa9320328116d6c679cd25e3eae9054a644643e14f",
+  "openloris_scorer_sha256": "11f6550bc2228a05d8d862772f68aacfa37eac8120464a651aa2ad849d6f80b3",
+  "openloris_self_test_seal_path": "${SANDBOX_ROOT}/g120_openloris_duel_v4/formal/RUNNER_SELF_TEST_PASS.json",
+  "openloris_self_test_seal_sha256": "656f15b070c4459d383c4ec671a13656c2d415defc9964df7b1003dd2b5d703a",
+  "protocol_freeze_sha256": "bbe298386abedd387653e106c4b677e6d003534fa55e716b165499e56cb44770",
+  "protocol_v3_correction_sha256": "9c12f99562a63f4f5cbc763231ea862f3ff9a5027f24d04eb178625197033050",
+  "protocol_v3_manifest_sha256": "ec9e6a2889a9b384b3d4ca6802f9aa6c405dc974b7a140324fb7cb280dabc018",
+  "protocol_v4_correction_sha256": "65e64a2a4b54834ee89dc75f8ba932bf7e063b93197f1202b691b7109d48115a",
+  "runtime_envelope_sha256": "ab435ebe115ae35066e15db6cd5195698b5b994cdae8758470af7b0808228211",
+  "schema": "g120-cross-dataset-v4-execution-freeze-v1",
+  "score_only_after_all_58_terminal": true,
+  "shared_lock_path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/locks/g120_estimator_serial.lock",
+  "status": "GO",
+  "v3_execution_receipts_accepted": false,
+  "v3_invalidation_incident_sha256": "c5fb8abd0bc30cf461590f12b1f2c57a6ede8abc81f7183c4100471d5a441ffa"
+}

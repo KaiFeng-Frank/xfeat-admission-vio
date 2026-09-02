@@ -1,0 +1,75 @@
+diff --git a/svio/feature_tracking/feature_tracker.cpp
+index 97fff1a..8a21561 100644
+--- a/svio/feature_tracking/feature_tracker.cpp
++++ b/svio/feature_tracking/feature_tracker.cpp
+@@ -583,6 +583,8 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+         ++age;
+ 
+     // Preserve the frozen KLT front end's two-view geometric rejection.
++    bool xfeat_health_valid = false;
++    size_t xfeat_post_f_survivors = cur_pts.size();
+     if (prev_pts.size() >= 8)
+     {
+         vector<cv::Point2f> un_prev(prev_pts.size()), un_cur(cur_pts.size());
+@@ -606,9 +608,24 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+             reduceVector(cur_pts, status);
+             reduceVector(ids, status);
+             reduceVector(track_cnt, status);
++            xfeat_health_valid = true;
++            xfeat_post_f_survivors = cur_pts.size();
+         }
+     }
+ 
++    // A two-frame post-F shortage is the only learned-admission selector.
++    // Four fifths of MAX_CNT is 120 under the frozen 150-track budget.
++    if (xfeat_admission_only_)
++    {
++        const size_t threshold = static_cast<size_t>((4 * MAX_CNT) / 5);
++        if (xfeat_health_valid && xfeat_post_f_survivors < threshold)
++            xfeat_low_health_streak_ = std::min<uint32_t>(2u, xfeat_low_health_streak_ + 1u);
++        else
++            xfeat_low_health_streak_ = 0u;
++    }
++    const bool xfeat_health_ready = !xfeat_admission_only_ ||
++                                    xfeat_low_health_streak_ >= 2u;
++
+     vector<uchar> proposal_used(proposal_pts.size(), 0);
+     int xfeat_validated = 0;
+     if (!xfeat_admission_only_ && xfeat_tick && !cur_pts.empty() && !proposal_desc.empty())
+@@ -742,7 +759,9 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+     hybrid_anchor_desc_.swap(kept_desc);
+     hybrid_has_anchor_.swap(kept_has);
+ 
+-    if (xfeat_tick)
++    const bool xfeat_admit = xfeat_tick && xfeat_health_ready;
++
++    if (xfeat_admit)
+     {
+         vector<int> score_order(proposal_pts.size());
+         for (int i = 0; i < static_cast<int>(score_order.size()); ++i)
+@@ -790,10 +809,11 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+     xfeat_propagated_total_ += static_cast<uint64_t>(xfeat_validated);
+     xfeat_emitted_total_ += static_cast<uint64_t>(cur_pts.size());
+     if (xfeat_frames_read_ == 1 || xfeat_frames_read_ % 100 == 0)
+-        ROS_WARN("XFEAT-HYBRID frame=%llu mode=%s tick=%d emitted=%zu validated=%d anchored=%zu",
++        ROS_WARN("XFEAT-HYBRID frame=%llu mode=%s tick=%d admit=%d survivors=%zu emitted=%zu validated=%d anchored=%zu",
+                  static_cast<unsigned long long>(xfeat_frames_read_),
+                  xfeat_admission_only_ ? "admission" : "validate",
+-                 xfeat_tick ? 1 : 0, cur_pts.size(), xfeat_validated,
++                 xfeat_tick ? 1 : 0, xfeat_admit ? 1 : 0, xfeat_post_f_survivors,
++                 cur_pts.size(), xfeat_validated,
+                  static_cast<size_t>(std::count(hybrid_has_anchor_.begin(),
+                                                 hybrid_has_anchor_.end(), 1)));
+ 
+diff --git a/svio/feature_tracking/feature_tracker.h
+index f5c2ad0..da9518f 100644
+--- a/svio/feature_tracking/feature_tracker.h
++++ b/svio/feature_tracking/feature_tracker.h
+@@ -86,6 +86,7 @@ private:
+     vector<int> xfeat_prev_proposal_age_;
+     uint64_t xfeat_propagated_total_ = 0;
+     uint64_t xfeat_emitted_total_ = 0;
++    uint32_t xfeat_low_health_streak_ = 0;
+     vector<array<float, 64>> hybrid_anchor_desc_;
+     vector<uchar> hybrid_has_anchor_;
+ 

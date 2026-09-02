@@ -1,75 +1,88 @@
-# SVIO
-## A RGB-D Visual-Inertial Odometry Leveraging Structural Regularity 
+# xfeat-admission-vio
 
-**Related Paper**
+**Learned identity supply for classical visual-inertial front ends — a sidecar ABI
+any KLT tracker can consume, a reference integration into an RGB-D VIO, and a path
+from desktop replay to the RK3588 NPU.**
 
-Pengfei Gu and Ziyang Meng, **"S-VIO: Exploiting Structural Constraints for RGB-D Visual Inertial Odometry"**, *IEEE Robotics and Automation Letters*, 2023. [pdf](https://ieeexplore.ieee.org/document/10107752)
+Classical VIO front ends die in one specific way: the tracker starves, the refill
+detector hands the optimizer texture-less garbage, and the sliding window folds the
+damage into its prior. This project puts a small pretrained network (XFeat) in
+exactly one seat — **the supplier of new-track candidates, only while the tracker
+is starving** — and leaves the estimator's mathematics alone. The network proposes
+identity; it never proposes motion.
 
-## 1. Prerequisites
-### 1.1 **Ubuntu** and **ROS**
-Test on Ubuntu 18.04 and ROS Melodic. Follow [ROS Installation](http://wiki.ros.org/ROS/Installation). The following ROS pacakges are needed:
-```
-    sudo apt-get install ros-YOUR_DISTRO-cv-bridge ros-YOUR_DISTRO-tf ros-YOUR_DISTRO-message-filters ros-YOUR_DISTRO-image-transport
-```
+The goal is a one-stop learned front-end kit: pluggable feature backbones behind
+one binary sidecar format, gate policies that are identity-blind and auditable,
+adapters for the common open-source estimators, and device receipts for embedded
+NPUs — so that "add a learned detector to my VIO" becomes a configuration change
+with a reproducible ledger, not a research project.
 
-### 1.2 **Ceres Solver**
-Follow [Ceres Installation](http://ceres-solver.org/installation.html).
+## Where it stands: release 1.0
 
-## 2. Build SVIO on ROS
-Clone the repository and catkin_make:
-```
-    cd YOUR_PATH_TO_SVIO/SVIO/src
-    git clone https://github.com/oranfire/SVIO.git
-    cd ../
-    catkin_make
-```
-Before running the SVIO, remember to source the script first:
-```
-    source YOUR_PATH_TO_SVIO/SVIO/devel/setup.bash
-```
+* **One frozen candidate, two datasets, three sequence families.** Starvation-gated
+  admission wins eleven of twelve VCU-RVI handheld sequences against S-VIO and nine of
+  eleven KAIST-VIO UAV sequences against a corrected S-VIO replay, with no
+  per-sequence switch. Learning is credited only where the matched control says so:
+  three of six on Light, six of eleven on KAIST, including the two rows where the
+  control collapses and the gated build holds. Full tables and provenance:
+  [`docs/LEDGER.md`](docs/LEDGER.md).
+* **The mechanism fits on one page:** [`docs/MECHANISM.md`](docs/MECHANISM.md).
+  Two bits of state, one budget-relative threshold, an external health signal.
+* **Reproducible to the byte at the source level.** The gate-patched tracker hashes
+  to the values frozen before the held-out sequences were opened
+  (`PROVENANCE.json`); every stage under `experiments/` carries its pre-execution
+  contract and post-execution receipts.
+* **Deployment split proven at the compiler.** The fixed-shape XFeat backbone
+  compiles wholly to RK3588 NPU compute operators (`deploy/rknn/`); the sparse tail,
+  matching and the gate stay on CPU.
 
-## 3. Usage
-### 3.1 VCU-RVI handheld dataset 
-Download [VCU-RVI Dataset](https://github.com/rising-turtle/VCU_RVI_Benchmark). We use the time-synchronized IMU measurements and RGB-D images for localization. Open two terminals, launch the estimator and play the bag respectively. Take motion_1 for example: 
-```
-    roslaunch YOUR_PATH_TO_SVIO/SVIO/src/launch/svio_vcu_run.launch
-    rosbag play YOUR_PATH_TO_BAG/lab-motion1.bag
-```
-It will automounsly launch the rviz for visualization.
+![sealed results](docs/figures/results_vcu_kaist.png)
 
-### 3.2 OpenLORIS-Scene wheeled robot dataset
-Download [OpenLORIS-Scene Dataset](https://lifelong-robotic-vision.github.io/dataset/scene). Although it contains multiple sensors, we only use the RGB-D images and IMU measurements from the d400 depth camera. Open two terminals, launch the estimator and play the bag respectively. Take home1-1 for example: 
-```
-    roslaunch YOUR_PATH_TO_SVIO/SVIO/src/launch/svio_openloris_run.launch
-    rosbag play YOUR_PATH_TO_BAG/home1-1.bag
-```
-Note that the bag files provided by the OpenLORIS-Scene dataset record the acceleration and the angular velocity in two topics. Therefore before playing the bag, we should merge these two topics into one topic by using the script provided by [OpenLORIS-Scene Tools](https://github.com/lifelong-robotic-vision/openloris-scene-tools) first:
-```
-    python merge_imu_topics.py YOUR_PATH_TO_BAG/home1-1.bag
-```  
+## Layout
 
-### 3.3 EuRoC MAV dataset
-As a bonus, SVIO also provides interface for a stereo-inertial dataset, [EuRoC Dataset](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets), where the depth image is computed from the rectified stereo images using the SGM algorithm. Take mh01 for example:
 ```
-    roslaunch YOUR_PATH_TO_SVIO/SVIO/src/launch/svio_euroc_run.launch
-    rosbag play YOUR_PATH_TO_BAG/mh01.bag
+svio/ camera_models_in/ config/ launch/   the S-VIO fork itself, at the repository root as upstream laid it out, with the XFeat sidecar reader, three front-end modes, and the gate
+patches/                the three diffs that turn upstream S-VIO into this estimator, in order
+sidecar/                XFSIDE01 writer (xfs_materialize.py), header verifier, pinned sparse-XFeat implementation
+models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) and its export receipt
+deploy/rknn/            RKNN-Toolkit2 conversion tool and same-run receipts (the .rknn bytes are not redistributed)
+tools/scoring/          the pinned scorer and normalizer used for every number in the ledger
+experiments/            stage-by-stage contracts, configs, receipts, trajectories, telemetry
+docs/                   mechanism, ledger, reproduction recipe, figures
 ```
 
-## 4. Credits
-Many thanks to the authors of [VINS-Mono](https://github.com/HKUST-Aerial-Robotics/VINS-Mono), [DUI-VIO](https://github.com/rising-turtle/DUI_VIO) and [ManhattanSLAM](https://github.com/razayunus/ManhattanSLAM). Our system is built on the first two projects, and part of codes are borrowed from the third project.
+## Quick start (replay)
 
-## 5. Citation
-```
-    @ARTICLE{10107752,
-      author={Gu, Pengfei and Meng, Ziyang},
-      journal={IEEE Robotics and Automation Letters}, 
-      title={S-VIO: Exploiting Structural Constraints for RGB-D Visual Inertial Odometry}, 
-      year={2023},
-      volume={8},
-      number={6},
-      pages={3542-3549},
-      doi={10.1109/LRA.2023.3270033}}
+```bash
+# 1. sidecar for one bag (ROS 1 .bag or ROS 2 directory), 640x480 color topic
+python3 sidecar/xfs_materialize.py --bag /data/vcu_rvi/light1_ros2 \
+    --topic /d400/color/image --out /scratch/light1.xfs
+python3 sidecar/verify_xfs_header.py /scratch/light1.xfs
+
+# 2. build the estimator (ROS Noetic, OpenCV 4.2, Ceres 1.14) — see docs/REPRODUCE.md for the container recipe
+# 3. run with the sidecar (ON) or without it (matched OFF)
+SVIO_XFEAT_XFS=/scratch/light1.xfs SVIO_XFEAT_MODE=admission \
+    rosrun svio svio_syn_node _config_file:=experiments/02_vcu_motion_full_line/config_full_line.yaml
 ```
 
-## 6. Licence
-The source code is released under [GPLv3](http://www.gnu.org/licenses/) license.
+The full recipe, including the exact container, the scorer invocation and the
+verification record of this repository's own rebuild, is in
+[`docs/REPRODUCE.md`](docs/REPRODUCE.md).
+
+## Version line
+
+| Version | What it is |
+|---|---|
+| **1.0** | final code release: frozen candidate, sidecar tooling, sealed VCU + KAIST ledger, RKNN compile receipts, byte-identical rebuild verification |
+| 1.x | on-device receipts from the RK3588S campaign as they are measured; no code change planned |
+
+See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
+
+## License and attribution
+
+GPL-3.0 (the estimator is a derivative of S-VIO). XFeat is Apache-2.0. Provenance,
+third-party notices and what is deliberately not redistributed:
+[`NOTICE.md`](NOTICE.md).
+
+If you build on the gate or the sidecar format, please cite S-VIO (Gu and Meng,
+RA-L 2023) and XFeat (Potje et al., CVPR 2024) alongside this repository.

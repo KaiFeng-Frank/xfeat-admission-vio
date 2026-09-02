@@ -1,0 +1,64 @@
+{
+  "schema": "vcu-light-g120a-final-candidate-v1",
+  "status": "FROZEN_BEFORE_ANY_G120A_ESTIMATOR_RUN_OR_EVEN_SEQUENCE_REVEAL",
+  "frozen_at": "2026-09-01T19:59:46+08:00",
+  "candidate": {
+    "name": "G120-A",
+    "scope": "XFeat admission only; estimator and full line/plane/Atlanta backend unchanged",
+    "health_signal": "post-F-RANSAC KLT survivor count before spacing and learned admission",
+    "rule": "on every RGB frame, increment a capped two-frame streak iff F-RANSAC is valid and survivors < 120; otherwise reset; admit XFeat only on the existing 10 Hz tick when streak >= 2",
+    "max_tracks": 150,
+    "sequence_identity_input": false,
+    "ground_truth_input": false,
+    "history_state_bits": 2,
+    "per_sequence_tuning": false,
+    "further_revision_after_even_reveal": false
+  },
+  "selection": {
+    "allowed_tune_sequences": ["light1", "light3", "light5"],
+    "locked_evaluation_sequences": ["light2", "light4", "light6"],
+    "candidate0_odd_result": "3/3 wins versus paper S-VIO; causal gains on light3 and light5; light1 harmed versus matched OFF",
+    "reason_for_single_revision": "reduce unnecessary learned admission on healthy light1 while retaining broad motion-series exposure",
+    "rejected_unrun_candidate": "T90 two-frame gate; rejected before estimator execution because the motion-series proxy predicted excessive loss of useful learned exposure",
+    "gate_probe_ground_truth_read": false
+  },
+  "artifacts": {
+    "binary_sha256": "17758d517294adf1db8cae1df0f01fac8c569e1393c5f05da8ca32ecf8065ad0",
+    "libsvio_sha256": "22ebe897f74946ca6791e919949572285622900707de01c9de7a4ac5bd696ddc",
+    "patch_sha256": "9ec9feb6eb7f3e20c52f68744685cc50fb6c2c1cb0b8e092750c58c89cf81915",
+    "patched_feature_tracker_cpp_sha256": "243b1607b415dc3b69c071e6512baccbb14aa8b6fbe02e229571027d4d1fefc6",
+    "patched_feature_tracker_h_sha256": "3583bd961743648a7c9e96e1500799109326117cb989ce42c89e1183a19a3df0",
+    "base_config_sha256": "bfcec51a58b26e44430bccdf6b070298a27a57853f9748d8b2175ecadaf82008",
+    "input_freeze_sha256": "5003e2a890610e41b157b0009d18e633b699f0cc20d3ee3f76aec9f64dc1fee0",
+    "target_contract_sha256": "43ca533cb6803afb8b072a3ab63727ff51c9c874e3fcee30b40e86fda5d8d0db"
+  },
+  "configs_sha256": {
+    "t120_light1": "a026f9e5ced1ddba402fa6ea1cfc07ef69159194a5c8c7284149be27443c9f65",
+    "t120_light2": "6b2c36bd2bbe3c8519b1fad4e2383d6d10be9f40534f556683b5190051adcef8",
+    "t120_light3": "edf7e5c24b0362b71e4a84511848c3e7467288fcc138a7c3f1504e17d3d430c9",
+    "t120_light4": "35d0163d250e9a05556e1716015cd0379972d8329af0437bf814c00b967a39d8",
+    "t120_light5": "0725ea7eec35e9019c67cb9e371bd8dcc6c9b56084752f2009cf565820a4f6b5",
+    "t120_light6": "c1d083fe787cd14a55f95d83ba9ef45beb532552d82b49eb95a84671bb876a7b",
+    "t120_off_light1": "3762acc6cc5145ea3e82ec2d6aba77a7036b6f94a219ab29a3261be613be1ddc",
+    "t120_off_light2": "66550f8c6621f26959ce74f663da509fdf76f10f9ba2e072d3ee0e63989ddf4b",
+    "t120_off_light3": "af3dbaf932d5c01846905e89e5e14f4ff9a0d5ad1f03b0fa083283f2c11433c6",
+    "t120_off_light4": "5b577883b14c32138f0cb99f32ba0bb71ee49f37fcfdbc023a28f3b345f66cd4",
+    "t120_off_light5": "568129e5597d7ed8e1389a11134afdfcc819ce4309844bbda3d8fc37dc2c85f9",
+    "t120_off_light6": "d6129fa8c70235939788137588bf023ba234f1f92fe084418dee42490e77e43d"
+  },
+  "runner_sha256": {
+    "contract": "68c2932c9d03a8bf90df213373c5f3628c8fca621b6fd3378120b07a3ae04f21",
+    "prepare_configs": "4163e073f04d61288b1aedcb4464313bae2a111e8b492196a2ae6c6ed0af4e8f",
+    "run_sequence": "e5700e9550cdfd8d74934bd6e0e42a7371563cb199c4f89e621cc6a50fda9e14"
+  },
+  "evaluation": {
+    "primary": "Table-II SE3 ATE RMSE without scale, start offset 0, CR span GT, native body",
+    "minimum_cr": 0.95,
+    "broad_win": "at least 4/6 wins versus paper S-VIO and at least 2/3 locked evaluation wins",
+    "matched_off_sentinel": "G120-A OFF on light1 must be byte-identical to the already-run candidate0 matched OFF trajectory before reuse of the OFF baseline is permitted"
+  },
+  "safety": {
+    "production_writes": false,
+    "reserved_unseen_access": false
+  }
+}

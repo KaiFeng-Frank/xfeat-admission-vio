@@ -1,0 +1,117 @@
+{
+  "adapter_receipt": {
+    "counts": {
+      "/d400/aligned_depth/image": 6128,
+      "/d400/color/image": 6128,
+      "/d400/imu": 21151
+    },
+    "estimator_run": false,
+    "first_input_header_ns": {
+      "/d400/aligned_depth/image": 1624245813497555609,
+      "/d400/color/image": 1624245813497555609,
+      "/d400/imu": 1624245813481696292
+    },
+    "first_input_record_ns": {
+      "/d400/aligned_depth/image": 1624245813497555609,
+      "/d400/color/image": 1624245813497555609,
+      "/d400/imu": 1624245813481696292
+    },
+    "first_output_header_ns": {
+      "/d400/aligned_depth/image": 1624245813467597076,
+      "/d400/color/image": 1624245813467597076,
+      "/d400/imu": 1624245813481696292
+    },
+    "first_output_record_ns": {
+      "/d400/aligned_depth/image": 1624245813467597076,
+      "/d400/color/image": 1624245813467597076,
+      "/d400/imu": 1624245813481696292
+    },
+    "ground_truth_read": false,
+    "image_shift_applied_to": [
+      "header_timestamp",
+      "bag_record_timestamp"
+    ],
+    "image_shift_ns": -29958533,
+    "imu_policy": "byte-values-preserved; header and record timestamps unshifted",
+    "last_input_header_ns": {
+      "/d400/aligned_depth/image": 1624246025006518386,
+      "/d400/color/image": 1624246025006518386,
+      "/d400/imu": 1624246025019206460
+    },
+    "last_input_record_ns": {
+      "/d400/aligned_depth/image": 1624246025006518386,
+      "/d400/color/image": 1624246025006518386,
+      "/d400/imu": 1624246025019206460
+    },
+    "last_output_header_ns": {
+      "/d400/aligned_depth/image": 1624246024976559853,
+      "/d400/color/image": 1624246024976559853,
+      "/d400/imu": 1624246025019206460
+    },
+    "last_output_record_ns": {
+      "/d400/aligned_depth/image": 1624246024976559853,
+      "/d400/color/image": 1624246024976559853,
+      "/d400/imu": 1624246025019206460
+    },
+    "max_frames_per_image_stream": 0,
+    "numpy": "2.4.4",
+    "output_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+    "output_bag_bytes": 9424083509,
+    "output_bag_sha256": "6cbe8f42a287446d892602559ffc7b343af5eaeeadee002da0790e07716e60e3",
+    "python_executable": "${CONDA_ROOT}/bin/python3.13",
+    "python_executable_sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+    "rosbags": "0.11.1",
+    "schema": "g120-kaist-ros2-to-ros1-adapter-v1",
+    "scoring_run": false,
+    "sequence": "infinite_fast",
+    "shifted_color_stamp_sequence": {
+      "count": 6128,
+      "encoding": "concatenated_little_endian_signed_int64_ns",
+      "sha256": "81efa9300fd925d0befd7ffa8087cb59590d0fe1a4609db06d3e1e23079160cd"
+    },
+    "source_bag": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2",
+    "source_bag_identity": {
+      "files": [
+        {
+          "bytes": 9432150016,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2/infinite_fast_ros2.db3",
+          "sha256": "9eaf1a0738ee5b362862f1cdfb02da8719f5a2a6f6c7a089dc354e0f4487f788"
+        },
+        {
+          "bytes": 1397,
+          "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2/metadata.yaml",
+          "sha256": "daee099fe7e420c04f058e953d309f7eddd133695a5a71f58a7599b073143837"
+        }
+      ],
+      "manifest_path": "${SANDBOX_ROOT}/g120_kaist_duel/KAIST_SOURCE_BAGS.json",
+      "manifest_sha256": "5d3ff4e221a3e2b063b34a580a2385fda62c2acdfda35ff03b36728abaa13530",
+      "path": "${DATA_ROOT}/kaist_vio/infinite_fast_ros2"
+    },
+    "status": "PASS_FULL_ADAPTATION",
+    "topics_unchanged": [
+      "/d400/color/image",
+      "/d400/aligned_depth/image",
+      "/d400/imu"
+    ]
+  },
+  "deleted_staged_bag_sha256": "6cbe8f42a287446d892602559ffc7b343af5eaeeadee002da0790e07716e60e3",
+  "recovery": "full shifted bag is reproducible from the hash-bound ROS2 source and adapter",
+  "schema": "g120-kaist-staged-bag-release-v4",
+  "sequence": "infinite_fast",
+  "staged_bag": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/staged_bag/current.bag",
+  "staged_input_disposition": "DELETED_REPRODUCIBLE_V4_TEMPORARY",
+  "terminal_runs": {
+    "off": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/off/infinite_fast/RUN_RECEIPT.json",
+      "receipt_sha256": "af3144c62e0ed203f9f3a0089c2dc7a56992c7e70a03efda30258496a6c67cbe",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "44026e818ac52497697e41c64baa6c4559496e2221e51390d89d822fc85cf316"
+    },
+    "on": {
+      "path": "${EXTERNAL_ROOT}/g120_cross_dataset_v4_20260902/kaist/runs/on/infinite_fast/RUN_RECEIPT.json",
+      "receipt_sha256": "6a542be103798934c3a8cbfd8436a1a9eeec64e19841227b1d70730bf475bddf",
+      "status": "PASS_RUN_NO_SCORE",
+      "trajectory_sha256": "07ff74780b25bb011f9ce025ff305bb7593139f9ba0133f4345b176f5d4d8991"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "xfeat-klt-admission-atlanta-freeze-v1",
+  "status": "FROZEN_AFTER_MOTION4_GO",
+  "sandbox_git_commit": "562cdfeaf6b361d49b7c6a331d1b50df5ae8e0cf",
+  "upstream_svio_commit": "18cdfbcffecedaef593089e66db529becb750327",
+  "algorithm": {
+    "carrier": "KLT plus original F-RANSAC; identities are never changed by XFeat",
+    "xfeat_role": "new-point admission only every third RGB frame (10 Hz at VCU 30 Hz)",
+    "xfeat_descriptor_threshold_role": "unused",
+    "live_track_budget": 150,
+    "min_distance_px": 20,
+    "keyframe_parallax_px": 20,
+    "backend": "frozen Phase2 A3_gmm_plane_atlanta, WINDOW_SIZE=10"
+  },
+  "sha256": {
+    "feature_tracker_cpp": "1e2edf59c87baa5d13d4a9ee201c734bc382de5ce5c49bfb3f7c6de858909979",
+    "feature_tracker_h": "1994caf5817e2e94c736075c8ddf69419eaec1d1c0b45a431f26e20ae14bd00a",
+    "config": "9a67415abf94ec39e321e37ead1dff30d5ffef125f5d3208e7724c3b2355d354",
+    "libsvio": "9efe50165e1864aebb5c38131a72485ad8efe6ba4e10399ee58b4f675971cdc8",
+    "svio_syn_node": "cdc2cb2d7cc0bd0f045566f8cf8dd27c3e8220d51a74e2f7465e8e1a593e6e1a",
+    "xfeat_onnx": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f",
+    "motion4_ros1_temp_bag": "6b82373b6ef83c4ef2e14a56b1d833016861bec9a70c3862b7ca494c5f2820ab"
+  },
+  "ros1_conversion": {
+    "tool": "${DATA_ROOT}/kaist_vio/venv/bin/rosbags-convert",
+    "arguments": "--src ${DATA_ROOT}/vcu_rvi/<sequence>_ros2 --dst <sandbox>/<sequence>.bag --dst-typestore ros1_noetic --include-topic /d400/color/image /d400/aligned_depth/image /d400/imu",
+    "topic_remap_at_playback": "/d400/color/image:=/cam0/color /d400/aligned_depth/image:=/cam0/depth /d400/imu:=/imu",
+    "temporary_bag_policy": "delete each sandbox-generated ROS1 bag after its scored run; source ROS2 is untouched"
+  },
+  "motion4_gate": {
+    "score_receipt": "score_motion4_atlanta_admission/SCORE_RECEIPT.json",
+    "ate_rmse_m": 0.30116120307837163,
+    "cr": 0.9504293653487697,
+    "aoe_median_deg": 2.786800614403056,
+    "svio_target_ate_m": 0.3409,
+    "decision": "GO_MECHANICAL_GENERALIZATION"
+  },
+  "reserved_unseen_policy": "nya_02 and eee_02 are forbidden and were not accessed"
+}
