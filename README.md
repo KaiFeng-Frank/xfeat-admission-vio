@@ -195,6 +195,10 @@ to catch up when the data stops. ATE RMSE in cm, single runs:
 | real-time configuration, ON, sidecar made on the NPU | 939 / 939 | 0.0 s | 16.36 |
 | the same, with the NPU sidecar materializer running concurrently on the A55 cores and the NPU | 939 / 939 | 0.0 s | 16.36 |
 
+How the work is divided on the SoC, and what one 100 ms back-end period looks like:
+
+![Division of labour on the RK3588S under the real-time configuration](docs/figures/rk3588s_division.svg)
+
 The 10 Hz back-end cadence is a different operating point, so its accuracy was measured
 on the desktop on all twelve VCU-RVI sequences, OFF and ON, beside the sealed full-rate
 rows (`experiments/12_rk3588s_realtime_20260903/desktop_ledger/LEDGER_TABLE.md`). Two

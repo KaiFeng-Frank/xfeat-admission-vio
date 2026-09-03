@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="750" viewBox="0 0 1260 750" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#0b0b0b">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2a78d6"/>
+    </marker>
+  </defs>
+  <rect width="1260" height="750" fill="#fcfcfb"/>
+  <text x="24" y="34" font-size="20" font-weight="bold">Division of labour on the RK3588S · real-time configuration</text>
+  <text x="24" y="56" font-size="13" fill="#52514e">grey: the estimator (S-VIO fork), blue: the learned seat (XFeat). Times are means measured on light1 at 1× replay.</text>
+
+  <!-- inputs -->
+  <rect x="30" y="150" width="160" height="62" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="110" y="174" text-anchor="middle" font-weight="bold">Colour + aligned depth</text>
+  <text x="110" y="196" text-anchor="middle" font-size="12.5" fill="#52514e">640×480 · 30 Hz</text>
+  <rect x="30" y="236" width="160" height="42" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="110" y="262" text-anchor="middle" font-weight="bold">IMU · 200 Hz</text>
+  <line x1="190" y1="181" x2="250" y2="200" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="190" y1="257" x2="250" y2="228" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- SoC -->
+  <rect x="215" y="80" width="920" height="392" rx="12" fill="#ffffff" stroke="#0b0b0b" stroke-width="1.8"/>
+  <text x="232" y="104" font-size="16" font-weight="bold">RK3588S</text>
+  <text x="318" y="104" font-size="12.5" fill="#52514e">Indiedroid Nova · 16 GB · Ubuntu 22.04 · estimator inside a Noetic chroot root filesystem</text>
+
+  <!-- A55 panel -->
+  <rect x="235" y="118" width="220" height="338" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
+  <text x="247" y="141" font-weight="bold">A55 cluster</text>
+  <text x="247" y="158" font-size="12" fill="#52514e">4 × Cortex-A55 · 1.8 GHz</text>
+  <rect x="250" y="176" width="190" height="80" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="345" y="197" text-anchor="middle" font-weight="bold">Sensor input</text>
+  <text x="345" y="216" text-anchor="middle" font-size="12.5">decode colour and depth</text>
+  <text x="345" y="233" text-anchor="middle" font-size="12.5">IMU stream · bag replay</text>
+  <rect x="250" y="292" width="190" height="130" rx="6" fill="#ffffff" stroke="#8b8a85" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="345" y="313" text-anchor="middle" font-size="12.5" fill="#52514e">nothing of the estimator</text>
+  <text x="345" y="330" text-anchor="middle" font-size="12.5" fill="#52514e">is pinned here</text>
+  <text x="345" y="356" text-anchor="middle" font-size="12" fill="#2a78d6">load test: the whole XFeat</text>
+  <text x="345" y="372" text-anchor="middle" font-size="12" fill="#2a78d6">sidecar materializer ran here</text>
+  <text x="345" y="388" text-anchor="middle" font-size="12" fill="#2a78d6">at 5 frames/s (with the NPU);</text>
+  <text x="345" y="404" text-anchor="middle" font-size="12" fill="#2a78d6">the estimator did not notice</text>
+
+  <!-- NPU panel -->
+  <rect x="475" y="118" width="210" height="338" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
+  <text x="487" y="141" font-weight="bold">NPU</text>
+  <text x="487" y="158" font-size="12" fill="#52514e">3 cores · 1.0 GHz · RKNN runtime 2.3.2</text>
+  <rect x="490" y="300" width="180" height="100" rx="6" fill="#ffffff" stroke="#2a78d6" stroke-width="1.8"/>
+  <text x="580" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">XFeat backbone</text>
+  <text x="580" y="341" text-anchor="middle" font-size="12.5">fixed shape 1×3×480×640</text>
+  <text x="580" y="358" text-anchor="middle" font-size="12.5">FP16, all 37 operators on NPU</text>
+  <text x="580" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">64 ms per image</text>
+
+  <!-- A76 panel -->
+  <rect x="705" y="118" width="415" height="338" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
+  <text x="717" y="141" font-weight="bold">A76 cluster</text>
+  <text x="717" y="158" font-size="12" fill="#52514e">4 × Cortex-A76 · 2.35 GHz · the estimator is pinned here</text>
+
+  <rect x="720" y="172" width="190" height="112" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="815" y="193" text-anchor="middle" font-weight="bold">Front end · every frame</text>
+  <text x="815" y="210" text-anchor="middle" font-size="12.5">KLT tracking</text>
+  <text x="815" y="226" text-anchor="middle" font-size="12.5">outlier rejection</text>
+  <text x="815" y="242" text-anchor="middle" font-size="12.5">starvation gate</text>
+  <text x="815" y="260" text-anchor="middle" font-size="12.5" fill="#2a78d6">learned admission at the tick</text>
+  <text x="815" y="276" text-anchor="middle" font-size="11.5" fill="#52514e">14 ms per frame, mean</text>
+
+  <rect x="925" y="172" width="185" height="112" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="1017" y="193" text-anchor="middle" font-weight="bold">Every third frame · 10 Hz</text>
+  <text x="1017" y="210" text-anchor="middle" font-size="12.5">corner detection</text>
+  <text x="1017" y="226" text-anchor="middle" font-size="12.5">depth association</text>
+  <text x="1017" y="242" text-anchor="middle" font-size="12.5">line and plane front ends</text>
+  <text x="1017" y="260" text-anchor="middle" font-size="12.5">→ one measurement</text>
+  <text x="1017" y="276" text-anchor="middle" font-size="11.5" fill="#52514e">three parallel threads</text>
+
+  <rect x="720" y="300" width="190" height="100" rx="6" fill="#ffffff" stroke="#2a78d6" stroke-width="1.8"/>
+  <text x="815" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">XFeat sparse tail</text>
+  <text x="815" y="341" text-anchor="middle" font-size="12.5">NMS · top-500</text>
+  <text x="815" y="358" text-anchor="middle" font-size="12.5">descriptor sampling</text>
+  <text x="815" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">19 ms per image</text>
+
+  <rect x="925" y="300" width="185" height="100" rx="6" fill="#e6e5e1" stroke="#52514e" stroke-width="1.5"/>
+  <text x="1017" y="322" text-anchor="middle" font-weight="bold">Back end · 10 Hz</text>
+  <text x="1017" y="341" text-anchor="middle" font-size="12.5">sliding-window optimization</text>
+  <text x="1017" y="358" text-anchor="middle" font-size="12.5">marginalization</text>
+  <text x="1017" y="382" text-anchor="middle" font-size="13" font-weight="bold">65 ms per period</text>
+
+  <!-- data flow: colour+depth to the front end (grey), branch to the NPU (blue) -->
+  <line x1="440" y1="200" x2="720" y2="200" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="583" y="192" text-anchor="middle" font-size="12" fill="#52514e">colour + depth, every frame</text>
+  <line x1="580" y1="200" x2="580" y2="300" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="592" y="250" font-size="12" fill="#2a78d6">colour,</text>
+  <text x="592" y="265" font-size="12" fill="#2a78d6">every third frame</text>
+  <!-- backbone -> tail -> admission -->
+  <line x1="670" y1="350" x2="720" y2="350" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <line x1="815" y1="300" x2="815" y2="284" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="826" y="296" font-size="11.5" fill="#2a78d6">candidates</text>
+  <!-- tracks -> tick work -> measurement -> back end -->
+  <line x1="910" y1="228" x2="925" y2="228" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="1017" y1="284" x2="1017" y2="300" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- IMU to the back end along the floor of the SoC -->
+  <polyline points="440,240 462,240 462,438 1060,438 1060,400" fill="none" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="760" y="428" text-anchor="middle" font-size="12" fill="#52514e">IMU, 200 Hz, preintegrated between the 10 Hz frames</text>
+  <!-- pose out -->
+  <rect x="1160" y="320" width="90" height="60" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
+  <text x="1205" y="345" text-anchor="middle" font-weight="bold">Pose out</text>
+  <text x="1205" y="365" text-anchor="middle" font-size="12.5" fill="#52514e">10 Hz</text>
+  <line x1="1110" y1="350" x2="1160" y2="350" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ================= timeline ================= -->
+  <text x="24" y="512" font-size="16" font-weight="bold">One back-end period · 100 ms · three sensor frames</text>
+  <!-- axis: 0..100 ms over x 250..1130 (8.8 px per ms) -->
+  <g stroke="#e6e5e1" stroke-width="1" stroke-dasharray="3 3">
+    <line x1="250" y1="524" x2="250" y2="700"/>
+    <line x1="540" y1="524" x2="540" y2="700"/>
+    <line x1="840" y1="524" x2="840" y2="700"/>
+    <line x1="1130" y1="524" x2="1130" y2="700"/>
+  </g>
+  <g font-size="12" fill="#52514e" text-anchor="middle">
+    <text x="250" y="716">0 ms</text>
+    <text x="540" y="716">33 ms</text>
+    <text x="840" y="716">67 ms</text>
+    <text x="1130" y="716">100 ms</text>
+  </g>
+  <g font-size="12.5" fill="#0b0b0b">
+    <text x="30" y="552">A76 · front end</text>
+    <text x="30" y="596">A76 · back end</text>
+    <text x="30" y="640">NPU · backbone</text>
+    <text x="30" y="684">A76 · sparse tail</text>
+  </g>
+  <!-- front end: two tracked-only frames (~9 ms) and one tick frame (~24 ms) -->
+  <rect x="250" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
+  <text x="290" y="553" text-anchor="middle" font-size="11.5">track</text>
+  <rect x="540" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
+  <text x="580" y="553" text-anchor="middle" font-size="11.5">track</text>
+  <rect x="840" y="536" width="211" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
+  <text x="945" y="553" text-anchor="middle" font-size="11.5">track + detect + lines / planes</text>
+  <!-- back end: 65 ms -->
+  <rect x="250" y="580" width="572" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
+  <text x="536" y="597" text-anchor="middle" font-size="11.5">sliding-window optimization of the previous measurement · 65 ms</text>
+  <!-- NPU: 64 ms -->
+  <rect x="250" y="624" width="563" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="531" y="641" text-anchor="middle" font-size="11.5" fill="#2a78d6">XFeat backbone · 64 ms</text>
+  <!-- tail: 19 ms after the backbone -->
+  <rect x="813" y="668" width="167" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="896" y="685" text-anchor="middle" font-size="11.5" fill="#2a78d6">tail · 19 ms</text>
+  <text x="988" y="685" font-size="11.5" fill="#2a78d6">→ candidates for the next tick</text>
+  <text x="24" y="742" font-size="12" fill="#52514e">The front-end row shows the mean of 14 ms per frame split into its two kinds of frame; the back end owns the whole period and uses about two thirds of it. The tail's 19 ms is its A76 figure.</text>
+</svg>

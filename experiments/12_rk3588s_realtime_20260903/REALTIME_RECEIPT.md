@@ -40,6 +40,9 @@ during and after playback (`timeline.csv`) and reports the catch-up after playba
 (`backlog_after_play_s`); a run is real time when that catch-up is at most 2 s. `SVIO_ENV_EXTRA`
 passes environment such as `OPENCV_FOR_THREADS_NUM` into the estimator.
 
+The division of labour across the A55 cluster, the NPU and the A76 cluster, and the
+timing of one back-end period, are drawn in `docs/figures/rk3588s_division.svg`.
+
 The code change is `patches/04_backend_cadence.patch` (63 added lines over six files);
 with the new keys absent every path is the sealed one, verified below. Configuration:
 `config_realtime.yaml`, three lines away from the frozen base (`config_realtime.diff`).
