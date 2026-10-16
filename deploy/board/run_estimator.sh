@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
-# run_estimator.sh SEQ on|off PORT BAG_PATH SIDECAR_PATH_OR_EMPTY OUT_DIR
+# run_estimator.sh SEQ on|off|online PORT BAG_PATH SIDECAR_PATH_OR_EMPTY OUT_DIR
 #
 # Board-side replay runner for the S-VIO + XFeat estimator. Mirrors the
 # desktop reference runner: roscore on a private port, svio_syn_node against a
 # config rendered from the frozen base (only output_path differs), then
 # `rosbag play --clock` with the three VCU-RVI topic remaps.
 #
-#   arm=on   -> SVIO_XFEAT_XFS=<sidecar>, SVIO_XFEAT_MODE=admission
-#   arm=off  -> every SVIO_XFEAT_* variable is unset
+#   arm=on     -> SVIO_XFEAT_XFS=<sidecar>, SVIO_XFEAT_MODE=admission
+#   arm=online -> proposals computed in the estimator, no sidecar (pass ""):
+#                 SVIO_XFEAT_ONLINE_MODEL=$SVIO_ONLINE_MODEL (the reliability model on
+#                 the NPU), SVIO_XFEAT_ONLINE_KHEAD=$SVIO_ONLINE_KHEAD (the CPU keypoint
+#                 head); per-launch timing -> OUT_DIR/xfeat_online.csv, admitted
+#                 proposals -> OUT_DIR/xfeat_online_dump.bin
+#   arm=off    -> every SVIO_XFEAT_* variable is unset
 #
 # Optional environment overrides:
 #   SVIO_WS            workspace root                  (default /opt/svio_ws)
@@ -25,6 +30,9 @@
 #   SVIO_EXPECT_ROWS   required svio_no_loop.csv rows  (unset = no check; >=95% passes)
 #   SVIO_RT_BACKLOG_MAX seconds of post-playback catch-up that still counts as real time (default 2)
 #   SVIO_ENV_EXTRA     'K=V K=V' exported into the estimator's environment (e.g. OPENCV_FOR_THREADS_NUM=1)
+#   SVIO_ONLINE_MODEL  arm=online reliability model     (default /opt/xfeat/models/online/reliability_gray_fp16.rknn)
+#   SVIO_ONLINE_KHEAD  arm=online keypoint head weights (default /opt/xfeat/models/online/keypoint_head_fp32.bin)
+#   SVIO_ONLINE_CORES  arm=online NPU cores, 0|1|2|0_1|0_1_2 (default 0_1_2)
 #
 # Rate-limiting the replay is semantically free for this estimator: it contains
 # zero `ros::Time::now()` call sites and nothing sets use_sim_time, so every
@@ -40,7 +48,7 @@ bag=${4:?usage: run_estimator.sh SEQ on|off PORT BAG_PATH SIDECAR_OR_EMPTY OUT_D
 sidecar=${5-}
 out_dir=${6:?usage: run_estimator.sh SEQ on|off PORT BAG_PATH SIDECAR_OR_EMPTY OUT_DIR}
 
-case "$arm" in on|off) ;; *) echo "run_estimator: arm must be 'on' or 'off', got '$arm'" >&2; exit 2 ;; esac
+case "$arm" in on|off|online) ;; *) echo "run_estimator: arm must be 'on', 'off' or 'online', got '$arm'" >&2; exit 2 ;; esac
 
 XF_ROOT=/opt/xfeat
 WS=${SVIO_WS:-/opt/svio_ws}
@@ -61,8 +69,15 @@ NODE_BIN="$WS/devel/lib/svio/svio_syn_node"
 [[ -f "$bag"      ]] || { echo "run_estimator: missing bag: $bag" >&2; exit 2; }
 [[ -f "$BASE_CFG" ]] || { echo "run_estimator: missing base config: $BASE_CFG" >&2; exit 2; }
 [[ -x "$NODE_BIN" ]] || { echo "run_estimator: missing estimator binary: $NODE_BIN" >&2; exit 2; }
+ONLINE_MODEL=${SVIO_ONLINE_MODEL:-$XF_ROOT/models/online/reliability_gray_fp16.rknn}
+ONLINE_KHEAD=${SVIO_ONLINE_KHEAD:-$XF_ROOT/models/online/keypoint_head_fp32.bin}
+ONLINE_CORES=${SVIO_ONLINE_CORES:-0_1_2}
 if [[ "$arm" == on ]]; then
   [[ -n "$sidecar" && -f "$sidecar" ]] || { echo "run_estimator: arm=on needs an existing sidecar, got '${sidecar}'" >&2; exit 2; }
+fi
+if [[ "$arm" == online ]]; then
+  [[ -z "$sidecar" ]] || { echo "run_estimator: arm=online reads no sidecar, got '${sidecar}'" >&2; exit 2; }
+  [[ -f "$ONLINE_MODEL" && -f "$ONLINE_KHEAD" ]] || { echo "run_estimator: arm=online needs $ONLINE_MODEL and $ONLINE_KHEAD" >&2; exit 2; }
 fi
 
 mkdir -p "$out_dir"
@@ -93,6 +108,12 @@ while IFS= read -r n; do unset "$n"; done < <(compgen -A variable SVIO_XFEAT_ ||
 if [[ "$arm" == on ]]; then
   export SVIO_XFEAT_XFS="$sidecar"
   export SVIO_XFEAT_MODE=admission
+fi
+if [[ "$arm" == online ]]; then
+  export SVIO_XFEAT_MODE=admission
+  export SVIO_XFEAT_ONLINE_MODEL="$ONLINE_MODEL" SVIO_XFEAT_ONLINE_KHEAD="$ONLINE_KHEAD"
+  export SVIO_XFEAT_ONLINE_NPU_CORES="$ONLINE_CORES"
+  export SVIO_XFEAT_ONLINE_LOG="$out_dir/xfeat_online.csv" SVIO_XFEAT_ONLINE_DUMP="$out_dir/xfeat_online_dump.bin"
 fi
 
 # --- CPU pinning ------------------------------------------------------------
@@ -234,6 +255,10 @@ fi
 if grep -qE 'XFeat/image timestamp mismatch|XFeat sidecar truncated|unsupported XFeat sidecar header|XFeat sidecar record exceeds|cannot open XFeat sidecar' "$out_dir/svio.log" 2>/dev/null; then
   echo "run_estimator: FAILED - XFeat sidecar integrity error; see $out_dir/svio.log" >&2
   grep -m3 -E 'XFeat/image timestamp mismatch|XFeat sidecar' "$out_dir/svio.log" >&2 || true
+  anom=1
+fi
+if [[ "$arm" == online ]] && ! grep -q 'XFEAT-ONLINE enabled' "$out_dir/svio.log" 2>/dev/null; then
+  echo "run_estimator: FAILED - arm=online but the estimator did not start the online extractor" >&2
   anom=1
 fi
 thrown_rgb=$(grep -c 'throw rgb image' "$out_dir/svio.log" 2>/dev/null || true); thrown_rgb=${thrown_rgb:-0}

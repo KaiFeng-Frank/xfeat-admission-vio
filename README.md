@@ -86,9 +86,11 @@ Two bits of state, one budget-relative threshold, an external health signal: on 
 frame the tracker counts its post-F-RANSAC survivors; after two consecutive frames
 below 120 of the 150-track budget, the next 10 Hz XFeat tick may admit new-track
 candidates, score-ordered, before the ordinary Shi-Tomasi refill. Nothing else in
-S-VIO changes: not the identities, not the keyframe logic, not the backend.
+S-VIO changes: not the identities, not the keyframe logic, not the backend. The
+candidates come from a recorded sidecar or, since 1.5, from the estimator itself,
+computed online on exactly the ticks where the gate can open.
 [`docs/MECHANISM.md`](docs/MECHANISM.md) has the full page, the three front-end
-modes and the XFSIDE01 sidecar format.
+modes, both proposal sources and the XFSIDE01 sidecar format.
 
 ## Reproducible to the byte
 
@@ -99,18 +101,23 @@ binaries byte for byte; a light1 replay of both arms agrees with the sealed ATE
 added one deployment path to the estimator (the back-end cadence, off by default); the
 binary built from the current tree with that path disabled reproduces the sealed light1
 rows to 0.005 cm (`experiments/12_rk3588s_realtime_20260903/sealed_behavior_check/`).
+Release 1.5 added online admission, off unless selected. Replaying the same sidecars,
+the 1.5 binary agrees with the 1.4 binary to within 0.03 cm on eleven of twelve
+sequences (light5: 0.7 cm). On the board, OFF reproduces 1.4 to 0.01 cm
+(`experiments/13_online_admission_20261017/`).
 
 ## Layout
 
 ```
 svio/ camera_models_in/ config/ launch/   the S-VIO fork itself, at the repository root as upstream laid it out, with the XFeat sidecar reader, three front-end modes, and the gate
-patches/                the four diffs that turn upstream S-VIO into this estimator, in order (the fourth is the deployment cadence of 1.4, off by default)
+patches/                the five diffs that turn upstream S-VIO into this estimator, in order (04: the back-end cadence of 1.4; 05: online admission of 1.5; both off by default)
 sidecar/                XFSIDE01 writer (xfs_materialize.py), header verifier, pinned sparse-XFeat implementation
-models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) and its export receipt
+models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) and its export receipt; models/online/: the reliability model and keypoint-head weights of the online path
 deploy/rknn/            RKNN-Toolkit2 conversion tool and same-run receipts (the .rknn bytes are not redistributed)
 tools/scoring/          the pinned scorer and normalizer used for every number in the ledger
 experiments/            stage-by-stage contracts, configs, receipts, trajectories, telemetry, board receipts
 deploy/board/           aarch64 build recipe, chroot launcher, replay runner and NPU sidecar materializer for the RK3588S
+deploy/online/          online admission: model export, RKNN conversion, parity and deadline tools
 docs/                   mechanism, ledger, reproduction recipe
 ```
 
@@ -125,6 +132,12 @@ python3 sidecar/verify_xfs_header.py /scratch/light1.xfs
 # 2. build the estimator (ROS Noetic, OpenCV 4.2, Ceres 1.14) — see docs/REPRODUCE.md for the container recipe
 # 3. run with the sidecar (ON) or without it (matched OFF)
 SVIO_XFEAT_XFS=/scratch/light1.xfs SVIO_XFEAT_MODE=admission \
+    rosrun svio svio_syn_node _config_file:=experiments/02_vcu_motion_full_line/config_full_line.yaml
+
+# or no sidecar at all: the estimator computes its proposals online
+# (build with -DSVIO_XFEAT_ONNXRUNTIME_ROOT=... on a desktop, -DSVIO_XFEAT_RKNN=ON on an RK3588)
+SVIO_XFEAT_MODE=admission SVIO_XFEAT_ONLINE_MODEL=models/online/reliability_gray.onnx \
+SVIO_XFEAT_ONLINE_KHEAD=models/online/keypoint_head_fp32.bin \
     rosrun svio svio_syn_node _config_file:=experiments/02_vcu_motion_full_line/config_full_line.yaml
 ```
 
@@ -210,6 +223,39 @@ new keys absent the patched binary reproduces the sealed rows. Receipt:
 [`experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md`](experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md);
 the patch: [`patches/04_backend_cadence.patch`](patches/04_backend_cadence.patch).
 
+### Online admission on the board
+
+Release 1.5 removes the sidecar. Admission reads (x, y, score), and score = K × R:
+the keypoint branch's heat map times the backbone's reliability, both of the current
+frame. A decision experiment on all twelve sequences closed the cheaper variants.
+With K alone, light2 falls to 40.6 cm and light5/6 lose completeness; with an R one
+tick old, light2's gain is gone. So the estimator computes both, synchronously, on
+exactly the ticks where the gate can open. On a tick that follows a short frame, the
+reliability backbone starts on the NPU as the frame arrives. The keypoint branch and
+its heat map run on one A76 core in float32 meanwhile. When the gate opens, the front
+end takes the proposals; a healthy run never touches the NPU. Single runs at 1× replay
+under the real-time configuration, ATE RMSE in cm:
+
+| RK3588S, 1× replay | OFF | online admission | desktop, sealed sidecar |
+|---|---:|---:|---:|
+| light1 | 17.98 | 18.06 | 18.41 |
+| light6 | 61.73 (CR 0.86) | **28.13** | 30.37 |
+| motion2 | diverged | **14.50** | 14.16 |
+
+![Online admission on the RK3588S: accuracy and the front end's wait per admission](docs/figures/online_admission_rk3588s.png)
+
+All three replays finished with nothing left to catch up, light6 with the gate open on
+712 of its 1,041 ticks. When the gate opens, the front end waits a median 28 ms
+(p95 40 ms) for the proposals. The backbone takes about 40 ms on the three NPU cores
+and is the whole critical path: the keypoint head, the heat map and the NMS run under
+it, and scoring after it takes 1.5 ms. The board's C++ path reproduces a Python
+reference in set and order on 300 of 300 ticks. On the desktop, all twelve
+sequences, online and recorded-sidecar replay agree to within the estimator's
+run-to-run variation, and the twelve-sequence mean sits on the 1 % perturbation floor
+(21.4 cm, against 21.4 and 21.6). Receipt:
+[`experiments/13_online_admission_20261017/ONLINE_RECEIPT.md`](experiments/13_online_admission_20261017/ONLINE_RECEIPT.md);
+how to build and run it: [`deploy/online/README.md`](deploy/online/README.md).
+
 <img src="docs/figures/rk3588s_indiedroid_nova.jpg" alt="Indiedroid Nova RK3588S on the bench over ADB" width="520">
 
 ## Version line
@@ -220,8 +266,9 @@ the patch: [`patches/04_backend_cadence.patch`](patches/04_backend_cadence.patch
 | 1.1 | RK3588S on-device receipts: identity, NPU latency per core mask, CPU sparse-tail latency, memory, conformance against the ONNX reference |
 | 1.2 | matched-OFF control completed on all twelve VCU sequences with the rebuilt binary; README tables replace the chart |
 | 1.3 | the estimator end to end on the RK3588S: aarch64 build, chroot launcher, lossless replay runner, light1 scored on the board in both solver configurations against a desktop rerun |
-| **1.4** | real time on the RK3588S: back-end cadence path (off by default, sealed behavior reproduced), native tuned build, light1 at 1× with no backlog including under NPU load, the cadence's accuracy on all twelve VCU sequences |
-| 1.x | further device receipts (C++ runtime path, driver upgrade, a live camera and sidecar pipeline); no change to the mechanism planned |
+| 1.4 | real time on the RK3588S: back-end cadence path (off by default, sealed behavior reproduced), native tuned build, light1 at 1× with no backlog including under NPU load, the cadence's accuracy on all twelve VCU sequences |
+| **1.5** | online admission: the estimator computes its own proposals, synchronously and only where the gate can open (RKNN C runtime on the NPU, float32 keypoint head on the CPU, onnxruntime on desktops); the decision experiment behind it; light6 and motion2 rescued on the board at 1× with no backlog |
+| 1.x | a live camera feeding the board pipeline, a faster NPU backbone (mixed precision, INT8 under the floor of 1.5), per-layer NPU profiling, driver upgrade, more backbones behind the online interface |
 
 See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
 

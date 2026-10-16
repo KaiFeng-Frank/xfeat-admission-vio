@@ -1,5 +1,42 @@
 # Changelog
 
+## 1.5 — 2026-10-17
+
+Online admission: the estimator computes its own proposals. The recorded-sidecar path
+is unchanged.
+
+- `svio/feature_tracking/xfeat_online.{h,cpp}`: on a tick that follows a short frame,
+  the reliability backbone (`xfeat_backend_rknn.cpp`: RKNN C runtime, three NPU cores,
+  uint8 input; `xfeat_backend_onnx.cpp`: ONNX Runtime C API) and the keypoint branch
+  (float32, CPU) of that frame run concurrently. The heat map and NMS overlap the
+  backbone, and R sampling and ranking follow it. This is the pinned tail without
+  descriptors. The front end collects the proposals only when the gate opens.
+  Selected by `SVIO_XFEAT_ONLINE_MODEL` / `SVIO_XFEAT_ONLINE_KHEAD`, exclusive with
+  `SVIO_XFEAT_XFS`, admission mode only. Per-launch deadline log
+  (`SVIO_XFEAT_ONLINE_LOG`) and admitted-proposal dump (`SVIO_XFEAT_ONLINE_DUMP`).
+  CMake options `SVIO_XFEAT_RKNN` and `SVIO_XFEAT_ONNXRUNTIME_ROOT`; with neither, the
+  sidecar path builds as before. `xfeat_online_check` runs the extractor on recorded
+  frames.
+- `patches/05_online_admission.patch`: the diff of `svio/` against 1.4
+- `models/online/`: the gray-input reliability model (bit-exact to the pinned backbone)
+  and the keypoint-head weights, with their receipt. The RKNN build is not redistributed.
+- `deploy/online/`: model export, RKNN conversion, gray-frame extraction, proposal
+  comparison, the board's Python reference and a deadline summary, plus a README
+- `deploy/board/run_estimator.sh`: `arm=online`
+- `experiments/13_online_admission_20261017/`:
+  - the decision experiment: K only and stale R both fail, so the extraction is
+    synchronous; the perturbation floor;
+  - parity checks on the desktop and the board;
+  - all twelve VCU-RVI sequences on the desktop: the sealed sidecar on the new binary,
+    the C++ provider through a sidecar, and online in process;
+  - light1, light6 and motion2 at 1× on the RK3588S, OFF and online, with per-tick
+    deadline logs.
+- `experiments/12_rk3588s_realtime_20260903/build/` (the 1.4 board build receipts the README
+  points to) had been caught by the `build/` ignore rule and never published; added, and
+  the rule now spares `experiments/*/build/`
+- README: online admission on the board, quick start; MECHANISM: proposal sources;
+  REPRODUCE: the frozen tracker hashes are those of patches 01–03; ROADMAP updated
+
 ## 1.4 — 2026-09-03
 
 Real time on the RK3588S. One code path added to the estimator, off by default.

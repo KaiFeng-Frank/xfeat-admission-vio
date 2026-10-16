@@ -31,13 +31,19 @@ source /opt/ros/noetic/setup.bash
 cd /work/svio_ws && catkin_make -DCMAKE_BUILD_TYPE=Release -j"$(nproc)"
 ```
 
-The gate-patched tracker in the tree must hash to the frozen values before you
-build anything else on top of it:
+The gate-patched tracker of the frozen candidate (upstream S-VIO plus `patches/01`–`03`)
+hashes to the frozen values:
 
 ```bash
-sha256sum svio/feature_tracking/feature_tracker.cpp   # 243b1607…fefcd6
+sha256sum svio/feature_tracking/feature_tracker.cpp   # 243b1607…fefcd6   (patches 01–03)
 sha256sum svio/feature_tracking/feature_tracker.h     # 3583bd96…9a3df0
 ```
+
+The tree of this release carries two more diffs on top, both inert unless enabled: the
+back-end cadence of 1.4 (`patches/04_backend_cadence.patch`, off unless
+`backend_freq_gate` is set) and online admission of 1.5
+(`patches/05_online_admission.patch`, off unless `SVIO_XFEAT_ONLINE_MODEL` is set). To
+check the frozen hashes, apply 01–03 to upstream commit `18cdfbc`.
 
 ## 3. Inputs
 

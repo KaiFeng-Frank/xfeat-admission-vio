@@ -50,6 +50,20 @@ XFeat @ every 3rd frame ──► 500 proposals ──► [tick ∧ streak≥2] 
 The motion4 design ladder that selected `admission` is in
 `experiments/01_vcu_motion_admission_point_no_line/motion4_pilot_arms/PILOT_ARMS_ATE.json`.
 
+## Where the proposals come from
+
+| Source | Selected by | What is computed |
+|---|---|---|
+| recorded sidecar | `SVIO_XFEAT_XFS=<file>` | XFeat offline on every frame, full features (positions, scores, descriptors); all modes |
+| online, in process (1.5) | `SVIO_XFEAT_ONLINE_MODEL=<.rknn or .onnx>`, `SVIO_XFEAT_ONLINE_KHEAD=<.bin>` | `admission` only: on a tick that follows a short frame, the backbone's reliability R and the keypoint branch K of that frame, then the tail without descriptors |
+
+The two are exclusive. Admission reads (x, y, score) and score = K × R, so the online
+source computes exactly that, synchronously: the decision experiment of 1.5 shows
+that admission fails with K alone and with an R one tick old
+(`experiments/13_online_admission_20261017/ONLINE_RECEIPT.md`). The extraction
+launches as the frame arrives and is collected only when the gate opens; details and
+build options in `deploy/online/README.md`.
+
 ## Sidecar format (XFSIDE01)
 
 The estimator reads XFeat results from a binary sidecar keyed by the exact color
@@ -76,14 +90,23 @@ NPU (RK3588/RK3588S, RKNN FP16)   fixed 1×3×480×640 backbone, 37 compute ops 
 CPU                               NMS / top-k / descriptor sampling / matching / gate
 ```
 
+Online (1.5):
+
+```
+NPU (RKNN FP16, three cores)      reliability backbone on the uint8 gray frame, no descriptor head   ~40 ms
+CPU, one A76 core (float32)       keypoint branch ~14 ms, then heat map + NMS, while the NPU runs
+CPU, after R                      bilinear R at the peaks, rank, top 500                              ~1.5 ms
+```
+
 The conversion receipts are in `deploy/rknn/preflight_v1/`. Host-CPU reference
 latency of the full sparse path (x86, ONNX Runtime, four threads) is in
 `sidecar/BENCHMARK_xfeat_causal_host_cpu.json`. On-device latency of the backbone and
 the tail is in `experiments/09_rk3588s_board_20260903/`; the estimator itself runs on
 the board at sensor rate under the back-end cadence configuration of
 `experiments/12_rk3588s_realtime_20260903/` (front end on every frame, back end fed at
-10 Hz; the admission tick and the cadence coincide). Every experiment in this
-repository consumed a precomputed sidecar.
+10 Hz; the admission tick and the cadence coincide). Up to 1.4 every experiment in
+this repository consumed a precomputed sidecar; from 1.5 the estimator can compute its
+proposals itself (`experiments/13_online_admission_20261017/`).
 
 ## What is deliberately not here
 

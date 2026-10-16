@@ -1,0 +1,10 @@
+desktop patched binary (container, catkin_make -DCMAKE_BUILD_TYPE=Release, sources' own RelWithDebInfo):
+56fd19415679b8bef9f725d7b0b30ec28a02d4c5be93aa73f198461cd8df92d4  /work/svio_ws/devel/lib/svio/svio_syn_node
+d28b5e00673f5746160534fb7883dcb4cd6bbc47c9e370ca697111fc8aa78c9b  /work/svio_ws/devel/lib/libsvio.so
+
+board patched binary (native on the RK3588S, -mcpu=cortex-a76, -O3 -DNDEBUG in CMAKE_CXX_FLAGS_RELWITHDEBINFO):
+3370b19885afc06db9578616f2318008245ba2b3c7ab34701e9144dc77bc9d0a  /opt/svio_ws/devel/lib/svio/svio_syn_node
+53907d806df14bd06d5db78de19a362d2ae64d46e0b96232c0c824f219de93c6  /opt/svio_ws/devel/lib/libsvio.so
+CXX_FLAGS = -mcpu=cortex-a76 -std=c++14 -w -g -O3 -fpermissive -O3 -DNDEBUG
+
+note: the first native pass compiled every object but linked nothing, because the board clock lagged the host by three months and the QEMU-built link outputs looked newer than the fresh objects; the clock was set from the host and the stale outputs removed before the second pass (board_relink.log)

@@ -1,0 +1,5 @@
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light6 ARM=online OUT=/data/runs/online_rt_light6
+rows=1030 frames=3121 drained=1 drain_wait_s=22 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=25.2947 swo_ms=57.312
+wall_total_s=140 wall_play_s=116 pinning=taskset est=4-7 io=0-3 play_rate=1.0
+rows_at_play_end=991 final_rows=1030 backlog_after_play_s=1.9 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>

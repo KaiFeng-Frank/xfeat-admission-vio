@@ -47,7 +47,12 @@ FeatureTracker::FeatureTracker()
     depthMapFactor = 0.001f;
     mp_gmm = new GMM_Model();
     const char *sidecar = std::getenv("SVIO_XFEAT_XFS");
-    if (sidecar != nullptr && sidecar[0] != '\0')
+    const char *online = std::getenv("SVIO_XFEAT_ONLINE_MODEL");
+    const bool use_sidecar = sidecar != nullptr && sidecar[0] != '\0';
+    const bool use_online = online != nullptr && online[0] != '\0';
+    if (use_sidecar && use_online)
+        throw std::runtime_error("SVIO_XFEAT_XFS and SVIO_XFEAT_ONLINE_MODEL are exclusive");
+    if (use_sidecar)
     {
         const char *mode = std::getenv("SVIO_XFEAT_MODE");
         xfeat_hybrid_ = mode != nullptr &&
@@ -55,10 +60,19 @@ FeatureTracker::FeatureTracker()
         xfeat_admission_only_ = mode != nullptr && string(mode) == "admission";
         openXFeatSidecar(sidecar);
     }
+    else if (use_online)
+        openXFeatOnline(online);
 }
 
 FeatureTracker::~FeatureTracker()
 {
+    if (xfeat_online_)
+        ROS_WARN("XFEAT-ONLINE frames=%llu launches=%llu admissions=%llu wait_ms_mean=%.2f wait_ms_max=%.2f latency_ms_max=%.2f",
+                 static_cast<unsigned long long>(xfeat_frames_read_),
+                 static_cast<unsigned long long>(xfeat_online_launches_),
+                 static_cast<unsigned long long>(xfeat_online_admissions_),
+                 xfeat_online_admissions_ ? xfeat_online_wait_ms_total_ / xfeat_online_admissions_ : 0.0,
+                 xfeat_online_wait_ms_max_, xfeat_online_latency_ms_max_);
     if (xfeat_enabled_)
         ROS_WARN("XFEAT-SIDECAR frames=%llu mean_emitted=%.2f mean_propagated=%.2f",
                  static_cast<unsigned long long>(xfeat_frames_read_),
@@ -104,6 +118,44 @@ void FeatureTracker::openXFeatSidecar(const string &path)
              path.c_str(), static_cast<unsigned long long>(xfeat_frame_count_),
              xfeat_admission_only_ ? "klt_10hz_admission" :
              (xfeat_hybrid_ ? "klt_10hz_hybrid" : "descriptor_only"));
+}
+
+void FeatureTracker::openXFeatOnline(const string &reliability_model)
+{
+    // The online path computes only what admission reads: (x, y, score), no
+    // descriptors. Hence admission mode only.
+    const char *mode = std::getenv("SVIO_XFEAT_MODE");
+    if (mode != nullptr && mode[0] != '\0' && string(mode) != "admission")
+        throw std::runtime_error("SVIO_XFEAT_ONLINE_MODEL supports SVIO_XFEAT_MODE=admission only");
+    const char *head = std::getenv("SVIO_XFEAT_ONLINE_KHEAD");
+    if (head == nullptr || head[0] == '\0')
+        throw std::runtime_error("SVIO_XFEAT_ONLINE_MODEL needs SVIO_XFEAT_ONLINE_KHEAD (keypoint_head_fp32.bin)");
+    const char *threads = std::getenv("SVIO_XFEAT_ONLINE_THREADS");
+    const char *cores = std::getenv("SVIO_XFEAT_ONLINE_NPU_CORES");
+    xfeat_online_.reset(new xfeat_online::OnlineExtractor(
+        reliability_model, head, threads != nullptr ? std::max(1, std::atoi(threads)) : 1,
+        cores != nullptr ? string(cores) : string()));
+    xfeat_enabled_ = true;
+    xfeat_hybrid_ = true;
+    xfeat_admission_only_ = true;
+
+    const char *log = std::getenv("SVIO_XFEAT_ONLINE_LOG");
+    if (log != nullptr && log[0] != '\0')
+    {
+        xfeat_online_log_.open(log);
+        if (!xfeat_online_log_)
+            throw std::runtime_error(string("cannot open SVIO_XFEAT_ONLINE_LOG ") + log);
+        xfeat_online_log_ << "frame,stamp_ns,survivors,admitted,proposals,wait_ms,latency_ms,keypoint_ms,heatmap_ms,reliability_ms,tail_ms\n";
+    }
+    const char *dump = std::getenv("SVIO_XFEAT_ONLINE_DUMP");
+    if (dump != nullptr && dump[0] != '\0')
+    {
+        xfeat_online_dump_.open(dump, std::ios::out | std::ios::binary);
+        if (!xfeat_online_dump_)
+            throw std::runtime_error(string("cannot open SVIO_XFEAT_ONLINE_DUMP ") + dump);
+    }
+    ROS_WARN("XFEAT-ONLINE enabled mode=klt_10hz_admission keypoint_head=%s reliability=%s",
+             head, xfeat_online_->describe().c_str());
 }
 
 void FeatureTracker::readXFeatRecord(int64_t expected_stamp_ns,
@@ -531,9 +583,22 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
     vector<cv::Point2f> proposal_pts;
     vector<float> proposal_scores;
     cv::Mat proposal_desc;
-    readXFeatRecord(static_cast<int64_t>(std::llround(_cur_time * 1e9)),
-                    proposal_pts, proposal_scores, proposal_desc);
+    const int64_t stamp_ns = static_cast<int64_t>(std::llround(_cur_time * 1e9));
+    if (xfeat_online_)
+        ++xfeat_frames_read_;
+    else
+        readXFeatRecord(stamp_ns, proposal_pts, proposal_scores, proposal_desc);
     const bool xfeat_tick = ((xfeat_frames_read_ - 1u) % 3u) == 0u;
+
+    // Online: the gate opens on a tick whose frame and predecessor are both
+    // short, so a tick that follows a short frame starts the extraction now, to
+    // run alongside KLT and the F test; it is collected only if the gate opens.
+    const bool xfeat_online_launched = xfeat_online_ && xfeat_tick && xfeat_low_health_streak_ >= 1u;
+    if (xfeat_online_launched)
+    {
+        xfeat_online_->launch(mono_img);
+        ++xfeat_online_launches_;
+    }
 
     auto reduceHybrid = [this](const vector<uchar> &status)
     {
@@ -760,6 +825,54 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
     hybrid_has_anchor_.swap(kept_has);
 
     const bool xfeat_admit = xfeat_tick && xfeat_health_ready;
+
+    if (xfeat_online_launched)
+    {
+        double wait_ms = 0.0;
+        xfeat_online::Timing timing;
+        if (xfeat_admit)
+        {
+            xfeat_online::Proposals proposals;
+            TicToc t_wait;
+            xfeat_online_->collect(proposals, timing);
+            wait_ms = t_wait.toc();
+            proposal_pts.swap(proposals.points);
+            proposal_scores.swap(proposals.scores);
+            proposal_used.assign(proposal_pts.size(), 0);
+            ++xfeat_online_admissions_;
+            xfeat_online_wait_ms_total_ += wait_ms;
+            xfeat_online_wait_ms_max_ = std::max(xfeat_online_wait_ms_max_, wait_ms);
+            xfeat_online_latency_ms_max_ = std::max(xfeat_online_latency_ms_max_, timing.latency_ms);
+            if (xfeat_online_dump_.is_open())
+            {
+                const uint32_t n = static_cast<uint32_t>(proposal_pts.size());
+                xfeat_online_dump_.write(reinterpret_cast<const char *>(&stamp_ns), sizeof(stamp_ns));
+                xfeat_online_dump_.write(reinterpret_cast<const char *>(&n), sizeof(n));
+                for (uint32_t i = 0; i < n; ++i)
+                {
+                    const float xys[3] = {proposal_pts[i].x, proposal_pts[i].y, proposal_scores[i]};
+                    xfeat_online_dump_.write(reinterpret_cast<const char *>(xys), sizeof(xys));
+                }
+                xfeat_online_dump_.flush();  // the node's shutdown aborts without unwinding
+            }
+        }
+        if (xfeat_online_log_.is_open())
+        {
+            char row[256];
+            if (xfeat_admit)
+                std::snprintf(row, sizeof(row), "%llu,%lld,%zu,1,%zu,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n",
+                              static_cast<unsigned long long>(xfeat_frames_read_), static_cast<long long>(stamp_ns),
+                              xfeat_post_f_survivors, proposal_pts.size(), wait_ms, timing.latency_ms,
+                              timing.keypoint_ms, timing.heatmap_ms, timing.reliability_ms, timing.tail_ms);
+            else
+                std::snprintf(row, sizeof(row), "%llu,%lld,%zu,0,,,,,,,\n",
+                              static_cast<unsigned long long>(xfeat_frames_read_), static_cast<long long>(stamp_ns),
+                              xfeat_post_f_survivors);
+            xfeat_online_log_ << row << std::flush;
+        }
+    }
+    else if (xfeat_admit && xfeat_online_)
+        throw std::logic_error("online XFeat: gate open on a frame that launched no extraction");
 
     if (xfeat_admit)
     {

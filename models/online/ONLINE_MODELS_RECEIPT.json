@@ -1,0 +1,49 @@
+{
+ "export": {
+  "source_onnx": {
+   "path": "models/xfeat_backbone_1x3x480x640_opset19.onnx",
+   "sha256": "19b34ddb388011507c4103c3274b7c9120cb22e933149a3ea44146c2fa6a380f"
+  },
+  "reliability_gray.onnx": {
+   "sha256": "43c5ccdc815cffd6c3db1b1de069ffe921a649d2b25d2bf872bf3b60abb7a941",
+   "bytes": 2583505,
+   "nodes": 67,
+   "conv": 23
+  },
+  "keypoint_head_fp32.bin": {
+   "sha256": "f658bc4cf921bce864ec0cbd945d2774c046dac86880e3ab3def73173790f4a3",
+   "bytes": 66844,
+   "parameters": 16705,
+   "eps": 9.999999747378752e-06
+  },
+  "checks": [
+   {
+    "frame": 0,
+    "reliability_max_abs": 0.0,
+    "keypoint_logits_max_abs": 4.00543212890625e-05
+   },
+   {
+    "frame": 1,
+    "reliability_max_abs": 0.0,
+    "keypoint_logits_max_abs": 0.000934600830078125
+   }
+  ],
+  "versions": {
+   "onnx": "1.21.0",
+   "onnxruntime": "1.23.2",
+   "numpy": "2.2.6"
+  },
+  "tool": "deploy/online/export_online_models.py"
+ },
+ "rknn_fp16": {
+  "tool": "deploy/online/convert_reliability_rknn.py",
+  "onnx_sha256": "43c5ccdc815cffd6c3db1b1de069ffe921a649d2b25d2bf872bf3b60abb7a941",
+  "rknn_sha256": "06c670898ef3591ff20a458dbba3fc56eef127a180a2c6ceffebe600670ead2c",
+  "bytes": 1942072,
+  "toolkit": "2.3.2",
+  "target_platform": "rk3588",
+  "quantization": false,
+  "redistributed": false,
+  "note": "the .rknn is not redistributed (see NOTICE.md); this is the build the board runs of 1.5 used. RKNN builds are not byte-reproducible; a rebuild is checked by output equality on the board."
+ }
+}

@@ -18,6 +18,7 @@
 #include "../state_estimation/parameters.h"
 #include "../utility/tic_toc.h"
 #include "../plane_tools/PlaneExtractor.h"
+#include "xfeat_online.h"
 
 using namespace std;
 using namespace camodocal;
@@ -92,7 +93,19 @@ private:
     vector<array<float, 64>> hybrid_anchor_desc_;
     vector<uchar> hybrid_has_anchor_;
 
+    // online, on-demand admission (SVIO_XFEAT_ONLINE_MODEL): proposals are
+    // computed in process for the frames where the gate can open
+    std::unique_ptr<xfeat_online::OnlineExtractor> xfeat_online_;
+    std::ofstream xfeat_online_log_;
+    std::ofstream xfeat_online_dump_;
+    uint64_t xfeat_online_launches_ = 0;
+    uint64_t xfeat_online_admissions_ = 0;
+    double xfeat_online_wait_ms_total_ = 0.0;
+    double xfeat_online_wait_ms_max_ = 0.0;
+    double xfeat_online_latency_ms_max_ = 0.0;
+
     void openXFeatSidecar(const string &path);
+    void openXFeatOnline(const string &reliability_model);
     void trackImageXFeat(const cv::Mat &_img, double _cur_time);
     void trackImageHybrid(const cv::Mat &_img, double _cur_time);
     void readXFeatRecord(int64_t expected_stamp_ns,

@@ -1,0 +1,150 @@
+-- Using CATKIN_DEVEL_PREFIX: /opt/svio_ws/devel
+-- Using CMAKE_PREFIX_PATH: /opt/ros/noetic
+-- This workspace overlays: /opt/ros/noetic
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using Debian Python package layout
+-- Using empy: /usr/lib/python3/dist-packages/em.py
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /opt/svio_ws/build/test_results
+-- Forcing gtest/gmock from source, though one was otherwise available.
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+-- Using Python nosetests: /usr/bin/nosetests3
+-- catkin 0.8.12
+-- BUILD_SHARED_LIBS is on
+-- BUILD_SHARED_LIBS is on
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 2 packages in topological order:
+-- ~~  - camera_models_in
+-- ~~  - svio
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'camera_models_in'
+-- ==> add_subdirectory(SVIO/camera_models_in)
+-- Found installed version of Eigen: /usr/lib/cmake/eigen3
+-- Found required Ceres dependency: Eigen version 3.3.7 in /usr/include/eigen3
+-- Found required Ceres dependency: glog
+-- Found installed version of gflags: /usr/lib/aarch64-linux-gnu/cmake/gflags
+-- Detected gflags version: 2.2.2
+-- Found required Ceres dependency: gflags
+-- Found Ceres version: 1.14.0 installed in: /usr with components: [EigenSparse, SparseLinearAlgebraLibrary, LAPACK, SuiteSparse, CXSparse, SchurSpecializations, OpenMP, Multithreading]
+-- +++ processing catkin package: 'svio'
+-- ==> add_subdirectory(SVIO/svio)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found installed version of Eigen: /usr/lib/cmake/eigen3
+-- Found required Ceres dependency: Eigen version 3.3.7 in /usr/include/eigen3
+-- Found required Ceres dependency: glog
+-- Found installed version of gflags: /usr/lib/aarch64-linux-gnu/cmake/gflags
+-- Detected gflags version: 2.2.2
+-- Found required Ceres dependency: gflags
+-- Found Ceres version: 1.14.0 installed in: /usr with components: [EigenSparse, SparseLinearAlgebraLibrary, LAPACK, SuiteSparse, CXSparse, SchurSpecializations, OpenMP, Multithreading]
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/svio_ws/build
+-- Using CATKIN_DEVEL_PREFIX: /opt/svio_ws/devel
+-- Using CMAKE_PREFIX_PATH: /opt/ros/noetic
+-- This workspace overlays: /opt/ros/noetic
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using Debian Python package layout
+-- Using empy: /usr/lib/python3/dist-packages/em.py
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /opt/svio_ws/build/test_results
+-- Forcing gtest/gmock from source, though one was otherwise available.
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+-- Using Python nosetests: /usr/bin/nosetests3
+-- catkin 0.8.12
+-- BUILD_SHARED_LIBS is on
+-- BUILD_SHARED_LIBS is on
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 2 packages in topological order:
+-- ~~  - camera_models_in
+-- ~~  - svio
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'camera_models_in'
+-- ==> add_subdirectory(SVIO/camera_models_in)
+-- Found installed version of Eigen: /usr/lib/cmake/eigen3
+-- Found required Ceres dependency: Eigen version 3.3.7 in /usr/include/eigen3
+-- Found required Ceres dependency: glog
+-- Found installed version of gflags: /usr/lib/aarch64-linux-gnu/cmake/gflags
+-- Detected gflags version: 2.2.2
+-- Found required Ceres dependency: gflags
+-- Found Ceres version: 1.14.0 installed in: /usr with components: [EigenSparse, SparseLinearAlgebraLibrary, LAPACK, SuiteSparse, CXSparse, SchurSpecializations, OpenMP, Multithreading]
+-- +++ processing catkin package: 'svio'
+-- ==> add_subdirectory(SVIO/svio)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found installed version of Eigen: /usr/lib/cmake/eigen3
+-- Found required Ceres dependency: Eigen version 3.3.7 in /usr/include/eigen3
+-- Found required Ceres dependency: glog
+-- Found installed version of gflags: /usr/lib/aarch64-linux-gnu/cmake/gflags
+-- Detected gflags version: 2.2.2
+-- Found required Ceres dependency: gflags
+-- Found Ceres version: 1.14.0 installed in: /usr with components: [EigenSparse, SparseLinearAlgebraLibrary, LAPACK, SuiteSparse, CXSparse, SchurSpecializations, OpenMP, Multithreading]
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/svio_ws/build
+make[2]: Warning: File 'SVIO/camera_models_in/CMakeFiles/camera_models_in.dir/flags.make' has modification time 7681407 s in the future
+make[2]: Warning: File 'SVIO/camera_models_in/CMakeFiles/Calibrations_in.dir/flags.make' has modification time 7681407 s in the future
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Warning: File 'SVIO/camera_models_in/CMakeFiles/camera_models_in.dir/flags.make' has modification time 7681407 s in the future
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Warning: File 'SVIO/camera_models_in/CMakeFiles/Calibrations_in.dir/flags.make' has modification time 7681407 s in the future
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[ 24%] Built target Calibrations_in
+[ 46%] Built target camera_models_in
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio.dir/depend.make' has modification time 7681623 s in the future
+Scanning dependencies of target svio
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio.dir/build.make' has modification time 7681407 s in the future
+[ 50%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/feature_manager.cpp.o
+[ 50%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/depth_factor.cpp.o
+[ 53%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/svio_init.cpp.o
+[ 53%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/svio.cpp.o
+[ 54%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/projection_quat.cpp.o
+[ 56%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/parameters.cpp.o
+[ 58%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/plane_factor.cpp.o
+[ 59%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/utility/visualization.cpp.o
+[ 61%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/initialization/initial_aligment.cpp.o
+[ 62%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/initialization/initial_ex_rotation.cpp.o
+[ 64%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/initialization/initial_sfm.cpp.o
+[ 66%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/initialization/solve_opt.cpp.o
+[ 67%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/feature_tracking/feature_tracker.cpp.o
+[ 69%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/plane_tools/PlaneExtractor.cpp.o
+[ 70%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/plane_manager.cpp.o
+[ 72%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/line_tracking/line_tracker.cpp.o
+[ 74%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/line_manager.cpp.o
+[ 75%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/mns_alg.cpp.o
+[ 77%] Building CXX object SVIO/svio/CMakeFiles/svio.dir/state_estimation/frontend.cpp.o
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[ 93%] Built target svio
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio_syn_node.dir/depend.make' has modification time 7681568 s in the future
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio_stereo_node.dir/depend.make' has modification time 7681568 s in the future
+Scanning dependencies of target svio_syn_node
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+Scanning dependencies of target svio_stereo_node
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio_stereo_node.dir/build.make' has modification time 7681034 s in the future
+make[2]: Warning: File 'SVIO/svio/CMakeFiles/svio_syn_node.dir/build.make' has modification time 7681034 s in the future
+[ 96%] Building CXX object SVIO/svio/CMakeFiles/svio_stereo_node.dir/state_estimation/svio_stereo_node.cpp.o
+[ 96%] Building CXX object SVIO/svio/CMakeFiles/svio_syn_node.dir/state_estimation/svio_syn_node.cpp.o
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[ 98%] Built target svio_syn_node
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+[100%] Built target svio_stereo_node
+Base path: /opt/svio_ws
+Source space: /opt/svio_ws/src
+Build space: /opt/svio_ws/build
+Devel space: /opt/svio_ws/devel
+Install space: /opt/svio_ws/install
+####
+#### Running command: "cmake /opt/svio_ws/src -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-mcpu=cortex-a76 -DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O3 -DNDEBUG -DCATKIN_DEVEL_PREFIX=/opt/svio_ws/devel -DCMAKE_INSTALL_PREFIX=/opt/svio_ws/install -G Unix Makefiles" in "/opt/svio_ws/build"
+####
+####
+#### Running command: "make -j4" in "/opt/svio_ws/build"
+####

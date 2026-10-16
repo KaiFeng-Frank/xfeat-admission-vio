@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "formal_python": {
+      "path": "python3",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+      "size_bytes": 32003680
+    },
+    "formal_table2_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "sha256": "800b96b0c9bdeaf61779f126cb35d5a09a856fba781605e1e846f4783524caf0",
+      "size_bytes": 20124
+    },
+    "formal_table2_scorer_dependency": {
+      "path": "${REPO_ROOT}/tools/scoring/trajectory_compare.py",
+      "sha256": "4c8895b1e4b58d90aeaf4859e2716c5ab6e6f00c4f395ad251b6a31c57f6500a",
+      "size_bytes": 28000
+    },
+    "frozen_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/score_nn20.py",
+      "sha256": "037a579cfd5cdb6368733e9fe04809eb301da255091dc69f2dfde61953a8c01b",
+      "size_bytes": 964
+    },
+    "ground_truth": {
+      "path": "${DATA_ROOT}/vcu_rvi/light3_gt.tum",
+      "sha256": "f5086c6d174d14c9ccc3f2836a12b79040dd225a8d0d3e280af397d429ee2ff5",
+      "size_bytes": 640972
+    },
+    "normalized": {
+      "path": "${VERIFY_ROOT}/verify/scores/light3_A/trajectory_body.tum",
+      "sha256": "063681280581cccad6334fe54c3e974dda51b68f4f7c931499dceb13f4677d38",
+      "size_bytes": 80989
+    },
+    "normalizer_and_exact_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/normalize_score_phase1.py",
+      "sha256": "9598238d10703a07d7d5e97fc1f1d530efb289202dfd4cf3f97b25f0283aa190",
+      "size_bytes": 10075
+    },
+    "raw": {
+      "path": "${VERIFY_ROOT}/verify/runs/light3_A/svio_no_loop.csv",
+      "sha256": "5fd21eeaf1253ba64b72982f849a58720d99f10f7a765b775eb9066fb96d1e3b",
+      "size_bytes": 78883
+    }
+  },
+  "formal_table2_scoring": {
+    "alignment": "SE3_Horn_no_scale_all_interpolated_rows",
+    "association": "GT_interpolated_to_each_estimate_timestamp_within_GT_span",
+    "command": [
+      "python3",
+      "-s",
+      "-B",
+      "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "--input",
+      "${VERIFY_ROOT}/verify/scores/light3_A/trajectory_body.tum",
+      "--scene",
+      "online",
+      "--gt-file",
+      "${DATA_ROOT}/vcu_rvi/light3_gt.tum",
+      "--align",
+      "se3",
+      "--start-offset",
+      "0",
+      "--cr-span",
+      "gt",
+      "--ate-thresh",
+      "1.0",
+      "--no-to-base-link",
+      "--format",
+      "csv"
+    ],
+    "environment": {
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "result": {
+      "align": "se3",
+      "aoe_median_deg": "4.816520436663071",
+      "ate_max_m": "0.3176848656825737",
+      "ate_median_m": "0.1255531664732577",
+      "ate_rmse_all_m": "0.1381110852980127",
+      "ate_rmse_correct_m": "0.1381110852980127",
+      "coverage": "0.9838308457711443",
+      "cr": "0.9819085632164133",
+      "cr_inf": "0.9819085632164133",
+      "cr_pos": "0.9819085632164133",
+      "eps_m": "1.0",
+      "matched": "791",
+      "method": "",
+      "n_est": "804",
+      "n_gt": "8085",
+      "scene": "online",
+      "tag": "trajectory_body",
+      "temporal_coverage": "0.9819085632164133"
+    },
+    "role": "primary_Table_II_metric",
+    "stderr": "",
+    "time_shift_s": 0.0
+  },
+  "label": "online-light3-A",
+  "normalization": {
+    "canonical_header": "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows",
+    "output_frame": "body_imu",
+    "parser": "vins_ns_qwxyz_csv",
+    "quaternion_input": "qw_qx_qy_qz",
+    "quaternion_output": "qx_qy_qz_qw",
+    "row_count": 804,
+    "timestamp": "ns_to_s_if_gt_1e10",
+    "transform": "native_body"
+  },
+  "schema": "svio-native-body-nn20-score-v1",
+  "scoring": {
+    "alignment": "SE3_Umeyama_no_scale_all_matched_rows",
+    "alignment_rotation": [
+      [
+        -0.18838915410016782,
+        0.1413859195655307,
+        0.9718639556882603
+      ],
+      [
+        -0.5534001327141218,
+        -0.8327998428420373,
+        0.013882178297025715
+      ],
+      [
+        0.8113308941051214,
+        -0.5352143902315101,
+        0.23513344457923674
+      ]
+    ],
+    "alignment_translation_m": [
+      -0.07066534491535431,
+      0.16571166743008736,
+      -0.0740128086410845
+    ],
+    "association": "nearest_neighbor_strict_abs_dt_lt_0.020s",
+    "ate_median_m": 0.12802509258713962,
+    "ate_p90_m": 0.19481781769950132,
+    "ate_rmse_m": 0.1395066813916443,
+    "estimate_rows": 804,
+    "frozen_stdout": "online-light3-A: n=748 ATE RMSE=13.95cm median=12.80cm p90=19.48cm",
+    "ground_truth_rows": 8085,
+    "matched_rows": 748,
+    "max_matched_abs_dt_s": 0.019522004000009474,
+    "time_shift_s": 0.0,
+    "unmatched_rows": 56
+  }
+}

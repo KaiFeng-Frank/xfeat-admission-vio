@@ -1,0 +1,1158 @@
+diff --git a/svio/CMakeLists.txt b/svio/CMakeLists.txt
+index 6ed7791..7558e54 100644
+--- a/svio/CMakeLists.txt
++++ b/svio/CMakeLists.txt
+@@ -73,6 +73,52 @@ if(WITH_OPENGV)
+     include_directories("${opengv_DIR}/../include")
+ endif()
+ 
++# Online, on-demand, admission-only XFeat (feature_tracking/xfeat_online.h).
++# The keypoint head and the sparse tail are plain C++; the reliability backbone
++# needs a backend: RKNN on the RK3588 NPU, or onnxruntime on a desktop. Neither
++# is required; without one, only the recorded-sidecar path is available.
++option(SVIO_XFEAT_RKNN "online XFeat reliability backbone on the RK3588 NPU (librknnrt)" OFF)
++set(SVIO_XFEAT_RKNN_ROOT "" CACHE PATH "directory holding rknn_api.h and librknnrt.so (default: system paths)")
++set(SVIO_XFEAT_ONNXRUNTIME_ROOT "" CACHE PATH "onnxruntime root (include/, lib/) for desktop runs of the online path")
++set(XFEAT_ONLINE_SOURCES feature_tracking/xfeat_online.cpp)
++set(XFEAT_ONLINE_LIBS ${OpenCV_LIBS} pthread)
++set(XFEAT_ONLINE_DEFS)
++set(XFEAT_ONLINE_INCLUDES)
++if(SVIO_XFEAT_RKNN)
++    find_path(RKNN_INCLUDE_DIR rknn_api.h HINTS ${SVIO_XFEAT_RKNN_ROOT} ${SVIO_XFEAT_RKNN_ROOT}/include)
++    find_library(RKNN_LIBRARY rknnrt HINTS ${SVIO_XFEAT_RKNN_ROOT} ${SVIO_XFEAT_RKNN_ROOT}/lib)
++    if(NOT RKNN_INCLUDE_DIR OR NOT RKNN_LIBRARY)
++        message(FATAL_ERROR "SVIO_XFEAT_RKNN: rknn_api.h / librknnrt.so not found (set SVIO_XFEAT_RKNN_ROOT)")
++    endif()
++    list(APPEND XFEAT_ONLINE_SOURCES feature_tracking/xfeat_backend_rknn.cpp)
++    list(APPEND XFEAT_ONLINE_LIBS ${RKNN_LIBRARY})
++    list(APPEND XFEAT_ONLINE_DEFS SVIO_XFEAT_RKNN)
++    list(APPEND XFEAT_ONLINE_INCLUDES ${RKNN_INCLUDE_DIR})
++    message(STATUS "online XFeat: RKNN backend ${RKNN_LIBRARY}")
++endif()
++if(SVIO_XFEAT_ONNXRUNTIME_ROOT)
++    find_path(ORT_INCLUDE_DIR onnxruntime_c_api.h HINTS ${SVIO_XFEAT_ONNXRUNTIME_ROOT}/include
++              ${SVIO_XFEAT_ONNXRUNTIME_ROOT}/include/onnxruntime/core/session NO_DEFAULT_PATH)
++    find_library(ORT_LIBRARY onnxruntime HINTS ${SVIO_XFEAT_ONNXRUNTIME_ROOT}/lib NO_DEFAULT_PATH)
++    if(NOT ORT_INCLUDE_DIR OR NOT ORT_LIBRARY)
++        message(FATAL_ERROR "SVIO_XFEAT_ONNXRUNTIME_ROOT: onnxruntime_c_api.h / libonnxruntime.so not found")
++    endif()
++    list(APPEND XFEAT_ONLINE_SOURCES feature_tracking/xfeat_backend_onnx.cpp)
++    list(APPEND XFEAT_ONLINE_LIBS ${ORT_LIBRARY})
++    list(APPEND XFEAT_ONLINE_DEFS SVIO_XFEAT_ONNXRUNTIME)
++    list(APPEND XFEAT_ONLINE_INCLUDES ${ORT_INCLUDE_DIR})
++    message(STATUS "online XFeat: onnxruntime backend ${ORT_LIBRARY}")
++endif()
++add_library(svio_xfeat_online STATIC ${XFEAT_ONLINE_SOURCES})
++set_target_properties(svio_xfeat_online PROPERTIES POSITION_INDEPENDENT_CODE ON)
++set_source_files_properties(feature_tracking/xfeat_online.cpp PROPERTIES COMPILE_FLAGS "-ffp-contract=off")
++target_include_directories(svio_xfeat_online PRIVATE ${XFEAT_ONLINE_INCLUDES})
++target_compile_definitions(svio_xfeat_online PRIVATE ${XFEAT_ONLINE_DEFS})
++target_link_libraries(svio_xfeat_online ${XFEAT_ONLINE_LIBS})
++
++add_executable(xfeat_online_check feature_tracking/xfeat_online_check.cpp)
++target_link_libraries(xfeat_online_check svio_xfeat_online)
++
+ # svio library 
+ add_library(svio state_estimation/svio.cpp state_estimation/svio_init.cpp
+             state_estimation/feature_manager.cpp state_estimation/marginalization_factor.cpp state_estimation/depth_factor.cpp
+@@ -87,9 +133,9 @@ add_library(svio state_estimation/svio.cpp state_estimation/svio_init.cpp
+             state_estimation/vanish_point_factor.cpp state_estimation/mns_alg.cpp state_estimation/frontend.cpp)
+ 
+ if(WITH_OPENGV)
+-    target_link_libraries(svio ${CERES_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBS} opengv)
++    target_link_libraries(svio ${CERES_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBS} svio_xfeat_online opengv)
+ else()
+-    target_link_libraries(svio ${CERES_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBS})
++    target_link_libraries(svio ${CERES_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBS} svio_xfeat_online)
+ endif()
+ 
+ add_executable(svio_syn_node state_estimation/svio_syn_node.cpp)
+diff --git a/svio/feature_tracking/feature_tracker.cpp b/svio/feature_tracking/feature_tracker.cpp
+index b302a33..4cb3394 100644
+--- a/svio/feature_tracking/feature_tracker.cpp
++++ b/svio/feature_tracking/feature_tracker.cpp
+@@ -47,7 +47,12 @@ FeatureTracker::FeatureTracker()
+     depthMapFactor = 0.001f;
+     mp_gmm = new GMM_Model();
+     const char *sidecar = std::getenv("SVIO_XFEAT_XFS");
+-    if (sidecar != nullptr && sidecar[0] != '\0')
++    const char *online = std::getenv("SVIO_XFEAT_ONLINE_MODEL");
++    const bool use_sidecar = sidecar != nullptr && sidecar[0] != '\0';
++    const bool use_online = online != nullptr && online[0] != '\0';
++    if (use_sidecar && use_online)
++        throw std::runtime_error("SVIO_XFEAT_XFS and SVIO_XFEAT_ONLINE_MODEL are exclusive");
++    if (use_sidecar)
+     {
+         const char *mode = std::getenv("SVIO_XFEAT_MODE");
+         xfeat_hybrid_ = mode != nullptr &&
+@@ -55,10 +60,19 @@ FeatureTracker::FeatureTracker()
+         xfeat_admission_only_ = mode != nullptr && string(mode) == "admission";
+         openXFeatSidecar(sidecar);
+     }
++    else if (use_online)
++        openXFeatOnline(online);
+ }
+ 
+ FeatureTracker::~FeatureTracker()
+ {
++    if (xfeat_online_)
++        ROS_WARN("XFEAT-ONLINE frames=%llu launches=%llu admissions=%llu wait_ms_mean=%.2f wait_ms_max=%.2f latency_ms_max=%.2f",
++                 static_cast<unsigned long long>(xfeat_frames_read_),
++                 static_cast<unsigned long long>(xfeat_online_launches_),
++                 static_cast<unsigned long long>(xfeat_online_admissions_),
++                 xfeat_online_admissions_ ? xfeat_online_wait_ms_total_ / xfeat_online_admissions_ : 0.0,
++                 xfeat_online_wait_ms_max_, xfeat_online_latency_ms_max_);
+     if (xfeat_enabled_)
+         ROS_WARN("XFEAT-SIDECAR frames=%llu mean_emitted=%.2f mean_propagated=%.2f",
+                  static_cast<unsigned long long>(xfeat_frames_read_),
+@@ -106,6 +120,44 @@ void FeatureTracker::openXFeatSidecar(const string &path)
+              (xfeat_hybrid_ ? "klt_10hz_hybrid" : "descriptor_only"));
+ }
+ 
++void FeatureTracker::openXFeatOnline(const string &reliability_model)
++{
++    // The online path computes only what admission reads: (x, y, score), no
++    // descriptors. Hence admission mode only.
++    const char *mode = std::getenv("SVIO_XFEAT_MODE");
++    if (mode != nullptr && mode[0] != '\0' && string(mode) != "admission")
++        throw std::runtime_error("SVIO_XFEAT_ONLINE_MODEL supports SVIO_XFEAT_MODE=admission only");
++    const char *head = std::getenv("SVIO_XFEAT_ONLINE_KHEAD");
++    if (head == nullptr || head[0] == '\0')
++        throw std::runtime_error("SVIO_XFEAT_ONLINE_MODEL needs SVIO_XFEAT_ONLINE_KHEAD (keypoint_head_fp32.bin)");
++    const char *threads = std::getenv("SVIO_XFEAT_ONLINE_THREADS");
++    const char *cores = std::getenv("SVIO_XFEAT_ONLINE_NPU_CORES");
++    xfeat_online_.reset(new xfeat_online::OnlineExtractor(
++        reliability_model, head, threads != nullptr ? std::max(1, std::atoi(threads)) : 1,
++        cores != nullptr ? string(cores) : string()));
++    xfeat_enabled_ = true;
++    xfeat_hybrid_ = true;
++    xfeat_admission_only_ = true;
++
++    const char *log = std::getenv("SVIO_XFEAT_ONLINE_LOG");
++    if (log != nullptr && log[0] != '\0')
++    {
++        xfeat_online_log_.open(log);
++        if (!xfeat_online_log_)
++            throw std::runtime_error(string("cannot open SVIO_XFEAT_ONLINE_LOG ") + log);
++        xfeat_online_log_ << "frame,stamp_ns,survivors,admitted,proposals,wait_ms,latency_ms,keypoint_ms,heatmap_ms,reliability_ms,tail_ms\n";
++    }
++    const char *dump = std::getenv("SVIO_XFEAT_ONLINE_DUMP");
++    if (dump != nullptr && dump[0] != '\0')
++    {
++        xfeat_online_dump_.open(dump, std::ios::out | std::ios::binary);
++        if (!xfeat_online_dump_)
++            throw std::runtime_error(string("cannot open SVIO_XFEAT_ONLINE_DUMP ") + dump);
++    }
++    ROS_WARN("XFEAT-ONLINE enabled mode=klt_10hz_admission keypoint_head=%s reliability=%s",
++             head, xfeat_online_->describe().c_str());
++}
++
+ void FeatureTracker::readXFeatRecord(int64_t expected_stamp_ns,
+                                       vector<cv::Point2f> &points,
+                                       vector<float> &scores,
+@@ -531,10 +583,23 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+     vector<cv::Point2f> proposal_pts;
+     vector<float> proposal_scores;
+     cv::Mat proposal_desc;
+-    readXFeatRecord(static_cast<int64_t>(std::llround(_cur_time * 1e9)),
+-                    proposal_pts, proposal_scores, proposal_desc);
++    const int64_t stamp_ns = static_cast<int64_t>(std::llround(_cur_time * 1e9));
++    if (xfeat_online_)
++        ++xfeat_frames_read_;
++    else
++        readXFeatRecord(stamp_ns, proposal_pts, proposal_scores, proposal_desc);
+     const bool xfeat_tick = ((xfeat_frames_read_ - 1u) % 3u) == 0u;
+ 
++    // Online: the gate opens on a tick whose frame and predecessor are both
++    // short, so a tick that follows a short frame starts the extraction now, to
++    // run alongside KLT and the F test; it is collected only if the gate opens.
++    const bool xfeat_online_launched = xfeat_online_ && xfeat_tick && xfeat_low_health_streak_ >= 1u;
++    if (xfeat_online_launched)
++    {
++        xfeat_online_->launch(mono_img);
++        ++xfeat_online_launches_;
++    }
++
+     auto reduceHybrid = [this](const vector<uchar> &status)
+     {
+         int out = 0;
+@@ -761,6 +826,54 @@ void FeatureTracker::trackImageHybrid(const cv::Mat &mono_img, double _cur_time)
+ 
+     const bool xfeat_admit = xfeat_tick && xfeat_health_ready;
+ 
++    if (xfeat_online_launched)
++    {
++        double wait_ms = 0.0;
++        xfeat_online::Timing timing;
++        if (xfeat_admit)
++        {
++            xfeat_online::Proposals proposals;
++            TicToc t_wait;
++            xfeat_online_->collect(proposals, timing);
++            wait_ms = t_wait.toc();
++            proposal_pts.swap(proposals.points);
++            proposal_scores.swap(proposals.scores);
++            proposal_used.assign(proposal_pts.size(), 0);
++            ++xfeat_online_admissions_;
++            xfeat_online_wait_ms_total_ += wait_ms;
++            xfeat_online_wait_ms_max_ = std::max(xfeat_online_wait_ms_max_, wait_ms);
++            xfeat_online_latency_ms_max_ = std::max(xfeat_online_latency_ms_max_, timing.latency_ms);
++            if (xfeat_online_dump_.is_open())
++            {
++                const uint32_t n = static_cast<uint32_t>(proposal_pts.size());
++                xfeat_online_dump_.write(reinterpret_cast<const char *>(&stamp_ns), sizeof(stamp_ns));
++                xfeat_online_dump_.write(reinterpret_cast<const char *>(&n), sizeof(n));
++                for (uint32_t i = 0; i < n; ++i)
++                {
++                    const float xys[3] = {proposal_pts[i].x, proposal_pts[i].y, proposal_scores[i]};
++                    xfeat_online_dump_.write(reinterpret_cast<const char *>(xys), sizeof(xys));
++                }
++                xfeat_online_dump_.flush();  // the node's shutdown aborts without unwinding
++            }
++        }
++        if (xfeat_online_log_.is_open())
++        {
++            char row[256];
++            if (xfeat_admit)
++                std::snprintf(row, sizeof(row), "%llu,%lld,%zu,1,%zu,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n",
++                              static_cast<unsigned long long>(xfeat_frames_read_), static_cast<long long>(stamp_ns),
++                              xfeat_post_f_survivors, proposal_pts.size(), wait_ms, timing.latency_ms,
++                              timing.keypoint_ms, timing.heatmap_ms, timing.reliability_ms, timing.tail_ms);
++            else
++                std::snprintf(row, sizeof(row), "%llu,%lld,%zu,0,,,,,,,\n",
++                              static_cast<unsigned long long>(xfeat_frames_read_), static_cast<long long>(stamp_ns),
++                              xfeat_post_f_survivors);
++            xfeat_online_log_ << row << std::flush;
++        }
++    }
++    else if (xfeat_admit && xfeat_online_)
++        throw std::logic_error("online XFeat: gate open on a frame that launched no extraction");
++
+     if (xfeat_admit)
+     {
+         vector<int> score_order(proposal_pts.size());
+diff --git a/svio/feature_tracking/feature_tracker.h b/svio/feature_tracking/feature_tracker.h
+index 980ba94..74a19c4 100644
+--- a/svio/feature_tracking/feature_tracker.h
++++ b/svio/feature_tracking/feature_tracker.h
+@@ -18,6 +18,7 @@
+ #include "../state_estimation/parameters.h"
+ #include "../utility/tic_toc.h"
+ #include "../plane_tools/PlaneExtractor.h"
++#include "xfeat_online.h"
+ 
+ using namespace std;
+ using namespace camodocal;
+@@ -92,7 +93,19 @@ private:
+     vector<array<float, 64>> hybrid_anchor_desc_;
+     vector<uchar> hybrid_has_anchor_;
+ 
++    // online, on-demand admission (SVIO_XFEAT_ONLINE_MODEL): proposals are
++    // computed in process for the frames where the gate can open
++    std::unique_ptr<xfeat_online::OnlineExtractor> xfeat_online_;
++    std::ofstream xfeat_online_log_;
++    std::ofstream xfeat_online_dump_;
++    uint64_t xfeat_online_launches_ = 0;
++    uint64_t xfeat_online_admissions_ = 0;
++    double xfeat_online_wait_ms_total_ = 0.0;
++    double xfeat_online_wait_ms_max_ = 0.0;
++    double xfeat_online_latency_ms_max_ = 0.0;
++
+     void openXFeatSidecar(const string &path);
++    void openXFeatOnline(const string &reliability_model);
+     void trackImageXFeat(const cv::Mat &_img, double _cur_time);
+     void trackImageHybrid(const cv::Mat &_img, double _cur_time);
+     void readXFeatRecord(int64_t expected_stamp_ns,
+diff --git a/svio/feature_tracking/xfeat_backend_onnx.cpp b/svio/feature_tracking/xfeat_backend_onnx.cpp
+new file mode 100644
+index 0000000..e00eda6
+--- /dev/null
++++ b/svio/feature_tracking/xfeat_backend_onnx.cpp
+@@ -0,0 +1,108 @@
++// onnxruntime (C API) reliability backend for desktop runs of the online path.
++
++#include "xfeat_online.h"
++
++#include <onnxruntime_c_api.h>
++
++#include <stdexcept>
++
++namespace xfeat_online
++{
++namespace
++{
++class OnnxBackend : public ReliabilityBackend
++{
++public:
++    OnnxBackend(const std::string &model_path, int cpu_threads)
++        : api_(OrtGetApiBase()->GetApi(ORT_API_VERSION)), threads_(cpu_threads), input_(kHeight * kWidth)
++    {
++        if (api_ == nullptr)
++            throw std::runtime_error("onnxruntime library older than the header it was built against");
++        check(api_->CreateEnv(ORT_LOGGING_LEVEL_WARNING, "xfeat_online", &env_));
++        OrtSessionOptions *options = nullptr;
++        check(api_->CreateSessionOptions(&options));
++        check(api_->SetIntraOpNumThreads(options, cpu_threads));
++        check(api_->SetInterOpNumThreads(options, 1));
++        check(api_->SetSessionExecutionMode(options, ORT_SEQUENTIAL));
++        OrtStatus *status = api_->CreateSession(env_, model_path.c_str(), options, &session_);
++        api_->ReleaseSessionOptions(options);
++        check(status);
++        check(api_->CreateCpuMemoryInfo(OrtArenaAllocator, OrtMemTypeDefault, &memory_));
++
++        OrtAllocator *allocator = nullptr;
++        check(api_->GetAllocatorWithDefaultOptions(&allocator));
++        size_t inputs = 0, outputs = 0;
++        check(api_->SessionGetInputCount(session_, &inputs));
++        check(api_->SessionGetOutputCount(session_, &outputs));
++        char *input_name = nullptr, *output_name = nullptr;
++        check(api_->SessionGetInputName(session_, 0, allocator, &input_name));
++        check(api_->SessionGetOutputName(session_, 0, allocator, &output_name));
++        const std::string in_name(input_name), out_name(output_name);
++        check(api_->AllocatorFree(allocator, input_name));
++        check(api_->AllocatorFree(allocator, output_name));
++        if (inputs != 1 || outputs != 1 || in_name != "gray" || out_name != "reliability")
++            throw std::runtime_error("expected gray -> reliability model: " + model_path);
++        describe_ = "onnxruntime threads=" + std::to_string(threads_) + " model=" + model_path;
++    }
++
++    ~OnnxBackend() override
++    {
++        if (memory_)
++            api_->ReleaseMemoryInfo(memory_);
++        if (session_)
++            api_->ReleaseSession(session_);
++        if (env_)
++            api_->ReleaseEnv(env_);
++    }
++
++    void run(const uint8_t *gray, float *reliability) override
++    {
++        for (int i = 0; i < kHeight * kWidth; ++i)
++            input_[i] = static_cast<float>(gray[i]);
++        const int64_t in_shape[4] = {1, 1, kHeight, kWidth};
++        const int64_t out_shape[4] = {1, 1, kCellsY, kCellsX};
++        OrtValue *in = nullptr, *out = nullptr;
++        check(api_->CreateTensorWithDataAsOrtValue(memory_, input_.data(), input_.size() * sizeof(float),
++                                                   in_shape, 4, ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT, &in));
++        OrtStatus *status = api_->CreateTensorWithDataAsOrtValue(memory_, reliability, kCells * sizeof(float),
++                                                                 out_shape, 4, ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT, &out);
++        if (status == nullptr)
++        {
++            const char *in_names[1] = {"gray"};
++            const char *out_names[1] = {"reliability"};
++            status = api_->Run(session_, nullptr, in_names, &in, 1, out_names, 1, &out);
++        }
++        if (out)
++            api_->ReleaseValue(out);
++        api_->ReleaseValue(in);
++        check(status);
++    }
++
++    std::string describe() const override { return describe_; }
++
++private:
++    void check(OrtStatus *status) const
++    {
++        if (status == nullptr)
++            return;
++        const std::string message = api_->GetErrorMessage(status);
++        api_->ReleaseStatus(status);
++        throw std::runtime_error("onnxruntime: " + message);
++    }
++
++    const OrtApi *api_;
++    int threads_;
++    OrtEnv *env_ = nullptr;
++    OrtSession *session_ = nullptr;
++    OrtMemoryInfo *memory_ = nullptr;
++    std::vector<float> input_;
++    std::string describe_;
++};
++}  // namespace
++
++std::unique_ptr<ReliabilityBackend> makeOnnxBackend(const std::string &model_path, int cpu_threads)
++{
++    return std::unique_ptr<ReliabilityBackend>(new OnnxBackend(model_path, cpu_threads));
++}
++
++}  // namespace xfeat_online
+diff --git a/svio/feature_tracking/xfeat_backend_rknn.cpp b/svio/feature_tracking/xfeat_backend_rknn.cpp
+new file mode 100644
+index 0000000..2d090ea
+--- /dev/null
++++ b/svio/feature_tracking/xfeat_backend_rknn.cpp
+@@ -0,0 +1,106 @@
++// RKNN runtime (librknnrt, C API) reliability backend: the backbone on the RK3588 NPU.
++
++#include "xfeat_online.h"
++
++#include <rknn_api.h>
++
++#include <fstream>
++#include <iterator>
++#include <stdexcept>
++
++namespace xfeat_online
++{
++namespace
++{
++rknn_core_mask parseCores(const std::string &cores)
++{
++    if (cores.empty() || cores == "0_1_2" || cores == "012")
++        return RKNN_NPU_CORE_0_1_2;
++    if (cores == "0")
++        return RKNN_NPU_CORE_0;
++    if (cores == "1")
++        return RKNN_NPU_CORE_1;
++    if (cores == "2")
++        return RKNN_NPU_CORE_2;
++    if (cores == "0_1" || cores == "01")
++        return RKNN_NPU_CORE_0_1;
++    if (cores == "auto")
++        return RKNN_NPU_CORE_AUTO;
++    throw std::runtime_error("unknown NPU core selection '" + cores + "' (0, 1, 2, 0_1, 0_1_2, auto)");
++}
++
++class RknnBackend : public ReliabilityBackend
++{
++public:
++    RknnBackend(const std::string &model_path, const std::string &cores)
++    {
++        std::ifstream in(model_path.c_str(), std::ios::in | std::ios::binary);
++        if (!in)
++            throw std::runtime_error("cannot open RKNN model: " + model_path);
++        model_.assign(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>());
++        check(rknn_init(&ctx_, model_.data(), static_cast<uint32_t>(model_.size()), 0, nullptr), "rknn_init");
++        check(rknn_set_core_mask(ctx_, parseCores(cores)), "rknn_set_core_mask");
++
++        rknn_input_output_num io{};
++        check(rknn_query(ctx_, RKNN_QUERY_IN_OUT_NUM, &io, sizeof(io)), "query io");
++        rknn_tensor_attr input{}, output{};
++        input.index = 0;
++        output.index = 0;
++        check(rknn_query(ctx_, RKNN_QUERY_INPUT_ATTR, &input, sizeof(input)), "query input");
++        check(rknn_query(ctx_, RKNN_QUERY_OUTPUT_ATTR, &output, sizeof(output)), "query output");
++        if (io.n_input != 1 || io.n_output != 1 || input.n_elems != kHeight * kWidth || output.n_elems != kCells)
++            throw std::runtime_error("expected gray[480x640] -> reliability[60x80] RKNN model: " + model_path);
++        rknn_sdk_version version{};
++        check(rknn_query(ctx_, RKNN_QUERY_SDK_VERSION, &version, sizeof(version)), "query version");
++        describe_ = std::string("rknn api=") + version.api_version + " driver=" + version.drv_version +
++                    " cores=" + (cores.empty() ? "0_1_2" : cores) + " model=" + model_path;
++    }
++
++    ~RknnBackend() override
++    {
++        if (ctx_)
++            rknn_destroy(ctx_);
++    }
++
++    void run(const uint8_t *gray, float *reliability) override
++    {
++        rknn_input input{};
++        input.index = 0;
++        input.buf = const_cast<uint8_t *>(gray);
++        input.size = kHeight * kWidth;
++        input.pass_through = 0;
++        input.type = RKNN_TENSOR_UINT8;
++        input.fmt = RKNN_TENSOR_NHWC;  // one channel: NHWC and NCHW share the layout
++        check(rknn_inputs_set(ctx_, 1, &input), "rknn_inputs_set");
++        check(rknn_run(ctx_, nullptr), "rknn_run");
++        rknn_output output{};
++        output.index = 0;
++        output.want_float = 1;
++        output.is_prealloc = 1;
++        output.buf = reliability;
++        output.size = kCells * sizeof(float);
++        check(rknn_outputs_get(ctx_, 1, &output, nullptr), "rknn_outputs_get");
++        rknn_outputs_release(ctx_, 1, &output);
++    }
++
++    std::string describe() const override { return describe_; }
++
++private:
++    static void check(int ret, const char *what)
++    {
++        if (ret != RKNN_SUCC)
++            throw std::runtime_error(std::string("RKNN ") + what + " failed: " + std::to_string(ret));
++    }
++
++    std::vector<char> model_;
++    rknn_context ctx_ = 0;
++    std::string describe_;
++};
++}  // namespace
++
++std::unique_ptr<ReliabilityBackend> makeRknnBackend(const std::string &model_path, const std::string &npu_cores)
++{
++    return std::unique_ptr<ReliabilityBackend>(new RknnBackend(model_path, npu_cores));
++}
++
++}  // namespace xfeat_online
+diff --git a/svio/feature_tracking/xfeat_online.cpp b/svio/feature_tracking/xfeat_online.cpp
+new file mode 100644
+index 0000000..ab70144
+--- /dev/null
++++ b/svio/feature_tracking/xfeat_online.cpp
+@@ -0,0 +1,403 @@
++// Compiled with -ffp-contract=off: the tail reproduces the pinned float32
++// arithmetic operation by operation (sampling coordinates, bilinear weights,
++// score products), which a fused multiply-add would round differently.
++
++#include "xfeat_online.h"
++
++#include <algorithm>
++#include <array>
++#include <chrono>
++#include <cmath>
++#include <cstring>
++#include <fstream>
++#include <limits>
++#include <stdexcept>
++
++namespace xfeat_online
++{
++
++#ifdef SVIO_XFEAT_RKNN
++std::unique_ptr<ReliabilityBackend> makeRknnBackend(const std::string &model_path, const std::string &npu_cores);
++#endif
++#ifdef SVIO_XFEAT_ONNXRUNTIME
++std::unique_ptr<ReliabilityBackend> makeOnnxBackend(const std::string &model_path, int cpu_threads);
++#endif
++
++std::unique_ptr<ReliabilityBackend> makeReliabilityBackend(const std::string &model_path,
++                                                           int cpu_threads,
++                                                           const std::string &npu_cores)
++{
++    auto ends_with = [&model_path](const std::string &suffix)
++    {
++        return model_path.size() >= suffix.size() &&
++               model_path.compare(model_path.size() - suffix.size(), suffix.size(), suffix) == 0;
++    };
++    if (ends_with(".rknn"))
++    {
++#ifdef SVIO_XFEAT_RKNN
++        return makeRknnBackend(model_path, npu_cores);
++#else
++        throw std::runtime_error("this build has no RKNN backend (configure with -DSVIO_XFEAT_RKNN=ON): " + model_path);
++#endif
++    }
++    if (ends_with(".onnx"))
++    {
++#ifdef SVIO_XFEAT_ONNXRUNTIME
++        return makeOnnxBackend(model_path, cpu_threads);
++#else
++        throw std::runtime_error("this build has no onnxruntime backend (configure with -DSVIO_XFEAT_ONNXRUNTIME_ROOT=...): " + model_path);
++#endif
++    }
++    (void)cpu_threads;
++    (void)npu_cores;
++    throw std::runtime_error("reliability model must be .rknn or .onnx: " + model_path);
++}
++
++// ---------------------------------------------------------------------------
++// Keypoint head
++
++namespace
++{
++template <typename T>
++void readExactly(std::ifstream &in, T *data, size_t count, const std::string &path)
++{
++    in.read(reinterpret_cast<char *>(data), static_cast<std::streamsize>(count * sizeof(T)));
++    if (!in)
++        throw std::runtime_error("truncated keypoint head weights: " + path);
++}
++
++double nowSeconds()
++{
++    return std::chrono::duration<double>(std::chrono::steady_clock::now().time_since_epoch()).count();
++}
++}  // namespace
++
++KeypointHead::KeypointHead(const std::string &weights_path)
++{
++    std::ifstream in(weights_path.c_str(), std::ios::in | std::ios::binary);
++    if (!in)
++        throw std::runtime_error("cannot open keypoint head weights: " + weights_path);
++    char magic[8];
++    uint32_t header[3];
++    readExactly(in, magic, 8, weights_path);
++    readExactly(in, header, 3, weights_path);
++    readExactly(in, &eps_, 1, weights_path);
++    if (std::memcmp(magic, "XFKHEAD1", 8) != 0 || header[0] != 1u || header[1] != 64u || header[2] != 65u)
++        throw std::runtime_error("unsupported keypoint head weights: " + weights_path);
++    for (int k = 0; k < 3; ++k)
++    {
++        readExactly(in, w_[k].data(), 64 * 64, weights_path);
++        readExactly(in, b_[k].data(), 64, weights_path);
++    }
++    readExactly(in, w3_.data(), 65 * 64, weights_path);
++    readExactly(in, b3_.data(), 65, weights_path);
++    if (in.peek() != std::char_traits<char>::eof())
++        throw std::runtime_error("trailing bytes in keypoint head weights: " + weights_path);
++    x_.resize(64, kCells);
++    h_.resize(64, kCells);
++}
++
++void KeypointHead::run(const uint8_t *gray, float *logits)
++{
++    // Instance norm of the whole gray frame (statistics in float64), then the
++    // 8x8 unfold: column = cell 80*cy + cx, row = 8*dy + dx.
++    std::array<uint64_t, 256> histogram{};
++    for (int i = 0; i < kHeight * kWidth; ++i)
++        ++histogram[gray[i]];
++    const double n = static_cast<double>(kHeight * kWidth);
++    double sum = 0.0;
++    for (int v = 0; v < 256; ++v)
++        sum += static_cast<double>(v) * static_cast<double>(histogram[v]);
++    const double mean = sum / n;
++    double squares = 0.0;
++    for (int v = 0; v < 256; ++v)
++        squares += (v - mean) * (v - mean) * static_cast<double>(histogram[v]);
++    const double inv_std = 1.0 / std::sqrt(squares / n + static_cast<double>(eps_));
++    std::array<float, 256> normalized;
++    for (int v = 0; v < 256; ++v)
++        normalized[v] = static_cast<float>((v - mean) * inv_std);
++
++    for (int cy = 0; cy < kCellsY; ++cy)
++        for (int cx = 0; cx < kCellsX; ++cx)
++        {
++            float *column = x_.col(cy * kCellsX + cx).data();
++            for (int dy = 0; dy < 8; ++dy)
++            {
++                const uint8_t *row = gray + (8 * cy + dy) * kWidth + 8 * cx;
++                for (int dx = 0; dx < 8; ++dx)
++                    column[8 * dy + dx] = normalized[row[dx]];
++            }
++        }
++
++    h_.noalias() = w_[0] * x_;
++    h_ = (h_.colwise() + b_[0]).cwiseMax(0.0f);
++    x_.noalias() = w_[1] * h_;
++    x_ = (x_.colwise() + b_[1]).cwiseMax(0.0f);
++    h_.noalias() = w_[2] * x_;
++    h_ = (h_.colwise() + b_[2]).cwiseMax(0.0f);
++    Eigen::Map<Eigen::Matrix<float, 65, Eigen::Dynamic>> out(logits, 65, kCells);
++    out.noalias() = w3_ * h_;
++    out.colwise() += b3_;
++}
++
++// ---------------------------------------------------------------------------
++// Sparse tail
++
++namespace
++{
++// InterpolateSparse2d normgrid + grid_sample(align_corners=False), float32.
++inline float gridSource(float coordinate, int source_size, int original_size)
++{
++    const float normalized = 2.0f * (coordinate / static_cast<float>(original_size - 1)) - 1.0f;
++    return ((normalized + 1.0f) * static_cast<float>(source_size) - 1.0f) * 0.5f;
++}
++
++inline float gatherZero(const float *tensor, int height, int width, long x, long y)
++{
++    if (x < 0 || x >= width || y < 0 || y >= height)
++        return 0.0f;
++    return tensor[y * width + x];
++}
++}  // namespace
++
++void SparseTail::heatmap(const float *logits)
++{
++    // 65-way cell softmax, dustbin dropped, 8x pixel shuffle.
++    heat_.resize(kHeight * kWidth);
++    for (int cell = 0; cell < kCells; ++cell)
++    {
++        const float *l = logits + static_cast<size_t>(cell) * 65u;
++        float peak = l[0];
++        for (int c = 1; c < 65; ++c)
++            peak = std::max(peak, l[c]);
++        float e[65];
++        float total = 0.0f;
++        for (int c = 0; c < 65; ++c)
++        {
++            e[c] = std::exp(l[c] - peak);
++            total += e[c];
++        }
++        const int cy = cell / kCellsX, cx = cell % kCellsX;
++        for (int c = 0; c < 64; ++c)
++            heat_[(8 * cy + c / 8) * kWidth + 8 * cx + c % 8] = e[c] / total;
++    }
++
++    // 5x5 max-pool NMS with -inf outside the image, threshold 0.05: a pixel is
++    // kept iff it exceeds the threshold and no pixel of its 5x5 window is larger
++    // (equal to the window max). Only above-threshold pixels are examined.
++    const float threshold = 0.05f;
++    candidates_.clear();
++    for (int y = 0; y < kHeight; ++y)
++    {
++        const float *row = heat_.data() + y * kWidth;
++        for (int x = 0; x < kWidth; ++x)
++        {
++            const float h = row[x];
++            if (!(h > threshold))
++                continue;
++            bool peak = true;
++            for (int yy = std::max(0, y - 2); peak && yy <= std::min(kHeight - 1, y + 2); ++yy)
++            {
++                const float *r = heat_.data() + yy * kWidth;
++                for (int xx = std::max(0, x - 2); xx <= std::min(kWidth - 1, x + 2); ++xx)
++                    if (r[xx] > h)
++                    {
++                        peak = false;
++                        break;
++                    }
++            }
++            if (peak)
++                candidates_.push_back(y * kWidth + x);
++        }
++    }
++}
++
++void SparseTail::score(const float *reliability, Proposals &out)
++{
++    // score = nearest(heat) x bilinear(reliability); (0,0) is upstream's padding
++    // sentinel; only scores > 0 survive.
++    points_.clear();
++    scores_.clear();
++    for (const int index : candidates_)
++    {
++        const int y = index / kWidth, x = index % kWidth;
++        const float fx = static_cast<float>(x), fy = static_cast<float>(y);
++        const long nx = std::lrint(gridSource(fx, kWidth, kWidth));
++        const long ny = std::lrint(gridSource(fy, kHeight, kHeight));
++        const float heat_score = gatherZero(heat_.data(), kHeight, kWidth, nx, ny);
++
++        const float sx = gridSource(fx, kCellsX, kWidth);
++        const float sy = gridSource(fy, kCellsY, kHeight);
++        const long x0 = static_cast<long>(std::floor(sx)), y0 = static_cast<long>(std::floor(sy));
++        const float wx1 = sx - static_cast<float>(x0), wy1 = sy - static_cast<float>(y0);
++        const float wx0 = 1.0f - wx1, wy0 = 1.0f - wy1;
++        const float t00 = gatherZero(reliability, kCellsY, kCellsX, x0, y0) * (wx0 * wy0);
++        const float t10 = gatherZero(reliability, kCellsY, kCellsX, x0 + 1, y0) * (wx1 * wy0);
++        const float t01 = gatherZero(reliability, kCellsY, kCellsX, x0, y0 + 1) * (wx0 * wy1);
++        const float t11 = gatherZero(reliability, kCellsY, kCellsX, x0 + 1, y0 + 1) * (wx1 * wy1);
++        const float reliability_score = ((t00 + t10) + t01) + t11;
++
++        float score = heat_score * reliability_score;
++        if (x == 0 && y == 0)
++            score = -1.0f;
++        if (!(score > 0.0f))
++            continue;
++        points_.push_back(cv::Point2f(fx, fy));
++        scores_.push_back(score);
++    }
++
++    // Rank by (-score, x, y), keep 500.
++    order_.resize(points_.size());
++    for (size_t i = 0; i < order_.size(); ++i)
++        order_[i] = static_cast<int>(i);
++    std::sort(order_.begin(), order_.end(), [this](int a, int b)
++              {
++                  if (scores_[a] != scores_[b])
++                      return scores_[a] > scores_[b];
++                  if (points_[a].x != points_[b].x)
++                      return points_[a].x < points_[b].x;
++                  return points_[a].y < points_[b].y;
++              });
++    const size_t keep = std::min<size_t>(order_.size(), kProposalLimit);
++    out.points.resize(keep);
++    out.scores.resize(keep);
++    for (size_t i = 0; i < keep; ++i)
++    {
++        out.points[i] = points_[order_[i]];
++        out.scores[i] = scores_[order_[i]];
++    }
++}
++
++// ---------------------------------------------------------------------------
++// Extractor
++
++OnlineExtractor::OnlineExtractor(const std::string &reliability_model, const std::string &keypoint_head,
++                                 int cpu_threads, const std::string &npu_cores)
++    : backend_(makeReliabilityBackend(reliability_model, cpu_threads, npu_cores)),
++      head_(keypoint_head),
++      gray_(kHeight * kWidth),
++      logits_(static_cast<size_t>(kCells) * 65u),
++      reliability_(kCells)
++{
++    reliability_thread_ = std::thread(&OnlineExtractor::reliabilityLoop, this);
++    keypoint_thread_ = std::thread(&OnlineExtractor::keypointLoop, this);
++}
++
++OnlineExtractor::~OnlineExtractor()
++{
++    {
++        std::lock_guard<std::mutex> lock(mutex_);
++        stop_ = true;
++    }
++    cv_.notify_all();
++    reliability_thread_.join();
++    keypoint_thread_.join();
++}
++
++void OnlineExtractor::launch(const cv::Mat &gray)
++{
++    if (gray.type() != CV_8UC1 || gray.rows != kHeight || gray.cols != kWidth)
++        throw std::runtime_error("online XFeat expects a 640x480 8-bit gray frame");
++    std::unique_lock<std::mutex> lock(mutex_);
++    cv_.wait(lock, [this] { return done_ == launched_; });
++    for (int r = 0; r < kHeight; ++r)
++        std::memcpy(gray_.data() + r * kWidth, gray.ptr<uint8_t>(r), kWidth);
++    error_.clear();
++    launch_s_ = nowSeconds();
++    ++launched_;
++    lock.unlock();
++    cv_.notify_all();
++}
++
++void OnlineExtractor::collect(Proposals &out, Timing &timing)
++{
++    std::unique_lock<std::mutex> lock(mutex_);
++    if (launched_ == 0)
++        throw std::logic_error("online XFeat: collect() without launch()");
++    cv_.wait(lock, [this] { return done_ == launched_; });
++    if (!error_.empty())
++        throw std::runtime_error("online XFeat: " + error_);
++    out = result_;
++    timing = timing_;
++}
++
++void OnlineExtractor::reliabilityLoop()
++{
++    uint64_t job = 0;
++    for (;;)
++    {
++        {
++            std::unique_lock<std::mutex> lock(mutex_);
++            cv_.wait(lock, [&] { return stop_ || launched_ > job; });
++            if (stop_)
++                return;
++            job = launched_;
++        }
++        const double t0 = nowSeconds();
++        std::string error;
++        try
++        {
++            backend_->run(gray_.data(), reliability_.data());
++        }
++        catch (const std::exception &e)
++        {
++            error = e.what();
++        }
++        {
++            std::lock_guard<std::mutex> lock(mutex_);
++            timing_.reliability_ms = 1e3 * (nowSeconds() - t0);
++            if (!error.empty())
++                error_ = error;
++            reliability_done_ = job;
++        }
++        cv_.notify_all();
++    }
++}
++
++void OnlineExtractor::keypointLoop()
++{
++    uint64_t job = 0;
++    for (;;)
++    {
++        {
++            std::unique_lock<std::mutex> lock(mutex_);
++            cv_.wait(lock, [&] { return stop_ || launched_ > job; });
++            if (stop_)
++                return;
++            job = launched_;
++        }
++        const double t0 = nowSeconds();
++        head_.run(gray_.data(), logits_.data());
++        const double t1 = nowSeconds();
++        tail_.heatmap(logits_.data());
++        const double t2 = nowSeconds();
++        {
++            std::unique_lock<std::mutex> lock(mutex_);
++            cv_.wait(lock, [&] { return stop_ || reliability_done_ == job; });
++            if (stop_)
++                return;
++        }
++        const double t3 = nowSeconds();
++        bool ok;
++        {
++            std::lock_guard<std::mutex> lock(mutex_);
++            ok = error_.empty();
++        }
++        if (ok)
++            tail_.score(reliability_.data(), result_);
++        else
++            result_ = Proposals();
++        const double t4 = nowSeconds();
++        {
++            std::lock_guard<std::mutex> lock(mutex_);
++            timing_.keypoint_ms = 1e3 * (t1 - t0);
++            timing_.heatmap_ms = 1e3 * (t2 - t1);
++            timing_.tail_ms = 1e3 * (t4 - t3);
++            timing_.latency_ms = 1e3 * (t4 - launch_s_);
++            done_ = job;
++        }
++        cv_.notify_all();
++    }
++}
++
++}  // namespace xfeat_online
+diff --git a/svio/feature_tracking/xfeat_online.h b/svio/feature_tracking/xfeat_online.h
+new file mode 100644
+index 0000000..05a9301
+--- /dev/null
++++ b/svio/feature_tracking/xfeat_online.h
+@@ -0,0 +1,139 @@
++#pragma once
++
++// Online, on-demand, admission-only XFeat proposals.
++//
++// Admission reads only (x, y, score) of each proposal, with score = K x R: the
++// keypoint heat map K (65-way cell softmax of the keypoint branch) sampled at its
++// own 5x5 NMS maxima, times the backbone reliability R sampled bilinearly there.
++// The extractor therefore computes exactly two things per launched frame:
++//   R  the backbone + reliability head on the gray frame (ReliabilityBackend:
++//      RKNN on the RK3588 NPU, onnxruntime on a desktop), no descriptor head;
++//   K  the keypoint branch (instance norm, 8x8 unfold, four 1x1 convolutions)
++//      on the CPU in float32,
++// concurrently, then the pinned sparse tail without descriptors. The output is the
++// sealed sidecar's proposal list for that frame (same NMS, threshold, sampling,
++// ranking, 500 cap), with zero descriptors.
++
++#include <condition_variable>
++#include <cstdint>
++#include <memory>
++#include <mutex>
++#include <string>
++#include <thread>
++#include <vector>
++
++#include <eigen3/Eigen/Dense>
++#include <opencv2/core/core.hpp>
++
++namespace xfeat_online
++{
++
++constexpr int kHeight = 480;
++constexpr int kWidth = 640;
++constexpr int kCellsY = kHeight / 8;
++constexpr int kCellsX = kWidth / 8;
++constexpr int kCells = kCellsY * kCellsX;
++constexpr int kProposalLimit = 500;
++
++// gray uint8 [480*640] -> reliability float32 [60*80]
++class ReliabilityBackend
++{
++public:
++    virtual ~ReliabilityBackend() = default;
++    virtual void run(const uint8_t *gray, float *reliability) = 0;
++    virtual std::string describe() const = 0;
++};
++
++// Chooses the backend from the model file extension (.rknn or .onnx); throws if
++// this build does not carry that backend.
++std::unique_ptr<ReliabilityBackend> makeReliabilityBackend(const std::string &model_path,
++                                                           int cpu_threads,
++                                                           const std::string &npu_cores);
++
++class KeypointHead
++{
++public:
++    explicit KeypointHead(const std::string &weights_path);
++    // logits: cell-major [4800][65] (cell = 80 * cy + cx)
++    void run(const uint8_t *gray, float *logits);
++
++private:
++    float eps_ = 0.0f;
++    Eigen::Matrix<float, 64, 64, Eigen::RowMajor> w_[3];
++    Eigen::Matrix<float, 65, 64, Eigen::RowMajor> w3_;
++    Eigen::Matrix<float, 64, 1> b_[3];
++    Eigen::Matrix<float, 65, 1> b3_;
++    Eigen::Matrix<float, 64, Eigen::Dynamic> x_, h_;
++};
++
++struct Proposals
++{
++    std::vector<cv::Point2f> points;  // score-ranked, at most 500
++    std::vector<float> scores;
++};
++
++// The pinned sparse post-processing (sidecar/pinned/xfeat_sparse_onnx.py,
++// sparse_from_backbone) without descriptors, in two steps: heatmap() needs only
++// K (cell softmax, NMS, threshold) and runs while the backbone is still on the
++// NPU; score() then samples R at the candidates and ranks them.
++class SparseTail
++{
++public:
++    void heatmap(const float *logits);
++    void score(const float *reliability, Proposals &out);
++
++private:
++    std::vector<float> heat_;
++    std::vector<int> candidates_, order_;
++    std::vector<cv::Point2f> points_;
++    std::vector<float> scores_;
++};
++
++struct Timing
++{
++    double keypoint_ms = 0.0;     // CPU keypoint head
++    double heatmap_ms = 0.0;      // cell softmax + NMS (overlaps the backbone)
++    double reliability_ms = 0.0;  // backend call, application visible
++    double tail_ms = 0.0;         // R sampling + ranking, after both
++    double latency_ms = 0.0;      // launch -> proposals ready
++};
++
++// Two worker threads: one drives the reliability backend, one runs the keypoint
++// head and the heat map, then scores the candidates once R is in. launch() returns at once; collect() blocks
++// until that frame's proposals are ready. A launched frame whose proposals are not
++// needed is simply never collected; the next launch waits for it to finish.
++class OnlineExtractor
++{
++public:
++    OnlineExtractor(const std::string &reliability_model, const std::string &keypoint_head,
++                    int cpu_threads, const std::string &npu_cores);
++    ~OnlineExtractor();
++    OnlineExtractor(const OnlineExtractor &) = delete;
++    OnlineExtractor &operator=(const OnlineExtractor &) = delete;
++
++    void launch(const cv::Mat &gray);
++    void collect(Proposals &out, Timing &timing);
++    std::string describe() const { return backend_->describe(); }
++
++private:
++    void reliabilityLoop();
++    void keypointLoop();
++
++    std::unique_ptr<ReliabilityBackend> backend_;
++    KeypointHead head_;
++    SparseTail tail_;
++    std::vector<uint8_t> gray_;
++    std::vector<float> logits_, reliability_;
++    Proposals result_;
++    Timing timing_;
++    double launch_s_ = 0.0;
++    std::string error_;  // backend failure of the current frame, rethrown by collect()
++
++    std::mutex mutex_;
++    std::condition_variable cv_;
++    uint64_t launched_ = 0, reliability_done_ = 0, done_ = 0;
++    bool stop_ = false;
++    std::thread reliability_thread_, keypoint_thread_;
++};
++
++}  // namespace xfeat_online
+diff --git a/svio/feature_tracking/xfeat_online_check.cpp b/svio/feature_tracking/xfeat_online_check.cpp
+new file mode 100644
+index 0000000..a8a1f0d
+--- /dev/null
++++ b/svio/feature_tracking/xfeat_online_check.cpp
+@@ -0,0 +1,107 @@
++// Offline parity and latency check of the online extractor on recorded gray frames.
++//
++//   xfeat_online_check RELIABILITY_MODEL KEYPOINT_HEAD FRAMES OUT_PREFIX [cpu_threads] [npu_cores]
++//
++//   FRAMES             "XFGRAY01", uint32 n, then n x (int64 stamp_ns, uint8 gray[480*640])
++//   OUT_PREFIX.xfs     XFSIDE01 sidecar, one record per frame (zero descriptors)
++//   OUT_PREFIX.csv     per-frame timing of the threaded launch/collect path
++//   OUT_PREFIX.frame0  frame 0's keypoint logits [4800][65] and reliability [4800], float32
++
++#include "xfeat_online.h"
++
++#include <chrono>
++#include <cstdio>
++#include <cstring>
++#include <fstream>
++#include <iostream>
++#include <stdexcept>
++
++using namespace xfeat_online;
++
++static int run(int argc, char **argv);
++
++int main(int argc, char **argv)
++{
++    try
++    {
++        return run(argc, argv);
++    }
++    catch (const std::exception &e)
++    {
++        std::cerr << "xfeat_online_check: " << e.what() << "\n";
++        return 1;
++    }
++}
++
++static int run(int argc, char **argv)
++{
++    if (argc < 5)
++    {
++        std::cerr << "usage: " << argv[0]
++                  << " RELIABILITY_MODEL KEYPOINT_HEAD FRAMES OUT_PREFIX [cpu_threads] [npu_cores]\n";
++        return 2;
++    }
++    const std::string model = argv[1], head_path = argv[2], frames_path = argv[3], prefix = argv[4];
++    const int threads = argc > 5 ? std::atoi(argv[5]) : 1;
++    const std::string cores = argc > 6 ? argv[6] : "0_1_2";
++
++    std::ifstream frames(frames_path.c_str(), std::ios::in | std::ios::binary);
++    char magic[8];
++    uint32_t count = 0;
++    frames.read(magic, 8);
++    frames.read(reinterpret_cast<char *>(&count), 4);
++    if (!frames || std::memcmp(magic, "XFGRAY01", 8) != 0)
++        throw std::runtime_error("not an XFGRAY01 frame file: " + frames_path);
++
++    std::ofstream xfs((prefix + ".xfs").c_str(), std::ios::out | std::ios::binary);
++    std::ofstream csv((prefix + ".csv").c_str());
++    const uint32_t header[6] = {1u, kWidth, kHeight, 64u, kProposalLimit, 0u};
++    const uint64_t frame_count = count;
++    xfs.write("XFSIDE01", 8);
++    xfs.write(reinterpret_cast<const char *>(header), sizeof(header));
++    xfs.write(reinterpret_cast<const char *>(&frame_count), sizeof(frame_count));
++    csv << "frame,stamp_ns,proposals,keypoint_ms,heatmap_ms,reliability_ms,tail_ms,latency_ms\n";
++
++    OnlineExtractor extractor(model, head_path, threads, cores);
++    std::cerr << "backend: " << extractor.describe() << "\n";
++    cv::Mat gray(kHeight, kWidth, CV_8UC1);
++    Proposals proposals;
++    Timing timing;
++    std::vector<float> zeros(64, 0.0f);
++    for (uint32_t f = 0; f < count; ++f)
++    {
++        int64_t stamp = 0;
++        frames.read(reinterpret_cast<char *>(&stamp), 8);
++        frames.read(reinterpret_cast<char *>(gray.data), kHeight * kWidth);
++        if (!frames)
++            throw std::runtime_error("truncated frame file");
++        if (f == 0)
++        {
++            KeypointHead head(head_path);
++            std::unique_ptr<ReliabilityBackend> backend = makeReliabilityBackend(model, threads, cores);
++            std::vector<float> logits(static_cast<size_t>(kCells) * 65u), reliability(kCells);
++            head.run(gray.data, logits.data());
++            backend->run(gray.data, reliability.data());
++            std::ofstream dump((prefix + ".frame0").c_str(), std::ios::out | std::ios::binary);
++            dump.write(reinterpret_cast<const char *>(logits.data()), logits.size() * sizeof(float));
++            dump.write(reinterpret_cast<const char *>(reliability.data()), reliability.size() * sizeof(float));
++        }
++        extractor.launch(gray);
++        extractor.collect(proposals, timing);
++        const uint32_t n = static_cast<uint32_t>(proposals.points.size());
++        xfs.write(reinterpret_cast<const char *>(&stamp), 8);
++        xfs.write(reinterpret_cast<const char *>(&n), 4);
++        for (uint32_t i = 0; i < n; ++i)
++        {
++            const float xys[3] = {proposals.points[i].x, proposals.points[i].y, proposals.scores[i]};
++            xfs.write(reinterpret_cast<const char *>(xys), sizeof(xys));
++            xfs.write(reinterpret_cast<const char *>(zeros.data()), 64 * sizeof(float));
++        }
++        char row[256];
++        std::snprintf(row, sizeof(row), "%u,%lld,%u,%.3f,%.3f,%.3f,%.3f,%.3f\n", f, static_cast<long long>(stamp), n,
++                      timing.keypoint_ms, timing.heatmap_ms, timing.reliability_ms, timing.tail_ms, timing.latency_ms);
++        csv << row;
++    }
++    std::cerr << "frames: " << count << " -> " << prefix << ".xfs\n";
++    return 0;
++}

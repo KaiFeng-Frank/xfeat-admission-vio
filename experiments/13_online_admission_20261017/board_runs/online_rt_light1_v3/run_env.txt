@@ -1,0 +1,11 @@
+SEQ=light1 ARM=online PORT=11508
+BAG=/data/vcu/light1.bag
+SIDECAR=<none>
+CONFIG=/data/runs/online_rt_light1_v3/config_light1_online.yaml
+NODE=/dev/shm/xfeat_online/ws/devel/lib/svio/svio_syn_node
+PINNING=taskset est=4-7 io=0-3
+PLAY_FLAGS=--clock -r 1.0 --queue 10000 --wait-for-subscribers
+WAIT_FOR_SUBSCRIBERS=1
+DRAIN_STABLE=20 DRAIN_MAX=1800
+EXPECT_FRAMES=2875 EXPECT_ROWS=<none>
+SVIO_XFEAT_*: SVIO_XFEAT_MODE SVIO_XFEAT_ONLINE_DUMP SVIO_XFEAT_ONLINE_KHEAD SVIO_XFEAT_ONLINE_LOG SVIO_XFEAT_ONLINE_MODEL SVIO_XFEAT_ONLINE_NPU_CORES 

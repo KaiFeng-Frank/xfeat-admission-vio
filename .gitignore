@@ -4,6 +4,7 @@ __pycache__/
 *.bag
 *.rknn
 build/
+!experiments/*/build/
 devel/
 install/
 .catkin_workspace

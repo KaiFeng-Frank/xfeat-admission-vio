@@ -1,0 +1,10 @@
+{
+ "frames_compared": 300,
+ "identical": 0,
+ "top150_order_identical": 0,
+ "top150_jaccard_min": 0.9607843137254902,
+ "top150_jaccard_median": 1.0,
+ "position_jaccard_min": 0.9801980198019802,
+ "max_abs_dscore": 0.0075428783893585205,
+ "max_rel_dscore": 0.05687057226896286
+}

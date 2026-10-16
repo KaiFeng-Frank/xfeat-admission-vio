@@ -79,6 +79,40 @@ push the sources and run `board_build.sh` inside the chroot; set the board clock
 host first (`date -s @<epoch>`), because a clock that lags the source timestamps makes
 `make` skip the link step (`board_relink.sh` records the fix).
 
+## 2c. Online admission (no sidecar)
+
+From 1.5 the estimator computes its proposals itself: the reliability backbone on the
+NPU through the RKNN C runtime, the keypoint branch on an A76 core, only on the ticks
+where the starvation gate can open (`deploy/online/README.md`). Build the workspace
+with the RKNN backend (inside the chroot; `rknn_api.h` and `librknnrt.so` 2.3.2 in one
+directory, the board's `/usr/lib/librknnrt.so` copied there):
+
+```bash
+catkin_make -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=-mcpu=cortex-a76 \
+    "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O3 -DNDEBUG -g0" \
+    -DSVIO_XFEAT_RKNN=ON -DSVIO_XFEAT_RKNN_ROOT=/opt/rknn -j3
+```
+
+Keep `-j` to what memory allows. Each `cc1plus` of this tree needs up to 2 GB, and
+`/dev/shm` counts against the same RAM. If you build from an `adb shell`, start the build
+under its own unit (`systemd-run --unit=svio-build -p MemoryMax=8G ...`). An OOM kill
+inside `adbd`'s cgroup stops `adbd` with it, and `adbd` does not come back until reboot.
+
+Models: `models/online/keypoint_head_fp32.bin` and an FP16 RKNN build of
+`models/online/reliability_gray.onnx` (`deploy/online/convert_reliability_rknn.py`; the
+`.rknn` is not redistributed), by default under `/opt/xfeat/models/online/`. Then:
+
+```bash
+SVIO_BASE_CONFIG=/opt/xfeat/config/base_realtime.yaml SVIO_PLAY_RATE=1.0 SVIO_EXPECT_FRAMES=2875 \
+    /opt/xfeat/bin/svio-chroot.sh run_estimator.sh light1 online 11531 /data/vcu/light1.bag "" /data/runs/online_light1
+```
+
+`SVIO_ONLINE_MODEL`, `SVIO_ONLINE_KHEAD` and `SVIO_ONLINE_CORES` override the defaults.
+The run directory gains `xfeat_online.csv`, one row per launch with the front end's
+wait and the stage times (`deploy/online/timing_summary.py`), and
+`xfeat_online_dump.bin`, the admitted proposals (`deploy/online/compare_proposals.py`).
+Receipts: `experiments/13_online_admission_20261017/`.
+
 ## 3. Score on the host
 
 Pull `/data/runs/<name>/svio_no_loop.csv` and score it with `tools/scoring/` exactly as

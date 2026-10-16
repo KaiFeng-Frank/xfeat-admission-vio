@@ -1,0 +1,5 @@
+PLAY_STATUS=0 NODE_STATUS=134 SEQ=light1 ARM=off OUT=/data/runs/off_rt_light1_newbin
+rows=939 frames=2875 drained=1 drain_wait_s=20 anomalies=0
+throw_rgb=0 throw_depth=0 frontend_ms=14.081 swo_ms=64.5049
+wall_total_s=129 wall_play_s=107 pinning=taskset est=4-7 io=0-3 play_rate=1.0
+rows_at_play_end=939 final_rows=939 backlog_after_play_s=0.0 realtime_ok=1 rt_backlog_max_s=2 env_extra=<none>

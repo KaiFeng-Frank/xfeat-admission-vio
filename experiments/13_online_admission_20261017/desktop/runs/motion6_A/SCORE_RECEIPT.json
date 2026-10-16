@@ -1,0 +1,149 @@
+{
+  "artifacts": {
+    "formal_python": {
+      "path": "python3",
+      "sha256": "e35ffd2b3d0f301775541d1e292b509a68cedcd59f7d8ac0a8e5c205df658e44",
+      "size_bytes": 32003680
+    },
+    "formal_table2_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "sha256": "800b96b0c9bdeaf61779f126cb35d5a09a856fba781605e1e846f4783524caf0",
+      "size_bytes": 20124
+    },
+    "formal_table2_scorer_dependency": {
+      "path": "${REPO_ROOT}/tools/scoring/trajectory_compare.py",
+      "sha256": "4c8895b1e4b58d90aeaf4859e2716c5ab6e6f00c4f395ad251b6a31c57f6500a",
+      "size_bytes": 28000
+    },
+    "frozen_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/score_nn20.py",
+      "sha256": "037a579cfd5cdb6368733e9fe04809eb301da255091dc69f2dfde61953a8c01b",
+      "size_bytes": 964
+    },
+    "ground_truth": {
+      "path": "${DATA_ROOT}/vcu_rvi/motion6_gt.tum",
+      "sha256": "0b1817b54e4629e4b809a7d0a5bf26a85448fc04dbadd6b7e4564a7e1b563000",
+      "size_bytes": 1037779
+    },
+    "normalized": {
+      "path": "${VERIFY_ROOT}/verify/scores/motion6_A/trajectory_body.tum",
+      "sha256": "10d4ea533f9992ab1ed8eff21a37cfc73ccf603c1e9f18e27aedcd56b883d60a",
+      "size_bytes": 105602
+    },
+    "normalizer_and_exact_scorer": {
+      "path": "${REPO_ROOT}/tools/scoring/normalize_score_phase1.py",
+      "sha256": "9598238d10703a07d7d5e97fc1f1d530efb289202dfd4cf3f97b25f0283aa190",
+      "size_bytes": 10075
+    },
+    "raw": {
+      "path": "${VERIFY_ROOT}/verify/runs/motion6_A/svio_no_loop.csv",
+      "sha256": "a709a48aa45d8b40ed32cc7b64a629f8edc7893b89dfb2213fcf780d852f5c56",
+      "size_bytes": 103041
+    }
+  },
+  "formal_table2_scoring": {
+    "alignment": "SE3_Horn_no_scale_all_interpolated_rows",
+    "association": "GT_interpolated_to_each_estimate_timestamp_within_GT_span",
+    "command": [
+      "python3",
+      "-s",
+      "-B",
+      "${REPO_ROOT}/tools/scoring/eval_openloris.py",
+      "--input",
+      "${VERIFY_ROOT}/verify/scores/motion6_A/trajectory_body.tum",
+      "--scene",
+      "online",
+      "--gt-file",
+      "${DATA_ROOT}/vcu_rvi/motion6_gt.tum",
+      "--align",
+      "se3",
+      "--start-offset",
+      "0",
+      "--cr-span",
+      "gt",
+      "--ate-thresh",
+      "1.0",
+      "--no-to-base-link",
+      "--format",
+      "csv"
+    ],
+    "environment": {
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "result": {
+      "align": "se3",
+      "aoe_median_deg": "5.599528897372968",
+      "ate_max_m": "0.33131973600832254",
+      "ate_median_m": "0.16567411775530744",
+      "ate_rmse_all_m": "0.17895779400373205",
+      "ate_rmse_correct_m": "0.17895779400373205",
+      "coverage": "0.9980372914622179",
+      "cr": "0.979163006642809",
+      "cr_inf": "0.979163006642809",
+      "cr_pos": "0.979163006642809",
+      "eps_m": "1.0",
+      "matched": "1017",
+      "method": "",
+      "n_est": "1019",
+      "n_gt": "12467",
+      "scene": "online",
+      "tag": "trajectory_body",
+      "temporal_coverage": "0.979163006642809"
+    },
+    "role": "primary_Table_II_metric",
+    "stderr": "",
+    "time_shift_s": 0.0
+  },
+  "label": "online-motion6-A",
+  "normalization": {
+    "canonical_header": "parser=vins_ns_qwxyz_csv; transform=native_body; causal_filter=all_rows",
+    "output_frame": "body_imu",
+    "parser": "vins_ns_qwxyz_csv",
+    "quaternion_input": "qw_qx_qy_qz",
+    "quaternion_output": "qx_qy_qz_qw",
+    "row_count": 1019,
+    "timestamp": "ns_to_s_if_gt_1e10",
+    "transform": "native_body"
+  },
+  "schema": "svio-native-body-nn20-score-v1",
+  "scoring": {
+    "alignment": "SE3_Umeyama_no_scale_all_matched_rows",
+    "alignment_rotation": [
+      [
+        0.3611318232794837,
+        -0.08004463443625656,
+        0.9290730125844803
+      ],
+      [
+        0.1058032397449019,
+        0.9933926510035598,
+        0.04446026756108673
+      ],
+      [
+        -0.9264931088110252,
+        0.0822429172031651,
+        0.36721468093690757
+      ]
+    ],
+    "alignment_translation_m": [
+      -0.06749980258884133,
+      -0.17004546925274505,
+      -0.1979688832584099
+    ],
+    "association": "nearest_neighbor_strict_abs_dt_lt_0.020s",
+    "ate_median_m": 0.16519844400293457,
+    "ate_p90_m": 0.2694067391355384,
+    "ate_rmse_m": 0.1791808570130876,
+    "estimate_rows": 1019,
+    "frozen_stdout": "online-motion6-A: n=1018 ATE RMSE=17.92cm median=16.52cm p90=26.94cm",
+    "ground_truth_rows": 12467,
+    "matched_rows": 1018,
+    "max_matched_abs_dt_s": 0.01941483600239735,
+    "time_shift_s": 0.0,
+    "unmatched_rows": 1
+  }
+}
