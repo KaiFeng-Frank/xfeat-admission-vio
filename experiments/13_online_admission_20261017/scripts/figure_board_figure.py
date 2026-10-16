@@ -26,23 +26,20 @@ for i, s in enumerate(seqs):
     a.bar(i + 0.18, n, 0.34, color=on_c, label="online admission (board)" if i == 0 else None)
     a.text(i + 0.18, n + 1, f"{n:.1f}", ha="center", fontsize=8)
     d = desk[s]["A_new"][0]
-    a.plot([i + 0.02, i + 0.34], [d, d], color=ref_c, lw=1.6, label="desktop sealed A" if i == 0 else None)
+    a.plot([i + 0.02, i + 0.34], [d, d], color=ref_c, lw=1.6, label="desktop, recorded sidecar" if i == 0 else None)
 a.set_xticks(x); a.set_xticklabels(seqs); a.set_ylabel("ATE RMSE (cm)"); a.set_ylim(0, 75)
 a.set_title("RK3588S, 1x replay, real-time config", fontsize=10)
 a.legend(fontsize=8, frameon=False, loc="upper left")
 for sp in ("top", "right"): a.spines[sp].set_visible(False)
 a.grid(axis="y", color="#eee"); a.set_axisbelow(True)
-pos = []; labels = []; data = []; colors = []
-for i, s in enumerate(seqs):
-    for j, (tag, c) in enumerate((("", "#b9c7dc"), ("_v3", on_c))):
-        data.append(waits(f"online_rt_{s}{tag}")); pos.append(i * 3 + j); colors.append(c)
-bp = b.boxplot(data, positions=pos, widths=0.7, patch_artist=True, showfliers=True,
+data = [waits(f"online_rt_{s}_v3") for s in seqs]
+bp = b.boxplot(data, positions=list(range(len(seqs))), widths=0.5, patch_artist=True, showfliers=True,
                flierprops=dict(marker=".", markersize=3, alpha=0.4), medianprops=dict(color="black"))
-for p, c in zip(bp["boxes"], colors): p.set_facecolor(c); p.set_edgecolor("#444")
-b.axhline(33.3, color="#999", ls="--", lw=1); b.text(7.6, 34.5, "frame interval 33 ms", fontsize=8, color="#666", ha="right")
-b.set_xticks([0.5, 3.5, 6.5]); b.set_xticklabels([f"{s}\n({len(data[2*i])} admissions)" for i, s in enumerate(seqs)])
+for p in bp["boxes"]: p.set_facecolor(on_c); p.set_edgecolor("#444")
+b.axhline(33.3, color="#999", ls="--", lw=1); b.text(2.45, 34.5, "frame interval 33 ms", fontsize=8, color="#666", ha="right")
+b.set_xticks(range(len(seqs))); b.set_xticklabels([f"{s}\n({len(d)} admissions)" for s, d in zip(seqs, data)])
 b.set_ylabel("front-end wait per admission (ms)")
-b.set_title("Wait on collect: tail after R (light) vs heat map overlapped with R (dark)", fontsize=10)
+b.set_title("Front-end wait when the gate opens (backbone on the NPU is the critical path)", fontsize=10)
 for sp in ("top", "right"): b.spines[sp].set_visible(False)
 b.grid(axis="y", color="#eee"); b.set_axisbelow(True)
-fig.tight_layout(); fig.savefig(W / "figures/online_board.png"); print("saved")
+fig.tight_layout(); fig.savefig(os.environ.get("OUT", str(W / "figures/online_board.png"))); print("saved")

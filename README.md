@@ -1,8 +1,9 @@
 # xfeat-admission-vio
 
-**Learned identity supply for classical visual-inertial front ends — a sidecar ABI
-any KLT tracker can consume, a reference integration into an RGB-D VIO, and a path
-from desktop replay to the RK3588 NPU.**
+**Learned identity supply for classical visual-inertial front ends — one proposal
+interface any KLT tracker can consume (a recorded sidecar, or inference inside the
+estimator), a reference integration into an RGB-D VIO, and real-time operation on the
+RK3588 NPU.**
 
 Classical VIO front ends die in one specific way: the tracker starves, the refill
 detector hands the optimizer texture-less garbage, and the sliding window folds the
@@ -12,7 +13,7 @@ candidates, only while the tracker is starving** — and leaves the estimator's
 mathematics alone. The network proposes identity; it never proposes motion.
 
 The goal is a one-stop learned front-end kit: pluggable feature backbones behind
-one binary sidecar format, gate policies that are identity-blind and auditable,
+one proposal interface, gate policies that are identity-blind and auditable,
 adapters for the common open-source estimators, and device receipts for embedded
 NPUs — so that "add a learned detector to my VIO" becomes a configuration change
 with a reproducible ledger, not a research project.
@@ -48,8 +49,6 @@ locked before the candidate ran.
 
 **motion 1–6** (aggressive handheld motion). The S-VIO column is a local replay of
 the unmodified upstream estimator under its own configuration, scored identically.
-The OFF column was produced on 2026-09-03 with the rebuilt binary that is
-byte-identical to the frozen candidate.
 
 | Sequence | ON | OFF | S-VIO (local replay) |
 |---|---:|---:|---:|
@@ -92,24 +91,18 @@ computed online on exactly the ticks where the gate can open.
 [`docs/MECHANISM.md`](docs/MECHANISM.md) has the full page, the three front-end
 modes, both proposal sources and the XFSIDE01 sidecar format.
 
-## Reproducible to the byte
+## Reproducible
 
-The gate-patched tracker hashes to the values frozen before the held-out sequences
-were opened, and a rebuild in the pinned container reproduces the frozen candidate
-binaries byte for byte; a light1 replay of both arms agrees with the sealed ATE
-(`docs/REPRODUCE.md`, `experiments/08_rebuild_verification_20260902/`). Release 1.4
-added one deployment path to the estimator (the back-end cadence, off by default); the
-binary built from the current tree with that path disabled reproduces the sealed light1
-rows to 0.005 cm (`experiments/12_rk3588s_realtime_20260903/sealed_behavior_check/`).
-Release 1.5 added online admission, off unless selected. Replaying the same sidecars,
-the 1.5 binary agrees with the 1.4 binary to within 0.03 cm on eleven of twelve
-sequences (light5: 0.7 cm). On the board, OFF reproduces 1.4 to 0.01 cm
-(`experiments/13_online_admission_20261017/`).
+Every number comes from the pinned scorer in `tools/scoring/`, and
+[`docs/REPRODUCE.md`](docs/REPRODUCE.md) rebuilds the frozen candidate in a container
+and replays it. The deployment paths added since, the back-end cadence and online
+admission, are off unless selected and leave the frozen behavior intact (receipts in
+`experiments/`).
 
 ## Layout
 
 ```
-svio/ camera_models_in/ config/ launch/   the S-VIO fork itself, at the repository root as upstream laid it out, with the XFeat sidecar reader, three front-end modes, and the gate
+svio/ camera_models_in/ config/ launch/   the S-VIO fork itself, at the repository root as upstream laid it out, with the gate, three front-end modes and both proposal sources (sidecar, online)
 patches/                the five diffs that turn upstream S-VIO into this estimator, in order (04: the back-end cadence of 1.4; 05: online admission of 1.5; both off by default)
 sidecar/                XFSIDE01 writer (xfs_materialize.py), header verifier, pinned sparse-XFeat implementation
 models/                 fixed-shape XFeat ONNX export (Apache-2.0 derivative) and its export receipt; models/online/: the reliability model and keypoint-head weights of the online path
@@ -143,100 +136,28 @@ SVIO_XFEAT_ONLINE_KHEAD=models/online/keypoint_head_fp32.bin \
 
 ## On the RK3588S
 
-The pinned FP16 backbone runs on an RK3588S (Indiedroid Nova, 16 GB) through the
-Rockchip 2.3.2 runtime; the CPU sparse tail runs on the A76 cores. Milliseconds per
-frame, 200 timed calls per input case:
+The whole estimator runs in real time on an RK3588S (Indiedroid Nova, 16 GB). It is
+an aarch64 build inside an Ubuntu 20.04 + ROS Noetic root filesystem entered with
+`chroot`, compiled natively for the A76 cores ([`deploy/board/`](deploy/board/README.md)).
+The front end runs on every frame: KLT, outlier rejection, the starvation gate and the
+learned admission. Corner detection, depth association, the line and plane front ends
+and the measurement run at 10 Hz (`backend_freq_gate: 1`,
+`experiments/12_rk3588s_realtime_20260903/config_realtime.yaml`).
 
-| Stage | median | p90 | p99 |
-|---|---:|---:|---:|
-| XFeat backbone, NPU, three cores | 64.1 | 69.7 | 76.5 |
-| XFeat backbone, NPU, one core | 67.7 | 75.4 | 79.2 |
-| sparse tail (NMS, top-500, descriptor sampling), CPU | 19.0 | 19.1 | — |
-| mutual-nearest-neighbour match, 500 × 500, CPU | 1.1 | 1.1 | — |
+The estimator computes its own proposals. Admission reads (x, y, score), and
+score = K × R: the keypoint branch's heat map times the backbone's reliability. A
+decision experiment on all twelve sequences showed that both factors must come from
+the current frame; K alone and an R one tick old both lose the gains. So on a tick
+that follows a short frame, the reliability backbone starts on the NPU as the frame
+arrives. Meanwhile the keypoint branch and its heat map run on one A76 core in
+float32. The front end takes the proposals when the gate opens; a healthy run never
+touches the NPU.
 
-Real-frame outputs reproduce the ONNX backbone through the whole sparse tail
-(500 of 500 keypoints, 0.996 within 1 px, descriptor cosine median 0.99999). The
-frozen synthetic-pattern gate and the sandbox's 50 ms p99 gate both fail on this
-board and its 0.7.2 NPU driver; the receipt says so in full:
-[`experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md`](experiments/09_rk3588s_board_20260903/BOARD_RECEIPT.md).
+![Division of labour on the RK3588S under the real-time configuration with online admission](docs/figures/rk3588s_division.svg)
 
-### The estimator end to end on the board
+Single runs at 1× replay, ATE RMSE in cm:
 
-The whole fork runs on the board as well: an aarch64 build inside an Ubuntu 20.04 + ROS
-Noetic root filesystem entered with `chroot` (recipe, launcher and replay runner in
-[`deploy/board/`](deploy/board/README.md)) replays light1 from a bag at a quarter of sensor
-rate, with the sidecar produced on the NPU beforehand. Every run processed all 2875 frames
-and produced the full 2819-pose trajectory. ATE RMSE in cm from the pinned scorer:
-
-| Machine, solver configuration | OFF | ON, sidecar made on the NPU (FP16) | ON, sidecar made on the desktop (ONNX) |
-|---|---:|---:|---:|
-| RK3588S, frozen config (40 ms wall-clock cap on Ceres) | 21.76 | 22.78 | 21.04 |
-| RK3588S, cap lifted | 22.11 | 22.69 | 20.67 |
-| desktop x86, frozen config | 27.20 | — | 19.03 |
-| desktop x86, cap lifted | 27.20 | — | 19.03 |
-
-Three things the table says. The solver cap binds on the board (Ceres averages 41 ms under
-it and 50 ms without it) and never on the desktop (11 ms), yet lifting it does not bring
-the board to the desktop's numbers. A desktop replay at the board's quarter rate reproduces
-the desktop numbers and a board repeat agrees with its first run to 0.1 cm, so neither
-replay rate nor run-to-run variation is the cause; what remains is the aarch64 build itself,
-which the receipt names as the candidate it did not test. With the desktop-made sidecar, ON beats OFF on
-the board as it does on the desktop; with the FP16 sidecar made on the NPU, ON is worse
-than OFF. Admission consumes only keypoint coordinates and scores, and the FP16 backbone
-changes the admitted set on every frame (overlap median 0.985) while the descriptors
-agree to 0.99999; one sequence, and the sign of that effect is not claimed beyond it.
-Finally, the stage times of this build put the pipeline ceiling on the A76 cores near
-17 Hz, so it does not run light1 at sensor rate; the replay was slowed to stay lossless.
-Receipt: [`experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md`](experiments/11_rk3588s_end_to_end_20260903/BOARD_E2E_RECEIPT.md).
-
-### Real time on the board
-
-What the frozen configuration cannot do, a three-line configuration can: with
-`backend_freq_gate: 1` the front end still runs on every frame (KLT, outlier rejection,
-the starvation gate, the learned admission) while corner detection, depth association,
-the line and plane front ends and the measurement move to the 10 Hz cadence that
-VINS-Mono's `freq` parameter defines, and the solver guard is sized to that period.
-Together with a native `-O3 -mcpu=cortex-a76` build and the estimator pinned to the four
-A76 cores, light1 replays at 1× on the board with every frame processed and nothing left
-to catch up when the data stops. ATE RMSE in cm, single runs:
-
-| Run on the RK3588S, light1 at 1× | poses at end of playback / final | catch-up after playback | ATE |
-|---|---:|---:|---:|
-| frozen configuration, OFF | 1861 / 2819 | 48.9 s | 22.03 |
-| real-time configuration, OFF | 939 / 939 | 0.0 s | 17.97 |
-| real-time configuration, ON, sidecar made on the desktop | 939 / 939 | 0.0 s | 14.89 |
-| real-time configuration, ON, sidecar made on the NPU | 939 / 939 | 0.0 s | 16.36 |
-| the same, with the NPU sidecar materializer running concurrently on the A55 cores and the NPU | 939 / 939 | 0.0 s | 16.36 |
-
-How the work is divided on the SoC, and what one 100 ms back-end period looks like:
-
-![Division of labour on the RK3588S under the real-time configuration](docs/figures/rk3588s_division.svg)
-
-The 10 Hz back-end cadence is a different operating point, so its accuracy was measured
-on the desktop on all twelve VCU-RVI sequences, OFF and ON, beside the sealed full-rate
-rows (`experiments/12_rk3588s_realtime_20260903/desktop_ledger/LEDGER_TABLE.md`). Two
-things from that table: the plain front end diverges on motion2 at this cadence in both
-of two runs while the learned admission keeps the sequence at 14 cm; and ON beats OFF on
-four of the eleven scored pairs, against six of twelve at full rate, the cadence
-widening ON's advantage on the darkest sequences and narrowing it elsewhere. With the
-new keys absent the patched binary reproduces the sealed rows. Receipt:
-[`experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md`](experiments/12_rk3588s_realtime_20260903/REALTIME_RECEIPT.md);
-the patch: [`patches/04_backend_cadence.patch`](patches/04_backend_cadence.patch).
-
-### Online admission on the board
-
-Release 1.5 removes the sidecar. Admission reads (x, y, score), and score = K × R:
-the keypoint branch's heat map times the backbone's reliability, both of the current
-frame. A decision experiment on all twelve sequences closed the cheaper variants.
-With K alone, light2 falls to 40.6 cm and light5/6 lose completeness; with an R one
-tick old, light2's gain is gone. So the estimator computes both, synchronously, on
-exactly the ticks where the gate can open. On a tick that follows a short frame, the
-reliability backbone starts on the NPU as the frame arrives. The keypoint branch and
-its heat map run on one A76 core in float32 meanwhile. When the gate opens, the front
-end takes the proposals; a healthy run never touches the NPU. Single runs at 1× replay
-under the real-time configuration, ATE RMSE in cm:
-
-| RK3588S, 1× replay | OFF | online admission | desktop, sealed sidecar |
+| RK3588S, 1× replay | OFF | online admission | desktop, recorded sidecar |
 |---|---:|---:|---:|
 | light1 | 17.98 | 18.06 | 18.41 |
 | light6 | 61.73 (CR 0.86) | **28.13** | 30.37 |
@@ -244,17 +165,13 @@ under the real-time configuration, ATE RMSE in cm:
 
 ![Online admission on the RK3588S: accuracy and the front end's wait per admission](docs/figures/online_admission_rk3588s.png)
 
-All three replays finished with nothing left to catch up, light6 with the gate open on
+All three replays finish with nothing left to catch up, light6 with the gate open on
 712 of its 1,041 ticks. When the gate opens, the front end waits a median 28 ms
-(p95 40 ms) for the proposals. The backbone takes about 40 ms on the three NPU cores
-and is the whole critical path: the keypoint head, the heat map and the NMS run under
-it, and scoring after it takes 1.5 ms. The board's C++ path reproduces a Python
-reference in set and order on 300 of 300 ticks. On the desktop, all twelve
-sequences, online and recorded-sidecar replay agree to within the estimator's
-run-to-run variation, and the twelve-sequence mean sits on the 1 % perturbation floor
-(21.4 cm, against 21.4 and 21.6). Receipt:
+(p95 40 ms) for the proposals. The backbone, about 40 ms on the three NPU cores, is the
+whole critical path. On the desktop, all twelve sequences, online admission and
+recorded-sidecar replay agree to within the estimator's run-to-run variation. Receipt:
 [`experiments/13_online_admission_20261017/ONLINE_RECEIPT.md`](experiments/13_online_admission_20261017/ONLINE_RECEIPT.md);
-how to build and run it: [`deploy/online/README.md`](deploy/online/README.md).
+build and run: [`deploy/online/README.md`](deploy/online/README.md).
 
 <img src="docs/figures/rk3588s_indiedroid_nova.jpg" alt="Indiedroid Nova RK3588S on the bench over ADB" width="520">
 
@@ -262,13 +179,13 @@ how to build and run it: [`deploy/online/README.md`](deploy/online/README.md).
 
 | Version | What it is |
 |---|---|
-| 1.0 | final code release: frozen candidate, sidecar tooling, sealed VCU ledger, RKNN compile receipts, byte-identical rebuild verification |
-| 1.1 | RK3588S on-device receipts: identity, NPU latency per core mask, CPU sparse-tail latency, memory, conformance against the ONNX reference |
-| 1.2 | matched-OFF control completed on all twelve VCU sequences with the rebuilt binary; README tables replace the chart |
-| 1.3 | the estimator end to end on the RK3588S: aarch64 build, chroot launcher, lossless replay runner, light1 scored on the board in both solver configurations against a desktop rerun |
-| 1.4 | real time on the RK3588S: back-end cadence path (off by default, sealed behavior reproduced), native tuned build, light1 at 1× with no backlog including under NPU load, the cadence's accuracy on all twelve VCU sequences |
-| **1.5** | online admission: the estimator computes its own proposals, synchronously and only where the gate can open (RKNN C runtime on the NPU, float32 keypoint head on the CPU, onnxruntime on desktops); the decision experiment behind it; light6 and motion2 rescued on the board at 1× with no backlog |
-| 1.x | a live camera feeding the board pipeline, a faster NPU backbone (mixed precision, INT8 under the floor of 1.5), per-layer NPU profiling, driver upgrade, more backbones behind the online interface |
+| 1.0 | the mechanism: frozen candidate, sidecar tooling, VCU ledger, rebuild verification |
+| 1.1 | RK3588S on-device receipts: NPU latency, memory, conformance against ONNX |
+| 1.2 | matched-OFF control on all twelve VCU sequences |
+| 1.3 | the estimator end to end on the RK3588S |
+| 1.4 | real time on the RK3588S: front end at sensor rate, back end at 10 Hz |
+| **1.5** | online admission: proposals computed in the estimator, only where the gate can open; light6 and motion2 rescued on the board |
+| 1.x | a live camera on the board, a faster NPU backbone (mixed precision, INT8), per-layer NPU profiling, more backbones behind the online interface |
 
 See [`ROADMAP.md`](ROADMAP.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -278,5 +195,5 @@ GPL-3.0 (the estimator is a derivative of S-VIO). XFeat is Apache-2.0. Provenanc
 third-party notices and what is deliberately not redistributed:
 [`NOTICE.md`](NOTICE.md).
 
-If you build on the gate or the sidecar format, please cite S-VIO (Gu and Meng,
+If you build on the gate or the proposal interface, please cite S-VIO (Gu and Meng,
 RA-L 2023) and XFeat (Potje et al., CVPR 2024) alongside this repository.

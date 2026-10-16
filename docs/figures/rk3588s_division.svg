@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="750" viewBox="0 0 1260 750" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#0b0b0b">
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="772" viewBox="0 0 1260 772" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#0b0b0b">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#52514e"/>
@@ -7,9 +7,9 @@
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#2a78d6"/>
     </marker>
   </defs>
-  <rect width="1260" height="750" fill="#fcfcfb"/>
-  <text x="24" y="34" font-size="20" font-weight="bold">Division of labour on the RK3588S · real-time configuration</text>
-  <text x="24" y="56" font-size="13" fill="#52514e">grey: the estimator (S-VIO fork), blue: the learned seat (XFeat). Times are means measured on light1 at 1× replay.</text>
+  <rect width="1260" height="772" fill="#fcfcfb"/>
+  <text x="24" y="34" font-size="20" font-weight="bold">Division of labour on the RK3588S · real-time configuration, online admission</text>
+  <text x="24" y="56" font-size="13" fill="#52514e">grey: the estimator (S-VIO fork), blue: the learned seat (XFeat), computed in the estimator. Times measured on light1 at 1× replay: per-launch medians, per-frame and per-period means.</text>
 
   <!-- inputs -->
   <rect x="30" y="150" width="160" height="62" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
@@ -33,23 +33,19 @@
   <text x="345" y="197" text-anchor="middle" font-weight="bold">Sensor input</text>
   <text x="345" y="216" text-anchor="middle" font-size="12.5">decode colour and depth</text>
   <text x="345" y="233" text-anchor="middle" font-size="12.5">IMU stream · bag replay</text>
-  <rect x="250" y="292" width="190" height="130" rx="6" fill="#ffffff" stroke="#8b8a85" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="345" y="313" text-anchor="middle" font-size="12.5" fill="#52514e">nothing of the estimator</text>
-  <text x="345" y="330" text-anchor="middle" font-size="12.5" fill="#52514e">is pinned here</text>
-  <text x="345" y="356" text-anchor="middle" font-size="12" fill="#2a78d6">load test: the whole XFeat</text>
-  <text x="345" y="372" text-anchor="middle" font-size="12" fill="#2a78d6">sidecar materializer ran here</text>
-  <text x="345" y="388" text-anchor="middle" font-size="12" fill="#2a78d6">at 5 frames/s (with the NPU);</text>
-  <text x="345" y="404" text-anchor="middle" font-size="12" fill="#2a78d6">the estimator did not notice</text>
+  <rect x="250" y="300" width="190" height="60" rx="6" fill="#ffffff" stroke="#8b8a85" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="345" y="325" text-anchor="middle" font-size="12.5" fill="#52514e">nothing of the estimator</text>
+  <text x="345" y="342" text-anchor="middle" font-size="12.5" fill="#52514e">is pinned here</text>
 
   <!-- NPU panel -->
   <rect x="475" y="118" width="210" height="338" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
   <text x="487" y="141" font-weight="bold">NPU</text>
   <text x="487" y="158" font-size="12" fill="#52514e">3 cores · 1.0 GHz · RKNN runtime 2.3.2</text>
   <rect x="490" y="300" width="180" height="100" rx="6" fill="#ffffff" stroke="#2a78d6" stroke-width="1.8"/>
-  <text x="580" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">XFeat backbone</text>
-  <text x="580" y="341" text-anchor="middle" font-size="12.5">fixed shape 1×3×480×640</text>
-  <text x="580" y="358" text-anchor="middle" font-size="12.5">FP16, all 37 operators on NPU</text>
-  <text x="580" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">64 ms per image</text>
+  <text x="580" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">Reliability backbone</text>
+  <text x="580" y="341" text-anchor="middle" font-size="12.5">gray 480×640, uint8 in</text>
+  <text x="580" y="358" text-anchor="middle" font-size="12.5">FP16, no descriptor head</text>
+  <text x="580" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">40 ms per launch</text>
 
   <!-- A76 panel -->
   <rect x="705" y="118" width="415" height="338" rx="10" fill="#f4f3ef" stroke="#8b8a85" stroke-width="1.5"/>
@@ -62,7 +58,7 @@
   <text x="815" y="226" text-anchor="middle" font-size="12.5">outlier rejection</text>
   <text x="815" y="242" text-anchor="middle" font-size="12.5">starvation gate</text>
   <text x="815" y="260" text-anchor="middle" font-size="12.5" fill="#2a78d6">learned admission at the tick</text>
-  <text x="815" y="276" text-anchor="middle" font-size="11.5" fill="#52514e">14 ms per frame, mean</text>
+  <text x="815" y="276" text-anchor="middle" font-size="11.5" fill="#52514e">15 ms per frame, mean</text>
 
   <rect x="925" y="172" width="185" height="112" rx="6" fill="#ffffff" stroke="#52514e" stroke-width="1.5"/>
   <text x="1017" y="193" text-anchor="middle" font-weight="bold">Every third frame · 10 Hz</text>
@@ -73,27 +69,28 @@
   <text x="1017" y="276" text-anchor="middle" font-size="11.5" fill="#52514e">three parallel threads</text>
 
   <rect x="720" y="300" width="190" height="100" rx="6" fill="#ffffff" stroke="#2a78d6" stroke-width="1.8"/>
-  <text x="815" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">XFeat sparse tail</text>
-  <text x="815" y="341" text-anchor="middle" font-size="12.5">NMS · top-500</text>
-  <text x="815" y="358" text-anchor="middle" font-size="12.5">descriptor sampling</text>
-  <text x="815" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">19 ms per image</text>
+  <text x="815" y="322" text-anchor="middle" font-weight="bold" fill="#2a78d6">Keypoint head</text>
+  <text x="815" y="341" text-anchor="middle" font-size="12.5">float32 · one core</text>
+  <text x="815" y="358" text-anchor="middle" font-size="12.5">heat map + NMS under the NPU</text>
+  <text x="815" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a78d6">13 + 6 ms, then 1.5 ms</text>
 
   <rect x="925" y="300" width="185" height="100" rx="6" fill="#e6e5e1" stroke="#52514e" stroke-width="1.5"/>
   <text x="1017" y="322" text-anchor="middle" font-weight="bold">Back end · 10 Hz</text>
   <text x="1017" y="341" text-anchor="middle" font-size="12.5">sliding-window optimization</text>
   <text x="1017" y="358" text-anchor="middle" font-size="12.5">marginalization</text>
-  <text x="1017" y="382" text-anchor="middle" font-size="13" font-weight="bold">65 ms per period</text>
+  <text x="1017" y="382" text-anchor="middle" font-size="13" font-weight="bold">67 ms per period</text>
 
   <!-- data flow: colour+depth to the front end (grey), branch to the NPU (blue) -->
   <line x1="440" y1="200" x2="720" y2="200" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
   <text x="583" y="192" text-anchor="middle" font-size="12" fill="#52514e">colour + depth, every frame</text>
   <line x1="580" y1="200" x2="580" y2="300" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
-  <text x="592" y="250" font-size="12" fill="#2a78d6">colour,</text>
-  <text x="592" y="265" font-size="12" fill="#2a78d6">every third frame</text>
+  <text x="592" y="250" font-size="12" fill="#2a78d6">gray, on a tick</text>
+  <text x="592" y="265" font-size="12" fill="#2a78d6">after a short frame</text>
   <!-- backbone -> tail -> admission -->
   <line x1="670" y1="350" x2="720" y2="350" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="695" y="343" text-anchor="middle" font-size="11.5" fill="#2a78d6">R</text>
   <line x1="815" y1="300" x2="815" y2="284" stroke="#2a78d6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
-  <text x="826" y="296" font-size="11.5" fill="#2a78d6">candidates</text>
+  <text x="826" y="296" font-size="11.5" fill="#2a78d6">proposals, when the gate opens</text>
   <!-- tracks -> tick work -> measurement -> back end -->
   <line x1="910" y1="228" x2="925" y2="228" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="1017" y1="284" x2="1017" y2="300" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -107,7 +104,7 @@
   <line x1="1110" y1="350" x2="1160" y2="350" stroke="#52514e" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <!-- ================= timeline ================= -->
-  <text x="24" y="512" font-size="16" font-weight="bold">One back-end period · 100 ms · three sensor frames</text>
+  <text x="24" y="512" font-size="16" font-weight="bold">One back-end period in which the gate opens · 100 ms · three sensor frames</text>
   <!-- axis: 0..100 ms over x 250..1130 (8.8 px per ms) -->
   <g stroke="#e6e5e1" stroke-width="1" stroke-dasharray="3 3">
     <line x1="250" y1="524" x2="250" y2="700"/>
@@ -124,25 +121,33 @@
   <g font-size="12.5" fill="#0b0b0b">
     <text x="30" y="552">A76 · front end</text>
     <text x="30" y="596">A76 · back end</text>
-    <text x="30" y="640">NPU · backbone</text>
-    <text x="30" y="684">A76 · sparse tail</text>
+    <text x="30" y="640">NPU · reliability</text>
+    <text x="30" y="684">A76 · keypoint head</text>
   </g>
-  <!-- front end: two tracked-only frames (~9 ms) and one tick frame (~24 ms) -->
-  <rect x="250" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
-  <text x="290" y="553" text-anchor="middle" font-size="11.5">track</text>
-  <rect x="540" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
-  <text x="580" y="553" text-anchor="middle" font-size="11.5">track</text>
-  <rect x="840" y="536" width="211" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
-  <text x="945" y="553" text-anchor="middle" font-size="11.5">track + detect + lines / planes</text>
-  <!-- back end: 65 ms -->
-  <rect x="250" y="580" width="572" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
-  <text x="536" y="597" text-anchor="middle" font-size="11.5">sliding-window optimization of the previous measurement · 65 ms</text>
-  <!-- NPU: 64 ms -->
-  <rect x="250" y="624" width="563" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
-  <text x="531" y="641" text-anchor="middle" font-size="11.5" fill="#2a78d6">XFeat backbone · 64 ms</text>
-  <!-- tail: 19 ms after the backbone -->
-  <rect x="813" y="668" width="167" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
-  <text x="896" y="685" text-anchor="middle" font-size="11.5" fill="#2a78d6">tail · 19 ms</text>
-  <text x="988" y="685" font-size="11.5" fill="#2a78d6">→ candidates for the next tick</text>
-  <text x="24" y="742" font-size="12" fill="#52514e">The front-end row shows the mean of 14 ms per frame split into its two kinds of frame; the back end owns the whole period and uses about two thirds of it. The tail's 19 ms is its A76 figure.</text>
+  <!-- front end: the tick frame (track + F test, wait, admit + detect), then two tracked-only frames; x = 250 + 8.8 px per ms -->
+  <rect x="250" y="536" width="114" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
+  <text x="307" y="553" text-anchor="middle" font-size="11.5">track + F test</text>
+  <rect x="364" y="536" width="252" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <text x="490" y="553" text-anchor="middle" font-size="11.5" fill="#2a78d6">wait for the proposals · 28 ms</text>
+  <rect x="616" y="536" width="97" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
+  <text x="664" y="553" text-anchor="middle" font-size="11.5">admit + detect</text>
+  <rect x="713" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
+  <text x="752" y="553" text-anchor="middle" font-size="11.5">track</text>
+  <rect x="840" y="536" width="79" height="24" fill="#ffffff" stroke="#52514e" stroke-width="1.3"/>
+  <text x="880" y="553" text-anchor="middle" font-size="11.5">track</text>
+  <!-- back end: 67 ms -->
+  <rect x="250" y="580" width="590" height="24" fill="#e6e5e1" stroke="#52514e" stroke-width="1.3"/>
+  <text x="545" y="597" text-anchor="middle" font-size="11.5">sliding-window optimization of the previous measurement · 67 ms</text>
+  <!-- NPU: reliability, 40 ms from the tick frame's arrival -->
+  <rect x="250" y="624" width="347" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="423" y="641" text-anchor="middle" font-size="11.5" fill="#2a78d6">reliability backbone · 40 ms</text>
+  <!-- keypoint head 13 ms, heat map 6 ms, scoring 1.5 ms after R -->
+  <rect x="250" y="668" width="114" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="307" y="685" text-anchor="middle" font-size="11.5" fill="#2a78d6">keypoint head</text>
+  <rect x="364" y="668" width="53" height="24" fill="#ffffff" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="390" y="685" text-anchor="middle" font-size="11.5" fill="#2a78d6">heat</text>
+  <rect x="603" y="668" width="13" height="24" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.5"/>
+  <text x="624" y="685" font-size="11.5" fill="#2a78d6">score → proposals at 42 ms</text>
+  <text x="24" y="740" font-size="12" fill="#52514e">The tick frame launches the extraction on arrival; the front end tracks it, waits for the proposals, admits them and detects. The next frame is processed late and the</text>
+  <text x="24" y="758" font-size="12" fill="#52514e">period still closes on time. In a period where the gate stays closed the blue rows are empty and the front end runs as without the network.</text>
 </svg>
